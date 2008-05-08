@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE web-app 
+    PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" 
+    "http://java.sun.com/dtd/web-app_2_3.dtd">
+<web-app>
+    <!-- General description of your web application -->
+    <display-name>WERTi</display-name>
+    <description>Learning languages interactively on the WEB</description>
+
+    <context-param>
+      <param-name>webmaster</param-name>
+      <param-value>admtrov@sfs.uni-tuebingen.de</param-value>
+      <description>Mail for trouble</description>
+    </context-param>
+
+    <servlet>
+      <servlet-name>WERTi</servlet-name>
+      <description>
+		 Learning languages interactively on the WEB
+      </description>
+      <servlet-class>tomtest.Hello</servlet-class>
+	 <load-on-startup>5</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+      <servlet-name>WERTi</servlet-name>
+	 <url-pattern>/werti</url-pattern>
+    </servlet-mapping>
+
+    <session-config>
+      <session-timeout>30</session-timeout> 
+    </session-config>
+</web-app>
