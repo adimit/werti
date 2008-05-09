@@ -36,6 +36,8 @@
 
 	<!-- External Dependencies -->
 
+	<property name="uima-core.jar" value="/home/aleks/opt/apache-uima/lib/uima-core.jar"/>
+
 	<!--
 	  <property name="foo.jar"
 			  value="/path/to/foo.jar"/>

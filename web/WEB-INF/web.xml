@@ -15,17 +15,24 @@
     </context-param>
 
     <servlet>
-      <servlet-name>WERTi</servlet-name>
-      <description>
-		 Learning languages interactively on the WEB
-      </description>
-      <servlet-class>tomtest.Hello</servlet-class>
-	 <load-on-startup>5</load-on-startup>
+	    <servlet-name>UIMAtest</servlet-name>
+	    <description>testing the UIMA functionality</description>
+	    <servlet-class>org.werti.UIMAtest</servlet-class>
+    </servlet>
+
+    <servlet>
+	    <servlet-name>Interface</servlet-name>
+	    <servlet-class>org.werti.Interface</servlet-class>
     </servlet>
 
     <servlet-mapping>
-      <servlet-name>WERTi</servlet-name>
-	 <url-pattern>/werti</url-pattern>
+      <servlet-name>UIMAtest</servlet-name>
+	 <url-pattern>/uima</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+	    <servlet-name>Interface</servlet-name>
+	    <url-pattern>/html</url-pattern>
     </servlet-mapping>
 
     <session-config>
