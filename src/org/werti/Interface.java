@@ -1,21 +1,29 @@
 package org.werti;
 
-/**
- * This is the base web interface class of WERTi.
- * It will, according to its arguments, call the appropriate classes that
- * are needed to fulfill a specific task.
- */
-
 import java.io.*;
+import java.util.*;
+import java.util.Enumeration;
+
 import java.util.logging.*;
 
 import javax.servlet.*;
+
 import javax.servlet.http.*;
+
 
 import org.werti.html.*;
 
+
+/**
+ * It will, according to its arguments, call the appropriate classes that
+ * This is the base web interface class of WERTi.
+ * are needed to fulfill a specific task.
+ */
+
 public class Interface extends HttpServlet {
 	static final long serialVersionUID = 0;
+
+	private static final String BR = "<br />";
 
 	private static final Logger log = Logger.getLogger("org.werti");
 
@@ -40,8 +48,16 @@ public class Interface extends HttpServlet {
 		final HTML.Input[] t = { new HTML.Input("text", "termquery", "20") };
 		out.print(HTML.form("RequestTerm", "POST", t));
 
-		for (Handler h:log.getHandlers()) {
-			h.toString();
+		out.print(HTML.hline());
+
+		out.print(HTML.element("h2", "System status"));
+
+		log.setLevel(Level.FINEST);
+		try {
+			LogManager.getLogManager().checkAccess();
+			out.print("Logger status: OK" + BR);
+		} catch (SecurityException se) {
+			out.print("Logger status: Broken" +BR);
 		}
 
 		out.print(HTML.footer());
@@ -50,7 +66,6 @@ public class Interface extends HttpServlet {
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
-		//doGet(request, response);
-		log.severe("Requested" + request.toString());
+		log.info("Requested" + request.getRequestURI());
 	}
 }

@@ -59,4 +59,8 @@ public class HTML {
 				+ "\"/>";
 		}
 	}
+
+	public static String hline() {
+		return "<hr noshade />";
+	}
 }

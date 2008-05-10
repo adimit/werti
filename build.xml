@@ -37,11 +37,7 @@
 	<!-- External Dependencies -->
 
 	<property name="uima-core.jar" value="/home/aleks/opt/apache-uima/lib/uima-core.jar"/>
-
-	<!--
-	  <property name="foo.jar"
-			  value="/path/to/foo.jar"/>
-	  -->
+	<property name="tomcat-juli.jar" value="/usr/share/tomcat5.5/bin/tomcat-juli.jar"/>
 
 
 	<!-- Compilation Classpath -->
@@ -65,6 +61,13 @@
 		<fileset dir="${catalina.home}/shared/lib">
 			<include name="*.jar"/>
 		</fileset>
+
+		<pathelement location="${web.home}/WEB-INF/lib"/>
+		<fileset dir="${web.home}/WEB-INF/lib">
+			<include name="*.jar"/>
+		</fileset>
+
+
 
 	</path>
 

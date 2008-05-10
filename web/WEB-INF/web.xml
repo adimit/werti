@@ -32,7 +32,7 @@
 
     <servlet-mapping>
 	    <servlet-name>Interface</servlet-name>
-	    <url-pattern>/html</url-pattern>
+	    <url-pattern>/</url-pattern>
     </servlet-mapping>
 
     <session-config>

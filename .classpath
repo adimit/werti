@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry kind="lib" path="/usr/share/tomcat5.5/bin/tomcat-juli.jar"/>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/jVinci.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/uima-adapter-soap.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/uima-adapter-vinci.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/uima-core.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/uima-cpe.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/uima-document-annotation.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/uima-examples.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/uima-tools.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/home/aleks/opt/apache-uima/lib/uima-core.jar"/>
-	<classpathentry kind="lib" path="/usr/share/tomcat5.5/common/lib/jsp-api.jar"/>
-	<classpathentry kind="lib" path="/usr/share/tomcat5.5/common/lib/servlet-api.jar"/>
 	<classpathentry kind="output" path="build"/>
+	<classpathentry kind="lib" path="/usr/share/tomcat5.5/common/lib/servlet-api.jar"/>
 </classpath>
