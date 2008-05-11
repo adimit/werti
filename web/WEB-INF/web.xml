@@ -25,9 +25,18 @@
 	    <servlet-class>org.werti.Interface</servlet-class>
     </servlet>
 
+    <servlet>
+	    <servlet-name>RequestWiki</servlet-name>
+	    <servlet-class>org.werti.RequestWiki</servlet-class>
+    </servlet>
+
     <servlet-mapping>
       <servlet-name>UIMAtest</servlet-name>
 	 <url-pattern>/uima</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+	    <servlet-name>RequestWiki</servlet-name>
+	    <url-pattern>/RequestWiki</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
