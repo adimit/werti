@@ -5,6 +5,8 @@ package org.werti.html;
  */
 
 public class HTML {
+	public static final String BR = "<br />";
+
 	public static String preamble(String title) {
 		return "<html><header><title>" 
 			+ title 

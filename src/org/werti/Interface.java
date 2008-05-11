@@ -1,15 +1,8 @@
 package org.werti;
-
 import java.io.*;
-import java.util.*;
-import java.util.Enumeration;
-
 import java.util.logging.*;
-
 import javax.servlet.*;
-
 import javax.servlet.http.*;
-
 
 import org.werti.html.*;
 
@@ -23,12 +16,11 @@ import org.werti.html.*;
 public class Interface extends HttpServlet {
 	static final long serialVersionUID = 0;
 
-	private static final String BR = "<br />";
-
 	private static final Logger log = Logger.getLogger("org.werti");
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
+		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		out.print(HTML.preamble("Welcome to WERTi"));
 		out.print(HTML.element("h1", "Welcome to WERTi"));
@@ -43,7 +35,7 @@ public class Interface extends HttpServlet {
 		out.print(HTML.form("RequestURL", "POST", e));
 		out.print(HTML.element("h4", "Query English Wikipedia"));
 		final HTML.Input[] w = { new HTML.Input("text", "wikiquery", "20") };
-		out.print(HTML.form("RequestWiki", "POST", w));
+		out.print(HTML.form("/werti/RequestWiki", "POST", w));
 		out.print(HTML.element("h4", "Term Query"));
 		final HTML.Input[] t = { new HTML.Input("text", "termquery", "20") };
 		out.print(HTML.form("RequestTerm", "POST", t));
@@ -55,9 +47,9 @@ public class Interface extends HttpServlet {
 		log.setLevel(Level.FINEST);
 		try {
 			LogManager.getLogManager().checkAccess();
-			out.print("Logger status: OK" + BR);
+			out.print("Logger status: OK" + HTML.BR);
 		} catch (SecurityException se) {
-			out.print("Logger status: Broken" +BR);
+			out.print("Logger status: Broken" + HTML.BR);
 		}
 
 		out.print(HTML.footer());
