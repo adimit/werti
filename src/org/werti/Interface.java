@@ -1,13 +1,8 @@
 package org.werti;
-
 import java.io.*;
-
 import java.util.logging.*;
-
 import javax.servlet.*;
-
 import javax.servlet.http.*;
-
 
 import org.werti.html.*;
 
@@ -54,7 +49,7 @@ public class Interface extends HttpServlet {
 			LogManager.getLogManager().checkAccess();
 			out.print("Logger status: OK" + HTML.BR);
 		} catch (SecurityException se) {
-			out.print("Logger status: Broken" +HTML.BR);
+			out.print("Logger status: Broken" + HTML.BR);
 		}
 
 		out.print(HTML.footer());

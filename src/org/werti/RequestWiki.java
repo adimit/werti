@@ -18,12 +18,13 @@ public class RequestWiki extends HttpServlet {
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
-		response.setContentType("text/html");
+		response.setContentType("text/plain");
 		PrintWriter out = response.getWriter();
 		final String article = request.getParameter("wikiquery");
-		log.info("Fetched " +article);
+		log.info("Fetched " + article);
 		try {
-			final BufferedReader wiki = new BufferedReader(Net.fetch(wikify(article)));
+			final Object o = Net.fetch(wikify(article));
+			out.write(o.getClass().getCanonicalName());
 		} catch (MalformedURLException mue) {
 			log.log(Level.SEVERE, "Malformed URL", mue);
 		} catch (IOException ioe) {

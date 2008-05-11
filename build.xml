@@ -12,7 +12,7 @@
 	<property name="catalina.home" value="/usr/share/tomcat5.5"/>
 	<property name="dist.home"     value="${basedir}/dist"/>
 	<property name="docs.home"     value="${basedir}/docs"/>
-	<property name="manager.url"   value="http://localhost:8180/manager"/>
+	<property name="manager.url"   value="http://brmbr:8180/manager"/>
 	<property name="manager.username" value="manager"/>
 	<property name="manager.password" value="_c,f0D"/>
 	<property name="src.home"      value="${basedir}/src"/>
