@@ -1,6 +1,7 @@
 *** Severe
  * Fix encoding problem with Net.fetch()
  * NullPointerException when klicking on Reuter's 'next page'
+ * Connection still seems flaky for some reason or another.
 
 *** Important
  * Fix regular expressions to not match so greedily (UIMA &| DOM)
@@ -10,3 +11,5 @@
 - Interactive Passivator
 - Scoring mechanism (this site helped me a lot-like)
 - Rank search results accordingly
+- Internationalize the exceptions, logging, whole application following
+	http://java.sun.com/j2se/1.5.0/docs/guide/intl/index.html

@@ -23,6 +23,9 @@ public class RequestReuters extends HttpServlet {
 	 * dangerous. They're going to match a whole lot of stuff that might not be their job.
 	 * For example, in the middle of a path something like var='value'/somewhere (although this
 	 * is unlikely.
+	 *
+	 * This method is still very flaky and should probably be refactored to exist in a UIMAn
+	 * context.
 	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
@@ -43,19 +46,21 @@ public class RequestReuters extends HttpServlet {
 		}
 
 		try {
-			String b = "";
+			//String b = "";
 			while (in.ready()) {
 				final String line = in.readLine();
-				b += (line
+				out.print( (line
 				      + "\n"
+				      // FIXME doesn't account for relative paths
 					).replaceAll("href=\"/", "href=\"" + baseurl
+					).replaceAll("background=\"", "background=\"" + baseurl
 					).replaceAll("src=\"/", "src=\"" + baseurl
 					).replaceAll("@import\\s*\"/", "@import \"" + baseurl
 					//).replaceAll("\"/", "\"" + baseurl // FIXME: this is dirty...
 					//).replaceAll("'/", "'" + baseurl // FIXME: this is dirty...
-					);
+					));
 			}
-			out.print(b);
+			//out.print(b);
 		} catch (MalformedURLException mue) {
 			log.log(Level.SEVERE, "Malformed URL", mue);
 		} catch (IOException ioe) {

@@ -23,8 +23,8 @@ public class Net {
 	public static BufferedReader fetch(String site_url) throws MalformedURLException, IOException {
 		final URL url = new URL(site_url);
 		final InputStream urlstream = url.openStream();
-		//final URLConnection uc = url.openConnection();
-		//final InputStream content = uc.getInputStream();
+		final URLConnection uc = url.openConnection();
+		final InputStream content = uc.getInputStream();
 		return new BufferedReader(new InputStreamReader(urlstream));
 	}
 
