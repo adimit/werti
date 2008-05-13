@@ -4,10 +4,10 @@ this schedule.
 
 May
 
-8th: Official start of project. Infrastructure established.
-- 9th:  initiate uima-tomcat glue, unifying logging and easing the debugging process.
-- 11th: Document retrieval from from web sources (Reuters, Wikipedia), converting into CAS with uima.
-	basic web interface during alpha status (essentially a search box and parameter settings)
+8th: Official start of project. Infrastructure established. -done
+- 9th:  initiate uima-tomcat glue, unifying logging and easing the debugging process. -done
+- 11th: Document retrieval from from web sources (Reuters, Wikipedia), converting into CAS with uima. - first done, second not.
+	basic web interface during alpha status (essentially a search box and parameter settings) -done
 - 14th: writing annotators and CAS consumers that are able to operate on web-provided content, annotate it with
 	basic, but non-destructive html-structure on the basis of primitive (e.g. regex) principles and return and 
 	display the web page in its original form with annotations.

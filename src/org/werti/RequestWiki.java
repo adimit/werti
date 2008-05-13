@@ -4,6 +4,8 @@ import java.io.*;
 
 import java.net.MalformedURLException;
 
+import java.util.Enumeration;
+
 import java.util.logging.*;
 
 import javax.servlet.*;
@@ -18,18 +20,46 @@ public class RequestWiki extends HttpServlet {
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
-		response.setContentType("text/plain");
+		log.setLevel(Level.FINEST);
+		response.setHeader("host", "en.wikipedia.org");
+		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		final String article = request.getParameter("wikiquery");
 		log.info("Fetched " + article);
 		try {
-			final Object o = Net.fetch(wikify(article));
-			out.write(o.getClass().getCanonicalName());
+			logResponseHeader(response);
+			logRequestHeader(request);
+			String b = "";
+			final BufferedReader in = Net.fetch(wikify(article));
+			while (in.ready()) {
+				b += (in.readLine() + "\n"
+						).replaceAll("href=\"/", "href=\"" + "http://en.wikipedia.org/"
+						).replaceAll("src=\"/", "src=\"" + "http://en.wikipedia.org/"
+						).replaceAll("@import\\s*\"/", "@import \"" + "http://en.wikipedia.org/"
+						).replaceAll("\"/", "\"" + "http://en.wikipedia.org/")
+						;
+			}
+			out.print(b);
 		} catch (MalformedURLException mue) {
 			log.log(Level.SEVERE, "Malformed URL", mue);
 		} catch (IOException ioe) {
 			log.log(Level.SEVERE, "Wrong content?", ioe);
 		}
+	}
+
+	private static void logRequestHeader(HttpServletRequest r) {
+		log.fine("ContextPath: " + r.getContextPath());
+		final Enumeration<String> e = r.getHeaderNames();
+		while (e.hasMoreElements()) {
+			final String s = e.nextElement();
+			log.fine("Header: " + s + "\n" + r.getHeader(s));
+		}
+
+
+	}
+
+	private static void logResponseHeader(HttpServletResponse r) {
+
 	}
 
 	private static String wikify(String term) {
@@ -38,6 +68,7 @@ public class RequestWiki extends HttpServlet {
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
+		response.setHeader("host", "en.wikipedia.org");
 		log.info("Fetching " + request.getParameter("wikiquery"));
 		doGet(request, response);
 	}

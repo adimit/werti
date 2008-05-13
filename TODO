@@ -1,3 +1,10 @@
+*** Severe
+ * Fix encoding problem with Net.fetch()
+ * NullPointerException when klicking on Reuter's 'next page'
+
+*** Important
+ * Fix regular expressions to not match so greedily (UIMA &| DOM)
+
 *** Wishlist
 ************
 - Interactive Passivator

@@ -15,12 +15,6 @@
     </context-param>
 
     <servlet>
-	    <servlet-name>UIMAtest</servlet-name>
-	    <description>testing the UIMA functionality</description>
-	    <servlet-class>org.werti.UIMAtest</servlet-class>
-    </servlet>
-
-    <servlet>
 	    <servlet-name>Interface</servlet-name>
 	    <servlet-class>org.werti.Interface</servlet-class>
     </servlet>
@@ -30,13 +24,19 @@
 	    <servlet-class>org.werti.RequestWiki</servlet-class>
     </servlet>
 
-    <servlet-mapping>
-      <servlet-name>UIMAtest</servlet-name>
-	 <url-pattern>/uima</url-pattern>
-    </servlet-mapping>
+    <servlet>
+	    <servlet-name>RequestReuters</servlet-name>
+	    <servlet-class>org.werti.RequestReuters</servlet-class>
+    </servlet>
+    
     <servlet-mapping>
 	    <servlet-name>RequestWiki</servlet-name>
 	    <url-pattern>/RequestWiki</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+	    <servlet-name>RequestReuters</servlet-name>
+	    <url-pattern>/RequestReuters</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
