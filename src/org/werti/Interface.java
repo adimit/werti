@@ -33,7 +33,7 @@ public class Interface extends HttpServlet {
 			+ " implemented ;-)"));
 		out.print(HTML.element("h4", "Query Reuters News"));
 		final HTML.Input[] e = { new HTML.Input("text", "url", "20") };
-		out.print(HTML.form("RequestReuters", "POST", e));
+		out.print(HTML.form("RequestURL", "POST", e));
 		out.print(HTML.element("h4", "Query English Wikipedia"));
 		final HTML.Input[] w = { new HTML.Input("text", "wikiquery", "20") };
 		out.print(HTML.form("/werti/RequestWiki", "POST", w));

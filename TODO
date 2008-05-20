@@ -5,6 +5,7 @@
 
 *** Important
  * Fix regular expressions to not match so greedily (UIMA &| DOM)
+ * Dispatch all of the html re-modeling to UIMA
 
 *** Wishlist
 ************
