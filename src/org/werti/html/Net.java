@@ -18,7 +18,7 @@ public class Net {
 	 *  
 	 * Oddly enough, this doesn't seem to work with a URLConnection (not for Reuters at least)
 	 * and has to be done using the InputStream from the URL directly. This may be a bug in 
-	 * Sun's libs
+	 * Sun's libs.
 	 */
 	public static BufferedReader fetch(String site_url) throws MalformedURLException, IOException {
 		final URL url = new URL(site_url);

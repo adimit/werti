@@ -69,6 +69,7 @@ public class RequestURL extends HttpServlet {
 	}
 
 
+	// DEBUG method
 	private static void logRequestHeader(HttpServletRequest r) {
 		log.fine("ContextPath: " + r.getContextPath());
 		final Enumeration<String> e = r.getHeaderNames();
@@ -76,10 +77,9 @@ public class RequestURL extends HttpServlet {
 			final String s = e.nextElement();
 			log.fine("Header: " + s + "\n" + r.getHeader(s));
 		}
-
-
 	}
 
+	// DEBUG method
 	private static void logResponseHeader(HttpServletResponse r) {
 
 	}
