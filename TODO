@@ -2,6 +2,7 @@
  * Fix encoding problem with Net.fetch()
  * NullPointerException when klicking on Reuter's 'next page'
  * Connection still seems flaky for some reason or another.
+ * Fix html tag recognition (will currently fail on JavaScript-code that uses the '<' or '>')
 
 *** Important
  * Fix regular expressions to not match so greedily (UIMA &| DOM)

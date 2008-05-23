@@ -34,7 +34,7 @@ public class Dispatcher {
 	 * Config() (constructor with no arguments) to give a meaninful result. In the
 	 * case it does not, see comments for Dispatcher(Config).
 	 */
-	public Dispatcher() {
+	public Dispatcher() throws UnrecoverableUIMAException {
 		this(new Config());
 	}
 
@@ -50,9 +50,10 @@ public class Dispatcher {
 	 * this case is bound to cause all sorts of trouble, especially if the error is
 	 * system wide (all descriptors unreadable, etc...)
 	 *
-	 * We therefore throw a RunTimeException. Be careful what you throw at this thing.
+	 * We therefore throw an UrecoverableUIMAException to inform the caller that
+	 * they should go fix teir code. Be careful what you throw at this thing.
 	 */
-	public Dispatcher(Config cfg) {
+	public Dispatcher(Config cfg) throws UnrecoverableUIMAException {
 		try {
 			final XMLInputSource in = new XMLInputSource(cfg.getDescriptor());
 			final ResourceSpecifier spec = 
@@ -63,14 +64,14 @@ public class Dispatcher {
 			cas = ae.newJCas();
 		} catch (IOException ioe) {
 			log.severe("Couldn't open despcriptor at: " + cfg.getDescriptor());
-			throw new RuntimeException(ioe);
+			throw new UnrecoverableUIMAException(ioe);
 		} catch (InvalidXMLException ixmle) {
 			log.severe("Check your XML in: " + cfg.getDescriptor());
-			throw new RuntimeException(ixmle);
+			throw new UnrecoverableUIMAException(ixmle);
 		} catch (ResourceInitializationException rie) {
 			log.severe("Failed to initialize resource. Dumping Stack:\n"
 					+ rie.getStackTrace());
-			throw new RuntimeException(rie);
+			throw new UnrecoverableUIMAException(rie);
 		} 
 	}
 
@@ -81,11 +82,9 @@ public class Dispatcher {
 	 * This method is thread safe, but it may block. A long time. It has therefore
 	 * been decoupled from retrieving the results, so it can be called asynchronously.
 	 */
-	public synchronized void process(InputStream in) {
+	public synchronized void process(BufferedReader bin) {
 		log.info("Starting Analysis.");
 		try {
-			final BufferedReader bin = 
-				new BufferedReader(new InputStreamReader(in));
 			String s = "";
 			while (bin.ready()) {
 				s += bin.readLine();
@@ -94,6 +93,13 @@ public class Dispatcher {
 		} catch (IOException ioe) {
 			log.severe("Couldn't read from website input stream");
 		}
+	}
+
+	/**
+	 * See process(BufferedReader).
+	 */
+	public synchronized void process(InputStream in) {
+		process(new BufferedReader(new InputStreamReader(in)));
 	}
 	
 	/*

@@ -38,6 +38,7 @@
 
 	<property name="uima-core.jar" value="/home/aleks/opt/apache-uima/lib/uima-core.jar"/>
 	<property name="tomcat-juli.jar" value="/usr/share/tomcat5.5/bin/tomcat-juli.jar"/>
+	<property name="stanford-postagger.jar" value="/home/aleks/var/tmp/stanford-postagger-full-2008-05-19/stanford-postagger-2008-05-19.jar"/>
 
 
 	<!-- Compilation Classpath -->

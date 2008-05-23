@@ -2,9 +2,9 @@
 <analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
   <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
   <primitive>true</primitive>
-  <annotatorImplementationName>org.werti.uima.ae.HTMLAnnotator</annotatorImplementationName>
+  <annotatorImplementationName>org.werti.uima.ae.Localizer</annotatorImplementationName>
   <analysisEngineMetaData>
-    <name>HTMLAnnotator</name>
+    <name>Localizer</name>
     <description/>
     <version>1.0</version>
     <vendor/>
@@ -19,7 +19,9 @@
     <fsIndexCollection/>
     <capabilities>
       <capability>
-        <inputs/>
+        <inputs>
+          <type allAnnotatorFeatures="true">org.werti.uima.types.annot.HTML</type>
+        </inputs>
         <outputs/>
         <languagesSupported/>
       </capability>

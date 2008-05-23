@@ -2,19 +2,15 @@
 <analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
   <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
   <primitive>true</primitive>
-  <annotatorImplementationName>org.werti.uima.ae.HTMLAnnotator</annotatorImplementationName>
+  <annotatorImplementationName>org.werti.uima.ae.GenericRelevanceAnnotator</annotatorImplementationName>
   <analysisEngineMetaData>
-    <name>HTMLAnnotator</name>
+    <name>GenericRelevanceAnnotator</name>
     <description/>
     <version>1.0</version>
     <vendor/>
     <configurationParameters/>
     <configurationParameterSettings/>
-    <typeSystemDescription>
-      <imports>
-        <import location="WERTiTypeSystem.xml"/>
-      </imports>
-    </typeSystemDescription>
+    <typeSystemDescription/>
     <typePriorities/>
     <fsIndexCollection/>
     <capabilities>

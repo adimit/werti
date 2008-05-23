@@ -1,8 +1,62 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <typeSystemDescription xmlns="http://uima.apache.org/resourceSpecifier">
-<name>WERTiTypeSystem</name>
-<description></description>
-<version>1.0</version>
-<vendor></vendor>
-<types></types>
+  <name>WERTiTypeSystem</name>
+  <description/>
+  <version>1.0</version>
+  <vendor/>
+  <types>
+    <typeDescription>
+      <name>org.werti.uima.types.annot.HTML</name>
+      <description>An annotation that spans HTML tags.</description>
+      <supertypeName>uima.tcas.Annotation</supertypeName>
+      <features>
+        <featureDescription>
+          <name>tag_name</name>
+          <description>The name of the html tag, without the brackets (like "p", "i" "a" or "div")</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>closing</name>
+          <description>Is this a closing tag?</description>
+          <rangeTypeName>uima.cas.Boolean</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.werti.uima.types.annot.RelevantText</name>
+      <description>Optional annotation to specify which text to work on.</description>
+      <supertypeName>uima.tcas.Annotation</supertypeName>
+      <features>
+        <featureDescription>
+          <name>enclosing_tag</name>
+          <description>The html tag that encloses this text fragment.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.werti.uima.types.annot.PoSTag</name>
+      <description>A relevant PoS-tag.</description>
+      <supertypeName>uima.tcas.Annotation</supertypeName>
+      <features>
+        <featureDescription>
+          <name>PoS</name>
+          <description>The part of speech this tag stands for.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.werti.uima.annot.Path</name>
+      <description>Path in a html file</description>
+      <supertypeName>uima.tcas.Annotation</supertypeName>
+      <features>
+        <featureDescription>
+          <name>localized</name>
+          <description>Localized version of this path</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+  </types>
 </typeSystemDescription>
