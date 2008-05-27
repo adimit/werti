@@ -11,5 +11,5 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/stanford-postagger.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="build"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="/usr/share/java/servlet-api.jar"/>
 </classpath>

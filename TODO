@@ -8,6 +8,9 @@
  * Fix regular expressions to not match so greedily (UIMA &| DOM)
  * Implement an Event interface so that callers of Dispatcher.process() know when it's ready
 
+*** Showstoppers
+ * Put a real email on ErrorPage
+
 *** Wishlist
 ************
 - handle org.werti.uima.Dispatcher(Config) more gracefully

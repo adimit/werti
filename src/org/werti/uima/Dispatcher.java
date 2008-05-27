@@ -9,7 +9,10 @@ import java.io.PrintWriter;
 import java.util.logging.*;
 
 import org.apache.uima.UIMAFramework;
+
 import org.apache.uima.analysis_engine.AnalysisEngine;
+import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
+
 import org.apache.uima.jcas.JCas;
 
 import org.apache.uima.resource.ResourceInitializationException;
@@ -18,25 +21,13 @@ import org.apache.uima.resource.ResourceSpecifier;
 import org.apache.uima.util.InvalidXMLException;
 import org.apache.uima.util.XMLInputSource;
 
-
-
 public class Dispatcher {
 
 	private final JCas cas;
 	private final AnalysisEngine ae;
+	private final PrintWriter out;
 
 	private static final Logger log = Logger.getLogger("org.werti");
-
-	/**
-	 * Initialize with default config.
-	 *
-	 * I wouldn't like this to get called, but... just in case, this relies on the
-	 * Config() (constructor with no arguments) to give a meaninful result. In the
-	 * case it does not, see comments for Dispatcher(Config).
-	 */
-	public Dispatcher() throws UnrecoverableUIMAException {
-		this(new Config());
-	}
 
 	/**
 	 * Initialize the Dispatcher with a given config.
@@ -53,7 +44,7 @@ public class Dispatcher {
 	 * We therefore throw an UrecoverableUIMAException to inform the caller that
 	 * they should go fix teir code. Be careful what you throw at this thing.
 	 */
-	public Dispatcher(Config cfg) throws UnrecoverableUIMAException {
+	public Dispatcher(Config cfg, PrintWriter out) throws UnrecoverableUIMAException {
 		try {
 			final XMLInputSource in = new XMLInputSource(cfg.getDescriptor());
 			final ResourceSpecifier spec = 
@@ -62,6 +53,7 @@ public class Dispatcher {
 				.parseResourceSpecifier(in);
 			ae  = UIMAFramework.produceAnalysisEngine(spec);
 			cas = ae.newJCas();
+			this.out = out;
 		} catch (IOException ioe) {
 			log.severe("Couldn't open despcriptor at: " + cfg.getDescriptor());
 			throw new UnrecoverableUIMAException(ioe);
@@ -92,6 +84,8 @@ public class Dispatcher {
 			process(s);
 		} catch (IOException ioe) {
 			log.severe("Couldn't read from website input stream");
+		} catch (UnrecoverableUIMAException uuimae) {
+			log.severe("Something baaaad happenend");
 		}
 	}
 
@@ -106,16 +100,25 @@ public class Dispatcher {
 	 * Private helper to process a String s. AEs can only have full strings set as
 	 * analysis objects.
 	 */
-	private synchronized void process(String s) {
-
+	private synchronized void process(String s) 
+		throws UnrecoverableUIMAException {
+		cas.setDocumentText(s);
+		try {
+			ae.process(cas);
+		} catch (AnalysisEngineProcessException aepe) {
+			log.severe("Problems processing data!");
+			throw new UnrecoverableUIMAException(aepe);
+		}
+		out.print(cas.getDocumentText());
 	}
 
 	public void print(PrintWriter out) {
 		log.fine("Printing results to given PrintWriter");
+		out.print(cas.getDocumentText());
 	}
 
 	public String get_results() {
 		log.fine("Returning the results.");
-		return null;
+		return cas.getDocumentText();
 	}
 }

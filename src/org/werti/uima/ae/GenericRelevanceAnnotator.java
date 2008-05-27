@@ -9,6 +9,11 @@ import org.apache.uima.jcas.JCas;
 import org.werti.uima.types.annot.HTML;
 import org.werti.uima.types.annot.RelevantText;
 
+/**
+ * foobar.
+ *
+ * aeuntha aoeu aoeu 
+ */
 public class GenericRelevanceAnnotator extends JCasAnnotator_ImplBase {
 	public void process(JCas cas) {
 		

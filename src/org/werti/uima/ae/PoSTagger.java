@@ -31,6 +31,5 @@ public class PoSTagger extends JCasAnnotator_ImplBase {
 		while (tit.hasNext()) {
 			textspan = (RelevantText)tit.next();
 		}
-
 	}
 }

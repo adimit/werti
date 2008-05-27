@@ -20,8 +20,9 @@ public class Interface extends HttpServlet {
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
+		// DEBUG
+		log.setLevel(Level.FINEST);
 		response.setContentType("text/html");
-		response.setHeader("host", "en.wikipedia.org");
 		PrintWriter out = response.getWriter();
 		out.print(HTML.preamble("Welcome to WERTi"));
 		out.print(HTML.element("h1", "Welcome to WERTi"));
@@ -31,7 +32,7 @@ public class Interface extends HttpServlet {
 			+ " address (URI) with the form below, or search for a term with"
 			+ " the other form. Note that not everything is already" 
 			+ " implemented ;-)"));
-		out.print(HTML.element("h4", "Query Reuters News"));
+		out.print(HTML.element("h4", "Query Specific URL"));
 		final HTML.Input[] e = { new HTML.Input("text", "url", "20") };
 		out.print(HTML.form("RequestURL", "POST", e));
 		out.print(HTML.element("h4", "Query English Wikipedia"));
@@ -59,7 +60,6 @@ public class Interface extends HttpServlet {
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
-		response.setHeader("host", "en.wikipedia.org");
 		log.info("Requested" + request.getRequestURI());
 	}
 }

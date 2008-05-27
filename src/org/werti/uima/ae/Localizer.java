@@ -17,7 +17,6 @@ public class Localizer extends JCasAnnotator_ImplBase {
 		String pathref = null;
 		while (tagIt.hasNext()) {
 			tagref = (HTML)tagIt.next();
-
 		}
 	}
 

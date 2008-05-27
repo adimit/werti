@@ -22,6 +22,7 @@ public class Net {
 	 */
 	public static BufferedReader fetch(String site_url) throws MalformedURLException, IOException {
 		final URL url = new URL(site_url);
+		log.fine("Host name of target URL '" + site_url +"':\n" + url.getHost());
 		final InputStream urlstream = url.openStream();
 		final URLConnection uc = url.openConnection();
 		final InputStream content = uc.getInputStream();
