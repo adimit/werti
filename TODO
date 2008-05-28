@@ -1,21 +1,28 @@
 *** Severe
+
  * Fix encoding problem with Net.fetch()
  * NullPointerException when klicking on Reuter's 'next page'
  * Connection still seems flaky for some reason or another.
  * Fix html tag recognition (will currently fail on JavaScript-code that uses the '<' or '>')
 
 *** Important
+
  * Fix regular expressions to not match so greedily (UIMA &| DOM)
  * Implement an Event interface so that callers of Dispatcher.process() know when it's ready
 
 *** Showstoppers
- * Put a real email on ErrorPage
 
 *** Wishlist
 ************
+- use HTMLcleaner [0] to clean up web page's html tags.
 - handle org.werti.uima.Dispatcher(Config) more gracefully
 - Interactive Passivator
 - Scoring mechanism (this site helped me a lot-like)
 - Rank search results accordingly
-- Internationalize the exceptions, logging, whole application following
-	http://java.sun.com/j2se/1.5.0/docs/guide/intl/index.html
+- Internationalize the exceptions, logging, whole application following [1]
+
+
+References:
+===========
+[0]	http://htmlcleaner.sourceforge.net/
+[1]	http://java.sun.com/j2se/1.5.0/docs/guide/intl/index.html

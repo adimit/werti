@@ -11,8 +11,8 @@ import org.apache.uima.jcas.tcas.Annotation;
 
 
 /** A relevant PoS-tag.
- * Updated by JCasGen Wed May 28 02:57:22 CEST 2008
- * XML source: /home/aleks/src/werti/desc/PoSTagger.xml
+ * Updated by JCasGen Wed May 28 15:40:28 CEST 2008
+ * XML source: /home/aleks/src/werti/desc/HTMLAnnotator.xml
  * @generated */
 public class PoSTag extends Annotation {
 	/** @generated

@@ -21,7 +21,11 @@
       <capability>
         <inputs/>
         <outputs>
-          <type allAnnotatorFeatures="true">org.werti.uima.types.annot.HTML</type>
+          <type>org.werti.uima.types.annot.HTML</type>
+          <feature>org.werti.uima.types.annot.HTML:closing</feature>
+          <feature>org.werti.uima.types.annot.HTML:tag_name</feature>
+          <feature>org.werti.uima.types.annot.HTML:end</feature>
+          <feature>org.werti.uima.types.annot.HTML:begin</feature>
         </outputs>
         <languagesSupported/>
       </capability>

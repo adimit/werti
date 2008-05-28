@@ -57,7 +57,6 @@ public class Interface extends HttpServlet {
 		out.print(HTML.footer());
 	}
 
-
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
 		log.info("Requested" + request.getRequestURI());
