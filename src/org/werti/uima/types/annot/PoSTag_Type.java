@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
 /** A relevant PoS-tag.
- * Updated by JCasGen Thu May 22 19:40:05 CEST 2008
+ * Updated by JCasGen Wed May 28 02:57:22 CEST 2008
  * @generated */
 public class PoSTag_Type extends Annotation_Type {
   /** @generated */

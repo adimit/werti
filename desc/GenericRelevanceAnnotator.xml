@@ -10,13 +10,21 @@
     <vendor/>
     <configurationParameters/>
     <configurationParameterSettings/>
-    <typeSystemDescription/>
+    <typeSystemDescription>
+      <imports>
+        <import location="WERTiTypeSystem.xml"/>
+      </imports>
+    </typeSystemDescription>
     <typePriorities/>
     <fsIndexCollection/>
     <capabilities>
       <capability>
-        <inputs/>
-        <outputs/>
+        <inputs>
+          <type allAnnotatorFeatures="true">org.werti.uima.types.annot.HTML</type>
+        </inputs>
+        <outputs>
+          <type allAnnotatorFeatures="true">org.werti.uima.types.annot.RelevantText</type>
+        </outputs>
         <languagesSupported/>
       </capability>
     </capabilities>

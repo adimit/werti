@@ -20,7 +20,9 @@
     <capabilities>
       <capability>
         <inputs/>
-        <outputs/>
+        <outputs>
+          <type allAnnotatorFeatures="true">org.werti.uima.types.annot.HTML</type>
+        </outputs>
         <languagesSupported/>
       </capability>
     </capabilities>

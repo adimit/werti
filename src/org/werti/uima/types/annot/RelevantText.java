@@ -11,8 +11,8 @@ import org.apache.uima.jcas.tcas.Annotation;
 
 
 /** Optional annotation to specify which text to work on.
- * Updated by JCasGen Thu May 22 19:40:05 CEST 2008
- * XML source: /home/aleks/src/werti/desc/WERTiTypeSystem.xml
+ * Updated by JCasGen Wed May 28 02:57:22 CEST 2008
+ * XML source: /home/aleks/src/werti/desc/PoSTagger.xml
  * @generated */
 public class RelevantText extends Annotation {
   /** @generated

@@ -19,15 +19,10 @@ public class RequestURL extends HttpServlet {
 	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
-		log.severe("Boo!");
-
-		response.setContentType("text/plain");
 		final String article = request.getParameter("url");
 		final String baseurl = Net.find_baseurl(article);
 		final PrintWriter out = response.getWriter();
 		final BufferedReader in = Net.fetch(article);
-
-		out.print("foo");
 
 		response.setContentType("text/html");
 
