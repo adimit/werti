@@ -3,9 +3,6 @@
   <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
   <primitive>false</primitive>
   <delegateAnalysisEngineSpecifiers>
-    <delegateAnalysisEngine key="Localizer">
-      <import location="Localizer.xml"/>
-    </delegateAnalysisEngine>
     <delegateAnalysisEngine key="PoSTagger">
       <import location="PoSTagger.xml"/>
     </delegateAnalysisEngine>
@@ -14,6 +11,9 @@
     </delegateAnalysisEngine>
     <delegateAnalysisEngine key="HTMLAnnotator">
       <import location="HTMLAnnotator.xml"/>
+    </delegateAnalysisEngine>
+    <delegateAnalysisEngine key="GenericRelevanceAnnotator">
+      <import location="GenericRelevanceAnnotator.xml"/>
     </delegateAnalysisEngine>
   </delegateAnalysisEngineSpecifiers>
   <analysisEngineMetaData>
@@ -26,7 +26,7 @@
     <flowConstraints>
       <fixedFlow>
         <node>HTMLAnnotator</node>
-        <node>Localizer</node>
+        <node>GenericRelevanceAnnotator</node>
         <node>PoSTagger</node>
         <node>InputEnhancer</node>
       </fixedFlow>

@@ -11,8 +11,8 @@ import org.apache.uima.jcas.tcas.Annotation;
 
 
 /** Optional annotation to specify which text to work on.
- * Updated by JCasGen Wed May 28 15:40:28 CEST 2008
- * XML source: /home/aleks/src/werti/desc/HTMLAnnotator.xml
+ * Updated by JCasGen Thu May 29 13:37:55 CEST 2008
+ * XML source: /home/aleks/src/werti/desc/WERTiTypeSystem.xml
  * @generated */
 public class RelevantText extends Annotation {
   /** @generated
@@ -75,6 +75,32 @@ public class RelevantText extends Annotation {
     if (RelevantText_Type.featOkTst && ((RelevantText_Type)jcasType).casFeat_enclosing_tag == null)
       jcasType.jcas.throwFeatMissing("enclosing_tag", "org.werti.uima.types.annot.RelevantText");
     jcasType.ll_cas.ll_setStringValue(addr, ((RelevantText_Type)jcasType).casFeatCode_enclosing_tag, v);}    
+   
+    
+  //*--------------*
+  //* Feature: relevant
+
+  /** getter for relevant - gets Is this a relevant chunk of input or too small?
+
+The idea is that a piece of text can make it to being relevant, iff it is between to already relevant pieces of text, but itself too small to be included and all tags that were opened between the first piece of actually relevant text and this piece of irrelevant text are closed before the second piece starts.
+
+The rationale behind this is not confusing the tagger by randomly dropping words, just because they're inside some <b> tag.
+   * @generated */
+  public boolean getRelevant() {
+    if (RelevantText_Type.featOkTst && ((RelevantText_Type)jcasType).casFeat_relevant == null)
+      jcasType.jcas.throwFeatMissing("relevant", "org.werti.uima.types.annot.RelevantText");
+    return jcasType.ll_cas.ll_getBooleanValue(addr, ((RelevantText_Type)jcasType).casFeatCode_relevant);}
+    
+  /** setter for relevant - sets Is this a relevant chunk of input or too small?
+
+The idea is that a piece of text can make it to being relevant, iff it is between to already relevant pieces of text, but itself too small to be included and all tags that were opened between the first piece of actually relevant text and this piece of irrelevant text are closed before the second piece starts.
+
+The rationale behind this is not confusing the tagger by randomly dropping words, just because they're inside some <b> tag. 
+   * @generated */
+  public void setRelevant(boolean v) {
+    if (RelevantText_Type.featOkTst && ((RelevantText_Type)jcasType).casFeat_relevant == null)
+      jcasType.jcas.throwFeatMissing("relevant", "org.werti.uima.types.annot.RelevantText");
+    jcasType.ll_cas.ll_setBooleanValue(addr, ((RelevantText_Type)jcasType).casFeatCode_relevant, v);}    
   }
 
     

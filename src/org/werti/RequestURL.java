@@ -35,7 +35,7 @@ public class RequestURL extends HttpServlet {
 		}
 
 		try {
-			final Dispatcher d = new Dispatcher(new Config("desc/GenericHTMLEngine.xml", baseurl), out);
+			final Dispatcher d = new Dispatcher(new Config("/home/aleks/src/werti/desc/testDescriptor.xml", baseurl), out);
 			d.process(in);
 			out.print(d.get_results());
 		} catch (org.werti.uima.UnrecoverableUIMAException uuimae) {

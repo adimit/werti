@@ -10,17 +10,21 @@ import org.werti.uima.types.annot.HTML;
 
 public class Localizer extends JCasAnnotator_ImplBase {
 	public void process(JCas cas) {
-		final FSIndex tagIndex = cas.getAnnotationIndex(HTML.type);
-		final Iterator<HTML> tagIt = tagIndex.iterator();
-		final String s = cas.getDocumentText();
-		HTML tagref = null;
-		String pathref = null;
-		while (tagIt.hasNext()) {
-			tagref = (HTML)tagIt.next();
-		}
+                /*
+		 *final FSIndex tagIndex = cas.getAnnotationIndex(HTML.type);
+		 *final Iterator<HTML> tagIt = tagIndex.iterator();
+		 *final String s = cas.getDocumentText();
+		 *HTML tagref = null;
+		 *String pathref = null;
+		 *while (tagIt.hasNext()) {
+		 *        tagref = (HTML)tagIt.next();
+		 *}
+                 */
 	}
 
-	private static String remotify(String remote_path, String relative_path) {
-		return relative_path;
-	}
+        /*
+	 *private static String remotify(String remote_path, String relative_path) {
+	 *        return relative_path;
+	 *}
+         */
 }

@@ -15,6 +15,15 @@
           <description>The html tag that encloses this text fragment.</description>
           <rangeTypeName>uima.cas.String</rangeTypeName>
         </featureDescription>
+        <featureDescription>
+          <name>relevant</name>
+          <description>Is this a relevant chunk of input or too small?
+
+The idea is that a piece of text can make it to being relevant, iff it is between to already relevant pieces of text, but itself too small to be included and all tags that were opened between the first piece of actually relevant text and this piece of irrelevant text are closed before the second piece starts.
+
+The rationale behind this is not confusing the tagger by randomly dropping words, just because they're inside some &lt;b&gt; tag.</description>
+          <rangeTypeName>uima.cas.Boolean</rangeTypeName>
+        </featureDescription>
       </features>
     </typeDescription>
     <typeDescription>
@@ -25,6 +34,13 @@
         <featureDescription>
           <name>PoS</name>
           <description>The part of speech this tag stands for.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>word</name>
+          <description>The word we're talking about 
+
+// FOR DEBUGGING PURPOSES ONLY</description>
           <rangeTypeName>uima.cas.String</rangeTypeName>
         </featureDescription>
       </features>

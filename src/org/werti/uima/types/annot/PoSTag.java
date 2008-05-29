@@ -11,8 +11,8 @@ import org.apache.uima.jcas.tcas.Annotation;
 
 
 /** A relevant PoS-tag.
- * Updated by JCasGen Wed May 28 15:40:28 CEST 2008
- * XML source: /home/aleks/src/werti/desc/HTMLAnnotator.xml
+ * Updated by JCasGen Thu May 29 13:37:55 CEST 2008
+ * XML source: /home/aleks/src/werti/desc/WERTiTypeSystem.xml
  * @generated */
 public class PoSTag extends Annotation {
 	/** @generated
@@ -73,6 +73,28 @@ public class PoSTag extends Annotation {
     if (PoSTag_Type.featOkTst && ((PoSTag_Type)jcasType).casFeat_PoS == null)
       jcasType.jcas.throwFeatMissing("PoS", "org.werti.uima.types.annot.PoSTag");
     jcasType.ll_cas.ll_setStringValue(addr, ((PoSTag_Type)jcasType).casFeatCode_PoS, v);}    
+   
+    
+  //*--------------*
+  //* Feature: word
+
+  /** getter for word - gets The word we're talking about 
+
+// FOR DEBUGGING PURPOSES ONLY
+   * @generated */
+  public String getWord() {
+    if (PoSTag_Type.featOkTst && ((PoSTag_Type)jcasType).casFeat_word == null)
+      jcasType.jcas.throwFeatMissing("word", "org.werti.uima.types.annot.PoSTag");
+    return jcasType.ll_cas.ll_getStringValue(addr, ((PoSTag_Type)jcasType).casFeatCode_word);}
+    
+  /** setter for word - sets The word we're talking about 
+
+// FOR DEBUGGING PURPOSES ONLY 
+   * @generated */
+  public void setWord(String v) {
+    if (PoSTag_Type.featOkTst && ((PoSTag_Type)jcasType).casFeat_word == null)
+      jcasType.jcas.throwFeatMissing("word", "org.werti.uima.types.annot.PoSTag");
+    jcasType.ll_cas.ll_setStringValue(addr, ((PoSTag_Type)jcasType).casFeatCode_word, v);}    
   }
 
 

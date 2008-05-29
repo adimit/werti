@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
 /** Optional annotation to specify which text to work on.
- * Updated by JCasGen Wed May 28 15:40:28 CEST 2008
+ * Updated by JCasGen Thu May 29 13:37:55 CEST 2008
  * @generated */
 public class RelevantText_Type extends Annotation_Type {
   /** @generated */
@@ -58,6 +58,24 @@ public class RelevantText_Type extends Annotation_Type {
     ll_cas.ll_setStringValue(addr, casFeatCode_enclosing_tag, v);}
     
   
+ 
+  /** @generated */
+  final Feature casFeat_relevant;
+  /** @generated */
+  final int     casFeatCode_relevant;
+  /** @generated */ 
+  public boolean getRelevant(int addr) {
+        if (featOkTst && casFeat_relevant == null)
+      jcas.throwFeatMissing("relevant", "org.werti.uima.types.annot.RelevantText");
+    return ll_cas.ll_getBooleanValue(addr, casFeatCode_relevant);
+  }
+  /** @generated */    
+  public void setRelevant(int addr, boolean v) {
+        if (featOkTst && casFeat_relevant == null)
+      jcas.throwFeatMissing("relevant", "org.werti.uima.types.annot.RelevantText");
+    ll_cas.ll_setBooleanValue(addr, casFeatCode_relevant, v);}
+    
+  
 
 
 
@@ -70,6 +88,10 @@ public class RelevantText_Type extends Annotation_Type {
  
     casFeat_enclosing_tag = jcas.getRequiredFeatureDE(casType, "enclosing_tag", "uima.cas.String", featOkTst);
     casFeatCode_enclosing_tag  = (null == casFeat_enclosing_tag) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_enclosing_tag).getCode();
+
+ 
+    casFeat_relevant = jcas.getRequiredFeatureDE(casType, "relevant", "uima.cas.Boolean", featOkTst);
+    casFeatCode_relevant  = (null == casFeat_relevant) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_relevant).getCode();
 
   }
 }

@@ -6,12 +6,16 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
+import java.util.Iterator;
+
 import java.util.logging.*;
 
 import org.apache.uima.UIMAFramework;
 
 import org.apache.uima.analysis_engine.AnalysisEngine;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
+
+import org.apache.uima.cas.FSIndex;
 
 import org.apache.uima.jcas.JCas;
 
@@ -21,11 +25,14 @@ import org.apache.uima.resource.ResourceSpecifier;
 import org.apache.uima.util.InvalidXMLException;
 import org.apache.uima.util.XMLInputSource;
 
+import org.werti.uima.types.annot.PoSTag;
+
 public class Dispatcher {
 
 	private final JCas cas;
 	private final AnalysisEngine ae;
 	private final PrintWriter out;
+	private final String baseurl;
 
 	private static final Logger log = Logger.getLogger("org.werti");
 
@@ -47,6 +54,7 @@ public class Dispatcher {
 	public Dispatcher(Config cfg, PrintWriter out) throws UnrecoverableUIMAException {
 		try {
 			final XMLInputSource in = new XMLInputSource(cfg.getDescriptor());
+			baseurl = cfg.getBaseURL();
 			final ResourceSpecifier spec = 
 				UIMAFramework
 				.getXMLParser()
@@ -109,7 +117,27 @@ public class Dispatcher {
 			log.severe("Problems processing data!");
 			throw new UnrecoverableUIMAException(aepe);
 		}
-		out.print(cas.getDocumentText());
+	}
+
+	private String enhance(JCas cas) {
+		String docText = cas.getDocumentText();
+		final int foo = docText.indexOf("<head>")+6;
+		docText = docText.substring(0,foo) + "<base href=\"" + baseurl + "\" />" + docText.substring(foo,docText.length()-1);
+		final FSIndex tagIndex = cas.getAnnotationIndex(PoSTag.type);
+		final Iterator<PoSTag> pit = tagIndex.iterator();
+		int skew = 0;
+		while (pit.hasNext()) {
+			final PoSTag tag = pit.next();
+			if (tag.getPoS().equals("NN")) {
+				log.info("found a noun");
+				docText = docText.substring(skew, (skew = docText.indexOf(tag.getWord())))
+					+ "<font color=\"#FF0000>"
+					+ tag.getWord()
+					+ "</font>"
+					+ docText.substring((skew = skew + tag.getWord().length()), docText.length() - 1);
+			}
+		}
+		return docText;
 	}
 
 	public void print(PrintWriter out) {
@@ -119,6 +147,6 @@ public class Dispatcher {
 
 	public String get_results() {
 		log.fine("Returning the results.");
-		return cas.getDocumentText();
+		return enhance(cas);
 	}
 }
