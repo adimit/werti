@@ -27,8 +27,8 @@ The rationale behind this is not confusing the tagger by randomly dropping words
       </features>
     </typeDescription>
     <typeDescription>
-      <name>org.werti.uima.types.annot.Token</name>
-      <description>A relevant Token with PoS information attached.</description>
+      <name>org.werti.uima.types.annot.PoSTag</name>
+      <description>A relevant PoS-tag.</description>
       <supertypeName>uima.tcas.Annotation</supertypeName>
       <features>
         <featureDescription>
@@ -59,30 +59,6 @@ The rationale behind this is not confusing the tagger by randomly dropping words
           <name>closing</name>
           <description>Is this tag closing?</description>
           <rangeTypeName>uima.cas.Boolean</rangeTypeName>
-        </featureDescription>
-      </features>
-    </typeDescription>
-    <typeDescription>
-      <name>org.werti.uima.types.annot.Sentence</name>
-      <description>A sentence in natural language on the page to be processed.</description>
-      <supertypeName>uima.tcas.Annotation</supertypeName>
-    </typeDescription>
-    <typeDescription>
-      <name>org.werti.uima.types.Enhancement</name>
-      <description>Describes an enhancment on the current spot.</description>
-      <supertypeName>uima.tcas.Annotation</supertypeName>
-      <features>
-        <featureDescription>
-          <name>enhancement_list</name>
-          <description>A list of enhancements this Enhancement stands for.</description>
-          <rangeTypeName>uima.cas.StringArray</rangeTypeName>
-          <multipleReferencesAllowed>false</multipleReferencesAllowed>
-        </featureDescription>
-        <featureDescription>
-          <name>index_list</name>
-          <description>A list of indices where the elements of enhancement_list should be applied. Please note that your Enhancement must guarantee this.size() == enhancement_list.size()</description>
-          <rangeTypeName>uima.cas.IntegerList</rangeTypeName>
-          <multipleReferencesAllowed>false</multipleReferencesAllowed>
         </featureDescription>
       </features>
     </typeDescription>
