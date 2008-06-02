@@ -1,0 +1,19 @@
+# For directory requests, i.e. when only the path up to the directory
+# name is given, we want the web server to check for
+# index.html, as usual, and then also for index.py
+DirectoryIndex index.html index.py
+
+# Treat files ending in .py using the PythonHandler:
+AddHandler python-program .py
+PythonHandler mod_python.publisher
+PythonDebug On
+
+# As alternative to AddHandler, one can use the SetHandler
+# directive to treat all files as python programs:
+#SetHandler python-program
+#
+# To treat html files properly, one then needs:
+#<Files *.html>
+#SetHandler None
+#</Files>
+
