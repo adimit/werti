@@ -59,7 +59,7 @@ public class GenericRelevanceAnnotator extends JCasAnnotator_ImplBase {
 			tags.push(tname);
 
 			// weed out tags we don't need
-			if (tname.equals("script")) {
+			if (tag.getIrrelevant()) {
 				tag = tit.next();
 				continue findreltxt;
 			}

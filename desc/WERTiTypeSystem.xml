@@ -60,6 +60,11 @@ The rationale behind this is not confusing the tagger by randomly dropping words
           <description>Is this tag closing?</description>
           <rangeTypeName>uima.cas.Boolean</rangeTypeName>
         </featureDescription>
+        <featureDescription>
+          <name>irrelevant</name>
+          <description>Is this a tag irrelevant to the interpreter? (like script, functional comment tags...)</description>
+          <rangeTypeName>uima.cas.Boolean</rangeTypeName>
+        </featureDescription>
       </features>
     </typeDescription>
     <typeDescription>

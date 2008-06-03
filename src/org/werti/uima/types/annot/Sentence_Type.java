@@ -12,7 +12,7 @@ import org.apache.uima.cas.Type;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
 /** A sentence in natural language on the page to be processed.
- * Updated by JCasGen Tue Jun 03 02:36:21 CEST 2008
+ * Updated by JCasGen Tue Jun 03 09:01:40 CEST 2008
  * @generated */
 public class Sentence_Type extends Annotation_Type {
   /** @generated */

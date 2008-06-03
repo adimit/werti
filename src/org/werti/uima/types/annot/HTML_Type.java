@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
 /** Annotation spanning an HTML tag.
- * Updated by JCasGen Tue Jun 03 02:36:21 CEST 2008
+ * Updated by JCasGen Tue Jun 03 09:01:40 CEST 2008
  * @generated */
 public class HTML_Type extends Annotation_Type {
   /** @generated */
@@ -76,6 +76,24 @@ public class HTML_Type extends Annotation_Type {
     ll_cas.ll_setBooleanValue(addr, casFeatCode_closing, v);}
     
   
+ 
+  /** @generated */
+  final Feature casFeat_irrelevant;
+  /** @generated */
+  final int     casFeatCode_irrelevant;
+  /** @generated */ 
+  public boolean getIrrelevant(int addr) {
+        if (featOkTst && casFeat_irrelevant == null)
+      jcas.throwFeatMissing("irrelevant", "org.werti.uima.types.annot.HTML");
+    return ll_cas.ll_getBooleanValue(addr, casFeatCode_irrelevant);
+  }
+  /** @generated */    
+  public void setIrrelevant(int addr, boolean v) {
+        if (featOkTst && casFeat_irrelevant == null)
+      jcas.throwFeatMissing("irrelevant", "org.werti.uima.types.annot.HTML");
+    ll_cas.ll_setBooleanValue(addr, casFeatCode_irrelevant, v);}
+    
+  
 
 
 
@@ -92,6 +110,10 @@ public class HTML_Type extends Annotation_Type {
  
     casFeat_closing = jcas.getRequiredFeatureDE(casType, "closing", "uima.cas.Boolean", featOkTst);
     casFeatCode_closing  = (null == casFeat_closing) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_closing).getCode();
+
+ 
+    casFeat_irrelevant = jcas.getRequiredFeatureDE(casType, "irrelevant", "uima.cas.Boolean", featOkTst);
+    casFeatCode_irrelevant  = (null == casFeat_irrelevant) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_irrelevant).getCode();
 
   }
 }

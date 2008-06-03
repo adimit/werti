@@ -11,8 +11,8 @@ import org.apache.uima.jcas.tcas.Annotation;
 
 
 /** A relevant Token with PoS information attached.
- * Updated by JCasGen Tue Jun 03 02:36:21 CEST 2008
- * XML source: /home/aleks/src/werti/desc/operators/TestDescriptor.xml
+ * Updated by JCasGen Tue Jun 03 09:01:40 CEST 2008
+ * XML source: /home/aleks/src/werti/desc/WERTiTypeSystem.xml
  * @generated */
 public class Token extends Annotation {
   /** @generated
