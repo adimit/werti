@@ -9,6 +9,8 @@
 
  * Implement an Event interface so that callers of Dispatcher.process() know when it's ready
  * RelevantText should actually check for alnum ratio to weed out garbage.
+ * fix HTML lib to mark comments
+ * fix HTML lib to not react stupidly on <!--[if]><!endif> tags
  * Improve tagger:
    - demonize
 ^  - sentence boundary recognition

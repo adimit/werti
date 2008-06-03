@@ -1,6 +1,8 @@
 package org.werti.uima.ae.relevance;
 
+import java.util.EmptyStackException;
 import java.util.Iterator;
+import java.util.Stack;
 
 import org.apache.uima.analysis_component.JCasAnnotator_ImplBase;
 
@@ -23,8 +25,15 @@ import org.werti.uima.types.annot.RelevantText;
  */
 public class GenericRelevanceAnnotator extends JCasAnnotator_ImplBase {
 
-	private static final int RELEVANCE_TRESHOLD = 30;
+	/**
+	 * Searches for the document body, then goes on and tags everything it deems
+	 * relevant as RelevantTag.
+	 *
+	 * The 'relevance'-notion is a primitive one. We just don't care about stuff that is
+	 * enclosed in, say <i>&lt;script&gt;</i> tags.
+	 */
 	public void process(JCas cas) {
+		final Stack<String> tags = new Stack<String>();
 		final FSIndex tagIndex = cas.getAnnotationIndex(HTML.type);
 		final Iterator<HTML> tit = tagIndex.iterator();
 		HTML tag = tit.next();
@@ -32,27 +41,45 @@ public class GenericRelevanceAnnotator extends JCasAnnotator_ImplBase {
 			getContext().getLogger().log(Level.SEVERE, 
 					"HTML tag was null while starting to search for relevance.");
 		}
-		boolean inBody = false;
-		titerator: while (tit.hasNext()){
-			final int t = tag.getEnd();
+
+		// skip ahead to the body
+		while (tit.hasNext()){
+			tag = tit.next();
 			final String tname = tag.getTag_name();
-			if (!inBody) {
-				if (tname.equals("body")
-				||  tname.equals("/head")) {
-					getContext().getLogger().log(Level.INFO,
-								"HTML tag was " + tname + ". Switching to body.");
-					inBody = true;
+			if (tname.equals("/head")
+			||  tname.equals("body")) {
+				tags.push(tname);
+				break;
+			}
+		}
+		
+		// read in all the natural language you can find
+		findreltxt: while (tit.hasNext()) {
+			final String tname = tag.getTag_name();
+			tags.push(tname);
+
+			// weed out tags we don't need
+			if (tname.equals("script")) {
+				tag = tit.next();
+				continue findreltxt;
+			}
+
+			// if it's a closing tag, we reduce the tag stack to find the matching opener
+			if (tag.getClosing()) {
+				try {
+					while (tags.pop().equals(tname)); // read: until not...
+				} catch (EmptyStackException ese) {
+					getContext().getLogger().log(Level.WARNING,
+							"Tag Stack broken. Tried to match '"
+							+ tname + "';");
 				}
-				tit.next();
-				continue titerator;
 			}
-			if (RELEVANCE_TRESHOLD < ((tag = tit.next()).getBegin() - t)) {
-				final RelevantText rt = new RelevantText(cas);
-				rt.setBegin(t);
-				rt.setEnd(tag.getBegin());
-				rt.setEnclosing_tag(tag.getTag_name());
-				rt.addToIndexes();
-			}
+
+			final RelevantText rt = new RelevantText(cas);
+			rt.setBegin(tag.getEnd());
+			rt.setEnd((tag = tit.next()).getBegin());
+			rt.setEnclosing_tag(tname);
+			rt.addToIndexes();
 		}
 	}
 }
