@@ -39,6 +39,8 @@ public class GenericRelevanceAnnotator extends JCasAnnotator_ImplBase {
 			if (!inBody) {
 				if (tname.equals("body")
 				||  tname.equals("/head")) {
+					getContext().getLogger().log(Level.INFO,
+								"HTML tag was " + tname + ". Switching to body.");
 					inBody = true;
 				}
 				tit.next();
