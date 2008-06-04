@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
 /** A relevant Token with PoS information attached.
- * Updated by JCasGen Tue Jun 03 09:01:40 CEST 2008
+ * Updated by JCasGen Wed Jun 04 02:46:32 CEST 2008
  * @generated */
 public class Token_Type extends Annotation_Type {
   /** @generated */
@@ -42,20 +42,20 @@ public class Token_Type extends Annotation_Type {
   public final static boolean featOkTst = JCasRegistry.getFeatOkTst("org.werti.uima.types.annot.Token");
  
   /** @generated */
-  final Feature casFeat_PoS;
+  final Feature casFeat_tag;
   /** @generated */
-  final int     casFeatCode_PoS;
+  final int     casFeatCode_tag;
   /** @generated */ 
-  public String getPoS(int addr) {
-        if (featOkTst && casFeat_PoS == null)
-      jcas.throwFeatMissing("PoS", "org.werti.uima.types.annot.Token");
-    return ll_cas.ll_getStringValue(addr, casFeatCode_PoS);
+  public String getTag(int addr) {
+        if (featOkTst && casFeat_tag == null)
+      jcas.throwFeatMissing("tag", "org.werti.uima.types.annot.Token");
+    return ll_cas.ll_getStringValue(addr, casFeatCode_tag);
   }
   /** @generated */    
-  public void setPoS(int addr, String v) {
-        if (featOkTst && casFeat_PoS == null)
-      jcas.throwFeatMissing("PoS", "org.werti.uima.types.annot.Token");
-    ll_cas.ll_setStringValue(addr, casFeatCode_PoS, v);}
+  public void setTag(int addr, String v) {
+        if (featOkTst && casFeat_tag == null)
+      jcas.throwFeatMissing("tag", "org.werti.uima.types.annot.Token");
+    ll_cas.ll_setStringValue(addr, casFeatCode_tag, v);}
     
   
  
@@ -86,8 +86,8 @@ public class Token_Type extends Annotation_Type {
     casImpl.getFSClassRegistry().addGeneratorForType((TypeImpl)this.casType, getFSGenerator());
 
  
-    casFeat_PoS = jcas.getRequiredFeatureDE(casType, "PoS", "uima.cas.String", featOkTst);
-    casFeatCode_PoS  = (null == casFeat_PoS) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_PoS).getCode();
+    casFeat_tag = jcas.getRequiredFeatureDE(casType, "tag", "uima.cas.String", featOkTst);
+    casFeatCode_tag  = (null == casFeat_tag) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_tag).getCode();
 
  
     casFeat_word = jcas.getRequiredFeatureDE(casType, "word", "uima.cas.String", featOkTst);

@@ -13,6 +13,10 @@
    - demonize
 ^  - sentence boundary recognition
 
+*** Bugs
+ * Don't screw up on html tags with &lt; and &gt; entities instead of < and >.
+ * use the "surpress escaping" feature of the PTBtagger
+
 *** Showstoppers
  * Update README
 

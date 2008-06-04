@@ -32,7 +32,7 @@ The rationale behind this is not confusing the tagger by randomly dropping words
       <supertypeName>uima.tcas.Annotation</supertypeName>
       <features>
         <featureDescription>
-          <name>PoS</name>
+          <name>tag</name>
           <description>The part of speech this tag stands for.</description>
           <rangeTypeName>uima.cas.String</rangeTypeName>
         </featureDescription>
@@ -71,6 +71,13 @@ The rationale behind this is not confusing the tagger by randomly dropping words
       <name>org.werti.uima.types.annot.Sentence</name>
       <description>A sentence in natural language on the page to be processed.</description>
       <supertypeName>uima.tcas.Annotation</supertypeName>
+      <features>
+        <featureDescription>
+          <name>coherence</name>
+          <description>The coherence of this sentence. How many html tags interefere?</description>
+          <rangeTypeName>uima.cas.Float</rangeTypeName>
+        </featureDescription>
+      </features>
     </typeDescription>
     <typeDescription>
       <name>org.werti.uima.types.Enhancement</name>

@@ -4,4 +4,4 @@
 .*.sw?
 *.jar
 *~
-uima.log
+uima\.log.*

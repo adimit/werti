@@ -9,10 +9,12 @@ import org.apache.uima.cas.impl.FSGenerator;
 import org.apache.uima.cas.FeatureStructure;
 import org.apache.uima.cas.impl.TypeImpl;
 import org.apache.uima.cas.Type;
+import org.apache.uima.cas.impl.FeatureImpl;
+import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
 /** A sentence in natural language on the page to be processed.
- * Updated by JCasGen Tue Jun 03 09:01:40 CEST 2008
+ * Updated by JCasGen Wed Jun 04 02:46:32 CEST 2008
  * @generated */
 public class Sentence_Type extends Annotation_Type {
   /** @generated */
@@ -41,11 +43,35 @@ public class Sentence_Type extends Annotation_Type {
 
 
 
+  /** @generated */
+  final Feature casFeat_coherence;
+  /** @generated */
+  final int     casFeatCode_coherence;
+  /** @generated */ 
+  public float getCoherence(int addr) {
+        if (featOkTst && casFeat_coherence == null)
+      jcas.throwFeatMissing("coherence", "org.werti.uima.types.annot.Sentence");
+    return ll_cas.ll_getFloatValue(addr, casFeatCode_coherence);
+  }
+  /** @generated */    
+  public void setCoherence(int addr, float v) {
+        if (featOkTst && casFeat_coherence == null)
+      jcas.throwFeatMissing("coherence", "org.werti.uima.types.annot.Sentence");
+    ll_cas.ll_setFloatValue(addr, casFeatCode_coherence, v);}
+    
+  
+
+
+
   /** initialize variables to correspond with Cas Type and Features
 	* @generated */
   public Sentence_Type(JCas jcas, Type casType) {
     super(jcas, casType);
     casImpl.getFSClassRegistry().addGeneratorForType((TypeImpl)this.casType, getFSGenerator());
+
+ 
+    casFeat_coherence = jcas.getRequiredFeatureDE(casType, "coherence", "uima.cas.Float", featOkTst);
+    casFeatCode_coherence  = (null == casFeat_coherence) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_coherence).getCode();
 
   }
 }
