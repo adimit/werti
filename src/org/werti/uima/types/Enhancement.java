@@ -13,7 +13,7 @@ import org.apache.uima.jcas.cas.StringArray;
 
 
 /** Describes an enhancment on the current spot.
- * Updated by JCasGen Wed Jun 04 04:34:24 CEST 2008
+ * Updated by JCasGen Wed Jun 04 16:54:22 CEST 2008
  * XML source: /home/aleks/src/werti/desc/WERTiTypeSystem.xml
  * @generated */
 public class Enhancement extends Annotation {

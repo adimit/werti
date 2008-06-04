@@ -29,6 +29,7 @@ public class Tokenizer extends JCasAnnotator_ImplBase {
 	 * change in the future for efficiency reasons.
 	 */
 	public void process(JCas cas) {
+		getContext().getLogger().log(Level.INFO, "Starting tokenization process.");
 		final FSIndex textIndex = cas.getAnnotationIndex(RelevantText.type);
 		final Iterator<RelevantText> tit = textIndex.iterator();
 
@@ -53,5 +54,6 @@ public class Tokenizer extends JCasAnnotator_ImplBase {
 				t.addToIndexes();
 			}
 		}
+		getContext().getLogger().log(Level.INFO, "Finished tokenization process.");
 	}
 }

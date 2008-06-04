@@ -7,7 +7,6 @@
 *** Important
 
  * Implement an Event interface so that callers of Dispatcher.process() know when it's ready
- * RelevantText should actually check for alnum ratio to weed out garbage.
  * React smart on encountering html-entities
  * Improve tagger:
    - demonize
@@ -23,13 +22,12 @@
 *** Wishlist
 ************
 ^ handle org.werti.uima.Dispatcher(Config) more gracefully
+- Use HTML entities in sentence boundary followers
 - Interactive Passivator
 - Scoring mechanism (this site helped me a lot-like)
 - Rank search results accordingly
 - Internationalize the exceptions, logging, whole application following [1]
-~ use HTMLcleaner [0] to clean up web page's html tags.
-~ Train the Stanfort tagger on something that's not the Penn bank and see if it does better.
-~ come up with a one-pass algorithm in PoSTagger, instead of a two-pass
+~ Train the Stanford tagger on something that's not the Penn bank and see if it does better.
 
 
 References:

@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
 /** A relevant Token with PoS information attached.
- * Updated by JCasGen Wed Jun 04 04:34:24 CEST 2008
+ * Updated by JCasGen Wed Jun 04 16:54:22 CEST 2008
  * @generated */
 public class Token_Type extends Annotation_Type {
   /** @generated */

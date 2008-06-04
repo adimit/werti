@@ -6,6 +6,9 @@
     <delegateAnalysisEngine key="Tokenizer">
       <import location="../annotators/Tokenizer.xml"/>
     </delegateAnalysisEngine>
+    <delegateAnalysisEngine key="SentenceBoundaryDetector">
+      <import location="../annotators/SentenceBoundaryDetector.xml"/>
+    </delegateAnalysisEngine>
     <delegateAnalysisEngine key="HTMLAnnotator">
       <import location="../annotators/HTMLAnnotator.xml"/>
     </delegateAnalysisEngine>
@@ -25,6 +28,7 @@
         <node>HTMLAnnotator</node>
         <node>GenericRelevanceAnnotator</node>
         <node>Tokenizer</node>
+        <node>SentenceBoundaryDetector</node>
       </fixedFlow>
     </flowConstraints>
     <typePriorities/>
