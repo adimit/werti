@@ -21,8 +21,6 @@ import org.werti.uima.types.annot.Token;
 
 public class SentenceBoundaryDetector extends JCasAnnotator_ImplBase {
 
-	JCas cas;
-
 	private static final Set<String> sentenceBoundaries = 
 		new HashSet<String>(Arrays.asList(new String[]{".", "!", "?"}));
 	private static final Set<String> sentenceBoundaryFollowers =
@@ -37,7 +35,6 @@ public class SentenceBoundaryDetector extends JCasAnnotator_ImplBase {
 	public void process(JCas cas) {
 		getContext().getLogger().log(Level.INFO, "Starting sentence boundary detection.");
 
-		this.cas = cas;
 		final FSIndex textIndex = cas.getAnnotationIndex(Token.type);
 		final Iterator<Token> tit = textIndex.iterator();
 
@@ -60,7 +57,7 @@ public class SentenceBoundaryDetector extends JCasAnnotator_ImplBase {
 					if (!sentenceBoundaryFollowers.contains(t0.word())) 
 						break followerfinder;
 				}
-				createSentenceAnnotation(s, coherence);
+				createSentenceAnnotation(s, coherence, cas);
 				s = new Sentence<Token>();
 				continue iteratetokens;
 			} else {
@@ -81,7 +78,7 @@ public class SentenceBoundaryDetector extends JCasAnnotator_ImplBase {
 	 * @param sentence The sentence that has to be added to the index.
 	 * @param coherence The sentence's coherence measure
 	 */
-	private void createSentenceAnnotation(Sentence<Token> sentence, double coherence) {
+	private void createSentenceAnnotation(Sentence<Token> sentence, double coherence, JCas cas) {
 		final SentenceAnnotation annot = new SentenceAnnotation(cas);
 		annot.setBegin(sentence.get(0).getBegin());
 		annot.setEnd(sentence.get(sentence.size()-1).getEnd());
