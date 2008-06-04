@@ -12,6 +12,9 @@
     <delegateAnalysisEngine key="HTMLAnnotator">
       <import location="../annotators/HTMLAnnotator.xml"/>
     </delegateAnalysisEngine>
+    <delegateAnalysisEngine key="PoSEnhancer">
+      <import location="../enhancers/PoSEnhancer.xml"/>
+    </delegateAnalysisEngine>
     <delegateAnalysisEngine key="GenericRelevanceAnnotator">
       <import location="../annotators/relevance/GenericRelevanceAnnotator.xml"/>
     </delegateAnalysisEngine>
@@ -21,7 +24,7 @@
     <description/>
     <version>1.0</version>
     <vendor/>
-    <configurationParameters/>
+    <configurationParameters searchStrategy="language_fallback"/>
     <configurationParameterSettings/>
     <flowConstraints>
       <fixedFlow>
@@ -29,6 +32,7 @@
         <node>GenericRelevanceAnnotator</node>
         <node>Tokenizer</node>
         <node>SentenceBoundaryDetector</node>
+        <node>PoSEnhancer</node>
       </fixedFlow>
     </flowConstraints>
     <typePriorities/>

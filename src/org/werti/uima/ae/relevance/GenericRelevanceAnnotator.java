@@ -69,7 +69,7 @@ public class GenericRelevanceAnnotator extends JCasAnnotator_ImplBase {
 				try {
 					while (tags.pop().equals(tname)); // read: until not...
 				} catch (EmptyStackException ese) {
-					getContext().getLogger().log(Level.WARNING,
+					getContext().getLogger().log(Level.FINE,
 							"Tag Stack broken. Tried to match '"
 							+ tname + "';");
 				}

@@ -38,12 +38,12 @@ public class HTMLAnnotator extends JCasAnnotator_ImplBase {
 			tag.setBegin(tstart);
 			tag.setEnd(tend = (s.indexOf('>', tstart) + 1));
 
-			getContext().getLogger().log(Level.INFO,
+			getContext().getLogger().log(Level.FINEST,
 					"tstart = " + tstart + "; tend = " + tend);
 
 			final String tname = find_tname(s.substring(tstart, tend));
 
-			getContext().getLogger().log(Level.INFO,
+			getContext().getLogger().log(Level.FINEST,
 					"Looking at tag " + tname);
 
 			tstart = tend;
