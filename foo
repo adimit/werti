@@ -15,7 +15,7 @@ import org.apache.uima.jcas.tcas.Annotation;
 
 
 /** A relevant Token with PoS information attached.
- * Updated by JCasGen Wed Jun 04 04:34:24 CEST 2008
+ * Updated by JCasGen Wed Jun 04 02:46:32 CEST 2008
  * XML source: /home/aleks/src/werti/desc/WERTiTypeSystem.xml
  * @generated */
 public class Token extends Annotation implements HasWord, HasTag {
@@ -29,36 +29,36 @@ public class Token extends Annotation implements HasWord, HasTag {
 	public final static int type = typeIndexID;
 	/** @generated  */
 	public              int getTypeIndexID() {return typeIndexID;}
- 
+
 	/** Never called.  Disable default constructor
 	 * @generated */
 	protected Token() {}
-    
+
 	/** Internal - constructor used by generator 
 	 * @generated */
 	public Token(int addr, TOP_Type type) {
-    super(addr, type);
-    readObject();
-  }
-  
+		super(addr, type);
+		readObject();
+	}
+
 	/** @generated */
 	public Token(JCas jcas) {
-    super(jcas);
-    readObject();   
-  } 
+		super(jcas);
+		readObject();   
+	} 
 
 	/** @generated */  
 	public Token(JCas jcas, int begin, int end) {
-    super(jcas);
-    setBegin(begin);
-    setEnd(end);
-    readObject();
-  }   
+		super(jcas);
+		setBegin(begin);
+		setEnd(end);
+		readObject();
+	}   
 
-  /** <!-- begin-user-doc -->
+	/** <!-- begin-user-doc -->
 	 * Write your own initialization here
 	 * <!-- end-user-doc -->
-  @generated modifiable */
+	 @generated modifiable */
 	private void readObject() {}
      
  
@@ -69,10 +69,10 @@ public class Token extends Annotation implements HasWord, HasTag {
 	/** getter for Tag - gets The part of speech this tag stands for.
 	 * @generated */
 	public String getTag() {
-    if (Token_Type.featOkTst && ((Token_Type)jcasType).casFeat_tag == null)
-      jcasType.jcas.throwFeatMissing("tag", "org.werti.uima.types.annot.Token");
-    return jcasType.ll_cas.ll_getStringValue(addr, ((Token_Type)jcasType).casFeatCode_tag);}
-    
+		if (Token_Type.featOkTst && ((Token_Type)jcasType).casFeat_tag == null)
+			jcasType.jcas.throwFeatMissing("tag", "org.werti.uima.types.annot.Token");
+		return jcasType.ll_cas.ll_getStringValue(addr, ((Token_Type)jcasType).casFeatCode_tag);}
+
 	/**
 	 * Stanford conformant getter for tag.
 	 *
@@ -87,10 +87,10 @@ public class Token extends Annotation implements HasWord, HasTag {
 	/** setter for Tag - sets The part of speech this tag stands for. 
 	 * @generated */
 	public void setTag(String v) {
-    if (Token_Type.featOkTst && ((Token_Type)jcasType).casFeat_tag == null)
-      jcasType.jcas.throwFeatMissing("tag", "org.werti.uima.types.annot.Token");
-    jcasType.ll_cas.ll_setStringValue(addr, ((Token_Type)jcasType).casFeatCode_tag, v);}    
-   
+		if (Token_Type.featOkTst && ((Token_Type)jcasType).casFeat_tag == null)
+			jcasType.jcas.throwFeatMissing("tag", "org.werti.uima.types.annot.Token");
+		jcasType.ll_cas.ll_setStringValue(addr, ((Token_Type)jcasType).casFeatCode_tag, v);}    
+
     
   //*--------------*
   //* Feature: word
@@ -110,16 +110,16 @@ public class Token extends Annotation implements HasWord, HasTag {
     // FOR DEBUGGING PURPOSES ONLY
      * @generated */
     public String getWord() {
-    if (Token_Type.featOkTst && ((Token_Type)jcasType).casFeat_word == null)
-      jcasType.jcas.throwFeatMissing("word", "org.werti.uima.types.annot.Token");
-    return jcasType.ll_cas.ll_getStringValue(addr, ((Token_Type)jcasType).casFeatCode_word);}
+	    if (Token_Type.featOkTst && ((Token_Type)jcasType).casFeat_word == null)
+		    jcasType.jcas.throwFeatMissing("word", "org.werti.uima.types.annot.Token");
+	    return jcasType.ll_cas.ll_getStringValue(addr, ((Token_Type)jcasType).casFeatCode_word);}
     
     /** setter for word - sets The word we're talking about 
 
     // FOR DEBUGGING PURPOSES ONLY 
      * @generated */
     public void setWord(String v) {
-    if (Token_Type.featOkTst && ((Token_Type)jcasType).casFeat_word == null)
-      jcasType.jcas.throwFeatMissing("word", "org.werti.uima.types.annot.Token");
-    jcasType.ll_cas.ll_setStringValue(addr, ((Token_Type)jcasType).casFeatCode_word, v);}    
-  }
+	    if (Token_Type.featOkTst && ((Token_Type)jcasType).casFeat_word == null)
+		    jcasType.jcas.throwFeatMissing("word", "org.werti.uima.types.annot.Token");
+	    jcasType.ll_cas.ll_setStringValue(addr, ((Token_Type)jcasType).casFeatCode_word, v);}    
+}
