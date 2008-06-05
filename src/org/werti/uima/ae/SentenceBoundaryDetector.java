@@ -31,7 +31,7 @@ public class SentenceBoundaryDetector extends JCasAnnotator_ImplBase {
 	private static final Set<String> sentenceBoundaryFollowers =
 		new HashSet<String>(Arrays.asList(new String[]{")", "]", "\"", "\'", "''", }));
 
-	private static MaxentTagger tagger;
+	private static final double COH_TRESHOLD = 0.1;
 
 	/**
 	 * Marks up sentences in the cas.
@@ -42,7 +42,7 @@ public class SentenceBoundaryDetector extends JCasAnnotator_ImplBase {
 	public void process(JCas cas) {
 		getContext().getLogger().log(Level.FINE, "Constructing tagger...");
 		try {
-			tagger = new MaxentTagger(MODEL);
+			MaxentTagger.init(MODEL);
 		} catch (Exception e) {
 			getContext().getLogger().log(Level.SEVERE, 
 					"Failed to contruct tagger", e);
@@ -71,13 +71,21 @@ public class SentenceBoundaryDetector extends JCasAnnotator_ImplBase {
 				s.add(t0);
 				final int length = t0.getEnd() - s.get(0).getBegin();
 				final double coherence = calculate_coherence(length, coh_gaps);
-				followerfinder: while (tit.hasNext()) {
-					t0 = tit.next();
-					if (!sentenceBoundaryFollowers.contains(t0.word())) 
-						break followerfinder;
+				if (!(coherence < COH_TRESHOLD)
+				||  !(coherence == 1.0)) {
+					// register sentence
+					followerfinder: while (tit.hasNext()) {
+								t0 = tit.next();
+								if (!sentenceBoundaryFollowers.contains(t0.word())) 
+									break followerfinder;
+					}
+					tagSentence(s);
+					createSentenceAnnotation(s, coherence, cas);
+				} else {
+					// discard token and sentence
+					tit.next();
 				}
-				tagSentence(s);
-				createSentenceAnnotation(s, coherence, cas);
+				coh_gaps = 0;
 				s = new Sentence<Token>();
 				continue iteratetokens;
 			} else {
@@ -132,8 +140,6 @@ public class SentenceBoundaryDetector extends JCasAnnotator_ImplBase {
 	// holds the formula for calculating the coherence based on the length
 	// and the gap value
 	private final double calculate_coherence(int length, int coh_gaps) {
-		getContext().getLogger().log(Level.FINE,
-				"Coherence; length: " + length + "; coh_gaps: " + coh_gaps);
-		return (length - coh_gaps)/length;
+		return ((double)(length - coh_gaps))/length;
 	}
 }

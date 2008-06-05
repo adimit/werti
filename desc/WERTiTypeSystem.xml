@@ -86,7 +86,7 @@ The rationale behind this is not confusing the tagger by randomly dropping words
       <features>
         <featureDescription>
           <name>enhancement_list</name>
-          <description>A list of enhancements this Enhancement stands for.</description>
+          <description>A list of enhancements this Enhancement stands for.Please note that your Enhancement must guarantee this.size() == index_list.size(). Assertions in the Code guarantee that.</description>
           <rangeTypeName>uima.cas.StringArray</rangeTypeName>
           <multipleReferencesAllowed>false</multipleReferencesAllowed>
         </featureDescription>

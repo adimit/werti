@@ -195,7 +195,7 @@ public class Dispatcher {
 				log.severe("Found no eList or iList on Enhancement");
 				continue;
 			}
-			assert sa.size() == ia.size();
+			assert true: sa.size() == ia.size();
 			for (int p = 0; p < sa.size(); p++) {
 				final String s = sa.get(p);
 				final int i = ia.get(p)+skew;

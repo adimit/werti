@@ -25,6 +25,8 @@ import org.werti.uima.types.annot.RelevantText;
  */
 public class GenericRelevanceAnnotator extends JCasAnnotator_ImplBase {
 
+	private static final int RELEVANCE_THRESHOLD = 1;
+
 	/**
 	 * Searches for the document body, then goes on and tags everything it deems
 	 * relevant as RelevantTag.
@@ -78,6 +80,7 @@ public class GenericRelevanceAnnotator extends JCasAnnotator_ImplBase {
 			final RelevantText rt = new RelevantText(cas);
 			rt.setBegin(tag.getEnd());
 			rt.setEnd((tag = tit.next()).getBegin());
+			if ((rt.getEnd() - rt.getBegin()) < RELEVANCE_THRESHOLD) continue findreltxt;
 			rt.setEnclosing_tag(tname);
 			rt.addToIndexes();
 		}
