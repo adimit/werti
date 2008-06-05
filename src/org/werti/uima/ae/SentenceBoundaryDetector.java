@@ -3,6 +3,7 @@ package org.werti.uima.ae;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 import edu.stanford.nlp.ling.Sentence;
@@ -40,14 +41,14 @@ public class SentenceBoundaryDetector extends JCasAnnotator_ImplBase {
 	 * @param cas The Cas the Tokens come from and the sentences go to.
 	 */
 	public void process(JCas cas) {
-		getContext().getLogger().log(Level.FINE, "Constructing tagger...");
+		getContext().getLogger().log(Level.INFO, "Constructing tagger...");
 		try {
 			MaxentTagger.init(MODEL);
 		} catch (Exception e) {
 			getContext().getLogger().log(Level.SEVERE, 
 					"Failed to contruct tagger", e);
 		}
-		getContext().getLogger().log(Level.FINE, "Done.");
+		getContext().getLogger().log(Level.INFO, "Done.");
 
 		getContext().getLogger().log(Level.INFO, 
 				"Starting sentence boundary detection.");
@@ -55,8 +56,14 @@ public class SentenceBoundaryDetector extends JCasAnnotator_ImplBase {
 		final FSIndex textIndex = cas.getAnnotationIndex(Token.type);
 		final Iterator<Token> tit = textIndex.iterator();
 
-		Token t0       = tit.next();
-		int   coh_gaps = 0;
+		Token t0;
+		try {
+			t0 = tit.next();
+		} catch (NoSuchElementException nsee) {
+			getContext().getLogger().log(Level.SEVERE, "Found no tokens to annotate. Returning...");
+			return;
+		}
+		int coh_gaps = 0;
 
 		Sentence<Token> s = new Sentence<Token>();
 		iteratetokens: while (tit.hasNext()) {

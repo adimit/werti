@@ -30,6 +30,8 @@ public class HTMLAnnotator extends JCasAnnotator_ImplBase {
 	 * position in the CAS.
 	 */
 	public void process(JCas cas) {
+		getContext().getLogger().log(Level.INFO,
+				"Starting HTML tag recognition");
 		final String s = cas.getDocumentText();
 		int tstart = 0;
 		int tend = 0;
@@ -64,6 +66,8 @@ public class HTMLAnnotator extends JCasAnnotator_ImplBase {
 			tag.addToIndexes();
 
 		}
+		getContext().getLogger().log(Level.INFO,
+				"Finished HTML tag recognition");
 	}
 
 	// skips ahead and marks irrelevant tags

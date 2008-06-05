@@ -35,6 +35,8 @@ public class GenericRelevanceAnnotator extends JCasAnnotator_ImplBase {
 	 * enclosed in, say <i>&lt;script&gt;</i> tags.
 	 */
 	public void process(JCas cas) {
+		getContext().getLogger().log(Level.INFO,
+				"Starting relevance annotation");
 		final Stack<String> tags = new Stack<String>();
 		final FSIndex tagIndex = cas.getAnnotationIndex(HTML.type);
 		final Iterator<HTML> tit = tagIndex.iterator();
@@ -84,5 +86,7 @@ public class GenericRelevanceAnnotator extends JCasAnnotator_ImplBase {
 			rt.setEnclosing_tag(tname);
 			rt.addToIndexes();
 		}
+		getContext().getLogger().log(Level.INFO,
+				"Finished relevance annotation");
 	}
 }

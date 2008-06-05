@@ -3,26 +3,39 @@
   <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
   <primitive>false</primitive>
   <delegateAnalysisEngineSpecifiers>
+    <delegateAnalysisEngine key="Tokenizer">
+      <import location="../annotators/Tokenizer.xml"/>
+    </delegateAnalysisEngine>
+    <delegateAnalysisEngine key="SentenceBoundaryDetector">
+      <import location="../annotators/SentenceBoundaryDetector.xml"/>
+    </delegateAnalysisEngine>
     <delegateAnalysisEngine key="HTMLAnnotator">
       <import location="../annotators/HTMLAnnotator.xml"/>
+    </delegateAnalysisEngine>
+    <delegateAnalysisEngine key="FIBEnhancer">
+      <import location="../enhancers/FIBEnhancer.xml"/>
     </delegateAnalysisEngine>
     <delegateAnalysisEngine key="GenericRelevanceAnnotator">
       <import location="../annotators/relevance/GenericRelevanceAnnotator.xml"/>
     </delegateAnalysisEngine>
   </delegateAnalysisEngineSpecifiers>
   <analysisEngineMetaData>
-    <name>RelevanceTester</name>
+    <name>TestDescriptor</name>
     <description/>
     <version>1.0</version>
     <vendor/>
-    <configurationParameters/>
+    <configurationParameters searchStrategy="language_fallback"/>
     <configurationParameterSettings/>
     <flowConstraints>
       <fixedFlow>
         <node>HTMLAnnotator</node>
         <node>GenericRelevanceAnnotator</node>
+        <node>Tokenizer</node>
+        <node>SentenceBoundaryDetector</node>
+        <node>FIBEnhancer</node>
       </fixedFlow>
     </flowConstraints>
+    <typePriorities/>
     <fsIndexCollection/>
     <capabilities>
       <capability>

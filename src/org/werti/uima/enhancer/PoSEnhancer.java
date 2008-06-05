@@ -22,6 +22,8 @@ public class PoSEnhancer extends JCasAnnotator_ImplBase {
 	private static final String TAG = "NN";
 
 	public void process(JCas cas) {
+		getContext().getLogger().log(Level.INFO,
+				"Starting enhancement");
 		final FSIndex textIndex = cas.getAnnotationIndex(Token.type);
 		final Iterator<Token> tit = textIndex.iterator();
 
@@ -49,5 +51,7 @@ public class PoSEnhancer extends JCasAnnotator_ImplBase {
 				e.addToIndexes();
 			}
 		}
+		getContext().getLogger().log(Level.INFO,
+				"Finished enhancement");
 	}
 }
