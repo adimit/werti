@@ -39,11 +39,13 @@ public class PoSEnhancer extends JCasAnnotator_ImplBase {
 				StringArray  sa = new StringArray(cas, 2);
 				IntegerArray ia = new IntegerArray(cas, 2);
 
-				sa.set(0, "<span style=\"color:blue;font-weight:bold\"");
+				sa.set(0, "<span style=\"color:blue;font-weight:bold\">");
 				sa.set(1, "</span>");
 
 				ia.set(0, e.getBegin());
 				ia.set(1, e.getEnd());
+				e.setEnhancement_list(sa);
+				e.setIndex_list(ia);
 				e.addToIndexes();
 			}
 		}

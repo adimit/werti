@@ -15,7 +15,7 @@ import org.apache.uima.jcas.tcas.Annotation;
 
 
 /** A relevant Token with PoS information attached.
- * Updated by JCasGen Wed Jun 04 16:54:22 CEST 2008
+ * Updated by JCasGen Thu Jun 05 01:43:57 CEST 2008
  * XML source: /home/aleks/src/werti/desc/WERTiTypeSystem.xml
  * @generated */
 public class Token extends Annotation implements HasWord, HasTag {

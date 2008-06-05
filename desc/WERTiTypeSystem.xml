@@ -93,7 +93,7 @@ The rationale behind this is not confusing the tagger by randomly dropping words
         <featureDescription>
           <name>index_list</name>
           <description>A list of indices where the elements of enhancement_list should be applied. Please note that your Enhancement must guarantee this.size() == enhancement_list.size()</description>
-          <rangeTypeName>uima.cas.IntegerList</rangeTypeName>
+          <rangeTypeName>uima.cas.IntegerArray</rangeTypeName>
           <multipleReferencesAllowed>false</multipleReferencesAllowed>
         </featureDescription>
       </features>

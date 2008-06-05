@@ -14,7 +14,7 @@ import org.apache.uima.jcas.tcas.Annotation;
 
 
 /** A sentence in natural language on the page to be processed.
- * Updated by JCasGen Wed Jun 04 16:54:22 CEST 2008
+ * Updated by JCasGen Thu Jun 05 02:33:19 CEST 2008
  * XML source: /home/aleks/src/werti/desc/WERTiTypeSystem.xml
  * @generated */
 public class SentenceAnnotation extends Annotation {
@@ -28,7 +28,7 @@ public class SentenceAnnotation extends Annotation {
 	public final static int type = typeIndexID;
 	/** @generated  */
 	public              int getTypeIndexID() {return typeIndexID;}
-
+ 
 	/**
 	 * Gets the sentence for this instance.
 	 *
@@ -50,32 +50,32 @@ public class SentenceAnnotation extends Annotation {
 	/** Never called.  Disable default constructor
 	 * @generated */
 	protected SentenceAnnotation() {}
-
+    
 	/** Internal - constructor used by generator 
 	 * @generated */
 	public SentenceAnnotation(int addr, TOP_Type type) {
-		super(addr, type);
-		readObject();
-	}
-
+    super(addr, type);
+    readObject();
+  }
+  
 	/** @generated */
 	public SentenceAnnotation(JCas jcas) {
-		super(jcas);
-		readObject();   
-	} 
+    super(jcas);
+    readObject();   
+  } 
 
 	/** @generated */  
 	public SentenceAnnotation(JCas jcas, int begin, int end) {
-		super(jcas);
-		setBegin(begin);
-		setEnd(end);
-		readObject();
-	}   
+    super(jcas);
+    setBegin(begin);
+    setEnd(end);
+    readObject();
+  }   
 
-	/** <!-- begin-user-doc -->
+  /** <!-- begin-user-doc -->
 	 * Write your own initialization here
 	 * <!-- end-user-doc -->
-	 @generated modifiable */
+  @generated modifiable */
 	private void readObject() {}
 
 
@@ -86,18 +86,17 @@ public class SentenceAnnotation extends Annotation {
 	/** getter for coherence - gets The coherence of this sentence. How many html tags interefere?
 	 * @generated */
 	public double getCoherence() {
-		if (SentenceAnnotation_Type.featOkTst && ((SentenceAnnotation_Type)jcasType).casFeat_coherence == null)
-			jcasType.jcas.throwFeatMissing("coherence", "org.werti.uima.types.annot.SentenceAnnotation");
-		return jcasType.ll_cas.ll_getDoubleValue(addr, ((SentenceAnnotation_Type)jcasType).casFeatCode_coherence);}
-
+    if (SentenceAnnotation_Type.featOkTst && ((SentenceAnnotation_Type)jcasType).casFeat_coherence == null)
+      jcasType.jcas.throwFeatMissing("coherence", "org.werti.uima.types.annot.SentenceAnnotation");
+    return jcasType.ll_cas.ll_getDoubleValue(addr, ((SentenceAnnotation_Type)jcasType).casFeatCode_coherence);}
+    
 	/** setter for coherence - sets The coherence of this sentence. How many html tags interefere? 
 	 * @generated */
 	public void setCoherence(double v) {
-		if (SentenceAnnotation_Type.featOkTst && ((SentenceAnnotation_Type)jcasType).casFeat_coherence == null)
-			jcasType.jcas.throwFeatMissing("coherence", "org.werti.uima.types.annot.SentenceAnnotation");
-		jcasType.ll_cas.ll_setDoubleValue(addr, ((SentenceAnnotation_Type)jcasType).casFeatCode_coherence, v);}    
-
-	/**
+    if (SentenceAnnotation_Type.featOkTst && ((SentenceAnnotation_Type)jcasType).casFeat_coherence == null)
+      jcasType.jcas.throwFeatMissing("coherence", "org.werti.uima.types.annot.SentenceAnnotation");
+    jcasType.ll_cas.ll_setDoubleValue(addr, ((SentenceAnnotation_Type)jcasType).casFeatCode_coherence, v);}    
+      	/**
 	 * Feature: Sentence.
 	 *
 	 * This is nonstandart.

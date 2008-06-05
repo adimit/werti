@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
 /** Annotation spanning an HTML tag.
- * Updated by JCasGen Wed Jun 04 16:54:22 CEST 2008
+ * Updated by JCasGen Thu Jun 05 02:33:19 CEST 2008
  * @generated */
 public class HTML_Type extends Annotation_Type {
   /** @generated */

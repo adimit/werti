@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
 /** Describes an enhancment on the current spot.
- * Updated by JCasGen Wed Jun 04 16:54:22 CEST 2008
+ * Updated by JCasGen Thu Jun 05 02:33:19 CEST 2008
  * @generated */
 public class Enhancement_Type extends Annotation_Type {
   /** @generated */
@@ -94,7 +94,26 @@ public class Enhancement_Type extends Annotation_Type {
       jcas.throwFeatMissing("index_list", "org.werti.uima.types.Enhancement");
     ll_cas.ll_setRefValue(addr, casFeatCode_index_list, v);}
     
-  
+   /** @generated */
+  public int getIndex_list(int addr, int i) {
+        if (featOkTst && casFeat_index_list == null)
+      jcas.throwFeatMissing("index_list", "org.werti.uima.types.Enhancement");
+    if (lowLevelTypeChecks)
+      return ll_cas.ll_getIntArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_index_list), i, true);
+    jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_index_list), i);
+  return ll_cas.ll_getIntArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_index_list), i);
+  }
+   
+  /** @generated */ 
+  public void setIndex_list(int addr, int i, int v) {
+        if (featOkTst && casFeat_index_list == null)
+      jcas.throwFeatMissing("index_list", "org.werti.uima.types.Enhancement");
+    if (lowLevelTypeChecks)
+      ll_cas.ll_setIntArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_index_list), i, v, true);
+    jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_index_list), i);
+    ll_cas.ll_setIntArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_index_list), i, v);
+  }
+ 
 
 
 
@@ -109,7 +128,7 @@ public class Enhancement_Type extends Annotation_Type {
     casFeatCode_enhancement_list  = (null == casFeat_enhancement_list) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_enhancement_list).getCode();
 
  
-    casFeat_index_list = jcas.getRequiredFeatureDE(casType, "index_list", "uima.cas.IntegerList", featOkTst);
+    casFeat_index_list = jcas.getRequiredFeatureDE(casType, "index_list", "uima.cas.IntegerArray", featOkTst);
     casFeatCode_index_list  = (null == casFeat_index_list) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_index_list).getCode();
 
   }

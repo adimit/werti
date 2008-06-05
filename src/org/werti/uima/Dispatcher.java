@@ -19,13 +19,17 @@ import org.apache.uima.cas.FSIndex;
 
 import org.apache.uima.jcas.JCas;
 
+import org.apache.uima.jcas.cas.IntegerArray;
+import org.apache.uima.jcas.cas.IntegerList;
+import org.apache.uima.jcas.cas.StringArray;
+
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.ResourceSpecifier;
 
 import org.apache.uima.util.InvalidXMLException;
 import org.apache.uima.util.XMLInputSource;
 
-import org.werti.uima.types.annot.PoSTag;
+import org.werti.uima.types.Enhancement;
 
 public class Dispatcher {
 
@@ -119,25 +123,87 @@ public class Dispatcher {
 		}
 	}
 
+	/** 
+	 * Input-Enhances the CAS given with Enhancement annotations.
+	 *
+	 * This is an easy to understand version of enhance.
+	 *
+	 * @param cas The cas to enhance.
+	 */
 	private String enhance(JCas cas) {
-		String docText = cas.getDocumentText();
-		final int foo = docText.indexOf("<head>")+6;
-		docText = docText.substring(0,foo) + "<base href=\"" + baseurl + "\" />" + docText.substring(foo,docText.length()-1);
-		final FSIndex tagIndex = cas.getAnnotationIndex(PoSTag.type);
-		final Iterator<PoSTag> pit = tagIndex.iterator();
-		int skew = 0;
-		while (pit.hasNext()) {
-			final PoSTag tag = pit.next();
-			if (tag.getPoS().equals("NN")) {
-				log.info("found a noun");
-				docText = docText.substring(skew, (skew = docText.indexOf(tag.getWord())))
-					+ "<font color=\"#FF0000>"
-					+ tag.getWord()
-					+ "</font>"
-					+ docText.substring((skew = skew + tag.getWord().length()), docText.length() - 1);
+		final String docText = cas.getDocumentText();
+		final StringBuilder rtext = new StringBuilder(docText);
+
+		int skew = docText.indexOf("<head");
+		skew = docText.indexOf('>',skew)+1;
+
+		final String basetag = "<base href=\"" + baseurl + "\" />";
+		rtext.insert(skew, basetag);
+		skew = basetag.length();
+
+		final FSIndex tagIndex = cas.getAnnotationIndex(Enhancement.type);
+		final Iterator<Enhancement> eit = tagIndex.iterator();
+
+		while (eit.hasNext()) {
+			final Enhancement e = eit.next();
+			final StringArray sa = e.getEnhancement_list();
+			final IntegerArray ia = e.getIndex_list();
+			if (sa == null || ia == null) {
+				log.severe("Found no eList or iList on Enhancement");
+				continue;
+			}
+			assert sa.size() == ia.size();
+			for (int p = 0; p < sa.size(); p++) {
+				final String s = sa.get(p);
+				final int i = ia.get(p)+skew;
+
+				rtext.insert(i, s);
+
+				skew += s.length();
 			}
 		}
-		return docText;
+		return rtext.toString();
+	}
+
+	/** 
+	 * Input-Enhances the CAS given with Enhancement annotations.
+	 *
+	 * This is a faster version of enhance. It's not working yet. DO NOT USE
+	 *
+	 * @param cas The cas to enhance.
+	 */
+	@Deprecated
+	private String faster_enhance(JCas cas) {
+		final String docText = cas.getDocumentText();
+		final StringBuilder rtext = new StringBuilder();
+
+		int pos = docText.indexOf("<head>")+6;
+		rtext.append(docText.substring(0,pos));
+
+		final String basetag = "<base href=\"" + baseurl + "\" />";
+		int skew = basetag.length();
+		rtext.append(basetag);
+
+		final FSIndex tagIndex = cas.getAnnotationIndex(Enhancement.type);
+		final Iterator<Enhancement> eit = tagIndex.iterator();
+
+		while (eit.hasNext()) {
+			final Enhancement e = eit.next();
+			final StringArray sa = e.getEnhancement_list();
+			final IntegerArray ia = e.getIndex_list();
+			if (sa == null || ia == null) {
+				log.severe("Found no eList or iList on Enhancement");
+				continue;
+			}
+			assert sa.size() == ia.size();
+			for (int p = 0; p < sa.size(); p++) {
+				final String s = sa.get(p);
+				final int i = ia.get(p)+skew;
+				skew += s.length();
+			}
+
+		}
+		return rtext.toString();
 	}
 
 	public void print(PrintWriter out) {
