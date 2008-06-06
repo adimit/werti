@@ -8,13 +8,10 @@ import edu.stanford.nlp.ling.HasTag;
 import edu.stanford.nlp.ling.HasWord;
 import edu.stanford.nlp.ling.Sentence;
 import edu.stanford.nlp.ling.TaggedWord;
-import edu.stanford.nlp.ling.Word;
 
 import edu.stanford.nlp.tagger.maxent.*;
 
 import org.apache.uima.analysis_component.JCasAnnotator_ImplBase;
-
-import org.apache.uima.cas.FSIterator;
 
 import org.apache.uima.cas.text.AnnotationIndex;
 
@@ -46,10 +43,10 @@ public class PoSTagger extends JCasAnnotator_ImplBase {
 			while (sit.hasNext()) {
 				sentence.clear();
 				final SentenceAnnotation sa = sit.next();
-				Iterator<TToken> tit = toknIndex.subiterator(sa);
+				Iterator<Token> tit = toknIndex.subiterator(sa);
 
 				while (tit.hasNext()) {
-					sentence.add(tit.next());
+					sentence.add(new TToken(tit.next()));
 				}
 
 				slist.add(sentence);
@@ -58,31 +55,45 @@ public class PoSTagger extends JCasAnnotator_ImplBase {
 			slist = tagger.process(slist);
 			getContext().getLogger().log(Level.INFO, "Finished tagging.");
 		} catch (Exception e) {
-			getContext().getLogger().log(Level.SEVERE, "Failed Processing!", e);
+			getContext().getLogger().log(Level.SEVERE, "Failed Tagging!", e);
 		}
 		getContext().getLogger().log(Level.INFO, "Annotating.");
 		for (Sentence<TToken> s:slist) {
 			for (TToken t:s) {
-				t.setTag(t.getTag());
+				
 			}
 		}
 		getContext().getLogger().log(Level.INFO, "Finished Annotating.");
 	}
 
-	private class TToken extends Token implements HasTag, HasWord {
-		private String word;
+	private class TToken extends TaggedWord implements HasTag, HasWord {
+		private Token t;
 
-		public void setWord(String w) {
-			this.word = w;
+		/**
+		 * Constructs a new instance.
+		 */
+		public TToken (Token t) {
+			super();
+			this.t = t;
 		}
 
-		public String word() {
-			assert true: this.word.equals(getCoveredText());
-			return getCoveredText();
+		/**
+		 * Gets the t for this instance.
+		 *
+		 * @return The t.
+		 */
+		public Token getT () {
+			return this.t;
 		}
 
-		public String tag() {
-			return getTag();
+		/**
+		 * Sets the t for this instance.
+		 *
+		 * @param t The t.
+		 */
+		public void setT (Token t) {
+			this.t = t;
 		}
+
 	}
 }
