@@ -3,8 +3,6 @@
 /* First created by JCasGen Wed Jun 04 16:54:22 CEST 2008 */
 package org.werti.uima.types.annot;
 
-import edu.stanford.nlp.ling.Sentence;
-
 import org.apache.uima.jcas.JCas; 
 import org.apache.uima.jcas.JCasRegistry;
 
@@ -14,7 +12,7 @@ import org.apache.uima.jcas.tcas.Annotation;
 
 
 /** A sentence in natural language on the page to be processed.
- * Updated by JCasGen Thu Jun 05 02:33:19 CEST 2008
+ * Updated by JCasGen Fri Jun 06 03:16:34 CEST 2008
  * XML source: /home/aleks/src/werti/desc/WERTiTypeSystem.xml
  * @generated */
 public class SentenceAnnotation extends Annotation {
@@ -29,24 +27,6 @@ public class SentenceAnnotation extends Annotation {
 	/** @generated  */
 	public              int getTypeIndexID() {return typeIndexID;}
  
-	/**
-	 * Gets the sentence for this instance.
-	 *
-	 * @return The sentence.
-	 */
-	public Sentence<Token> getSentence () {
-		return this.sentence;
-	}
-
-	/**
-	 * Sets the sentence for this instance.
-	 *
-	 * @param sentence The sentence.
-	 */
-	public void setSentence (Sentence<Token> sentence) {
-		this.sentence = sentence;
-	}
-
 	/** Never called.  Disable default constructor
 	 * @generated */
 	protected SentenceAnnotation() {}
@@ -96,10 +76,5 @@ public class SentenceAnnotation extends Annotation {
     if (SentenceAnnotation_Type.featOkTst && ((SentenceAnnotation_Type)jcasType).casFeat_coherence == null)
       jcasType.jcas.throwFeatMissing("coherence", "org.werti.uima.types.annot.SentenceAnnotation");
     jcasType.ll_cas.ll_setDoubleValue(addr, ((SentenceAnnotation_Type)jcasType).casFeatCode_coherence, v);}    
-      	/**
-	 * Feature: Sentence.
-	 *
-	 * This is nonstandart.
-	 */
-	private Sentence<Token> sentence;
 }
+  

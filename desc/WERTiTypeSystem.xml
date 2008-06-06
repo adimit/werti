@@ -36,13 +36,6 @@ The rationale behind this is not confusing the tagger by randomly dropping words
           <description>The part of speech this tag stands for.</description>
           <rangeTypeName>uima.cas.String</rangeTypeName>
         </featureDescription>
-        <featureDescription>
-          <name>word</name>
-          <description>The word we're talking about 
-
-// FOR DEBUGGING PURPOSES ONLY</description>
-          <rangeTypeName>uima.cas.String</rangeTypeName>
-        </featureDescription>
       </features>
     </typeDescription>
     <typeDescription>

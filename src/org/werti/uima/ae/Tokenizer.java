@@ -43,14 +43,13 @@ public class Tokenizer extends JCasAnnotator_ImplBase {
 			int lskew = 0;
 
 			tokenizeSpan: while (tokzr.hasNext()) {
-				final Word w = tokzr.next();
-				final int index = span.indexOf(w.word(), lskew);
+				final String w = tokzr.next().word();
+				final int index = span.indexOf(w, lskew);
 				if (index == -1) continue tokenizeSpan;
 				else lskew = index;
 				final Token t = new Token(cas);
 				t.setBegin(lskew + gskew);
-				t.setEnd((lskew += w.word().length()) + gskew);
-				t.setWord(w.word());
+				t.setEnd((lskew += w.length()) + gskew);
 				t.addToIndexes();
 			}
 		}

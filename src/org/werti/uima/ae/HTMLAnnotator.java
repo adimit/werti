@@ -10,17 +10,13 @@ import org.apache.uima.util.Level;
 
 import org.werti.uima.types.annot.HTML;
 
+/**
+ * Mark up all html tags and all their properties.
+ *
+ * Properties include 'closing', 'irrelevant' and the 'tag_name'. Also their absolute
+ * position in the CAS.
+ */
 public class HTMLAnnotator extends JCasAnnotator_ImplBase {
-
-
-	/**
-	 * This method tries to find all html tags in the CAS's document text efficiently.
-	 *
-	 * Note that currently this does not look out for broken HTML tags. This may be stupid.
-	 * We hope web sites don't do broken HTML tags right now. Watch errors closely, as they
-	 * may be related to this.
-	 */
-
 	private static final char[] TAG_NAME_DELMTR = { ' ', '\t', '\n', '\r', '>'};
 
 	/**

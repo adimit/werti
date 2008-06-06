@@ -6,22 +6,23 @@
 
 *** Important
 
- * Implement an Event interface so that callers of Dispatcher.process() know when it's ready
  * React smart on encountering html-entities
  * Improve tagger:
    - demonize
-^  - sentence boundary recognition
 
 *** Bugs
  * Don't screw up on html tags with &lt; and &gt; entities instead of < and >.
- * use the "surpress escaping" feature of the PTBtagger
+ * maybe use the "surpress escaping" feature of the PTBtagger
+ * does the HTML annotation really need the tag-name field?
 
 *** Showstoppers
  * Update README
 
 *** Wishlist
 ************
-^ handle org.werti.uima.Dispatcher(Config) more gracefully
+- Implement another Tokenizer
+- put a DocumentAnnotation somewhere in the preamble that 
+  would hold <script>s for the enhancements to use
 - Use HTML entities in sentence boundary followers
 - Interactive Passivator
 - Scoring mechanism (this site helped me a lot-like)

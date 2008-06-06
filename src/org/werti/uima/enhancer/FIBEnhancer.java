@@ -78,20 +78,20 @@ public class FIBEnhancer extends JCasAnnotator_ImplBase {
 			e_start.addToIndexes();
 		}
 		iteratetokens: while (tit.hasNext()) {
-			if (t.tag() == null) {
+			if (t.getTag() == null) {
 				getContext().getLogger().log(Level.WARNING,
 						"Encountered token with NULL tag");
 				tit.next();
 				continue iteratetokens;
 			}
-			if (t.tag().equals(TAG)) {
+			if (t.getTag().equals(TAG)) {
 				final Enhancement e = new Enhancement(cas);
 				e.setBegin(t.getBegin());
 				e.setEnd(t.getEnd());
 				final StringArray  sa = new StringArray(cas, 2);
 				final IntegerArray ia = new IntegerArray(cas, 2);
 
-				final String w = t.getWord();
+				final String w = t.getCoveredText();
 
 				sa.set(0, 
 					"<span id=\"" 

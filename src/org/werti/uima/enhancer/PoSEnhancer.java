@@ -29,12 +29,12 @@ public class PoSEnhancer extends JCasAnnotator_ImplBase {
 
 		iteratetokens: while (tit.hasNext()) {
 			final Token t = tit.next();
-			if (t.tag() == null) {
+			if (t.getTag() == null) {
 				getContext().getLogger().log(Level.WARNING,
 						"Encountered token with NULL tag");
 				continue iteratetokens;
 			}
-			if (t.tag().equals(TAG)) {
+			if (t.getTag().equals(TAG)) {
 				Enhancement e = new Enhancement(cas);
 				e.setBegin(t.getBegin());
 				e.setEnd(t.getEnd());

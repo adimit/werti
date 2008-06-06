@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
 /** A relevant Token with PoS information attached.
- * Updated by JCasGen Thu Jun 05 02:33:19 CEST 2008
+ * Updated by JCasGen Fri Jun 06 03:17:52 CEST 2008
  * @generated */
 public class Token_Type extends Annotation_Type {
   /** @generated */
@@ -58,24 +58,6 @@ public class Token_Type extends Annotation_Type {
     ll_cas.ll_setStringValue(addr, casFeatCode_tag, v);}
     
   
- 
-  /** @generated */
-  final Feature casFeat_word;
-  /** @generated */
-  final int     casFeatCode_word;
-  /** @generated */ 
-  public String getWord(int addr) {
-        if (featOkTst && casFeat_word == null)
-      jcas.throwFeatMissing("word", "org.werti.uima.types.annot.Token");
-    return ll_cas.ll_getStringValue(addr, casFeatCode_word);
-  }
-  /** @generated */    
-  public void setWord(int addr, String v) {
-        if (featOkTst && casFeat_word == null)
-      jcas.throwFeatMissing("word", "org.werti.uima.types.annot.Token");
-    ll_cas.ll_setStringValue(addr, casFeatCode_word, v);}
-    
-  
 
 
 
@@ -88,10 +70,6 @@ public class Token_Type extends Annotation_Type {
  
     casFeat_tag = jcas.getRequiredFeatureDE(casType, "tag", "uima.cas.String", featOkTst);
     casFeatCode_tag  = (null == casFeat_tag) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_tag).getCode();
-
- 
-    casFeat_word = jcas.getRequiredFeatureDE(casType, "word", "uima.cas.String", featOkTst);
-    casFeatCode_word  = (null == casFeat_word) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_word).getCode();
 
   }
 }
