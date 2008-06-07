@@ -21,6 +21,7 @@ import org.werti.uima.types.annot.Token;
 public class PoSEnhancer extends JCasAnnotator_ImplBase {
 	private static final String TAG = "NN";
 
+	@SuppressWarnings("unchecked")
 	public void process(JCas cas) {
 		getContext().getLogger().log(Level.INFO,
 				"Starting enhancement");

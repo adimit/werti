@@ -9,11 +9,17 @@ import edu.stanford.nlp.ling.TaggedWord;
 
 import edu.stanford.nlp.tagger.maxent.*;
 
+import org.apache.uima.UimaContext;
+
 import org.apache.uima.analysis_component.JCasAnnotator_ImplBase;
 
 import org.apache.uima.cas.text.AnnotationIndex;
 
+import org.apache.uima.examples.tagger.Tagger;
+
 import org.apache.uima.jcas.JCas;
+
+import org.apache.uima.resource.ResourceInitializationException;
 
 import org.apache.uima.util.Level;
 
@@ -21,11 +27,24 @@ import org.werti.uima.types.annot.SentenceAnnotation;
 import org.werti.uima.types.annot.Token;
 
 
-public class PoSTagger extends JCasAnnotator_ImplBase {
+public class PTBTagger extends JCasAnnotator_ImplBase implements Tagger {
 
 	private static final String MODEL =
 		"/home/aleks/src/werti/models/bidirectional-wsj-0-18.tagger";
 
+	public void initialize(UimaContext context) throws ResourceInitializationException {
+		super.initialize(context);
+		try {
+			getContext().getLogger().log(Level.INFO, "Constructing tagger...");
+			MaxentTagger.init(MODEL);
+			getContext().getLogger().log(Level.INFO, "Done.");
+		} catch (Exception e) {
+			context.getLogger().log(Level.SEVERE, "Failed to initialize tagger!");
+			throw new RuntimeException("No tagger, no game.");
+		}
+	}
+
+	@SuppressWarnings("unchecked")
 	public void process(JCas cas) {
 		Sentence<TaggedWord> sentence = new Sentence<TaggedWord>();
 		final List<Token> tlist = new ArrayList<Token>();
@@ -33,9 +52,6 @@ public class PoSTagger extends JCasAnnotator_ImplBase {
 		getContext().getLogger().log(Level.INFO, "Tagging...");
 
 		try {
-			getContext().getLogger().log(Level.INFO, "Constructing tagger...");
-			MaxentTagger.init(MODEL);
-			getContext().getLogger().log(Level.INFO, "Done.");
 		
 			final AnnotationIndex sentIndex = cas.getAnnotationIndex(SentenceAnnotation.type);
 			final AnnotationIndex toknIndex = cas.getAnnotationIndex(Token.type);

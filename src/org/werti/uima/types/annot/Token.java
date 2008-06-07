@@ -58,8 +58,6 @@ public class Token extends Annotation {
   @generated modifiable */
 	private void readObject() {}
      
- 
-    
   //*--------------*
   //* Feature: Tag
 

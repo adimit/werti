@@ -2,9 +2,9 @@
 <analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
   <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
   <primitive>true</primitive>
-  <annotatorImplementationName>org.werti.uima.ae.PoSTagger</annotatorImplementationName>
+  <annotatorImplementationName/>
   <analysisEngineMetaData>
-    <name>PoSTagger</name>
+    <name>HMMTagger</name>
     <description/>
     <version>1.0</version>
     <vendor/>
@@ -12,19 +12,15 @@
     <configurationParameterSettings/>
     <typeSystemDescription>
       <imports>
-        <import location="../WERTiTypeSystem.xml"/>
+        <import location="../../WERTiTypeSystem.xml"/>
       </imports>
     </typeSystemDescription>
     <typePriorities/>
     <fsIndexCollection/>
     <capabilities>
       <capability>
-        <inputs>
-          <type allAnnotatorFeatures="true">org.werti.uima.types.annot.Sentence</type>
-        </inputs>
-        <outputs>
-          <type allAnnotatorFeatures="true">org.werti.uima.types.annot.Token</type>
-        </outputs>
+        <inputs/>
+        <outputs/>
         <languagesSupported/>
       </capability>
     </capabilities>

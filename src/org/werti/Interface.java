@@ -1,11 +1,14 @@
 package org.werti;
+
 import java.io.*;
+
 import java.util.logging.*;
+
 import javax.servlet.*;
+
 import javax.servlet.http.*;
 
-import org.werti.html.*;
-
+import lib.html.HTML;
 
 /**
  * It will, according to its arguments, call the appropriate classes that

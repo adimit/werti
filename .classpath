@@ -5,7 +5,9 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/uima-document-annotation.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/uima-tools.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/stanford-postagger.jar"/>
+	<classpathentry kind="lib" path="/home/aleks/src/lib/lib-0.1.jar"/>
 	<classpathentry kind="lib" path="/usr/share/java/servlet-api.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/uima-an-tagger.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="build/WEB-INF/classes"/>
 </classpath>

@@ -1,12 +1,19 @@
 package org.werti;
 
+import lib.html.ErrorPage;
+
 import java.io.*;
+
 import java.util.Enumeration;
+
 import java.util.logging.*;
+
 import javax.servlet.*;
+
 import javax.servlet.http.*;
 
-import org.werti.html.*;
+import lib.html.Net;
+
 import org.werti.uima.Config;
 import org.werti.uima.Dispatcher;
 

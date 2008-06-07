@@ -1,12 +1,18 @@
 package org.werti;
 
 import java.io.*;
+
 import java.net.MalformedURLException;
+
 import java.util.Enumeration;
+
 import java.util.logging.*;
+
 import javax.servlet.*;
+
 import javax.servlet.http.*;
-import org.werti.html.*;
+
+import lib.html.Net;
 
 public class RequestReuters extends HttpServlet {
 	static final long serialVersionUID = 0;
