@@ -8,8 +8,23 @@
     <description/>
     <version>1.0</version>
     <vendor/>
-    <configurationParameters/>
-    <configurationParameterSettings/>
+    <configurationParameters>
+      <configurationParameter>
+        <name>MODEL_LOCATION</name>
+        <description>The model this tagger will use.</description>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>true</mandatory>
+      </configurationParameter>
+    </configurationParameters>
+    <configurationParameterSettings>
+      <nameValuePair>
+        <name>MODEL_LOCATION</name>
+        <value>
+          <string>org/werti/resources/models/ptbtagger/bidirectional-wsj-0-18.tagger</string>
+        </value>
+      </nameValuePair>
+    </configurationParameterSettings>
     <typeSystemDescription>
       <imports>
         <import location="../../WERTiTypeSystem.xml"/>

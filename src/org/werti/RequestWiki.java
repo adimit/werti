@@ -1,7 +1,5 @@
 package org.werti;
 
-import lib.html.Net;
-
 import java.io.*;
 
 import java.net.MalformedURLException;
@@ -13,6 +11,8 @@ import java.util.logging.*;
 import javax.servlet.*;
 
 import javax.servlet.http.*;
+
+import lib.html.Net;
 
 public class RequestWiki extends HttpServlet {
 	static final long serialVersionUID = 0;

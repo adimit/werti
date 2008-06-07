@@ -1,7 +1,5 @@
 package org.werti;
 
-import lib.html.ErrorPage;
-
 import java.io.*;
 
 import java.util.Enumeration;
@@ -12,6 +10,7 @@ import javax.servlet.*;
 
 import javax.servlet.http.*;
 
+import lib.html.ErrorPage;
 import lib.html.Net;
 
 import org.werti.uima.Config;

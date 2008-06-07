@@ -54,6 +54,7 @@ public class SentenceBoundaryDetector extends JCasAnnotator_ImplBase {
 			SentenceAnnotation sa = new SentenceAnnotation(cas);
 			sa.setBegin(t.getBegin());
 
+			// skip tokens unil we find a new sentence boundary
 			while (tit.hasNext() && !sentenceBoundaries.contains(t.getCoveredText())) {
 				// adjust coherence gaps and load next element
 				coh_gaps -= t.getEnd() - (t = tit.next()).getBegin();

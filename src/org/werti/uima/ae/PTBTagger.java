@@ -1,5 +1,7 @@
 package org.werti.uima.ae;
 
+import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -28,19 +30,25 @@ import org.werti.uima.types.annot.Token;
 
 
 public class PTBTagger extends JCasAnnotator_ImplBase implements Tagger {
+	
+	/*
+	 * Parameter definitions
+	 */
 
-	private static final String MODEL =
-		"/home/aleks/src/werti/models/bidirectional-wsj-0-18.tagger";
+
+	private static final String pModel = "MODEL_LOCATION";
 
 	public void initialize(UimaContext context) throws ResourceInitializationException {
 		super.initialize(context);
 		try {
+			final String resource = (String) context.getConfigParameterValue(pModel);
+			final URL rurl = ClassLoader.getSystemResource(resource);
 			getContext().getLogger().log(Level.INFO, "Constructing tagger...");
-			MaxentTagger.init(MODEL);
+			MaxentTagger.init(rurl.getFile());
 			getContext().getLogger().log(Level.INFO, "Done.");
 		} catch (Exception e) {
 			context.getLogger().log(Level.SEVERE, "Failed to initialize tagger!");
-			throw new RuntimeException("No tagger, no game.");
+			throw new RuntimeException("No tagger, no game.", e);
 		}
 	}
 
@@ -52,7 +60,6 @@ public class PTBTagger extends JCasAnnotator_ImplBase implements Tagger {
 		getContext().getLogger().log(Level.INFO, "Tagging...");
 
 		try {
-		
 			final AnnotationIndex sentIndex = cas.getAnnotationIndex(SentenceAnnotation.type);
 			final AnnotationIndex toknIndex = cas.getAnnotationIndex(Token.type);
 

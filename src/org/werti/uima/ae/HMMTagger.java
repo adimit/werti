@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 
+import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -48,7 +50,13 @@ public class HMMTagger extends JCasAnnotator_ImplBase implements Tagger {
 	private static final String pModel = "MODEL_LOCATION";
 	private ModelGeneration model;
 
-	public void initialize(UimaContext context) throws ResourceInitializationException {
+	/**
+	 * Initializes the HMMTagger with a model supplied by the configuration-resource
+	 * stored in pModel.
+	 *
+	 * @param context The context this AE has to initialize in.
+	 */
+	public void initialize(final UimaContext context) throws ResourceInitializationException {
 		super.initialize(context);
 		try {
 			this.N = (Integer) context.getConfigParameterValue(pN);
@@ -61,25 +69,25 @@ public class HMMTagger extends JCasAnnotator_ImplBase implements Tagger {
 	}
 
 	// initialize the model from context
-	private static ModelGeneration get_model(UimaContext context) throws AnnotatorConfigurationException {
+	private static ModelGeneration get_model(final UimaContext context) 
+		throws AnnotatorConfigurationException {
 		return get_model(context, null);
 	}
 
 	// initialize the model
-	private static ModelGeneration get_model(UimaContext context, String loc)
+	private static ModelGeneration get_model(final UimaContext context, final String loc)
 		throws AnnotatorConfigurationException {
 		final InputStream model;
 		try {
 			if (loc == null || loc.equals("")) {
 				// fetch model from Annotator configuration
-				final IModelResource mResource = (IModelResource) context.getResourceObject(pModel);
-				model = mResource.getInputStream();
+				final String resource = (String) context.getConfigParameterValue(pModel);
+				model = ClassLoader.getSystemResourceAsStream(resource);
 			} else {
-				// fetch model from file
 				model = new FileInputStream(loc);
 			}
 			final ObjectInputStream ois = new ObjectInputStream(model);
-			ModelGeneration oRead = (ModelGeneration) ois.readObject();
+			final ModelGeneration oRead = (ModelGeneration) ois.readObject();
 			return oRead;
 		} catch (IOException ioe) {
 			context.getLogger().log(Level.SEVERE,
@@ -91,13 +99,20 @@ public class HMMTagger extends JCasAnnotator_ImplBase implements Tagger {
 			throw new AnnotatorConfigurationException(cnfe);
 		} catch (Exception e) {
 			context.getLogger().log(Level.SEVERE,
-					"Unknow problem occured.");
+					"Unknown problem occured.");
 			throw new AnnotatorConfigurationException(e);
 		}
 	}
 
+	/**
+	 * Processes all sentence annotations; iterates over their Tokens
+	 * and tags the Tokens with what the Viterbi algorithm says it should
+	 * tag them.
+	 *
+	 * @param cas The cas for this AE
+	 */
 	@SuppressWarnings("unchecked")
-	public void process(JCas cas) throws AnalysisEngineProcessException {
+	public void process(final JCas cas) throws AnalysisEngineProcessException {
 		final List<Token> tlist = new ArrayList<Token>();
 		List<String> wlist = new ArrayList<String>();
 
@@ -124,7 +139,7 @@ public class HMMTagger extends JCasAnnotator_ImplBase implements Tagger {
 
 			assert true: wlist.size() == tlist.size();
 
-			for (int i =0; i < tlist.size(); i++) {
+			for (int i = 0; i < tlist.size(); i++) {
 				final Token t = tlist.get(i);
 				final String tag = wlist.get(i);
 				t.setTag(tag);
@@ -132,8 +147,9 @@ public class HMMTagger extends JCasAnnotator_ImplBase implements Tagger {
 		}
 	}
 
+	// A wrapper for the Viterbi algorithm, so it doesn't uglify the processing code.
 	@SuppressWarnings("unchecked")
-	private static List<String> viterbi(int N, ModelGeneration model, List<String> list) {
+	private static List<String> viterbi(final int N, final ModelGeneration model, final List<String> list) {
 		return Viterbi.process(N, list
 				, model.suffix_tree
 				, model.suffix_tree_capitalized

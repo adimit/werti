@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+  <primitive>false</primitive>
+  <delegateAnalysisEngineSpecifiers>
+    <delegateAnalysisEngine key="Tokenizer">
+      <import location="../annotators/Tokenizer.xml"/>
+    </delegateAnalysisEngine>
+    <delegateAnalysisEngine key="SentenceBoundaryDetector">
+      <import location="../annotators/SentenceBoundaryDetector.xml"/>
+    </delegateAnalysisEngine>
+    <delegateAnalysisEngine key="HTMLAnnotator">
+      <import location="../annotators/HTMLAnnotator.xml"/>
+    </delegateAnalysisEngine>
+    <delegateAnalysisEngine key="GenericRelevanceAnnotator">
+      <import location="../annotators/relevance/GenericRelevanceAnnotator.xml"/>
+    </delegateAnalysisEngine>
+    <delegateAnalysisEngine key="PTBTagger">
+      <import location="../annotators/taggers/PTBTagger.xml"/>
+    </delegateAnalysisEngine>
+  </delegateAnalysisEngineSpecifiers>
+  <analysisEngineMetaData>
+    <name>PTBTest</name>
+    <description/>
+    <version>1.0</version>
+    <vendor/>
+    <configurationParameters/>
+    <configurationParameterSettings/>
+    <flowConstraints>
+      <fixedFlow>
+        <node>HTMLAnnotator</node>
+        <node>GenericRelevanceAnnotator</node>
+        <node>Tokenizer</node>
+        <node>SentenceBoundaryDetector</node>
+        <node>PTBTagger</node>
+      </fixedFlow>
+    </flowConstraints>
+    <typePriorities/>
+    <fsIndexCollection/>
+    <capabilities>
+      <capability>
+        <inputs/>
+        <outputs/>
+        <languagesSupported/>
+      </capability>
+    </capabilities>
+    <operationalProperties>
+      <modifiesCas>true</modifiesCas>
+      <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+      <outputsNewCASes>false</outputsNewCASes>
+    </operationalProperties>
+  </analysisEngineMetaData>
+  <resourceManagerConfiguration/>
+</analysisEngineDescription>
