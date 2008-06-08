@@ -63,6 +63,7 @@ public class Dispatcher {
 				UIMAFramework
 				.getXMLParser()
 				.parseResourceSpecifier(in);
+				
 			ae  = UIMAFramework.produceAnalysisEngine(spec);
 			cas = ae.newJCas();
 			this.out = out;

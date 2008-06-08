@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 
-import java.net.URL;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -21,7 +19,6 @@ import org.apache.uima.analysis_engine.annotator.AnnotatorConfigurationException
 
 import org.apache.uima.cas.text.AnnotationIndex;
 
-import org.apache.uima.examples.tagger.IModelResource;
 import org.apache.uima.examples.tagger.Tagger;
 import org.apache.uima.examples.tagger.Viterbi;
 
@@ -41,7 +38,6 @@ public class HMMTagger extends JCasAnnotator_ImplBase implements Tagger {
 	/*
 	 * Parameter Definitions
 	 */
-
 	// n-gram model
 	private static final String pN = "NGRAM_SIZE";
 	private int N;

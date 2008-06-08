@@ -8,8 +8,46 @@
     <description/>
     <version>1.0</version>
     <vendor/>
-    <configurationParameters/>
-    <configurationParameterSettings/>
+    <configurationParameters searchStrategy="language_fallback">
+      <configurationParameter>
+        <name>Method</name>
+        <description>The mehod of input enhancement.
+
+One of:
+Markup
+Ask
+FIB</description>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>true</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>Tags</name>
+        <description>A list of tags to mark up.</description>
+        <type>String</type>
+        <multiValued>true</multiValued>
+        <mandatory>true</mandatory>
+      </configurationParameter>
+    </configurationParameters>
+    <configurationParameterSettings>
+      <nameValuePair>
+        <name>Method</name>
+        <value>
+          <string>Markup</string>
+        </value>
+      </nameValuePair>
+      <nameValuePair>
+        <name>Tags</name>
+        <value>
+          <array>
+            <string>NN</string>
+            <string>nn</string>
+            <string>np</string>
+            <string>NP</string>
+          </array>
+        </value>
+      </nameValuePair>
+    </configurationParameterSettings>
     <typeSystemDescription>
       <imports>
         <import location="../WERTiTypeSystem.xml"/>

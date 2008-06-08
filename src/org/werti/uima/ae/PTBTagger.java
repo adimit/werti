@@ -34,8 +34,7 @@ public class PTBTagger extends JCasAnnotator_ImplBase implements Tagger {
 	/*
 	 * Parameter definitions
 	 */
-
-
+	// Model file
 	private static final String pModel = "MODEL_LOCATION";
 
 	public void initialize(UimaContext context) throws ResourceInitializationException {
