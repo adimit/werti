@@ -27,6 +27,7 @@ import org.apache.uima.jcas.cas.StringArray;
 
 import org.apache.uima.resource.ResourceSpecifier;
 
+import org.apache.uima.util.InvalidXMLException;
 import org.apache.uima.util.XMLInputSource;
 
 import org.werti.uima.types.Enhancement;
@@ -39,6 +40,7 @@ import org.werti.uima.types.Enhancement;
 public class Interface extends HttpServlet {
 	static final long serialVersionUID = 0;
 	private static final String PREFIX = "/home/aleks/src/werti/desc/operators/";
+	private static final String ENHNCE = "/home/aleks/src/werti/desc/enhancers/PoSEnhancer.xml";
 
 	private static final Logger log = Logger.getLogger("org.werti");
 
@@ -49,7 +51,7 @@ public class Interface extends HttpServlet {
 		log.setLevel(Level.ALL);
 
 		// Get parameters
-		final String[] tags = request.getParameter("tags").split("\\s*,\\ss*");
+		final String[] tags = request.getParameter("tags").split("\\s*,\\s*");
 		final String tagger = request.getParameter("tagger");
 		final String termOrURL = request.getParameter("termOrUrl");
 		final String tokenizer = request.getParameter("tokenizer");
@@ -61,12 +63,12 @@ public class Interface extends HttpServlet {
 		// log this event's arguments
 		final Map<String,String[]> args = request.getParameterMap();
 		for (final Map.Entry<String,String[]> e: args.entrySet()) {
-		     final String[] vs = e.getValue();
-		     String r = "";
-		     for (String v: vs) {
-			  r += v + ", ";
-		     }
-		     log.config(e.getKey() + " = " + r);
+			final String[] vs = e.getValue();
+			String r = "";
+			for (String v: vs) {
+				r += v + ", ";
+			}
+			log.config(e.getKey() + " = " + r);
 		}
 
 		final String descriptor = PREFIX + tokenizer + "-" + tagger + "-hil.xml";
@@ -79,25 +81,41 @@ public class Interface extends HttpServlet {
 			log.severe("Input stream to " + termOrURL + " is broken!");
 		}
 
-		try {
-			final XMLInputSource xmlin = new XMLInputSource(descriptor);
-			final ResourceSpecifier spec = UIMAFramework.getXMLParser().parseResourceSpecifier(xmlin);
-			final AnalysisEngine ae  = UIMAFramework.produceAnalysisEngine(spec);
-			final JCas cas = ae.newJCas();
-
-			cas.setDocumentText(bis2str(in));
-			ae.process(cas);
-
-			final String enhanced = enhance(cas, baseurl);
-			out.print(enhanced);
-		} catch (Exception e) {
-			log.log(Level.SEVERE, "Processing encountered errors!", e);
-		}
-
-
 		response.setContentType("text/html");
 
+		try {
+			final XMLInputSource pre_xmlin = new XMLInputSource(descriptor);
+			final ResourceSpecifier pre_spec = 
+				UIMAFramework.getXMLParser().parseResourceSpecifier(pre_xmlin);
+			final AnalysisEngine preprocessor  = UIMAFramework.produceAnalysisEngine(pre_spec);
+			final JCas cas = preprocessor.newJCas();
+
+			cas.setDocumentText(bis2str(in));
+
+			preprocessor.process(cas);
+
+			final XMLInputSource post_xmlin = new XMLInputSource(ENHNCE);
+			final ResourceSpecifier post_spec = 
+				UIMAFramework.getXMLParser().parseResourceSpecifier(post_xmlin);
+			final AnalysisEngine postprocessor  = UIMAFramework.produceAnalysisEngine(post_spec);
+
+			postprocessor.setConfigParameterValue("Tags", tags);
+			postprocessor.setConfigParameterValue("enhance", enhance);
+
+			postprocessor.process(cas);
+
+			final String enhanced = enhance(cas, baseurl);
+
+			out.print(enhanced);
+		} catch (IOException ioe) {
+			log.log(Level.SEVERE, "Processing of " + descriptor + " encountered errors!", ioe);
+		} catch (InvalidXMLException ixmle) {
+			log.log(Level.SEVERE, "XML of " + descriptor + " seems to be invalid.", ixmle);
+		} catch (Exception e) {
+			log.log(Level.SEVERE, "Unknown problem occured: ", e);
+		}
 	}
+
 
 	private static String bis2str(BufferedReader in) {
 		StringBuilder sb = new StringBuilder();

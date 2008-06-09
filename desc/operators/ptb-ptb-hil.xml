@@ -12,9 +12,6 @@
     <delegateAnalysisEngine key="HTMLAnnotator">
       <import location="../annotators/HTMLAnnotator.xml"/>
     </delegateAnalysisEngine>
-    <delegateAnalysisEngine key="PoSEnhancer">
-      <import location="../enhancers/PoSEnhancer.xml"/>
-    </delegateAnalysisEngine>
     <delegateAnalysisEngine key="GenericRelevanceAnnotator">
       <import location="../annotators/relevance/GenericRelevanceAnnotator.xml"/>
     </delegateAnalysisEngine>
@@ -36,7 +33,6 @@
         <node>PTBTokenizer</node>
         <node>SentenceBoundaryDetector</node>
         <node>PTBTagger</node>
-        <node>PoSEnhancer</node>
       </fixedFlow>
     </flowConstraints>
     <fsIndexCollection/>

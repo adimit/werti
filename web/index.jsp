@@ -11,8 +11,8 @@
 	  <title>Welcome to WERTi</title>
      </head>
      <body>
-	  <h1>Welcome to WERTi</h1>
 	  <div class="text">
+	       <h1>Welcome to WERTi</h1>
 	       <div class="notice">
 		    This is the developer's backend of WERTi. If you're a user, we're sorry, but the user frontend
 		    is not yet written. Check back later.
@@ -22,9 +22,9 @@
 	       might still look different from what you expect. Please note problems to the
 	       <a href="mailto:admtrov@sfs.uni-tuebingen.de">administrator</a>.
 	  </div>
-	  <h2>Settings</h2>
-	  <form action="Interface" method="POST">
-	       <div class="text">
+	  <div class="text">
+	       <h2>Settings</h2>
+	       <form action="Interface" method="POST">
 		    <p>
 			 URL or search string: <input type="text" name="termOrUrl" size="30"/><br/>
 		    </p>
@@ -58,10 +58,10 @@
 		    <p>
 			 <input type="submit" value="Enhance"/>
 		    </p>
-	       </div>
-	  </form>
-	  <h2>Further Information</h2>
+	       </form>
+	  </div>
 	  <div class="text">
+	       <h2>Further Information</h2>
 	       Should you have questions about the system, you may 
 	       <a href="mailto:admtrov@sfs.uni-tuebingen.de">contact me</a>. You can also head over to 
 	       <a href="docs/">the documentation</a>

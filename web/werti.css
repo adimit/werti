@@ -5,11 +5,12 @@ body {
      font-family: Monospace;
 }
 h1,h2 {
-     background-color: #333;
+     background-color: #574;
+     border: 1px solid;
+     border-color: #251;
      font-family: Helvetica;
      color: #EEE;
      padding: 5px;
-     width: 80%;
 }
 form {
      line-height: 150%;
@@ -17,9 +18,11 @@ form {
 div.text {
      background-color: #333;
      border: 1px solid;
-     border-color: #222;
+     border-color: #999;
      padding: 5px;
      width: 80%;
+     margin-top: 2px;
+     margin-bottom: 2px;
 }
 div.notice {
      margin: 5px;
@@ -34,7 +37,6 @@ input {
      border: 1px solid;
      font-family: Monospace;
 }
-
 fieldset {
      border: 1px dotted;
 }

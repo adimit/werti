@@ -19,12 +19,30 @@ import org.werti.uima.types.annot.Token;
 
 
 public class PoSEnhancer extends JCasAnnotator_ImplBase {
-	private static final String TAG = "NN";
-
 	@SuppressWarnings("unchecked")
 	public void process(JCas cas) {
 		getContext().getLogger().log(Level.INFO,
 				"Starting enhancement");
+		Object o = getContext().getConfigParameterValue("Tags");
+		final String[] tags;
+		if (o instanceof String[]) {
+			tags = (String[]) o;
+			getContext().getLogger().log(Level.INFO, "Tags: ");
+			for (String s:tags) {
+				getContext().getLogger().log(Level.INFO, s);
+			}
+		} else {
+			throw new RuntimeException("Expected String Array as Paramater. Aborting");
+		}
+
+		o = getContext().getConfigParameterValue("enhance");
+		final String method;
+		if (o instanceof String) {
+			method = (String) o;
+		} else {
+			throw new RuntimeException("Expected String as Paramater. Aborting");
+		}
+
 		final FSIndex textIndex = cas.getAnnotationIndex(Token.type);
 		final Iterator<Token> tit = textIndex.iterator();
 
@@ -35,24 +53,31 @@ public class PoSEnhancer extends JCasAnnotator_ImplBase {
 						"Encountered token with NULL tag");
 				continue iteratetokens;
 			}
-			if (t.getTag().equals(TAG)) {
+			if (arrayContains(t.getTag(), tags)) {
 				Enhancement e = new Enhancement(cas);
 				e.setBegin(t.getBegin());
 				e.setEnd(t.getEnd());
-				StringArray  sa = new StringArray(cas, 2);
-				IntegerArray ia = new IntegerArray(cas, 2);
+				StringArray  csa = new StringArray(cas, 2);
+				IntegerArray cia = new IntegerArray(cas, 2);
 
-				sa.set(0, "<span style=\"color:blue;font-weight:bold\">");
-				sa.set(1, "</span>");
+				csa.set(0, "<span style=\"color:blue;font-weight:bold\">");
+				csa.set(1, "</span>");
 
-				ia.set(0, e.getBegin());
-				ia.set(1, e.getEnd());
-				e.setEnhancement_list(sa);
-				e.setIndex_list(ia);
+				cia.set(0, e.getBegin());
+				cia.set(1, e.getEnd());
+				e.setEnhancement_list(csa);
+				e.setIndex_list(cia);
 				e.addToIndexes();
 			}
 		}
 		getContext().getLogger().log(Level.INFO,
 				"Finished enhancement");
+	}
+	
+	private static boolean arrayContains(String data, String[] sa) {
+		for (String s:sa) {
+			if (s.equals(data)) return true;
+		}
+		return false;
 	}
 }
