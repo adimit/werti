@@ -1,28 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="build/WEB-INF/lib/jVinci.jar"/>
-	<classpathentry kind="lib" path="build/WEB-INF/lib/stanford-postagger.jar"/>
-	<classpathentry kind="lib" path="build/WEB-INF/lib/tomcat-juli.jar"/>
-	<classpathentry kind="lib" path="build/WEB-INF/lib/uima-adapter-soap.jar"/>
-	<classpathentry kind="lib" path="build/WEB-INF/lib/uima-adapter-vinci.jar"/>
-	<classpathentry kind="lib" path="build/WEB-INF/lib/uima-an-tagger.jar"/>
-	<classpathentry kind="lib" path="build/WEB-INF/lib/uima-core.jar"/>
-	<classpathentry kind="lib" path="build/WEB-INF/lib/uima-cpe.jar"/>
-	<classpathentry kind="lib" path="build/WEB-INF/lib/uima-document-annotation.jar"/>
-	<classpathentry kind="lib" path="build/WEB-INF/lib/uima-examples.jar"/>
-	<classpathentry kind="lib" path="build/WEB-INF/lib/uima-tools.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/jVinci.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/stanford-postagger.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/tomcat-juli.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/uima-adapter-soap.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/uima-adapter-vinci.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/uima-an-tagger.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/uima-core.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/uima-cpe.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/uima-document-annotation.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/uima-examples.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/uima-tools.jar"/>
+	<classpathentry kind="lib" path="/home/aleks/src/lib/lib-0.1.jar"/>
+	<classpathentry kind="lib" path="/home/aleks/opt/java/servlet-api.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="build/WEB-INF/classes"/>
 </classpath>

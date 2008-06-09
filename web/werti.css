@@ -1,0 +1,43 @@
+/* common elements */
+body {
+     background-color: #112;
+     color: #DDD;
+     font-family: Monospace;
+}
+h1,h2 {
+     background-color: #333;
+     font-family: Helvetica;
+     color: #EEE;
+     padding: 5px;
+}
+p {
+     background-color: #333;
+     border: 1px solid;
+     border-color: #222;
+     padding: 5px;
+}
+form {
+     line-height: 150%;
+}
+
+span.notice {
+     font-style: italic;
+     margin: 5px;
+}
+
+/* links */
+a:link {
+     color: #8a7;
+}
+a:visited {
+     color: #47B;
+}
+a:focus {
+     font-weight: bold;
+}
+a:hover {
+     background: #000;
+}
+a:active {
+     color: #FFF;
+}

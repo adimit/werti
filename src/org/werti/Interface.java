@@ -2,13 +2,13 @@ package org.werti;
 
 import java.io.*;
 
+import java.util.Map;
+
 import java.util.logging.*;
 
 import javax.servlet.*;
 
 import javax.servlet.http.*;
-
-import lib.html.HTML;
 
 /**
  * It will, according to its arguments, call the appropriate classes that
@@ -21,47 +21,24 @@ public class Interface extends HttpServlet {
 
 	private static final Logger log = Logger.getLogger("org.werti");
 
+	@SuppressWarnings("unchecked")
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
-		// DEBUG
-		log.setLevel(Level.FINEST);
-		response.setContentType("text/html");
-		PrintWriter out = response.getWriter();
-		out.print(HTML.preamble("Welcome to WERTi"));
-		out.print(HTML.element("h1", "Welcome to WERTi"));
-		out.print(HTML.element("p"
-			, "This is a preliminary site, which will eventually be replaced"
-			+ " by a nicer interface. Until then, you may query for an HTTP"
-			+ " address (URI) with the form below, or search for a term with"
-			+ " the other form. Note that not everything is already" 
-			+ " implemented ;-)"));
-		out.print(HTML.element("h4", "Query Specific URL"));
-		final HTML.Input[] e = { new HTML.Input("text", "url", "20") };
-		out.print(HTML.form("RequestURL", "POST", e));
-		out.print(HTML.element("h4", "Query English Wikipedia"));
-		final HTML.Input[] w = { new HTML.Input("text", "wikiquery", "20") };
-		out.print(HTML.form("/werti/RequestWiki", "POST", w));
-		out.print(HTML.element("h4", "Term Query"));
-		final HTML.Input[] t = { new HTML.Input("text", "termquery", "20") };
-		out.print(HTML.form("RequestTerm", "POST", t));
-
-		out.print(HTML.hline());
-
-		out.print(HTML.element("h2", "System status"));
-
-		log.setLevel(Level.FINEST);
-		try {
-			LogManager.getLogManager().checkAccess();
-			out.print("Logger status: OK" + HTML.BR);
-		} catch (SecurityException se) {
-			out.print("Logger status: Broken" + HTML.BR);
+		log.setLevel(Level.ALL);
+		final Map<String,String[]> args = request.getParameterMap();
+		for (final Map.Entry<String,String[]> e: args.entrySet()) {
+		     final String[] vs = e.getValue();
+		     String r = "";
+		     for (String v: vs) {
+			  r += v + ", ";
+		     }
+		     log.info(e.getKey() + " = " + r);
 		}
-
-		out.print(HTML.footer());
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
 		log.info("Requested" + request.getRequestURI());
+		doGet(request, response);
 	}
 }

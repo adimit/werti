@@ -51,7 +51,7 @@
 
     <servlet-mapping>
 	    <servlet-name>Interface</servlet-name>
-	    <url-pattern>/</url-pattern>
+	    <url-pattern>/Interface</url-pattern>
     </servlet-mapping>
 
     <session-config>

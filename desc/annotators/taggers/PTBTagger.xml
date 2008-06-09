@@ -21,7 +21,7 @@
       <nameValuePair>
         <name>MODEL_LOCATION</name>
         <value>
-          <string>org/werti/resources/models/ptbtagger/bidirectional-wsj-0-18.tagger</string>
+          <string>/home/aleks/src/werti/src/org/werti/resources/models/ptbtagger/bidirectional-wsj-0-18.tagger</string>
         </value>
       </nameValuePair>
     </configurationParameterSettings>

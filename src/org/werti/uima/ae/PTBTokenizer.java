@@ -6,8 +6,6 @@ import java.util.Iterator;
 
 import edu.stanford.nlp.ling.Word;
 
-import edu.stanford.nlp.process.PTBTokenizer;
-
 import org.apache.uima.analysis_component.JCasAnnotator_ImplBase;
 
 import org.apache.uima.cas.FSIndex;
@@ -19,7 +17,7 @@ import org.apache.uima.util.Level;
 import org.werti.uima.types.annot.RelevantText;
 import org.werti.uima.types.annot.Token;
 
-public class Tokenizer extends JCasAnnotator_ImplBase {
+public class PTBTokenizer extends JCasAnnotator_ImplBase {
 
 	/**
 	 * Go through all relevant text areas in the RelevantText-AnnotationIndex and annotate them
@@ -36,7 +34,8 @@ public class Tokenizer extends JCasAnnotator_ImplBase {
 		while (tit.hasNext()) {
 			final RelevantText rt = tit.next();
 			final String span = rt.getCoveredText();
-			final PTBTokenizer<Word> tokzr = PTBTokenizer.newPTBTokenizer(new StringReader(span), false);
+			final edu.stanford.nlp.process.PTBTokenizer<Word> tokzr =
+				edu.stanford.nlp.process.PTBTokenizer.newPTBTokenizer(new StringReader(span), false);
 
 			// global and local skews
 			final int gskew = rt.getBegin();

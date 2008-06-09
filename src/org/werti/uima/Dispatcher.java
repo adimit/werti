@@ -20,7 +20,6 @@ import org.apache.uima.cas.FSIndex;
 import org.apache.uima.jcas.JCas;
 
 import org.apache.uima.jcas.cas.IntegerArray;
-import org.apache.uima.jcas.cas.IntegerList;
 import org.apache.uima.jcas.cas.StringArray;
 
 import org.apache.uima.resource.ResourceInitializationException;
@@ -74,8 +73,7 @@ public class Dispatcher {
 			log.severe("Check your XML in: " + cfg.getDescriptor());
 			throw new UnrecoverableUIMAException(ixmle);
 		} catch (ResourceInitializationException rie) {
-			log.severe("Failed to initialize resource. Dumping Stack:\n"
-					+ rie.getStackTrace());
+			log.log(Level.SEVERE, "Failed to initialize resource. Dumping Stack:\n", rie);
 			throw new UnrecoverableUIMAException(rie);
 		} 
 	}
@@ -138,7 +136,7 @@ public class Dispatcher {
 		int skew = docText.indexOf("<head");
 		skew = docText.indexOf('>',skew)+1;
 
-		final String basetag = "<base href=\"" + baseurl + "\" />";
+		final String basetag = "<base href=\"http://" + baseurl + "\" />";
 		rtext.insert(skew, basetag);
 		skew = basetag.length();
 

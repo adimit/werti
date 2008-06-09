@@ -2,8 +2,6 @@ package org.werti;
 
 import java.io.*;
 
-import java.util.Enumeration;
-
 import java.util.logging.*;
 
 import javax.servlet.*;
@@ -35,35 +33,18 @@ public class RequestURL extends HttpServlet {
 		log.info("Fetched " + article);
 		log.info("baseurl: " + baseurl);
 
-		// DEBUG 
 		if (!in.ready()) {
 			log.severe("Input stream to " + article + " not ready!");
 		}
 
 		try {
 			final Dispatcher d = new Dispatcher(new Config(
-						"/home/aleks/src/werti/desc/operators/BlueTest.xml", baseurl), out);
+						"/home/aleks/src/werti/desc/testers/PTBTest.xml", baseurl), out);
 			d.process(in);
 			out.print(d.get_results());
 		} catch (org.werti.uima.UnrecoverableUIMAException uuimae) {
 			ErrorPage.show(out, uuimae);
 		}
-	}
-
-	// DEBUG method
-	private static void logRequestHeader(HttpServletRequest r) {
-		log.fine("ContextPath: " + r.getContextPath());
-		final Enumeration<String> e = r.getHeaderNames();
-		while (e.hasMoreElements()) {
-			final String s = e.nextElement();
-			log.fine("Header: " + s + "\n" + r.getHeader(s));
-			
-		}
-	}
-
-	// DEBUG method
-	private static void logResponseHeader(HttpServletResponse r) {
-
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
