@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+  <primitive>false</primitive>
+  <delegateAnalysisEngineSpecifiers>
+    <delegateAnalysisEngine key="PTBTokenizer">
+      <import location="../annotators/PTBTokenizer.xml"/>
+    </delegateAnalysisEngine>
+    <delegateAnalysisEngine key="SentenceBoundaryDetector">
+      <import location="../annotators/SentenceBoundaryDetector.xml"/>
+    </delegateAnalysisEngine>
+    <delegateAnalysisEngine key="HTMLAnnotator">
+      <import location="../annotators/HTMLAnnotator.xml"/>
+    </delegateAnalysisEngine>
+    <delegateAnalysisEngine key="PoSEnhancer">
+      <import location="../enhancers/PoSEnhancer.xml"/>
+    </delegateAnalysisEngine>
+    <delegateAnalysisEngine key="GenericRelevanceAnnotator">
+      <import location="../annotators/relevance/GenericRelevanceAnnotator.xml"/>
+    </delegateAnalysisEngine>
+    <delegateAnalysisEngine key="PTBTagger">
+      <import location="../annotators/taggers/PTBTagger.xml"/>
+    </delegateAnalysisEngine>
+  </delegateAnalysisEngineSpecifiers>
+  <analysisEngineMetaData>
+    <name>ptb-ptb-hil</name>
+    <description/>
+    <version>1.0</version>
+    <vendor/>
+    <configurationParameters/>
+    <configurationParameterSettings/>
+    <flowConstraints>
+      <fixedFlow>
+        <node>HTMLAnnotator</node>
+        <node>GenericRelevanceAnnotator</node>
+        <node>PTBTokenizer</node>
+        <node>SentenceBoundaryDetector</node>
+        <node>PTBTagger</node>
+        <node>PoSEnhancer</node>
+      </fixedFlow>
+    </flowConstraints>
+    <fsIndexCollection/>
+    <capabilities>
+      <capability>
+        <inputs/>
+        <outputs/>
+        <languagesSupported/>
+      </capability>
+    </capabilities>
+    <operationalProperties>
+      <modifiesCas>true</modifiesCas>
+      <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+      <outputsNewCASes>false</outputsNewCASes>
+    </operationalProperties>
+  </analysisEngineMetaData>
+  <resourceManagerConfiguration/>
+</analysisEngineDescription>
