@@ -10,9 +10,10 @@ import javax.servlet.*;
 
 import javax.servlet.http.*;
 
+import org.werti.uima.UnrecoverableUIMAException;
+
 /**
  * It will, according to its arguments, call the appropriate classes that
- * This is the base web interface class of WERTi.
  * are needed to fulfill a specific task.
  */
 
@@ -24,6 +25,12 @@ public class Interface extends HttpServlet {
 	@SuppressWarnings("unchecked")
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
+		final String[] tags = request.getParameter("tags").split("\\s*,\\ss*");
+		final String tagger = request.getParameter("tagger");
+		final String termOrURL = request.getParameter("termOrUrl");
+		final String tokenizer = request.getParameter("tokenizer");
+		final String enhance = request.getParameter("enhance");
+
 		log.setLevel(Level.ALL);
 		final Map<String,String[]> args = request.getParameterMap();
 		for (final Map.Entry<String,String[]> e: args.entrySet()) {
@@ -32,8 +39,22 @@ public class Interface extends HttpServlet {
 		     for (String v: vs) {
 			  r += v + ", ";
 		     }
-		     log.info(e.getKey() + " = " + r);
+		     log.config(e.getKey() + " = " + r);
 		}
+	}
+
+	private static String getTokenizer(String tok) throws UnrecoverableUIMAException {
+		if (tok.equals("ptb")) {
+			return "desc/annotators/PTBTokenizer.xml";
+		} else if (tok.equals("lgp")) {
+			return "desc/annotators/LingPipeTokenizer.xml";
+		} else if (tok.equals("own")) {
+			return "desc/annotators/SimpleTokenizer.xml";
+		} else throw new UnrecoverableUIMAException("Unkonwn tokenizer: " + tok);
+	}
+
+	private static String getTagger(String tag) {
+		return null;
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
