@@ -11,6 +11,7 @@
    - demonize
 
 *** Bugs
+ * fib is put into anchors currently, which is awkward.
  * Don't screw up on html tags with &lt; and &gt; entities instead of < and >.
  * does the HTML annotation really need the tag-name field?
 

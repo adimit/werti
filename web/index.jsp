@@ -15,7 +15,10 @@
 	       <h1>Welcome to WERTi</h1>
 	       <div class="notice">
 		    This is the developer's backend of WERTi. If you're a user, we're sorry, but the user frontend
-		    is not yet written. Check back later.
+		    is not yet written. Check back later or try the 
+		    <a href="http://prospero.ling.ohio-state.edu/WERTi/index.py/main?what=about">
+			 original implementation of WERTi
+		    </a>.
 	       </div>
 	       Please spcify a URL you want to send through the system, an input enhancement method
 	       and a set of tags you want to see enhanced in the website's tags. Please note that some pages

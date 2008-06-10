@@ -203,8 +203,42 @@ public class PoSEnhancer extends JCasAnnotator_ImplBase {
 	}
 
 	// put annotations for asking enhancement in the CAS
+	@SuppressWarnings("unchecked")
 	private static void ask(JCas cas, String[] tags, UimaContext context) {
-	
+		final FSIndex textIndex = cas.getAnnotationIndex(Token.type);
+		final Iterator<Token> tit = textIndex.iterator();
+
+		Token t = tit.next();
+
+		iteratetokens: while (tit.hasNext()) {
+			if (t.getTag() == null) {
+				context.getLogger().log(Level.WARNING,
+						"Encountered token with NULL tag");
+				tit.next();
+				continue iteratetokens;
+			}
+			final Enhancement e = new Enhancement(cas);
+			e.setBegin(t.getBegin());
+			e.setEnd(t.getEnd());
+			final StringArray  sa = new StringArray(cas, 2);
+			final IntegerArray ia = new IntegerArray(cas, 2);
+
+			sa.set(0, "<a href=\"javascript:void(null)\" stlye=\"color:black!important;\" "
+					+ "onclick=\"{this.style.color = '"
+					+ ((arrayContains(t.getTag(), tags))
+					  ? "green"
+					  : "red")
+					+ "'; this.style.fontWeight = 'bold';}\">"
+					);
+
+			sa.set(1, "</a>" );
+			ia.set(0, e.getBegin());
+			ia.set(1, e.getEnd());
+			e.setEnhancement_list(sa);
+			e.setIndex_list(ia);
+			e.addToIndexes();
+			t = tit.next();
+		}
 	}
 	
 	// does an array of Strings contain a given String?
