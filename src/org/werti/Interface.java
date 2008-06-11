@@ -39,7 +39,7 @@ import org.werti.uima.types.Enhancement;
 
 public class Interface extends HttpServlet {
 	static final long serialVersionUID = 0;
-	private static final String PREFIX = "/home/aleks/src/werti/desc/operators/";
+	private static final String PREFIX = "/var/local/werti/resources/descriptors/";
 	private static final String ENHNCE = "/home/aleks/src/werti/desc/enhancers/PoSEnhancer.xml";
 
 	private static final Logger log = Logger.getLogger("org.werti");

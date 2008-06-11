@@ -35,7 +35,7 @@
 	<property name="compile.debug"       value="true"/>
 	<property name="compile.deprecation" value="false"/>
 	<property name="compile.optimize"    value="true"/>
-
+	<property name="target.version"      value="1.5"/>
 
 
 	<!-- External Dependencies -->
@@ -45,6 +45,7 @@
 	<property name="tomcat-juli.jar" value="${basedir}/web/WEB-INF/lib/tomcat-juli.jar"/>
 	<property name="stanford-postagger.jar" value="${basedir}/web/WEB-INF/lib/stanford-postagger.jar"/>
 	<property name="lib-0.1.jar" value="/home/aleks/src/lib/lib-0.1.jar"/>
+
 
 
 	<!-- Compilation Classpath -->
@@ -100,6 +101,7 @@
 				destdir="${build.home}/WEB-INF/classes"
 				debug="${compile.debug}"
 				deprecation="${compile.deprecation}"
+				target="${target.version}"
 				optimize="${compile.optimize}">
 			<classpath refid="compile.classpath"/>
 		</javac>
