@@ -19,36 +19,6 @@
 	    <servlet-class>org.werti.Interface</servlet-class>
     </servlet>
 
-    <servlet>
-	    <servlet-name>RequestWiki</servlet-name>
-	    <servlet-class>org.werti.RequestWiki</servlet-class>
-    </servlet>
-
-    <servlet>
-	    <servlet-name>RequestURL</servlet-name>
-	    <servlet-class>org.werti.RequestURL</servlet-class>
-    </servlet>
-
-    <servlet>
-	    <servlet-name>RequestReuters</servlet-name>
-	    <servlet-class>org.werti.RequestReuters</servlet-class>
-    </servlet>
-    
-    <servlet-mapping>
-	    <servlet-name>RequestWiki</servlet-name>
-	    <url-pattern>/RequestWiki</url-pattern>
-    </servlet-mapping>
-
-    <servlet-mapping>
-	    <servlet-name>RequestURL</servlet-name>
-	    <url-pattern>/RequestURL</url-pattern>
-    </servlet-mapping>
-
-    <servlet-mapping>
-	    <servlet-name>RequestReuters</servlet-name>
-	    <url-pattern>/RequestReuters</url-pattern>
-    </servlet-mapping>
-
     <servlet-mapping>
 	    <servlet-name>Interface</servlet-name>
 	    <url-pattern>/Interface</url-pattern>
