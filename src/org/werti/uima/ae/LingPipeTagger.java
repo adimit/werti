@@ -11,10 +11,10 @@ import org.apache.uima.jcas.JCas;
 public class LingPipeTagger extends JCasAnnotator_ImplBase implements Tagger {
 
 	public void process(JCas cas) {
-	
+
 	}
 
 	public void initialize(UimaContext context) {
-	
+
 	}
 }

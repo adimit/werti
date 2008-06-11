@@ -1,0 +1,87 @@
+\documentclass{article}
+
+\usepackage[english]{babel}
+\usepackage{qtree}
+\usepackage[utf8x]{inputenc}
+\usepackage{linguex}
+
+\author{Aleksandar Dimitrov}
+\title{WERTi - Easing Second Language Acquisition}
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+
+\section*{Preface}
+
+\section{Introduction}
+
+Using tools and methods made available through new achievements in computational
+linguistics and related subjects like cognitive science to ease the process of
+second language acquisition has only recently gained focus in research projects.
+While adaptions of traditional data sources like dictionaries have been used for
+quite a while we have yet to discover new and effective ways of 
+
+WERTi tries to approach this probmlem from a more general perspective. Making
+use of the the momentum of the Internet, WERTi provides a platform for
+implementing linguistic analysis and subsequent input enhancement methods on
+user specified pages on the World Wide Web. Using Java Servlets technology for
+serving content and the UIMA framework for processing it in a dynamic and
+flexible session, we aim to provide a platform for linguistic processing of
+online content that can go beyond input enhancement.
+
+\subsection{Acknowledgements}
+
+I'd like to thank my advisor \textsc{Detmar Meurers} for providing me with the
+unique opportunity on working on the WERTi system. WERTi was originally thought
+out and developed in Python by him and his team at the Ohio State University. My
+job was to port the system he had already written to Java using UIMA and
+generalize the concept as to make it easier to implement new functions.
+
+I would also like to thank \textsc{Janina Radó}, who provided me with invaluable feedback
+about the general style guidelines of papers of this kind.
+
+Furthermore I'd like to thank , , , and for providing testing the system and for
+their suggestions, remarks and feature requests.
+
+\section{Explaining the Core Functionality}
+
+\subsection{UIMA Analysis Engines}
+
+The current processing line can be split up into three different parts that can
+interact autonomously themselves but each depend on the output of their
+predecessor. The components are arranged in the following manner:
+
+\begin{itemize}
+
+\item[HTML processing:] annotates HTML tags, finds ``relevant'' text within the
+tags.
+
+\item[Linguistic processing:] performs linguistic tasks (tokenization, sentence
+boundary detection, part-of-speech tagging\ldots{}) on the text-annoatations
+from the previous processing step.
+
+\item[Post processing:] Performs all sorts of content enhancement on the
+annotations of the previous two processing steps.
+
+\end{itemize}
+
+\subsubsection{HTML Processing}
+
+\subsubsection{Linguistic Processing}
+
+\subsubsection{Post Processing - Input Enhancement}
+
+\section{The User Inteface}
+
+\subsection{Web Interface}
+
+\subsection{Programming Interface}
+
+\section{Conclusion}
+
+\subsection{Loose Ends}
+
+\end{document}
+

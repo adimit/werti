@@ -22,8 +22,6 @@
 ************
 - implement HTML parser [0]
 - Implement TreeTagger and lingpipe
-- put a DocumentAnnotation somewhere in the preamble that 
-  would hold <script>s for the enhancements to use
 - Use HTML entities in sentence boundary followers (like, for " or similar)
 - Internationalize the exceptions, logging, whole application following [1]
 - Interactive Passivator

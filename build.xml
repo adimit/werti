@@ -18,6 +18,10 @@
 	<property name="src.home"      value="${basedir}/src"/>
 	<property name="web.home"      value="${basedir}/web"/>
 
+	<!-- Zappa targets -->
+	<property name="remote.manager.url"   value="http://zappa.sfs.uni-tuebingen.de:8180/manager"/>
+	<property name="remote.manager.username" value="manager"/>
+	<property name="remote.manager.password" value="_c,f0D"/>
 
 	<!-- Task definitions -->
 	<taskdef name="deploy"   classname="org.apache.catalina.ant.DeployTask"/>
@@ -176,9 +180,6 @@
 
 	</target>
 
-
-	<!-- Reload Target -->
-
 	<target name="reload" depends="compile" description="Reload application on servlet container">
 
 		<reload url="${manager.url}"
@@ -193,6 +194,35 @@
 		<undeploy url="${manager.url}"
 				username="${manager.username}"
 				password="${manager.password}"
+				path="${app.path}"/>
+
+	</target>
+
+	<!--remote targets -->
+	<target name="zappa.install" depends="compile" description="Install application to servlet container">
+
+		<deploy url="${remote.manager.url}"
+				username="${remote.manager.username}"
+				password="${remote.manager.password}"
+				path="${app.path}"
+				localWar="file://${build.home}"/>
+
+	</target>
+
+	<target name="zappa.reload" depends="compile" description="Reload application on servlet container">
+
+		<reload url="${remote.manager.url}"
+				username="${remote.manager.username}"
+				password="${remote.manager.password}"
+				path="${app.path}"/>
+
+	</target>
+
+	<target name="zappa.remove" description="Remove application on servlet container">
+
+		<undeploy url="${remote.manager.url}"
+				username="${remote.manager.username}"
+				password="${remote.manager.password}"
 				path="${app.path}"/>
 
 	</target>
