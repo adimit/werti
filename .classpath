@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/jVinci.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/lib-0.1.jar"/>
+	<classpathentry kind="lib" path="/home/aleks/src/lib/lib-0.1.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/tomcat-juli.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/uima-adapter-soap.jar"/>
 	<classpathentry kind="lib" path="/home/aleks/opt/java/servlet-api.jar"/>

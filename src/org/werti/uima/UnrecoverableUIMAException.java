@@ -7,8 +7,6 @@ public class UnrecoverableUIMAException extends Exception {
 		
 	}
 
-	foo
-
 	public UnrecoverableUIMAException(String arg0) {
 		super(arg0);
 		// TODO Auto-generated constructor stub

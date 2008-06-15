@@ -2,10 +2,10 @@ package org.werti;
 
 import java.io.*;
 import java.io.BufferedReader;
-import java.io.InputStream;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -16,6 +16,8 @@ import java.util.logging.Level;
 import javax.servlet.*;
 
 import javax.servlet.http.*;
+
+import lib.util.Pair;
 
 import org.apache.uima.UIMAFramework;
 
@@ -60,9 +62,6 @@ public class Interface extends HttpServlet {
 		final String tokenizer = request.getParameter("tokenizer");
 		final String enhance = request.getParameter("enhance");
 
-		final String baseurl = find_baseurl(termOrURL);
-		log.fine("Fetching: " + termOrURL + "; baseurl = " + baseurl);
-
 		// log this event's arguments
 		final Map<String,String[]> args = request.getParameterMap();
 		for (final Map.Entry<String,String[]> e: args.entrySet()) {
@@ -78,13 +77,15 @@ public class Interface extends HttpServlet {
 		log.config("Calling descriptor " + descriptor);
 
 		final PrintWriter out = response.getWriter();
-		final BufferedReader in = fetch(termOrURL);
+		final Pair<String,String> content = fetch(termOrURL);
 
-		if (!in.ready()) {
-			log.severe("Input stream to " + termOrURL + " is broken!");
-		} else {
-			log.info("Input stream to " + termOrURL + " seems to be fine.");
-		}
+                /*
+		 *if (!connection.getL().ready()) {
+		 *        log.severe("Input stream to " + connection.getR() + " is broken!");
+		 *} else {
+		 *        log.info("Input stream to " + connection.getR() + " seems to be fine.");
+		 *}
+                 */
 
 		response.setContentType("text/html");
 
@@ -95,9 +96,7 @@ public class Interface extends HttpServlet {
 			final AnalysisEngine preprocessor  = UIMAFramework.produceAnalysisEngine(pre_spec);
 			final JCas cas = preprocessor.newJCas();
 
-			final String s = bis2str(in);
-			log.info("Input length = " + s.length());
-			cas.setDocumentText(s);
+			cas.setDocumentText(content.getL());
 
 			preprocessor.process(cas);
 
@@ -111,7 +110,7 @@ public class Interface extends HttpServlet {
 
 			postprocessor.process(cas);
 
-			final String enhanced = enhance(cas, baseurl);
+			final String enhanced = enhance(cas, content.getR());
 
 			out.print(enhanced);
 		} catch (IOException ioe) {
@@ -124,13 +123,14 @@ public class Interface extends HttpServlet {
 	}
 
 
-	private String bis2str(BufferedReader in) {
+	private static String bis2str(BufferedReader in) {
 		final StringBuilder sb = new StringBuilder();
 		try {
 			if (!in.ready()) {
 				log.severe("Input stream is broken!");
+				throw new RuntimeException("No input stream to read from!");
 			} else {
-				log.info("Input stream seems to be fine.");
+				log.fine("Input stream seems to be fine.");
 			}
 			while (in.ready()) {
 				final String s = in.readLine();
@@ -193,31 +193,22 @@ public class Interface extends HttpServlet {
 	}
 
 	/**
-	 * Open a buffered input stream to the url.
+	 * Retrieve the text on a web page.
 	 *  
-	 * Oddly enough, this doesn't seem to work with a URLConnection (not for Reuters at least)
-	 * and has to be done using the InputStream from the URL directly. This may be a bug in 
-	 * Sun's libs.
+	 * @return A pair, whose left element is the document text and the right element is the base_url.
 	 */
-	private static BufferedReader fetch(String site_url) throws MalformedURLException, IOException {
+	private Pair<String,String> fetch(String site_url) throws MalformedURLException, IOException {
 		final URL url = new URL(site_url);
-		log.fine("Host name of target URL '" + site_url +"': " + url.getHost());
-		final InputStream urlstream = url.openStream();
-		//final URLConnection uc = url.openConnection();
-		//final InputStream content = uc.getInputStream();
-		return new BufferedReader(new InputStreamReader(urlstream));
-	}
+		final String base_url = "http://" + url.getHost();
+		log.fine("Host name of target URL '" + site_url +"': " + base_url);
 
-	/**
-	 * Returns the baseURL for the given String.
-	 *
-	 * @param s A String containing a URL
-	 *
-	 * @return The baseURL of s
-	 */
-	private static String find_baseurl(final String s) throws MalformedURLException {
-		final URL url = new URL(s);
-		return url.getHost();
-	}
+		final URLConnection uc = url.openConnection();
+		final BufferedReader content = new BufferedReader(new InputStreamReader(uc.getInputStream()));
 
+		final String text = bis2str(content);
+
+		content.close();
+
+		return new Pair<String,String>(text,base_url);
+	}
 }
