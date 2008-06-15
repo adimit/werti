@@ -2,7 +2,7 @@
 
  * Fix encoding problem with Net.fetch()
  * NullPointerException when klicking on Reuter's 'next page'
- * Connection still seems flaky for some reason or another.
+ * click on the words has a problem with [2]
 
 *** Important
 
@@ -13,7 +13,6 @@
 *** Bugs
  * fib is put into anchors currently, which is awkward.
  * Don't screw up on html tags with &lt; and &gt; entities instead of < and >.
- * does the HTML annotation really need the tag-name field?
 
 *** Showstoppers
  * Update README
@@ -31,3 +30,4 @@ References:
 ===========
 [0]	http://htmlparser.sourceforge.net/
 [1]	http://java.sun.com/j2se/1.5.0/docs/guide/intl/index.html
+[2]	http://www.bbcworld.com/Pages/ProgrammeFeature.aspx?id=106&FeatureId=798

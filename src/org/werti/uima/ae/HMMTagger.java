@@ -2,7 +2,6 @@ package org.werti.uima.ae;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectInputStream;
 
 import java.util.ArrayList;
@@ -40,11 +39,11 @@ public class HMMTagger extends JCasAnnotator_ImplBase implements Tagger {
 	 */
 	// n-gram model
 	private static final String pN = "NGRAM_SIZE";
-	private int N;
+	private static int N;
 
 	// model generation
 	private static final String pModel = "MODEL_LOCATION";
-	private ModelGeneration model;
+	private static ModelGeneration model;
 
 	/**
 	 * Initializes the HMMTagger with a model supplied by the configuration-resource
@@ -55,8 +54,10 @@ public class HMMTagger extends JCasAnnotator_ImplBase implements Tagger {
 	public void initialize(final UimaContext context) throws ResourceInitializationException {
 		super.initialize(context);
 		try {
-			this.N = (Integer) context.getConfigParameterValue(pN);
-			this.model = get_model(context);
+			N = (Integer) context.getConfigParameterValue(pN);
+			if (model == null) {
+				model = get_model(context);
+			}
 		} catch (AnnotatorConfigurationException ace) {
 			throw new ResourceInitializationException(ace);
 		} catch (Exception e) {
@@ -130,14 +131,14 @@ public class HMMTagger extends JCasAnnotator_ImplBase implements Tagger {
 				wlist.add(t.getCoveredText());
 			}
 
-			wlist = viterbi(this.N, this.model, wlist);
+			wlist = viterbi(N, model, wlist);
 
 			assert true: wlist.size() == tlist.size();
 
 			for (int i = 0; i < tlist.size(); i++) {
 				final Token t = tlist.get(i);
 				final String tag = wlist.get(i);
-				t.setTag(tag);
+				t.setTag(tag.toUpperCase());
 			}
 		}
 	}

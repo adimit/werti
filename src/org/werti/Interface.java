@@ -77,7 +77,11 @@ public class Interface extends HttpServlet {
 		log.config("Calling descriptor " + descriptor);
 
 		final PrintWriter out = response.getWriter();
-		final Pair<String,String> content = fetch(termOrURL);
+
+		// start fetching the site in background
+		log.fine("Fetching site " + termOrURL);
+		final Fetcher fetcher = new Fetcher(termOrURL);
+		fetcher.start();
 
                 /*
 		 *if (!connection.getL().ready()) {
@@ -90,20 +94,31 @@ public class Interface extends HttpServlet {
 		response.setContentType("text/html");
 
 		try {
+			// preprocessor
 			final XMLInputSource pre_xmlin = new XMLInputSource(descriptor);
 			final ResourceSpecifier pre_spec = 
 				UIMAFramework.getXMLParser().parseResourceSpecifier(pre_xmlin);
 			final AnalysisEngine preprocessor  = UIMAFramework.produceAnalysisEngine(pre_spec);
 			final JCas cas = preprocessor.newJCas();
 
-			cas.setDocumentText(content.getL());
-
-			preprocessor.process(cas);
-
+			// postprocessor
 			final XMLInputSource post_xmlin = new XMLInputSource(ENHNCE);
 			final ResourceSpecifier post_spec = 
 				UIMAFramework.getXMLParser().parseResourceSpecifier(post_xmlin);
 			final AnalysisEngine postprocessor  = UIMAFramework.produceAnalysisEngine(post_spec);
+
+			log.fine("Initialized UIMA components.");
+
+			// wait for document text to be available
+			while (fetcher.r == null) {
+				fetcher.join(100);
+			}
+
+			final Pair<String,String> content = fetcher.r;
+
+			cas.setDocumentText(content.getL());
+
+			preprocessor.process(cas);
 
 			postprocessor.setConfigParameterValue("Tags", tags);
 			postprocessor.setConfigParameterValue("enhance", enhance);
@@ -123,6 +138,7 @@ public class Interface extends HttpServlet {
 	}
 
 
+	// converts a buffered reader to a String. Don't forget to close it.
 	private static String bis2str(BufferedReader in) {
 		final StringBuilder sb = new StringBuilder();
 		try {
@@ -146,7 +162,8 @@ public class Interface extends HttpServlet {
 	/** 
 	 * Input-Enhances the CAS given with Enhancement annotations.
 	 *
-	 * This is an easy to understand version of enhance.
+	 * This is an easy to understand version of enhance, using StringBuilders insert() rather
+	 * than appending to it and minding skews.
 	 *
 	 * @param cas The cas to enhance.
 	 */
@@ -158,7 +175,7 @@ public class Interface extends HttpServlet {
 		int skew = docText.indexOf("<head");
 		skew = docText.indexOf('>',skew)+1;
 
-		final String basetag = "<base href=\"http://" + baseurl + "\" />";
+		final String basetag = "<base href=\"" + baseurl + "\" />";
 		rtext.insert(skew, basetag);
 		skew = basetag.length();
 
@@ -170,10 +187,10 @@ public class Interface extends HttpServlet {
 			final StringArray sa = e.getEnhancement_list();
 			final IntegerArray ia = e.getIndex_list();
 			if (sa == null || ia == null) {
-				log.severe("Found no eList or iList on Enhancement");
+				log.warning("Found no eList or iList on Enhancement");
 				continue;
 			}
-			assert sa.size() == ia.size();
+			assert true: sa.size() == ia.size();
 			for (int p = 0; p < sa.size(); p++) {
 				final String s = sa.get(p);
 				final int i = ia.get(p)+skew;
@@ -192,23 +209,44 @@ public class Interface extends HttpServlet {
 		doGet(request, response);
 	}
 
+
 	/**
-	 * Retrieve the text on a web page.
-	 *  
-	 * @return A pair, whose left element is the document text and the right element is the base_url.
+	 * Retrieves the text on a web page.
 	 */
-	private Pair<String,String> fetch(String site_url) throws MalformedURLException, IOException {
-		final URL url = new URL(site_url);
-		final String base_url = "http://" + url.getHost();
-		log.fine("Host name of target URL '" + site_url +"': " + base_url);
+	private static class Fetcher extends Thread { 
+		Pair<String,String> r;
+		final String site_url;
 
-		final URLConnection uc = url.openConnection();
-		final BufferedReader content = new BufferedReader(new InputStreamReader(uc.getInputStream()));
+		public Fetcher(final String url) {
+			this.site_url = url;
+		}
 
-		final String text = bis2str(content);
+		public void run() {
+			try {
+				final URL url = new URL(site_url);
+				final String base_url = "http://" + url.getHost();
+				log.fine("Host name of target URL '" + site_url +"': " + base_url);
 
-		content.close();
+				final URLConnection uc = url.openConnection();
+				final BufferedReader content = new BufferedReader(new InputStreamReader(uc.getInputStream()));
 
-		return new Pair<String,String>(text,base_url);
+				if (content.ready()) {
+					log.fine("Connections seems live.");
+				} else {
+					log.severe("Connection is dead.");
+				}
+
+				final String text = bis2str(content);
+
+				content.close();
+
+				this.r = new Pair<String,String> (text,base_url);
+				log.fine("Fetched site.");
+			} catch (MalformedURLException murle) {
+				log.severe(site_url + " is a malformed URL!");
+			} catch (IOException ioe) {
+				log.severe("Error reading " + site_url);
+			}
+		}
 	}
 }
