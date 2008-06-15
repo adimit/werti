@@ -1,0 +1,225 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+
+<html>
+<head>
+  <title>BananaSplit (Niels Ott)</title>
+  <meta name="language" content="en">
+<meta name="author" content="Niels Ott">
+<meta name="robots" content="Index,Follow">
+<meta name="keywords" content="deutsch,deutscher,compound,splitting,splitter,germanet,bounding,suffix,morpheme,german,iryna,gurevych,lexical,semantic,processing,evaluation,kompositatrennung,kompositatrenner,kompositazerlegung,kompositazerleger,komposita,kompositum,zerlegung,zerleger,trennung,trenner">
+
+  <meta name="MSSmartTagsPreventParsing" content="TRUE">
+  <meta http-equiv="Content-Type"        content="text/html; charset=iso-8859-1">
+  <meta http-equiv="Content-Language"    content="en">
+ <!-- <link rel="shortcut icon" href="/niels/drni.ico" />  -->
+  <link rel="stylesheet" type="text/css" href="/niels/lib/css/pages.css"> 
+  <script language="JavaScript" src="/niels/lib/js/pages.js" type="text/javascript"> </script>
+  
+</head>
+
+<body bgcolor="#F6F6F6">
+
+<center>
+<table>
+  <tr>
+    <td>
+    <!-- Titelzeile -->
+    <table bgcolor="#000000" cellpadding="10" cellspacing="3" border="0" width="100%">
+    <tr>
+    <td bgcolor="#D1D1D1" valign="middle"><h1 class="title">» /Niels Ott/Professional/BananaSplit</h1></td>
+    <td bgcolor="#000000" valign="middle" width="50"><img src="/niels/lib/icons/schreiben.png" width="50" height="50" alt=""></td>
+    </tr>
+    </table>
+    </td>    
+  </tr>
+  <tr>
+    <td>
+    <!-- Navigator und Inhalt -->
+    <table bgcolor="#000000" cellpadding="10" cellspacing="3" border="0" width="100%">
+    <tr>
+    <td bgcolor="#EDEDED" class="menu" valign="top">
+	<table><tr><td class="menu"><img src="/niels/lib/gfx/space.gif" alt="&nbsp;" width="0" height="5" align="middle"><img src="/niels/lib/gfx/dot-1.png" alt="*" width="5" height="5" align="middle"></td><td class="menu"><a href="/niels/" class="menu">Niels&nbsp;Ott</a></td></tr></table>
+<table><tr><td class="menu"><img src="/niels/lib/gfx/space.gif" alt="&nbsp;" width="13" height="5" align="middle"><img src="/niels/lib/gfx/dot-2.png" alt="*" width="5" height="5" align="middle"></td><td class="menu"><a href="/niels/cl/" class="menu">Professional</a></td></tr></table>
+<table><tr><td class="menu"><img src="/niels/lib/gfx/space.gif" alt="&nbsp;" width="26" height="5" align="middle"><img src="/niels/lib/gfx/dot-3.png" alt="*" width="5" height="5" align="middle"></td><td class="menu"><a href="/niels/cl/bananasplit/" class="menu">BananaSplit</a></td></tr></table>
+<table><tr><td class="menu"><img src="/niels/lib/gfx/space.gif" alt="&nbsp;" width="26" height="5" align="middle"><img src="/niels/lib/gfx/dot-3.png" alt="*" width="5" height="5" align="middle"></td><td class="menu"><a href="/niels/cl/clusterlib/" class="menu">ClusterLib</a></td></tr></table>
+<table><tr><td class="menu"><img src="/niels/lib/gfx/space.gif" alt="&nbsp;" width="26" height="5" align="middle"><img src="/niels/lib/gfx/dot-3.png" alt="*" width="5" height="5" align="middle"></td><td class="menu"><a href="/niels/cl/contact/" class="menu">Contact</a></td></tr></table>
+<table><tr><td class="menu"><img src="/niels/lib/gfx/space.gif" alt="&nbsp;" width="26" height="5" align="middle"><img src="/niels/lib/gfx/dot-3.png" alt="*" width="5" height="5" align="middle"></td><td class="menu"><a href="/niels/cl/cv/" class="menu">CV</a></td></tr></table>
+<table><tr><td class="menu"><img src="/niels/lib/gfx/space.gif" alt="&nbsp;" width="26" height="5" align="middle"><img src="/niels/lib/gfx/dot-3.png" alt="*" width="5" height="5" align="middle"></td><td class="menu"><a href="/niels/cl/papers/" class="menu">Papers</a></td></tr></table>
+<table><tr><td class="menu"><img src="/niels/lib/gfx/space.gif" alt="&nbsp;" width="26" height="5" align="middle"><img src="/niels/lib/gfx/dot-3.png" alt="*" width="5" height="5" align="middle"></td><td class="menu"><a href="/niels/cl/wac/" class="menu">Web&nbsp;as&nbsp;Corpus</a></td></tr></table>
+<table><tr><td class="menu"><img src="/niels/lib/gfx/space.gif" alt="&nbsp;" width="13" height="5" align="middle"><img src="/niels/lib/gfx/dot-2.png" alt="*" width="5" height="5" align="middle"></td><td class="menu"><a href="/niels/drni/" class="menu">Private</a></td></tr></table>
+<table><tr><td class="menu"><img src="/niels/lib/gfx/space.gif" alt="&nbsp;" width="13" height="5" align="middle"><img src="/niels/lib/gfx/dot-2.png" alt="*" width="5" height="5" align="middle"></td><td class="menu"><a href="/niels/uplink/" class="menu">Uplink</a></td></tr></table>
+
+    </td >
+    <td bgcolor="#FFFFFF" valign="top" class="content">
+
+<h2>BananaSplit: Dictionary-based Compound Splitter for German</h2>
+
+<p>
+BananaSplit is a compound splitter for German that uses 
+a dictionary resource. 
+The dictionary can be either a simple
+word list, or a word list equipped with POS values, or
+an XML based dictionary.
+The original version was able to use GermaNet as a dictionary.
+This is useful in applications that rely on GermaNet
+anyway: no additional lexicon needs to be generated and held
+in memory. This was also the original purpose of BananaSplit. It
+served as a compound splitter for a tool called BananaRelation.
+</p>
+
+<p>
+BananaRelation cannot be published here as it makes heavy use of unpublished code by 
+<a href="http://www.eml-research.de/" class="external">EML Research</a>, Heidelberg.
+BananaSplit program can run as standalone application 
+as well as integrated into other Java programs (as a library).
+</p>
+<p>
+This program emerged from the seminar 
+<a href="http://www.eml-research.de/english/homes/gurevych/teaching/WS2006.php" 
+class="external">Lexical Semantic Processing in NLP</a> 
+(winter term 2005/2006) taught by 
+<a href="http://www.tk.informatik.tu-darmstadt.de/Mitarbeiter/gurevych"
+class="external">Iryna Gurevych</a>
+at the <a href="http://www.sfs.uni-tuebingen.de" class="external">Seminar für Sprachwissenschaft</a>,
+ Tübingen.
+ Both BananaSplit and BananaRelation were introduced to the
+ seminar participants on 17th of December, 2005.
+
+<p>
+The key algorithm for compound splitting is based on
+<a href="#langer-98">Langer (1998)</a>.
+The program came to use in
+ <a href="#mueller-gurevych-06">Müller and Gurevych (2006)</a>. 
+</p>
+
+
+<h3>Theoretical Background</h3>
+
+<p>
+As mentioned earlier, this program emerged from a seminar. Therefore the theoretical
+background was presented in this seminar as a talk. Additionally there is a homework
+task describing the evaluation process and results. Both works do not fullfill the
+requirements of scientific publications but they will give you an idea about 
+the concepts behind the tool.</p>
+
+<ul>
+<li><a href="Compound-GermaNet-Slides.pdf">Slides of the talk</a> 
+	»Measuring Semantic Relatedness
+	of German Compounds using
+         GermaNet«, given during winter term 2005/2006. (305kb PDF)</li>
+<li>The <a href="Evaluation-CompoundSplitter.pdf">homework paper</a> entitled
+	»Evaluation of the BananaSplit
+     	Compound Splitter«. (85kb PDF)</li>	  
+</ul>	  
+
+<p>
+Apart from the resources named above, there is JavaDoc code in the sources
+which should give you a lot of technical explanations.
+</p>
+
+<h3>Preview</h3>
+
+<p>
+Take a look at this <a href="screenshot.png">screen shot</a>.
+</p>
+
+
+<h3>Dictionary Resources: GermaNet and ispell</h3>
+
+<p>As mentioned above, the original version of BananaSplit used 
+<a href="http://www.sfs.uni-tuebingen.de/lsd/" class="external">GermaNet</a> via 
+the <a href="http://projects.villa-bosch.de/nlpsoft/gn_api/"
+class="external">GermaNet API</a>. While using GermaNet as a dictionary makes sense
+in many situations the API is not open source in the sense of free speech. 
+Therefore from release 0.3.1 on, BananaSplit does not support GermaNet any more.
+However, there is good news: Rumour has it that a new GermaNet API is currently under
+construction. Assuming this new API will be open source, GermaNet support will soon be back
+in BananaSplit.</p>
+
+<p>BananaSplit supports the vertical dictionary format. This means you have
+one lemma per line and optionally a \t character followed by the POS. Additionally, the same
+information can be encoded in the XML format used by <a
+href="http://java.sun.com/j2se/1.5.0/docs/api/java/util/Properties.html"
+class="external">java.util.Properties</a>. A lemma dictionary based on the <a
+href="http://j3e.de/ispell/igerman98/" class="external">igerman98</a> ispell dictionary by 
+Björn Jacke is available in this format (see below).</a>
+
+
+<h3>Using and Testing</h3>
+
+<p>
+Run<br>
+<tt>java -jar banana-split-0.3.1.jar igerman98_all.xml</tt><br>
+on the command line. This will automatically load the BananaSplit test program
+allowing you to type in words directly.
+
+
+
+<h3>Download Programs, Sources and Resources</h3>
+
+<p>
+Please be aware that this program is released 
+under the <a class="external" href="http://www.gnu.org/licenses/old-licenses/gpl-2.0.html">GNU
+General Public License (v. 2)</a> since release 0.3.1
+
+<ul>
+<li><a href="banana-split-0.3.1.jar">banana-split-0.3.1.jar</a> including class
+	and source files.</li>
+<li><a href="igerman98_all.xml.bz2">igerman98_all.xml.bz2</a>: German lemma
+	list in XML format based on ispell word list.</li>
+<li>View the <a href="doc/" target="_blank">JavaDoc online</a> or 
+	<a href="doc-0.3.1.zip">download</a> it as zip archive.</li>
+</ul>
+
+<h3>References</h3>
+
+<p>
+<a name="langer-98">Langer, Stefan (1998).</a> 
+<i>Zur Morphologie und Semantik von Nominalkomposita.</i>
+In <i>Tagungsband der 4. Konferenz zur Verarbeitung naturlicher Sprache
+</i>, KONVENS, pp.83-97.
+  [<a href="http://citeseer.ist.psu.edu/496465.html">Citeseer</a>]
+</p>
+
+<p>
+<a name="mueller-gurevych-06">Christof Müller and Iryna Gurevych (2006).</a>
+  <i>
+  Exploring the Potential of Semantic Relatedness in Information Retrieval
+  </i>
+  In Martin Schaaf and Klaus-Dieter Althoff (eds).
+  <i>LWA 2006 Lernen - Wissensentdeckung - Adaptivität, 9.-11..10.2006
+	in Hildesheim}</i>
+  Hildesheimer Informatikberichte, Universität Hildesheim, pp. 126-131
+  [<a href="http://www.tk.informatik.tu-darmstadt.de/Forschung/publikationen/abstracts.php3?lang=en&bibtex=1&paperID=496">Abstract
+&amp; Paper</a>]
+</p>
+
+
+</td>
+    </tr>
+    </table>
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <!-- Fusszeile -->
+    <table bgcolor="#000000" cellpadding="10" cellspacing="3" border="0" width="100%">
+    <tr>
+    <td bgcolor="#000000" valign="middle" width="205" class="finder">
+    <form method="GET" action="/niels/finder.php" onsubmit="return FinderSubmit(this)">
+    <a name="finderbox" class="target"><font color="#FFFFFF">Take me to
+    </font><input type="text" name="s" value="" size="10" ><font color="#FFFFFF">&nbsp;!</font></a>
+    <input type="hidden" name="finderbox" value="2">
+    </form>
+    </td>    
+    <td bgcolor="#D1D1D1" valign="middle" class="footer"><a href="/">Impressum</a> - &copy; Niels Ott - Last modified: 2007-07-27</td>
+    </tr>
+    </table>
+    </td>    
+  </tr>     
+</table>
+</center>
+
+</body>
+</html>

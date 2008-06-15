@@ -73,16 +73,15 @@ public class HMMTagger extends JCasAnnotator_ImplBase implements Tagger {
 	// initialize the model
 	private static ModelGeneration get_model(final UimaContext context, final String loc)
 		throws AnnotatorConfigurationException {
-		final InputStream model;
+		final ObjectInputStream ois;
 		try {
 			if (loc == null || loc.equals("")) {
 				// fetch model from Annotator configuration
 				final String resource = (String) context.getConfigParameterValue(pModel);
-				model = ClassLoader.getSystemResourceAsStream(resource);
+				ois = new ObjectInputStream(new FileInputStream(resource));
 			} else {
-				model = new FileInputStream(loc);
+				ois = new ObjectInputStream(new FileInputStream(loc));
 			}
-			final ObjectInputStream ois = new ObjectInputStream(model);
 			final ModelGeneration oRead = (ModelGeneration) ois.readObject();
 			return oRead;
 		} catch (IOException ioe) {

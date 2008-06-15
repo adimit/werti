@@ -34,7 +34,7 @@
       <nameValuePair>
         <name>MODEL_LOCATION</name>
         <value>
-          <string>/home/aleks/src/werti/src/org/werti/resources/models/hmmtagger/english/BrownModel.dat</string>
+          <string>/var/local/resources/werti/models/hmmtagger/english/BrownModel.dat</string>
         </value>
       </nameValuePair>
     </configurationParameterSettings>

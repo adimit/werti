@@ -48,7 +48,7 @@ public class PTBTagger extends JCasAnnotator_ImplBase implements Tagger {
 			getContext().getLogger().log(Level.INFO, "URL.toString(): "
 					+ rurl);
 			getContext().getLogger().log(Level.INFO, "Constructing tagger...");
-			MaxentTagger.init( "/home/aleks/src/werti/src/org/werti/resources/models/ptbtagger/bidirectional-wsj-0-18.tagger");
+			MaxentTagger.init(resource);
 			getContext().getLogger().log(Level.INFO, "Done.");
 		} catch (Exception e) {
 			context.getLogger().log(Level.SEVERE, "Failed to initialize tagger!");

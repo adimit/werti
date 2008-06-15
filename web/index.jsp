@@ -43,7 +43,7 @@
 			 <input type="radio" name="tagger" value="hmm"/>Hidden Markov Model Tagger <br/>
 			 <input type="radio" name="tagger" value="lgp"/>LingPipe tagger (currently not working)<br/>
 			 <p>
-			      A set of tags: <input value="NN, IN" type="text" name="tags" size="30"/><br/>
+			      A set of tags: <input value="IN, TO" type="text" name="tags" size="30"/><br/>
 			 </p>
 			 <div class="notice">
 			      Please note that (for now) you'll have to carefully choose

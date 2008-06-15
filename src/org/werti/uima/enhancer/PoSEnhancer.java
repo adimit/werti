@@ -240,7 +240,7 @@ public class PoSEnhancer extends JCasAnnotator_ImplBase {
 			t = tit.next();
 		}
 	}
-	
+
 	// does an array of Strings contain a given String?
 	private static boolean arrayContains(String data, String[] sa) {
 		for (String s:sa) {

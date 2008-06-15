@@ -43,7 +43,7 @@
 	<property name="uima-core.jar" value="${basedir}/web/WEB-INF/lib/uima-an-tagger.jar"/>
 	<property name="uima-core.jar" value="${basedir}/web/WEB-INF/lib/uima-core.jar"/>
 	<property name="tomcat-juli.jar" value="${basedir}/web/WEB-INF/lib/tomcat-juli.jar"/>
-	<property name="stanford-postagger.jar" value="${basedir}/web/WEB-INF/lib/stanford-postagger.jar"/>
+	<property name="stanford-postagger.jar" value="/home/aleks/opt/java/stanford-postagger.jar"/>
 	<property name="lib-0.1.jar" value="/home/aleks/src/lib/lib-0.1.jar"/>
 
 
@@ -72,6 +72,11 @@
 
 		<pathelement location="${web.home}/WEB-INF/lib"/>
 		<fileset dir="${web.home}/WEB-INF/lib">
+			<include name="*.jar"/>
+		</fileset>
+
+		<pathelement location="/home/aleks/opt/java"/>
+		<fileset dir="/home/aleks/opt/java">
 			<include name="*.jar"/>
 		</fileset>
 
