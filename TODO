@@ -7,8 +7,8 @@
 *** Important
 
  * React smart on encountering html-entities
- * Improve tagger:
-   - demonize
+ * <base> doesn't work on some sites [3][4]
+
 
 *** Bugs
  * fib is put into anchors currently, which is awkward.
@@ -31,3 +31,5 @@ References:
 [0]	http://htmlparser.sourceforge.net/
 [1]	http://java.sun.com/j2se/1.5.0/docs/guide/intl/index.html
 [2]	http://www.bbcworld.com/Pages/ProgrammeFeature.aspx?id=106&FeatureId=798
+[3]	http://www.drumcenter-emmendingen.de/html/de/index/index.php4
+[4]	http://drni.de/niels/cl/bananasplit/

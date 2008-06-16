@@ -33,9 +33,9 @@
 		    </p>
 		    <fieldset>
 			 <legend>A tokenizer:</legend>
-			 <input type="radio" name="tokenizer" checked="checked" value="ptb"/>Stanford's Penn Tree Bank tokenizer (slow)<br/>
+			 <input type="radio" name="tokenizer" value="ptb"/>Stanford's Penn Tree Bank tokenizer (slow)<br/>
 			 <input type="radio" name="tokenizer" value="lgp"/>LingPipe tokenizer (currently not working)<br/>
-			 <input type="radio" name="tokenizer" value="own"/>Self-Made tokenizer (currently not working)<br/>
+			 <input type="radio" name="tokenizer" checked="checked" value="smp"/>Self-Made tokenizer<br/>
 		    </fieldset>
 		    <fieldset>
 			 <legend>A part of speech tagger: </legend>
@@ -43,7 +43,7 @@
 			 <input type="radio" name="tagger" checked="checked" value="hmm"/>Hidden Markov Model Tagger <br/>
 			 <input type="radio" name="tagger" value="lgp"/>LingPipe tagger (currently not working)<br/>
 			 <p>
-			      A set of tags: <input value="in" type="text" name="tags" size="30"/><br/>
+			      A set of tags: <input value="IN, TO" type="text" name="tags" size="30"/><br/>
 			 </p>
 			 <div class="notice">
 			      Please note that (for now) you'll have to carefully choose

@@ -17,8 +17,6 @@ import javax.servlet.*;
 
 import javax.servlet.http.*;
 
-import lib.util.Pair;
-
 import org.apache.uima.UIMAFramework;
 
 import org.apache.uima.analysis_engine.AnalysisEngine;
@@ -46,6 +44,9 @@ public class Interface extends HttpServlet {
 	static final long serialVersionUID = 0;
 	private static final String PREFIX = "/var/local/resources/werti/descriptors/";
 	private static final String ENHNCE = PREFIX + "enhancers/PoSEnhancer.xml";
+
+	// maximum amount of of ms to wait for a web-page to load
+	private static final int MAX_WAIT = 1000 * 10;
 
 	private static final Logger log = Logger.getLogger("org.werti");
 
@@ -83,14 +84,6 @@ public class Interface extends HttpServlet {
 		final Fetcher fetcher = new Fetcher(termOrURL);
 		fetcher.start();
 
-                /*
-		 *if (!connection.getL().ready()) {
-		 *        log.severe("Input stream to " + connection.getR() + " is broken!");
-		 *} else {
-		 *        log.info("Input stream to " + connection.getR() + " seems to be fine.");
-		 *}
-                 */
-
 		response.setContentType("text/html");
 
 		try {
@@ -110,13 +103,13 @@ public class Interface extends HttpServlet {
 			log.fine("Initialized UIMA components.");
 
 			// wait for document text to be available
-			while (fetcher.r == null) {
-				fetcher.join(100);
-			}
+			fetcher.join(MAX_WAIT);
 
-			final Pair<String,String> content = fetcher.r;
+			if (fetcher.text == null) {
+				throw new RuntimeException("Webpage retrieval failed.");
+			} 
 
-			cas.setDocumentText(content.getL());
+			cas.setDocumentText(fetcher.text);
 
 			preprocessor.process(cas);
 
@@ -125,7 +118,7 @@ public class Interface extends HttpServlet {
 
 			postprocessor.process(cas);
 
-			final String enhanced = enhance(cas, content.getR());
+			final String enhanced = enhance(cas, fetcher.base_url);
 
 			out.print(enhanced);
 		} catch (IOException ioe) {
@@ -214,8 +207,9 @@ public class Interface extends HttpServlet {
 	 * Retrieves the text on a web page.
 	 */
 	private static class Fetcher extends Thread { 
-		Pair<String,String> r;
+		String base_url;
 		final String site_url;
+		String text;
 
 		public Fetcher(final String url) {
 			this.site_url = url;
@@ -224,23 +218,22 @@ public class Interface extends HttpServlet {
 		public void run() {
 			try {
 				final URL url = new URL(site_url);
-				final String base_url = "http://" + url.getHost();
+				base_url = "http://" + url.getHost();
 				log.fine("Host name of target URL '" + site_url +"': " + base_url);
 
 				final URLConnection uc = url.openConnection();
-				final BufferedReader content = new BufferedReader(new InputStreamReader(uc.getInputStream()));
-
+				final BufferedReader content = 
+					new BufferedReader(new InputStreamReader(uc.getInputStream()));
 				if (content.ready()) {
 					log.fine("Connections seems live.");
 				} else {
 					log.severe("Connection is dead.");
 				}
 
-				final String text = bis2str(content);
+				text = bis2str(content);
 
 				content.close();
 
-				this.r = new Pair<String,String> (text,base_url);
 				log.fine("Fetched site.");
 			} catch (MalformedURLException murle) {
 				log.severe(site_url + " is a malformed URL!");

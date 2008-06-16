@@ -20,7 +20,9 @@ div.text {
      border: 1px solid;
      border-color: #999;
      padding: 5px;
-     width: 80%;
+     width: 60%;
+     margin-left: 20%;
+     margin-right: 20%;
      margin-top: 2px;
      margin-bottom: 2px;
 }
