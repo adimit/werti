@@ -118,7 +118,9 @@ public class Interface extends HttpServlet {
 
 			postprocessor.process(cas);
 
-			final String enhanced = enhance(cas, fetcher.base_url);
+			final String base_url = "http://" + fetcher.base_url + ":" + fetcher.port;
+
+			final String enhanced = enhance(cas, base_url);
 
 			out.print(enhanced);
 		} catch (IOException ioe) {
@@ -210,6 +212,7 @@ public class Interface extends HttpServlet {
 		String base_url;
 		final String site_url;
 		String text;
+		int port;
 
 		public Fetcher(final String url) {
 			this.site_url = url;
@@ -218,7 +221,8 @@ public class Interface extends HttpServlet {
 		public void run() {
 			try {
 				final URL url = new URL(site_url);
-				base_url = "http://" + url.getHost();
+				port = url.getPort();
+				base_url = url.getHost();
 				log.fine("Host name of target URL '" + site_url +"': " + base_url);
 
 				final URLConnection uc = url.openConnection();
