@@ -19,6 +19,7 @@
 
 *** Wishlist
 ************
+- FIB: Focus next input when hitting enter and having a correct result
 - implement HTML parser [0]
 - Implement TreeTagger and lingpipe
 - Use HTML entities in sentence boundary followers (like, for " or similar)

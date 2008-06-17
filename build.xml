@@ -70,21 +70,15 @@
 			<include name="*.jar"/>
 		</fileset>
 
-		<pathelement location="${web.home}/WEB-INF/lib"/>
+		<!--<pathelement location="${web.home}/WEB-INF/lib"/>
 		<fileset dir="${web.home}/WEB-INF/lib">
 			<include name="*.jar"/>
-		</fileset>
+			</fileset>-->
 
 		<pathelement location="/home/aleks/opt/java"/>
 		<fileset dir="/home/aleks/opt/java">
 			<include name="*.jar"/>
 		</fileset>
-
-		<pathelement location="/home/aleks/src/lib"/>
-		<fileset dir="/home/aleks/src/lib">
-			<include name="*.jar"/>
-		</fileset>
-
 	</path>
 
 

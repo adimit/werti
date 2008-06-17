@@ -204,7 +204,6 @@ public class Interface extends HttpServlet {
 		doGet(request, response);
 	}
 
-
 	/**
 	 * Retrieves the text on a web page.
 	 */
