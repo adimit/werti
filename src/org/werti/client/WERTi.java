@@ -52,10 +52,12 @@ public class WERTi implements EntryPoint {
 		// Create the User Interface
 		app = new WERTiUI();
 
-		setupTitlePanel(constants);
-		setupMainLinks(constants);
-		setupOptionsPanel();
-		setupMainMenu(constants);
+                /*
+		 *setupTitlePanel(constants);
+		 *setupMainLinks(constants);
+		 *setupOptionsPanel();
+		 *setupMainMenu(constants);
+                 */
 		RootPanel.get().add(app);
 
 
