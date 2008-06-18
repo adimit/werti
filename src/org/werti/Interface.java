@@ -36,7 +36,7 @@ import org.apache.uima.util.XMLInputSource;
 import org.werti.uima.types.Enhancement;
 
 /**
- * It will, according to its arguments, call the appropriate classes that
+ * This will, according to its arguments, call the appropriate classes that
  * are needed to fulfill a specific task.
  */
 
@@ -131,7 +131,6 @@ public class Interface extends HttpServlet {
 			log.log(Level.SEVERE, "Unknown problem occured: ", e);
 		}
 	}
-
 
 	// converts a buffered reader to a String. Don't forget to close it.
 	private static String bis2str(BufferedReader in) {
