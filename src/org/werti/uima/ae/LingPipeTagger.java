@@ -25,26 +25,28 @@ public class LingPipeTagger extends JCasAnnotator_ImplBase implements Tagger {
 
 		final Iterator<SentenceAnnotation> sit = sentIndex.iterator();
 
-		while (sit.hasNext()) {
-			sentence.clear();
-			tlist.clear();
-			final SentenceAnnotation sa = sit.next();
-			Iterator<Token> tit = toknIndex.subiterator(sa);
-
-			// fill sentence
-			while (tit.hasNext()) {
-				final Token t = tit.next();
-				tlist.add(t);
-				sentence.add(new TaggedWord(t.getCoveredText()));
-			}
-
-			assert true: tlist.size() == sentence.size();
-			final int size = tlist.size();
-			for (int i = 0; i < size; i++) {
-				final Token t = tlist.get(i);
-				t.setTag(sentence.get(i).tag());
-			}
-		}
+/*
+ *                while (sit.hasNext()) {
+ *                        sentence.clear();
+ *                        tlist.clear();
+ *                        final SentenceAnnotation sa = sit.next();
+ *                        Iterator<Token> tit = toknIndex.subiterator(sa);
+ *
+ *                        // fill sentence
+ *                        while (tit.hasNext()) {
+ *                                final Token t = tit.next();
+ *                                tlist.add(t);
+ *                                sentence.add(new TaggedWord(t.getCoveredText()));
+ *                        }
+ *
+ *                        assert true: tlist.size() == sentence.size();
+ *                        final int size = tlist.size();
+ *                        for (int i = 0; i < size; i++) {
+ *                                final Token t = tlist.get(i);
+ *                                t.setTag(sentence.get(i).tag());
+ *                        }
+ *                }
+ */
 	}
 
 	public void initialize(UimaContext context) {

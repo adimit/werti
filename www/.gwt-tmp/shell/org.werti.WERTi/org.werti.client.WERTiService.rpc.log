@@ -1,0 +1,43 @@
+Reachable types computed on: Wed Jun 18 17:39:20 GMT+01:00 2008
+com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException
+   Serialization status
+      Instantiable
+   Path
+      Started from 'com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException'
+
+java.lang.Exception
+   Serialization status
+      Field serializable
+   Path
+      Started from 'com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException'
+
+java.lang.Object
+   Serialization status
+      Not serializable
+   Path
+      Started from 'java.lang.String'
+
+java.lang.RuntimeException
+   Serialization status
+      Field serializable
+   Path
+      Started from 'com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException'
+
+java.lang.String
+   Serialization status
+      Instantiable
+   Path
+      Started from 'java.lang.String'
+
+java.lang.String[]
+   Serialization status
+      Instantiable
+   Path
+      Started from 'java.lang.String[]'
+
+java.lang.Throwable
+   Serialization status
+      Field serializable
+   Path
+      Started from 'com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException'
+

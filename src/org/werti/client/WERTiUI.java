@@ -1,10 +1,16 @@
 package org.werti.client;
 
+import com.google.gwt.core.client.GWT;
+
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.WindowResizeListener;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.rpc.ServiceDefTarget;
+
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
+import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
@@ -18,11 +24,25 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class WERTiUI extends Composite implements WindowResizeListener {
 
+	private static final String[] enhancementMethods = { "clr", "ask", "fib" };
+	private static final String[] enhancementNames = { "Colorize"
+			, "Click on the right word"
+			, "Fill in the blanks" };
+	private static final String defaultEnhancement = "clr";
+
+	private static final String[] posTags = { "NN", "IN", "DT" };
+	private static final String[] posNames = { "Nouns", "Prepositions", "Determiners" };
+	private static final String defaultTag = "IN";
+
+	private String[] pipeline = { "smp", "hmm", "hil" };
+	private String[] tags = { "NN" };
+
 	private static final String STYLE_PREFIX = "WERTi";
 	int windowWidth;
 
 	private VerticalPanel topPanel;
 	private TabPanel contentPanel;
+	private Button submitButton;
 	/**
 	 * Content wrapper. Put stuff here.
 	 */
@@ -57,16 +77,37 @@ public class WERTiUI extends Composite implements WindowResizeListener {
 		contentPanel.selectTab(0);
 	}
 
-	private static final String[] enhancementMethods = { "clr", "ask", "fib" };
-	private static final String[] enhancementNames = { "Colorize"
-			, "Click on the right word"
-			, "Fill in the blanks" };
-	private static final String defaultEnhancement = "clr";
+	private void error(String huh) {
+	
+	}
 
-	private static final String[] posTags = { "NN", "IN", "DT" };
-	private static final String[] posNames = { "Nouns", "Prepositions", "Determiners" };
-	private static final String defaultTag = "IN";
+	private void showPage(Object page) {
+	
+	}
 
+	@SuppressWarnings("unchecked")
+	private void mkSubmitButton() {
+		submitButton = new Button("Enhance");
+		submitButton.addClickListener(new ClickListener() {
+			public void onClick(Widget sender) {
+				WERTiServiceAsync wertiService = (WERTiServiceAsync) GWT.create(WERTiService.class);
+				ServiceDefTarget endpoint = (ServiceDefTarget) wertiService;
+				String moduleRelativeURL = GWT.getModuleBaseURL() + "uima";
+				endpoint.setServiceEntryPoint(moduleRelativeURL);
+
+				AsyncCallback callback = new AsyncCallback() {
+					public void onSuccess(Object result) {
+						showPage(result);
+					}
+
+					public void onFailure(Throwable reason) {
+						error(reason.toString());
+					}
+				};
+				wertiService.process(pipeline, tags, callback);
+			}
+		});
+	}
 
 	private VerticalPanel mkUserPanel() {
 		VerticalPanel users = new VerticalPanel();
@@ -77,7 +118,7 @@ public class WERTiUI extends Composite implements WindowResizeListener {
 
 		TextBox urlbox = new TextBox();
 
-		Button submitButton = new Button("Enhance");
+		mkSubmitButton();
 
 		VerticalPanel enhancements = new VerticalPanel();
 		HTML eHeading = new HTML("<h4>Input Enhancement Method:</h4>");

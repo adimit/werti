@@ -69,6 +69,18 @@ annotations of the previous two processing steps.
 
 \subsubsection{HTML Processing}
 
+The HTML processor method was designed to be primitive and efficient. While
+using a fully capable HTML parser was considered, we preffered to use a more
+simple approach since there didn't seem to be any need for the additional data
+an HTML parser could have provided us with. Furthermore, changing the
+implementation of an analysis step even this fundamental to further processing
+should be easy and without side-effects as long as the requirements to
+preconditions and postconditions are met.
+
+\paragraph{Preconditions} We have a document represented as a singleton and
+stored in the UIMA-CAS that is passed to the \verb#process(CAS)#-method of the
+\verb#HTMLAnnotator#-class.
+
 \subsubsection{Linguistic Processing}
 
 \subsubsection{Post Processing - Input Enhancement}
