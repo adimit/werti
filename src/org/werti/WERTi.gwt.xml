@@ -12,11 +12,10 @@
 
       <!-- Other module inherits                                      -->
 
-
       <!-- Specify the app entry point class.                         -->
       <entry-point class='org.werti.client.WERTi'/>
-	 <servlet path="/werti" class="org.werti.server.WERTiServiceImpl"/>
-    
+
+	 <servlet path='/org.werti.WERTi/WERTiService' class="org.werti.server.WERTiServiceImpl"/>
       <!-- Specify the application specific style sheet.              -->
       <stylesheet src='WERTi.css' />
 </module>
