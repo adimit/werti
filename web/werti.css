@@ -8,7 +8,6 @@ h1,h2 {
      background-color: #574;
      border: 1px solid;
      border-color: #251;
-     font-family: Helvetica;
      color: #EEE;
      padding: 5px;
 }
@@ -31,6 +30,7 @@ div.notice {
      padding: 2px;
      font-style: italic;
      border: 1px dotted;
+     font-family: Monospace;
 }
 input {
      background-color: #444;

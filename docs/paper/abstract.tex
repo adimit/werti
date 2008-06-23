@@ -1,0 +1,45 @@
+\documentclass[a4paper,twocolumn]{scrartcl}
+
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{aleks}
+\usepackage{qtree}
+\usepackage{linguex}
+
+\author{Aleksandar Dimitrov}
+\title{Rebuilding WERTi: Providing a Platform for Aiding Second Language Acquisition}
+
+\begin{document}
+
+\maketitle
+
+In the course of this presentation I want to provide insight into the
+development process of my re-implementation of WERTi, a system to aid second
+language acquisition of adult learners. The original implementation of WERTi was
+capable of requesting news articles from a certain news web
+site\footnote{\texttt{http://www.reuters.com}} and perform different kinds of
+input enhancements on it.
+
+While the original implementation was written in the programming language
+\emph{Python}, this new design is rooted in \emph{Java} technologies and makes
+use of several frameworks:
+\begin{itemize}
+  \item UIMA - IBM's \emph{Unstructured Information Management Architecture},
+    used to process web contents, find natural
+    language and annotate it according to its linguistic features.
+  \item Java Servlets and Server Pages - for hosting the web content and
+    executing server side processing.
+  \item GWT - The \emph{Google Web Toolkit}. This technology compiles native
+    \emph{Java} code to \emph{JavaScript} which is then executed on the client
+    side. It also eases the process of integrating Remote Procedure Calls to
+    communicate between server and client side.
+\end{itemize}
+
+The new \emph{Java} implementation now supports arbitrary web sites as inputs,
+multiple languages and has some new features regarding input enhancement.
+Overall the development focus rested on providing a flexible platform that can be
+easily extended to include more functionality. UIMA is used on the server side
+to provide a flexible analysis framework and GWT, on the client side, provides
+an easy way to enrich content of web pages.
+
+\end{document}

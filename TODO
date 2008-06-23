@@ -1,8 +1,8 @@
 *** Severe
 
- * Fix encoding problem with Net.fetch()
  * NullPointerException when klicking on Reuter's 'next page'
- * click on the words has a problem with [2]
+ * click on the words has a problem with almost all pages, but especially with [2]
+ * non-termination bug in HTMLAnnotator with [5]
 
 *** Important
 
@@ -34,3 +34,4 @@ References:
 [2]	http://www.bbcworld.com/Pages/ProgrammeFeature.aspx?id=106&FeatureId=798
 [3]	http://www.drumcenter-emmendingen.de/html/de/index/index.php4
 [4]	http://drni.de/niels/cl/bananasplit/
+[5]	http://code.google.com/support/bin/answer.py?answer=63584&topic=11121
