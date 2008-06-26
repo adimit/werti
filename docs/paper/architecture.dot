@@ -1,0 +1,38 @@
+digraph werti {
+	subgraph cluster_Interface {
+		label = "Client";
+		"Web Interface";
+		"Enhanced Content";
+	}
+	subgraph cluster_Server {
+		label = "Server";
+		"Tomcat Server" -> "Web Interface";
+		"Tomcat Server" -> "Enhanced Content";
+		"Linguistic Tools";
+		"RPC Server" -> "HTTP Request";
+			"Configuration";
+		subgraph cluster_Uima {
+			label = "Aggregate Analysis Engine";
+			"Analysis Engine" -> "Annotations";
+			"Analysis Engine " -> "Annotations";
+			" Analysis Engine" -> "Annotations";
+			" Analysis Engine " -> "Annotations";
+			 "CAS" -> "Analysis Engine";
+			 "CAS" -> " Analysis Engine";
+			 "CAS" -> " Analysis Engine ";
+			 "CAS" -> "Analysis Engine ";
+			"Analysis Engine" -> " Analysis Engine " -> "Analysis Engine " -> " Analysis Engine" 
+		}
+		"RPC Server" -> "Configuration";
+			"Analysis Engine " -> "Linguistic Tools";
+			" Analysis Engine " -> "Linguistic Tools";
+		"Annotations" -> "Enhancement Engine" -> "Enhanced Content"; 
+		"CAS" -> "Enhancement Engine";
+		"HTTP Request" -> "Web Content" -> "CAS";
+	}
+	User ->"Web Interface";
+	"Web Interface" -> "User";
+	"Enhanced Content" -> "RPC Server";
+	"Enhanced Content" -> "Web Interface";
+	"Web Interface" -> "RPC Server";
+}

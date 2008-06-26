@@ -1,0 +1,150 @@
+\documentclass{beamer}
+
+\mode<beamer>{
+\usetheme{Singapore}
+%Berlin
+%\usecolortheme{rose}
+}
+
+\usepackage[english]{babel}
+\usepackage{qtree}
+\usepackage{ucs}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsfonts,amsmath}
+\usepackage{linguex}
+\usepackage{color}
+\title{Rebuilding WERTi: Providing a Platform for Aiding Second Language Acquisition}
+\institute{Universität Tübingen}
+\author{Aleksandar L. Dimitrov}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}
+  \frametitle{Outline}
+  \tableofcontents
+\end{frame}
+
+\section{What is WERTi?}
+
+\subsection{Second Language Acquisition}
+\begin{frame}
+  \frametitle{Computational Methods in Second Language Acquisition}
+  Make use of existing methods in computational linguistics and natural language
+  processing\pause
+  \begin{itemize}
+    \item Increase the learner's awareness of grammatical patterns\ldots{}\pause
+    \item \ldots{} trough input enhancement\pause\emph{ (Receptive Presentation) }\pause
+    \item \ldots{} interaction with text in the target language\pause
+      \begin{itemize}
+	\item \emph{Productive Presentation/Perceiving Interaction}\pause
+	\item \emph{Controlled Practice/Productive Interaction}\pause
+      \end{itemize}
+  \end{itemize}
+  Leave room for new ideas.\pause
+\end{frame}
+
+\subsection{WERTi aids Second Language Acquisition}
+\begin{frame}
+  \frametitle{WERTi aids Second Language Acquisition}
+  WERTi \ldots
+  \begin{itemize}
+    \item \ldots{} lets the user decide what content they want to see\pause\\
+      $\to$ Would a restriction on the input texts be commendable?\pause
+    \item \ldots{} provides example implementations of \emph{Receptive Presentation},
+      \emph{Productive Presentation} and \emph{Controlled Practice}\pause
+    \item \ldots{} is interactive and easily accessible to the user\pause
+    \item \ldots{} has been re-written with flexibility in mind, in order to be
+      extended by programmers\pause
+  \end{itemize}
+\end{frame}
+
+\section{Working on WERTi}
+\begin{frame}
+  \frametitle{Working on WERTi}
+  \begin{itemize}
+    \item Complete rewrite, using new technologies\pause
+    \item Acquisition of technologies proved a great challenge\pause
+    \item Weekly design discussions greatly improved the overall designs
+    \item Development by one person\pause
+      \begin{itemize}
+	\item Advantage: greater consistency, rapid prototyping\pause
+	\item Disadvantages: fewer resources/capacity, possibility of creating a ``code bomb''\pause
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+\subsection{The Goals}
+\begin{frame}
+  \frametitle{The Goals}
+  \begin{itemize}
+    \item Make linguistic processing more flexible\pause\\
+      $\to$ using UIMA, the Unstructured Information Management Architecture\pause
+    \item Provide server $\leftrightarrow$ client side interaction\pause\\
+      $\to$ using RPC calls and GWT, the Google Web Toolkit\pause
+    \item Extend possible targets to include (possibly) arbitrary web
+      content\pause\\
+      $\to$ Using heuristics and eventually linguistic methods to extract
+      text\pause
+    \item Overall:\pause\\
+      $\to$ Provide an easy to extend web based platform to aid second language
+      acquisition of adult learners
+  \end{itemize}
+\end{frame}
+
+\section{Architecture}
+\begin{frame}
+  \frametitle{Architecture}
+  WERTi is now modular:
+  \begin{itemize}
+    \item Two client side code modules,\pause
+      \begin{itemize}
+	\item one for the application interface\pause
+	\item one for the enhancements interface\pause
+    \item Server side code and\pause
+    \item with in the server side code, linguistic analysis components\pause
+  \end{itemize}
+\end{frame}
+\begin{frame}
+  \frametitle{The general Picture}
+  (Picture)
+\end{frame}
+\begin{frame}
+  \frametitle{Textual and Linguistic Analysis}
+  \begin{itemize}
+    \item HTML tag recognition\pause
+    \item Classification into relevant chunks of input\pause
+    \item Tokenization\pause
+    \item Sentence Boundary detection and coherence analysis\pause
+    \item Part of Speech Tagging using different taggers\pause
+    \item Enhancement Annotations\pause
+  \end{itemize}
+\end{frame}
+
+\section{Conclusion/The Current Status} \subsection{Feature Proposals}
+\begin{frame}
+  \frametitle{The Current Status}
+  \begin{itemize}
+    \item WERTi is largely usable with a few bugs in the processing code (mostly
+      HTML sanitization)\pause
+    \item The user interface is not yet functional, but we have basic
+      functionality\pause
+    \item linguistic processing is so far feature complete, stable and
+      fast\pause
+    \item WERTi needs stress tests with many users to prove its
+      scalability\pause
+  \end{itemize}
+\end{frame}
+\begin{frame}
+  \frametitle{Feature Proposals}
+  \begin{itemize}
+    \item A passivator\pause
+    \item Partial translation (when ``mousing over'' a word)\pause
+    \item Lemmatization could provide fill-in-the-blanks for finite forms\pause
+    \item Phrase structures could be parsed and annotated\pause
+    \item \ldots{}
+  \end{itemize}
+\end{frame}
+\end{document}

@@ -9,5 +9,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="/home/aleks/opt/gwt-linux-1.5.0/gwt-user.jar"/>
 	<classpathentry kind="lib" path="/home/aleks/opt/gwt-linux-1.5.0/gwt-dev-linux.jar"/>
+	<classpathentry kind="lib" path="/home/aleks/opt/java/docs/gwt-google-apis-1.0.0/gwt-google-apis.jar"/>
 	<classpathentry kind="output" path="build/WEB-INF/classes"/>
 </classpath>

@@ -113,7 +113,7 @@ public class Application extends Composite implements WindowResizeListener {
 			public void onClick(Widget sender) {
 				WERTiServiceAsync wertiService = (WERTiServiceAsync) GWT.create(WERTiService.class);
 				ServiceDefTarget endpoint = (ServiceDefTarget) wertiService;
-				String moduleRelativeURL = GWT.getModuleBaseURL() + "/org.werti.WERTi/WERTiService";
+				String moduleRelativeURL = GWT.getHostPageBaseURL() + "/org.werti.WERTi/WERTiService";
 				endpoint.setServiceEntryPoint(moduleRelativeURL);
 				AsyncCallback callback = new AsyncCallback() {
 					public void onSuccess(Object result) {

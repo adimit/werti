@@ -59,8 +59,6 @@ public class WERTi implements EntryPoint {
 		 *setupMainMenu(constants);
                  */
 		RootPanel.get().add(app);
-
-		RootPanel.get().add(mainPanel);
 	}
 
 	/**

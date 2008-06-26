@@ -2,6 +2,7 @@
 
 \usepackage[english]{babel}
 \usepackage{qtree}
+\usepackage{aleks}
 \usepackage[utf8x]{inputenc}
 \usepackage{linguex}
 
@@ -47,49 +48,103 @@ their suggestions, remarks and feature requests.
 
 \section{Explaining the Core Functionality}
 
+This section will explain the principles underlying WERTi's functionality by
+first looking at the data processing architecture and then showing how this is
+then integrated into the user interface of the web application.
+
 \subsection{UIMA Analysis Engines}
 
 The current processing line can be split up into three different parts that can
-interact autonomously themselves but each depend on the output of their
-predecessor. The components are arranged in the following manner:
+interact autonomously but each depend on the output of their predecessor. The
+components are arranged in the following order:
 
 \begin{itemize}
 
 \item[HTML processing:] annotates HTML tags, finds ``relevant'' text within the
-tags.
+tags. This lays ground to later linguistic analysis by setting the margins of
+where the latter has to operate on in the web content.
 
 \item[Linguistic processing:] performs linguistic tasks (tokenization, sentence
-boundary detection, part-of-speech tagging\ldots{}) on the text-annoatations
-from the previous processing step.
+boundary detection, part-of-speech tagging\ldots{}) on the text-annotations
+from the previous processing step. This is also the most intensive step from a
+computational point of view. Optimizations to the code are most likely to yield
+visible results here.
 
 \item[Post processing:] Performs all sorts of content enhancement on the
-annotations of the previous two processing steps.
+annotations of the previous two processing steps. Note that this step depends on
+both annotation results: it also needs certain HTML markups in order to
+correctly organize all of the code that is going to be executed on client side.
+
 
 \end{itemize}
+
+We will now go on and explain those steps in further detail.
 
 \subsubsection{HTML Processing}
 
 The HTML processor method was designed to be primitive and efficient. While
-using a fully capable HTML parser was considered, we preffered to use a more
-simple approach since there didn't seem to be any need for the additional data
-an HTML parser could have provided us with. Furthermore, changing the
+using a fully capable HTML parser was considered, we preferred to use a more
+simple approach. Full and formally correct HTML markup was deemed unnecessary and
+too time intensive.
+Furthermore, changing the
 implementation of an analysis step even this fundamental to further processing
 should be easy and without side-effects as long as the requirements to
 preconditions and postconditions are met.
 
-\paragraph{Preconditions} We have a document represented as a singleton and
+\paragraph{Preconditions} We have a document represented as a singleton
+String\footnote{As usual in UIMA. For large documents, UMIA provides ways of
+splitting up documents and processing the chunks independently. However, UIMA
+only considers documents well beyond one megabyte to be ``big enough'' to be
+split and the plain HTML most web pages serve rarely exceeds this mark.}   and
 stored in the UIMA-CAS that is passed to the \verb#process(CAS)#-method of the
 \verb#HTMLAnnotator#-class.
+\paragraph{Postconditions} The document contains annotations marking up the
+positions and spans of html tags in the document text. The names of
+tags\footnote{E.g. ``p'' for the tag \texttt{<p>} or ``div'' for the dag
+\texttt{div}.} are
+also stored and a \verb#isClosing#-flag is set, that denotes whether this tag is
+closing another\footnote{A preceding slash in the tag name closes the tag.}.
 
 \subsubsection{Linguistic Processing}
 
+Linguistic processing goes through 3 major steps: \emph{Tokenization},
+\emph{Sentence Boundary Detection}
+
 \subsubsection{Post Processing - Input Enhancement}
 
-\section{The User Inteface}
+\section{The User Interface}
 
 \subsection{Web Interface}
 
 \subsection{Programming Interface}
+
+\section{The Development Process}
+In this section I want to display in what environment the project has been
+written and what technologies have been put to use.
+
+\subsection{Concept \& Design}
+The original design of WERTi has been developed at Ohio State University by
+\textsc{Detmar Meurers} and his research associates. There exist several papers
+about this original work. At Tübingen University the concept has been extended
+to 
+
+\subsection{Design Process} My Work on the Java implementation of WERTi was
+mostly autonomous. I had been given free choice over the frameworks and
+development environment I wanted to put to use, with the only exceptions being
+being using \emph{Java} and the UIMA architecture to achieve maximum flexibility
+and portability. Maximum flexibility and extensibility were the main goals of
+the re-implementation.
+
+Development happened in a very productive atmosphere with weekly project
+meetings where core functionality and the design of the analysis process were
+discussed. After those most important aspects of the system were implemented, I
+continued work on the interface and extension of the analysis process mostly
+alone for organizational reasons.
+
+I chose to use mostly standard UNIX command line tools for writing, testing and
+debugging the code, although more advanced solutions like the Eclipse Java IDE
+were also used - mostly for easier organization of the work with the different
+frameworks\footnote{Especially UIMA which comes with a number
 
 \section{Conclusion}
 

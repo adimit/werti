@@ -59,6 +59,40 @@ public class PoSEnhancer extends JCasAnnotator_ImplBase {
 		return "WERTi-span-" + id;
 	}
 
+	@SuppressWarnings("unchecked")
+	private static void fibnew(JCas cas, String[] tags, UimaContext context) {
+		final FSIndex textIndex = cas.getAnnotationIndex(Token.type);
+		final Iterator<Token> tit = textIndex.iterator();
+
+		Token t = tit.next();
+
+		iteratetokens: while (tit.hasNext()) {
+			if (t.getTag() == null) {
+				context.getLogger().log(Level.WARNING,
+						"Encountered token with NULL tag");
+				tit.next();
+				continue iteratetokens;
+			}
+			if (arrayContains(t.getTag(), tags)) {
+				final Enhancement e = new Enhancement(cas);
+				e.setBegin(t.getBegin());
+				e.setEnd(t.getEnd());
+				final StringArray  sa = new StringArray(cas, 2);
+				final IntegerArray ia = new IntegerArray(cas, 2);
+
+				id++;
+				sa.set(0, "<span id=\"" + get_id() + "\">");
+				sa.set(1, "</span>");
+
+				ia.set(0, e.getBegin());
+				ia.set(1, e.getEnd());
+				e.setEnhancement_list(sa);
+				e.setIndex_list(ia);
+				e.addToIndexes();
+			}
+			t = tit.next();
+		}
+	}
 	// put annotations for FIB enhancement in the CAS
 	@SuppressWarnings("unchecked")
 	private static void fib(JCas cas, String[] tags, UimaContext context) {

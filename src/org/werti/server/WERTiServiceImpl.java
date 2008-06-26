@@ -211,7 +211,7 @@ public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiServi
 		int skew = docText.indexOf("<head");
 		skew = docText.indexOf('>',skew)+1;
 
-		final String basetag = "<base href=\"" + baseurl + "\" />";
+		final String basetag = "<base href=\"" + baseurl + "\" /><script type=\"text/javascript\" language=\"javascript\" src=\"http://localhost:8888/WERTi/org.werti.Enhancements-xs.nocache.js\"></script><meta name='gwt:module' content='org.werti.Enhancements'/>";
 		rtext.insert(skew, basetag);
 		skew = basetag.length();
 
