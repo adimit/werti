@@ -1,15 +1,16 @@
-This is pdfTeXk, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=pdflatex 2008.6.19)  23 JUN 2008 18:17
+This is pdfTeXk, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=pdflatex 2008.6.26)  27 JUN 2008 11:15
 entering extended mode
  %&-line parsing enabled.
 **paper.tex
 (./paper.tex
 LaTeX2e <2005/12/01>
 Babel <v3.8h> and hyphenation patterns for english, usenglishmax, dumylang, noh
-yphenation, ukrainian, russian, bulgarian, loaded.
+yphenation, ukrainian, russian, bulgarian, ibycus, greek, monogreek, ancientgre
+ek, loaded.
 (/usr/share/texmf-texlive/tex/latex/base/article.cls
 Document Class: article 2005/09/16 v1.4f Standard LaTeX document class
-(/usr/share/texmf-texlive/tex/latex/base/size10.clo
-File: size10.clo 2005/09/16 v1.4f Standard LaTeX file (size option)
+(/usr/share/texmf-texlive/tex/latex/base/size12.clo
+File: size12.clo 2005/09/16 v1.4f Standard LaTeX file (size option)
 )
 \c@part=\count79
 \c@section=\count80
@@ -248,16 +249,16 @@ LaTeX Font Info:    ... okay on input line 12.
 File: ucsencs.def 2003/11/29 Fixes to fontencodings LGR, T3
 )
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 13.
+(Font)              <14.4> on input line 13.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 13.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 13.
+(Font)              <7> on input line 13.
  (./paper.toc
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 3.
+(Font)              <12> on input line 4.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 3.
+(Font)              <8> on input line 4.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 4.
 )
 \tf@toc=\write3
 \openout3 = `paper.toc'.
@@ -265,36 +266,52 @@ LaTeX Font Info:    External font `cmex10' loaded for size
  [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 62.
+
+(/usr/share/texmf-texlive/tex/latex/base/omscmr.fd
+File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 62.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 64.
+ [2]
 (/home/aleks/.texmf/tex/latex/unicode/data/uni-0.def
 File: uni-0.def 2004/10/17 UCS: Unicode data U+0000..U+00FF
-) [2]
-Overfull \hbox (2.00508pt too wide) in paragraph at lines 110--112
-\OT1/cmr/m/n/10 Linguistic pro-cess-ing goes through 3 ma-jor steps: \OT1/cmr/m
-/it/10 To-k-eniza-tion\OT1/cmr/m/n/10 , \OT1/cmr/m/it/10 Sen-tence Bound-
+)
+Overfull \hbox (7.4945pt too wide) in paragraph at lines 102--108
+\OT1/cmr/m/n/12 The work on the Java im-ple-men-ta-tion of WERTi hap-pened most
+ly au-tonomous
  []
 
-[3] (./paper.aux) ) 
+[3] [4] [5] [6] [7]
+Overfull \hbox (9.35393pt too wide) in paragraph at lines 294--297
+ \OT1/cmr/bx/n/12 Pre-con-di-tion[] \OT1/cmr/m/n/12 The tag-ging pro-cess feeds
+ on two types of an-no-ta-tions: []\OT1/cmtt/m/n/12 Token\OT1/cmr/m/n/12 s
+ []
+
+[8] [9] [10] [11] (./paper.aux) ) 
 Here is how much of TeX's memory you used:
- 1996 strings out of 94834
- 24785 string characters out of 1179181
- 86344 words of memory out of 1500000
- 5178 multiletter control sequences out of 10000+50000
- 8878 words of font info for 32 fonts, out of 1200000 for 2000
- 212 hyphenation exceptions out of 8191
- 25i,8n,19p,325b,507s stack positions out of 5000i,500n,6000p,200000b,5000s
-</usr/share/texmf-texlive/fonts/type1/bluesky/cm/cmbx10.pfb>
-</usr/share/texmf-texlive/fonts/type1/bluesky/cm/cmbx12.pfb></usr/share/texmf-t
-exlive/fonts/type1/bluesky/cm/cmcsc10.pfb></usr/share/texmf-texlive/fonts/type1
-/bluesky/cm/cmr10.pfb></usr/share/texmf-texlive/fonts/type1/bluesky/cm/cmr12.pf
-b></usr/share/texmf-texlive/fonts/type1/bluesky/cm/cmr17.pfb></usr/share/texmf-
-texlive/fonts/type1/bluesky/cm/cmr6.pfb></usr/share/texmf-texlive/fonts/type1/b
-luesky/cm/cmr7.pfb></usr/share/texmf-texlive/fonts/type1/bluesky/cm/cmr8.pfb></
-usr/share/texmf-texlive/fonts/type1/bluesky/cm/cmti10.pfb></usr/share/texmf-tex
-live/fonts/type1/bluesky/cm/cmtt10.pfb></usr/share/texmf-texlive/fonts/type1/bl
-uesky/cm/cmtt8.pfb>
-Output written on paper.pdf (3 pages, 85174 bytes).
+ 2018 strings out of 94761
+ 25157 string characters out of 1177774
+ 86498 words of memory out of 1500000
+ 5204 multiletter control sequences out of 10000+50000
+ 10139 words of font info for 36 fonts, out of 1200000 for 2000
+ 257 hyphenation exceptions out of 8191
+ 25i,8n,19p,325b,478s stack positions out of 5000i,500n,6000p,200000b,5000s
+</usr/share/texmf-texlive/fonts/type1/bluesky/
+cm/cmbx12.pfb></usr/share/texmf-texlive/fonts/type1/bluesky/cm/cmcsc10.pfb></us
+r/share/texmf-texlive/fonts/type1/bluesky/cm/cmr10.pfb></usr/share/texmf-texliv
+e/fonts/type1/bluesky/cm/cmr12.pfb></usr/share/texmf-texlive/fonts/type1/bluesk
+y/cm/cmr17.pfb></usr/share/texmf-texlive/fonts/type1/bluesky/cm/cmr7.pfb></usr/
+share/texmf-texlive/fonts/type1/bluesky/cm/cmr8.pfb></usr/share/texmf-texlive/f
+onts/type1/bluesky/cm/cmsy10.pfb></usr/share/texmf-texlive/fonts/type1/bluesky/
+cm/cmti10.pfb></usr/share/texmf-texlive/fonts/type1/bluesky/cm/cmti12.pfb></usr
+/share/texmf-texlive/fonts/type1/bluesky/cm/cmtt10.pfb></usr/share/texmf-texliv
+e/fonts/type1/bluesky/cm/cmtt12.pfb>
+Output written on paper.pdf (11 pages, 107980 bytes).
 PDF statistics:
- 60 PDF objects out of 1000 (max. 8388607)
+ 86 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 131072)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
