@@ -6,33 +6,38 @@ digraph werti {
 	}
 	subgraph cluster_Server {
 		label = "Server";
-		"Tomcat Server" -> "Web Interface";
-		"Tomcat Server" -> "Enhanced Content";
+		 "Web Interface" -> "RPC Server";
+		"RPC Server" -> "Web Interface";
+		 "Enhanced Content" ->"RPC Server";
+		"RPC Server" -> "Enhanced Content";
 		"Linguistic Tools";
-		"RPC Server" -> "HTTP Request";
+		"Web Interface" -> "HTTP Request";
 			"Configuration";
+			"Linguistic Tools";
 		subgraph cluster_Uima {
-			label = "Aggregate Analysis Engine";
-			"Analysis Engine" -> "Annotations";
-			"Analysis Engine " -> "Annotations";
-			" Analysis Engine" -> "Annotations";
-			" Analysis Engine " -> "Annotations";
-			 "CAS" -> "Analysis Engine";
-			 "CAS" -> " Analysis Engine";
-			 "CAS" -> " Analysis Engine ";
-			 "CAS" -> "Analysis Engine ";
-			"Analysis Engine" -> " Analysis Engine " -> "Analysis Engine " -> " Analysis Engine" 
+			label = "UIMA";
+			//Analysis Engine" -> " Analysis Engine " -> "Analysis Engine " -> " Analysis Engine" 
+			subgraph cluster_CAS {
+				label = CAS
+				"Document Text";
+				"Annotations";
+			}
+				"Document Text" -> "Preprocessing";
+				"Document Text" -> "Linguistic Processing";
+				"Document Text" -> "Postprocessing";
+				"Preprocessing" -> "Annotations" ;
+				"Linguistic Processing" -> "Annotations" ;
+				"Postprocessing" -> "Annotations" ;
 		}
+		"Linguistic Processing" -> "Linguistic Tools";
+		"Linguistic Tools"->"Linguistic Processing" ;
 		"RPC Server" -> "Configuration";
-			"Analysis Engine " -> "Linguistic Tools";
-			" Analysis Engine " -> "Linguistic Tools";
 		"Annotations" -> "Enhancement Engine" -> "Enhanced Content"; 
-		"CAS" -> "Enhancement Engine";
-		"HTTP Request" -> "Web Content" -> "CAS";
+		"HTTP Request" -> "Web Content" -> "Document Text";
 	}
 	User ->"Web Interface";
 	"Web Interface" -> "User";
-	"Enhanced Content" -> "RPC Server";
+	//"Enhanced Content" -> "RPC Server";
 	"Enhanced Content" -> "Web Interface";
-	"Web Interface" -> "RPC Server";
+	//"Web Interface" -> "RPC Server";
 }

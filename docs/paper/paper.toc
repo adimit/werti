@@ -1,29 +1,32 @@
 \select@language {english}
 \contentsline {section}{\numberline {1}Introduction}{2}
-\contentsline {section}{\numberline {2}The Development Process}{2}
-\contentsline {subsection}{\numberline {2.1}Goals of the New Ipmlementation}{2}
-\contentsline {subsection}{\numberline {2.2}Concept \& Design}{3}
-\contentsline {subsection}{\numberline {2.3}Design Process}{3}
+\contentsline {subsection}{\numberline {1.1}Concept \& Design}{2}
+\contentsline {section}{\numberline {2}The Development Process}{3}
+\contentsline {subsection}{\numberline {2.1}Goals of the New Implementation}{3}
+\contentsline {subsection}{\numberline {2.2}Design Process}{4}
 \contentsline {section}{\numberline {3}The Architecture of the System}{4}
 \contentsline {subsection}{\numberline {3.1}The UIMA Analysis Engines}{4}
 \contentsline {subsection}{\numberline {3.2}HTML Processing}{5}
-\contentsline {paragraph}{Preconditions}{6}
+\contentsline {paragraph}{Preconditions}{5}
 \contentsline {paragraph}{Postconditions}{6}
 \contentsline {subsection}{\numberline {3.3}Finding Text to Process}{6}
 \contentsline {paragraph}{Preconditions}{6}
 \contentsline {paragraph}{Postconditions}{6}
-\contentsline {subsection}{\numberline {3.4}Linguistic Processing}{7}
-\contentsline {subsubsection}{\numberline {3.4.1}Tokenization}{7}
+\contentsline {subsection}{\numberline {3.4}Linguistic Processing}{6}
+\contentsline {subsubsection}{\numberline {3.4.1}Tokenization}{6}
 \contentsline {paragraph}{Precondition}{7}
 \contentsline {paragraph}{Postcondition}{7}
 \contentsline {subsubsection}{\numberline {3.4.2}Sentence Boundary Detection}{7}
-\contentsline {paragraph}{Precondition}{8}
-\contentsline {paragraph}{Postcondition}{8}
+\contentsline {paragraph}{Precondition}{7}
+\contentsline {paragraph}{Postcondition}{7}
 \contentsline {subsubsection}{\numberline {3.4.3}Part of Speech Tagging}{8}
 \contentsline {paragraph}{Precondition}{8}
 \contentsline {paragraph}{Postcondition}{8}
-\contentsline {subsubsection}{\numberline {3.4.4}Post Processing - Input Enhancement}{9}
+\contentsline {subsubsection}{\numberline {3.4.4}Post Processing - Input Enhancement}{8}
+\contentsline {paragraph}{Precondition}{8}
+\contentsline {paragraph}{Postcondition}{9}
 \contentsline {subsection}{\numberline {3.5}The User Interface}{9}
 \contentsline {subsubsection}{\numberline {3.5.1}The Interactive Web Interface}{9}
-\contentsline {section}{\numberline {4}Conclusion}{10}
-\contentsline {subsection}{\numberline {4.1}Loose Ends}{10}
+\contentsline {subsection}{\numberline {3.6}Summary: A General Overview}{9}
+\contentsline {section}{\numberline {4}Conclusion}{11}
+\contentsline {subsection}{\numberline {4.1}Loose Ends}{11}
