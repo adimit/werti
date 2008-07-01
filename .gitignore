@@ -4,4 +4,7 @@
 .*.sw?
 *.jar
 *~
-uima\.log.*
+uima.log
+*tmp.html
+*.cache.*
+/web/.gwt-tmp

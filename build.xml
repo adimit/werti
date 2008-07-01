@@ -81,9 +81,6 @@
 		</fileset>
 	</path>
 
-
-
-
 	<!-- Targets -->
 	<target name="all" depends="clean,compile" description="Clean build and dist directories, then compile"/>
 
@@ -112,7 +109,7 @@
 
 	</target>
 
-	<target name="dist" depends="compile,javadoc" description="Create binary distribution">
+	<target name="dist" depends="compile,javadoc,gwt.compile" description="Create binary distribution">
 
 		<!-- Copy documentation subdirectories -->
 		<mkdir   dir="${dist.home}/docs"/>
@@ -127,8 +124,12 @@
 
 	</target>
 
-	<target name="install" depends="compile" description="Install application to servlet container">
+	<target name="gwt.compile" depends="compile" description="Compile AJAX code from Java Source">
+		<echo>Compiling GWT modules. This may take some time, please wait...</echo>
+		<exec executable="./WERTi-compile" dir="${basedir}"/>
+	</target>
 
+	<target name="install" depends="compile,gwt.compile" description="Install application to servlet container">
 		<deploy url="${manager.url}"
 				username="${manager.username}"
 				password="${manager.password}"
@@ -138,26 +139,21 @@
 	</target>
 
 	<target name="javadoc" depends="compile" description="Create Javadoc API documentation">
-
 		<mkdir          dir="${dist.home}/docs/api"/>
 		<javadoc sourcepath="${src.home}"
 				destdir="${dist.home}/docs/api"
 				packagenames="*">
 			<classpath refid="compile.classpath"/>
 		</javadoc>
-
 	</target>
 
 	<target name="list" description="List installed applications on servlet container">
-
 		<list    url="${manager.url}"
 				username="${manager.username}"
 				password="${manager.password}"/>
-
 	</target>
 
 	<target name="prepare">
-
 		<!-- Create build directories as needed -->
 		<mkdir  dir="${build.home}"/>
 		<mkdir  dir="${build.home}/WEB-INF"/>
