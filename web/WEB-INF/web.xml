@@ -15,18 +15,13 @@
     </context-param>
 
     <servlet>
-	    <servlet-name>WERTiService</servlet-name>
-	    <servlet-class>org.werti.client.WERTiService</servlet-class>
-    </servlet>
-
-    <servlet>
-	    <servlet-name>Enhancements</servlet-name>
-	    <servlet-class>org.werti.client.Enhancements</servlet-class>
+	    <servlet-name>Interface</servlet-name>
+	    <servlet-class>org.werti.Interface</servlet-class>
     </servlet>
 
     <servlet-mapping>
-	    <servlet-name>WERTiService</servlet-name>
-	    <url-pattern>/WERTiService</url-pattern>
+	    <servlet-name>Interface</servlet-name>
+	    <url-pattern>/Interface</url-pattern>
     </servlet-mapping>
 
     <session-config>

@@ -4,8 +4,6 @@ package org.werti.uima.ae;
 
 import org.apache.uima.analysis_component.JCasAnnotator_ImplBase;
 
-import org.apache.uima.cas.FSIndex;
-
 import org.apache.uima.jcas.JCas;
 
 import org.apache.uima.util.Level;
@@ -31,7 +29,6 @@ public class HTMLAnnotator extends JCasAnnotator_ImplBase {
 		getContext().getLogger().log(Level.INFO,
 				"Starting HTML tag recognition");
 		final String s = cas.getDocumentText();
-		getContext().getLogger().log(Level.FINEST, "DocumentText is " + s.length() + " characters long");
 		int tstart = 0;
 		int tend = 0;
 		while ((tstart = s.indexOf('<', tstart)) > -1) {
@@ -65,9 +62,8 @@ public class HTMLAnnotator extends JCasAnnotator_ImplBase {
 			tag.addToIndexes();
 
 		}
-		final FSIndex fsi = cas.getAnnotationIndex(HTML.type);
 		getContext().getLogger().log(Level.INFO,
-				"Finished HTML tag recognition. Recognized " + fsi.size() + " tags.");
+				"Finished HTML tag recognition");
 	}
 
 	// skips ahead and marks irrelevant tags

@@ -40,9 +40,7 @@ public class SimpleTokenizer extends JCasAnnotator_ImplBase {
 			for (int i = 1; i < span.length; i++) {
 				if ((Character.getType(span[i]) != Character.getType(span[i-1]))
 				||   Character.getType(span[i]) == Character.DIRECTIONALITY_WHITESPACE
-				||   span[i] == '.'
-				&&  (span[i] == '-' && span[i-1] != Character.DIRECTIONALITY_WHITESPACE)
-				) {
+				||   span[i] == '.') {
 					final Token t = new Token(cas);
 					t.setBegin(lskew);
 					t.setEnd((lskew = gskew + i));

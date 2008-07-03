@@ -1,13 +1,11 @@
 package org.werti.client;
 
-
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.core.client.GWT;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.HeadElement;
 import com.google.gwt.dom.client.LinkElement;
-
-
 
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
@@ -16,10 +14,12 @@ import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
+/**
+ * Entry point classes define <code>onModuleLoad()</code>.
+ */
 public class WERTi implements EntryPoint {
 
 	private Label styleTester;
@@ -47,18 +47,38 @@ public class WERTi implements EntryPoint {
 		RootPanel.get().add(styleTester);
 
 		// Create the constants
-		// WERTiConstants constants = (WERTiConstants) GWT.create(WERTiConstants.class);
+		WERTiConstants constants = (WERTiConstants) GWT.create(WERTiConstants.class);
 
 		// Create the User Interface
-		app = new Application();
+		app = new WERTiUI();
 
-                /*
-		 *setupTitlePanel(constants);
-		 *setupMainLinks(constants);
-		 *setupOptionsPanel();
-		 *setupMainMenu(constants);
-                 */
+		setupTitlePanel(constants);
+		setupMainLinks(constants);
+		setupOptionsPanel();
+		setupMainMenu(constants);
 		RootPanel.get().add(app);
+
+
+		// Create the dialog box
+		final DialogBox dialogBox = new DialogBox();
+		dialogBox.setText("Welcome to GWT!");
+		dialogBox.setAnimationEnabled(true);
+		Button closeButton = new Button("close");
+		VerticalPanel dialogVPanel = new VerticalPanel();
+		dialogVPanel.setWidth("100%");
+		dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_CENTER);
+		dialogVPanel.add(closeButton);
+
+		closeButton.addClickListener(new ClickListener() {
+			public void onClick(Widget sender) {
+				dialogBox.hide();
+			}
+		});
+
+		// Set the contents of the Widget
+		dialogBox.setWidget(dialogVPanel);
+
+		RootPanel.get().add(mainPanel);
 	}
 
 	/**
@@ -75,30 +95,10 @@ public class WERTi implements EntryPoint {
 		getHeadElement().appendChild(linkElem);
 	}
 
-	/**
-	 * Content wrapper. Put stuff here.
-	 */
-	private SimplePanel contentWrapper;
-
-
-	/// Utility Methods \\\
-
-	/**
-	 * Convenience method.
-	 *
-	 * Adds the {@link Widget} or an &amp;nbsp;-entity if the parameter is null.
-	 */
-	public void addWidget(Widget content) {
-		if (content == null) {
-			contentWrapper.setWidget(new HTML("&nbsp;"));
-		} else {
-			contentWrapper.setWidget(content);
-		}
-	}
-
 	/* Nasty stuff follows ahead. Please keep at end of file ~adimit */
 
 	private static native HeadElement getHeadElement() /*-{
 							     return $doc.getElementsByTagName("head")[0];
 							     }-*/;
+
 }

@@ -1,3 +1,3 @@
 #!/bin/sh
 APPDIR=`dirname $0`;
-java  -Xmx256M -cp "${HOME}/opt/java/uima-core.jar:${HOME}/opt/java/stanford-postagger.jar:${HOME}/opt/java/lib-0.1.jar:${HOME}/opt/java/uima-an-tagger.jar:$APPDIR/src:$APPDIR/bin:/home/aleks/opt/gwt-linux-1.5.0/gwt-user.jar:/home/aleks/opt/gwt-linux-1.5.0/gwt-dev-linux.jar" com.google.gwt.dev.GWTShell -out "$APPDIR/www" "$@" org.werti.WERTi/WERTi.html;
+java  -Xmx256M -cp "$APPDIR/src:$APPDIR/bin:/home/aleks/opt/gwt-linux-1.5.0/gwt-user.jar:/home/aleks/opt/gwt-linux-1.5.0/gwt-dev-linux.jar" com.google.gwt.dev.GWTShell -out "$APPDIR/www" "$@" org.werti.WERTi/WERTi.html;

@@ -3,8 +3,8 @@
   <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
   <primitive>false</primitive>
   <delegateAnalysisEngineSpecifiers>
-    <delegateAnalysisEngine key="PTBTokenizer">
-      <import location="../annotators/PTBTokenizer.xml"/>
+    <delegateAnalysisEngine key="Tokenizer">
+      <import location="../annotators/Tokenizer.xml"/>
     </delegateAnalysisEngine>
     <delegateAnalysisEngine key="HMMTagger">
       <import location="../annotators/taggers/HMMTagger.xml"/>
@@ -30,7 +30,7 @@
       <fixedFlow>
         <node>HTMLAnnotator</node>
         <node>GenericRelevanceAnnotator</node>
-        <node>PTBTokenizer</node>
+        <node>Tokenizer</node>
         <node>SentenceBoundaryDetector</node>
         <node>HMMTagger</node>
       </fixedFlow>

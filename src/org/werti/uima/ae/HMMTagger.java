@@ -2,6 +2,7 @@ package org.werti.uima.ae;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 
 import java.util.ArrayList;
@@ -39,11 +40,11 @@ public class HMMTagger extends JCasAnnotator_ImplBase implements Tagger {
 	 */
 	// n-gram model
 	private static final String pN = "NGRAM_SIZE";
-	private static int N;
+	private int N;
 
 	// model generation
 	private static final String pModel = "MODEL_LOCATION";
-	private static ModelGeneration model;
+	private ModelGeneration model;
 
 	/**
 	 * Initializes the HMMTagger with a model supplied by the configuration-resource
@@ -54,10 +55,8 @@ public class HMMTagger extends JCasAnnotator_ImplBase implements Tagger {
 	public void initialize(final UimaContext context) throws ResourceInitializationException {
 		super.initialize(context);
 		try {
-			N = (Integer) context.getConfigParameterValue(pN);
-			if (model == null) {
-				model = get_model(context);
-			}
+			this.N = (Integer) context.getConfigParameterValue(pN);
+			this.model = get_model(context);
 		} catch (AnnotatorConfigurationException ace) {
 			throw new ResourceInitializationException(ace);
 		} catch (Exception e) {
@@ -74,15 +73,16 @@ public class HMMTagger extends JCasAnnotator_ImplBase implements Tagger {
 	// initialize the model
 	private static ModelGeneration get_model(final UimaContext context, final String loc)
 		throws AnnotatorConfigurationException {
-		final ObjectInputStream ois;
+		final InputStream model;
 		try {
 			if (loc == null || loc.equals("")) {
 				// fetch model from Annotator configuration
 				final String resource = (String) context.getConfigParameterValue(pModel);
-				ois = new ObjectInputStream(new FileInputStream(resource));
+				model = ClassLoader.getSystemResourceAsStream(resource);
 			} else {
-				ois = new ObjectInputStream(new FileInputStream(loc));
+				model = new FileInputStream(loc);
 			}
+			final ObjectInputStream ois = new ObjectInputStream(model);
 			final ModelGeneration oRead = (ModelGeneration) ois.readObject();
 			return oRead;
 		} catch (IOException ioe) {
@@ -131,14 +131,14 @@ public class HMMTagger extends JCasAnnotator_ImplBase implements Tagger {
 				wlist.add(t.getCoveredText());
 			}
 
-			wlist = viterbi(N, model, wlist);
+			wlist = viterbi(this.N, this.model, wlist);
 
 			assert true: wlist.size() == tlist.size();
 
 			for (int i = 0; i < tlist.size(); i++) {
 				final Token t = tlist.get(i);
 				final String tag = wlist.get(i);
-				t.setTag(tag.toUpperCase());
+				t.setTag(tag);
 			}
 		}
 	}

@@ -18,10 +18,6 @@
 	<property name="src.home"      value="${basedir}/src"/>
 	<property name="web.home"      value="${basedir}/web"/>
 
-	<!-- Zappa targets -->
-	<property name="remote.manager.url"   value="http://zappa.sfs.uni-tuebingen.de:8180/manager"/>
-	<property name="remote.manager.username" value="manager"/>
-	<property name="remote.manager.password" value="_c,f0D"/>
 
 	<!-- Task definitions -->
 	<taskdef name="deploy"   classname="org.apache.catalina.ant.DeployTask"/>
@@ -43,7 +39,7 @@
 	<property name="uima-core.jar" value="${basedir}/web/WEB-INF/lib/uima-an-tagger.jar"/>
 	<property name="uima-core.jar" value="${basedir}/web/WEB-INF/lib/uima-core.jar"/>
 	<property name="tomcat-juli.jar" value="${basedir}/web/WEB-INF/lib/tomcat-juli.jar"/>
-	<property name="stanford-postagger.jar" value="/home/aleks/opt/java/stanford-postagger.jar"/>
+	<property name="stanford-postagger.jar" value="${basedir}/web/WEB-INF/lib/stanford-postagger.jar"/>
 	<property name="lib-0.1.jar" value="/home/aleks/src/lib/lib-0.1.jar"/>
 
 
@@ -70,16 +66,20 @@
 			<include name="*.jar"/>
 		</fileset>
 
-		<!--<pathelement location="${web.home}/WEB-INF/lib"/>
+		<pathelement location="${web.home}/WEB-INF/lib"/>
 		<fileset dir="${web.home}/WEB-INF/lib">
 			<include name="*.jar"/>
-			</fileset>-->
+		</fileset>
 
-		<pathelement location="/home/aleks/opt/java"/>
-		<fileset dir="/home/aleks/opt/java">
+		<pathelement location="/home/aleks/src/lib"/>
+		<fileset dir="/home/aleks/src/lib">
 			<include name="*.jar"/>
 		</fileset>
+
 	</path>
+
+
+
 
 	<!-- Targets -->
 	<target name="all" depends="clean,compile" description="Clean build and dist directories, then compile"/>
@@ -109,7 +109,7 @@
 
 	</target>
 
-	<target name="dist" depends="compile,javadoc,gwt.compile" description="Create binary distribution">
+	<target name="dist" depends="compile,javadoc" description="Create binary distribution">
 
 		<!-- Copy documentation subdirectories -->
 		<mkdir   dir="${dist.home}/docs"/>
@@ -124,12 +124,8 @@
 
 	</target>
 
-	<target name="gwt.compile" depends="compile" description="Compile AJAX code from Java Source">
-		<echo>Compiling GWT modules. This may take some time, please wait...</echo>
-		<exec executable="./WERTi-compile" dir="${basedir}"/>
-	</target>
+	<target name="install" depends="compile" description="Install application to servlet container">
 
-	<target name="install" depends="compile,gwt.compile" description="Install application to servlet container">
 		<deploy url="${manager.url}"
 				username="${manager.username}"
 				password="${manager.password}"
@@ -139,21 +135,26 @@
 	</target>
 
 	<target name="javadoc" depends="compile" description="Create Javadoc API documentation">
+
 		<mkdir          dir="${dist.home}/docs/api"/>
 		<javadoc sourcepath="${src.home}"
 				destdir="${dist.home}/docs/api"
 				packagenames="*">
 			<classpath refid="compile.classpath"/>
 		</javadoc>
+
 	</target>
 
 	<target name="list" description="List installed applications on servlet container">
+
 		<list    url="${manager.url}"
 				username="${manager.username}"
 				password="${manager.password}"/>
+
 	</target>
 
 	<target name="prepare">
+
 		<!-- Create build directories as needed -->
 		<mkdir  dir="${build.home}"/>
 		<mkdir  dir="${build.home}/WEB-INF"/>
@@ -177,6 +178,9 @@
 
 	</target>
 
+
+	<!-- Reload Target -->
+
 	<target name="reload" depends="compile" description="Reload application on servlet container">
 
 		<reload url="${manager.url}"
@@ -191,35 +195,6 @@
 		<undeploy url="${manager.url}"
 				username="${manager.username}"
 				password="${manager.password}"
-				path="${app.path}"/>
-
-	</target>
-
-	<!--remote targets -->
-	<target name="zappa.install" depends="compile" description="Install application to servlet container">
-
-		<deploy url="${remote.manager.url}"
-				username="${remote.manager.username}"
-				password="${remote.manager.password}"
-				path="${app.path}"
-				localWar="file://${build.home}"/>
-
-	</target>
-
-	<target name="zappa.reload" depends="compile" description="Reload application on servlet container">
-
-		<reload url="${remote.manager.url}"
-				username="${remote.manager.username}"
-				password="${remote.manager.password}"
-				path="${app.path}"/>
-
-	</target>
-
-	<target name="zappa.remove" description="Remove application on servlet container">
-
-		<undeploy url="${remote.manager.url}"
-				username="${remote.manager.username}"
-				password="${remote.manager.password}"
 				path="${app.path}"/>
 
 	</target>

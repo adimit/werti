@@ -8,6 +8,7 @@ h1,h2 {
      background-color: #574;
      border: 1px solid;
      border-color: #251;
+     font-family: Helvetica;
      color: #EEE;
      padding: 5px;
 }
@@ -19,9 +20,7 @@ div.text {
      border: 1px solid;
      border-color: #999;
      padding: 5px;
-     width: 60%;
-     margin-left: 20%;
-     margin-right: 20%;
+     width: 80%;
      margin-top: 2px;
      margin-bottom: 2px;
 }

@@ -1,27 +1,29 @@
 *** Severe
 
+ * Fix encoding problem with Net.fetch()
  * NullPointerException when klicking on Reuter's 'next page'
- * click on the words has a problem with almost all pages, but especially with [2]
- * non-termination bug in HTMLAnnotator with [5]
+ * Connection still seems flaky for some reason or another.
 
 *** Important
 
  * React smart on encountering html-entities
- * <base> doesn't work on some sites [3][4]
-
+ * Improve tagger:
+   - demonize
 
 *** Bugs
  * fib is put into anchors currently, which is awkward.
  * Don't screw up on html tags with &lt; and &gt; entities instead of < and >.
+ * does the HTML annotation really need the tag-name field?
 
 *** Showstoppers
  * Update README
 
 *** Wishlist
 ************
-- FIB: Focus next input when hitting enter and having a correct result
 - implement HTML parser [0]
 - Implement TreeTagger and lingpipe
+- put a DocumentAnnotation somewhere in the preamble that 
+  would hold <script>s for the enhancements to use
 - Use HTML entities in sentence boundary followers (like, for " or similar)
 - Internationalize the exceptions, logging, whole application following [1]
 - Interactive Passivator
@@ -31,7 +33,3 @@ References:
 ===========
 [0]	http://htmlparser.sourceforge.net/
 [1]	http://java.sun.com/j2se/1.5.0/docs/guide/intl/index.html
-[2]	http://www.bbcworld.com/Pages/ProgrammeFeature.aspx?id=106&FeatureId=798
-[3]	http://www.drumcenter-emmendingen.de/html/de/index/index.php4
-[4]	http://drni.de/niels/cl/bananasplit/
-[5]	http://code.google.com/support/bin/answer.py?answer=63584&topic=11121
