@@ -8,7 +8,7 @@
 	<property name="app.name"      value="werti"/>
 	<property name="app.path"      value="/${app.name}"/>
 	<property name="app.version"   value="0.1-dev"/>
-	<property name="build.home"    value="${basedir}/build"/>
+	<property name="build.home"    value="${basedir}/bin"/>
 	<property name="catalina.home" value="/usr/share/tomcat5.5"/>
 	<property name="dist.home"     value="${basedir}/dist"/>
 	<property name="docs.home"     value="${basedir}/docs"/>
@@ -16,7 +16,7 @@
 	<property name="manager.username" value="manager"/>
 	<property name="manager.password" value="_c,f0D"/>
 	<property name="src.home"      value="${basedir}/src"/>
-	<property name="web.home"      value="${basedir}/web"/>
+	<property name="web.home"      value="${basedir}/www"/>
 
 
 	<!-- Task definitions -->
@@ -34,24 +34,8 @@
 	<property name="target.version"      value="1.5"/>
 
 
-	<!-- External Dependencies -->
-
-	<property name="uima-core.jar" value="${basedir}/web/WEB-INF/lib/uima-an-tagger.jar"/>
-	<property name="uima-core.jar" value="${basedir}/web/WEB-INF/lib/uima-core.jar"/>
-	<property name="tomcat-juli.jar" value="${basedir}/web/WEB-INF/lib/tomcat-juli.jar"/>
-	<property name="stanford-postagger.jar" value="${basedir}/web/WEB-INF/lib/stanford-postagger.jar"/>
-	<property name="lib-0.1.jar" value="/home/aleks/src/lib/lib-0.1.jar"/>
-
-
-
 	<!-- Compilation Classpath -->
 	<path id="compile.classpath">
-
-		<!-- Include all JAR files that will be included in /WEB-INF/lib -->
-		<!-- *** CUSTOMIZE HERE AS REQUIRED BY YOUR APPLICATION *** -->
-		<!--
-		  <pathelement location="${foo.jar}"/>
-		  -->
 
 		<!-- Include all elements that Tomcat exposes to applications -->
 		<pathelement location="${catalina.home}/common/classes"/>
@@ -66,16 +50,10 @@
 			<include name="*.jar"/>
 		</fileset>
 
-		<pathelement location="${web.home}/WEB-INF/lib"/>
-		<fileset dir="${web.home}/WEB-INF/lib">
+		<pathelement location="/home/aleks/opt/java"/>
+		<fileset dir="/home/aleks/opt/java">
 			<include name="*.jar"/>
 		</fileset>
-
-		<pathelement location="/home/aleks/src/lib"/>
-		<fileset dir="/home/aleks/src/lib">
-			<include name="*.jar"/>
-		</fileset>
-
 	</path>
 
 
@@ -160,22 +138,14 @@
 		<mkdir  dir="${build.home}/WEB-INF"/>
 		<mkdir  dir="${build.home}/WEB-INF/classes"/>
 
-
 		<!-- Copy static content of this web application -->
 		<copy todir="${build.home}">
 			<fileset dir="${web.home}"/>
 		</copy>
 
-		<!-- Copy external dependencies as required -->
-		<!-- *** CUSTOMIZE HERE AS REQUIRED BY YOUR APPLICATION *** -->
-		<mkdir  dir="${build.home}/WEB-INF/lib"/>
-		<!--
-		  <copy todir="${build.home}/WEB-INF/lib" file="${foo.jar}"/>
-		  -->
-
-		<!-- Copy static files from external dependencies as needed -->
-		<!-- *** CUSTOMIZE HERE AS REQUIRED BY YOUR APPLICATION *** -->
-
+		<copy todir="${build.home}">
+			<fileset dir="desc"/>
+		</copy>
 	</target>
 
 

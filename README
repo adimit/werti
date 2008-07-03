@@ -1,11 +1,24 @@
-WERTi is supposed to be a tool for second language learners. It retrieves documents from certain web sites and then
-annotates their linguistic structure in a way that is supposed to help the learner. This structure is then exposed
-through an interactive interface which was designed to help the learner understand the underlying principles of the 
-structures and, accordingly, the language itself.
+* WERTi - Providing a Platforrm for Second Language Learning Assistance *
 
-The system currently only supports English as a target language, but is planned to be highly modular and thus extensible
-towards other languages.
 
-It runs is tested to run on a tomcat web server and relies on a recent JVM. It was only tested uisg the Sun JVM. The
-basic architecture relies on tomcat's servlets API, the (incubating) Apache UIMA API and the Google Web Toolkit. Thus
-it makes use of Java, JavaScript, HTML and XML peripheral (e.g. Ant, Eclipse EMF ...) technologies. 
+WERTi is a web platform for second language learners and programmers interested
+in providing functionality for second language learning assistance. It is
+capable of retrieving documents from certain web sites and then annotating
+their linguistic structure in a way that could to help the learner. The web
+content can then be marked up in a modular way and the enhanced content exposed
+to the user through an interactive interface. This should ultimately allow the
+learner to understand the underlying principles of the target language, and
+thus acquire a firmer grasp of the language itself.
+
+The system currently only supports English as a target language, but is planned
+to be highly modular and thus extensible towards other languages.
+
+It runs is tested to run on a tomcat web server and relies on a recent JVM. It
+was only tested uisg the Sun JVM. The basic architecture relies on tomcat's
+servlets API, the (incubating) Apache UIMA API and the Google Web Toolkit. Thus
+it makes use of Java, AJAX, HTML and XML peripheral (e.g. Ant, Eclipse
+EMF ...) technologies.
+
+The system is currently in early development. For more information, please
+refer to the documentation under /docs or contact the author
+admtrov@sfs.uni-tuebingen.de

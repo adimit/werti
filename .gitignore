@@ -1,7 +1,9 @@
 /dist
 /build
+/temp
+/bin
 
 .*.sw?
 *.jar
 *~
-uima\.log.*
+uima.log*

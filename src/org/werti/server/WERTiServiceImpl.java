@@ -37,10 +37,9 @@ import org.werti.client.WERTiService;
 import org.werti.uima.types.Enhancement;
 
 public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiService {
-	private static final String PREFIX = "/var/local/resources/werti/descriptors/";
+	private static final String PREFIX = "desc";
 	private static final String ENHNCE = PREFIX + "enhancers/PoSEnhancer.xml";
 	private static final String OPERTR = PREFIX + "operators/";
-
 
 	// maximum amount of of ms to wait for a web-page to load
 	private static final int MAX_WAIT = 1000 * 10;
