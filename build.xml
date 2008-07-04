@@ -56,9 +56,6 @@
 		</fileset>
 	</path>
 
-
-
-
 	<!-- Targets -->
 	<target name="all" depends="clean,compile" description="Clean build and dist directories, then compile"/>
 
