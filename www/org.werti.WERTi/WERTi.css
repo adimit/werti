@@ -1,84 +1,33 @@
 /** Add css rules here for your application. */
 body {
-     background-color: #112;
-     color: #DDD;
-     font-family: Monospace;
-}
-h1,h2 {
-     width: 80%;
-     margin-left: 10%;
-     margin-right: 10%;
-     background-color: #574;
-     border: 1px solid;
-     border-color: #251;
-     color: #EEE;
-     padding: 5px;
-}
-form {
-     line-height: 150%;
-}
-div.text {
-     background-color: #333;
-     border: 1px solid;
-     border-color: #999;
-     padding: 5px;
-     width: 60%;
-     margin-left: 20%;
-     margin-right: 20%;
-     margin-top: 2px;
-     margin-bottom: 2px;
-}
-div.notice {
-     margin: 5px;
-     padding: 2px;
-     font-style: italic;
-     border: 1px dotted;
-}
-input {
-     background-color: #444;
-     border-color: #000;
-     color: #DDD;
-     border: 1px solid;
-     font-family: Monospace;
-}
-fieldset {
-     border: 1px dotted;
+  font-family:arial,sans-serif
 }
 
-.WERTi-content {
-     background-color: #333;
-     border: 1px solid;
-     border-color: #999;
-     padding: 5px;
-     width: 80%;
-     margin-left: 10%;
-     margin-right: 10%;
-     margin-top: 2px;
-     margin-bottom: 2px;
+div,td {
+  color:#000000
 }
 
-.WERTi-submit {
-     background-color: #574;
-     color: #eee;
-     font-weight: bold;
-     border: 1px solid;
-     margin-left: 80%;
-     width: 20%;
-}
-
-/* links */
 a:link {
-     color: #8a7;
+  color:#0000cc
 }
+     
 a:visited {
-     color: #47B;
+  color:#551a8b
 }
-a:focus {
-     font-weight: bold;
-}
-a:hover {
-     background: #000;
-}
+
 a:active {
-     color: #FFF;
+  color:#ff0000
+}
+
+button {
+  display: block;
+  font-size: 16pt
+}
+
+.widePanel {
+  width: 100%
+}
+
+img {
+  margin-top: 20px;
 }

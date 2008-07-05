@@ -11,12 +11,10 @@
       <!-- <inherits name="com.google.gwt.user.theme.dark.Dark"/>     -->
 
       <!-- Other module inherits                                      -->
-
-
       <!-- Specify the app entry point class.                         -->
       <entry-point class='org.werti.client.WERTi'/>
     
       <!-- Specify the application specific style sheet.              -->
-      <stylesheet src='WERTi.css' />
+      <stylesheet src='werti.css' />
 	
 </module>

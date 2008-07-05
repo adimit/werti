@@ -31,7 +31,7 @@
 	<property name="compile.debug"       value="true"/>
 	<property name="compile.deprecation" value="false"/>
 	<property name="compile.optimize"    value="true"/>
-	<property name="target.version"      value="1.5"/>
+	<property name="target.version"      value="1.6"/>
 
 
 	<!-- Compilation Classpath -->
@@ -63,6 +63,11 @@
 			description="Delete old build and dist directories">
 		<delete dir="${build.home}"/>
 		<delete dir="${dist.home}"/>
+	</target>
+
+	<target name="gwt.compile" description="Compile AJAX with GWT">
+		<echo>Compiling GWT classes. This may take some time...</echo>
+		<exec executable="./WERTi-compile"/>
 	</target>
 
 	<target name="compile" depends="prepare" description="Compile Java sources">
@@ -145,16 +150,12 @@
 		</copy>
 	</target>
 
-
 	<!-- Reload Target -->
 
 	<target name="reload" depends="compile" description="Reload application on servlet container">
-
-		<reload url="${manager.url}"
-				username="${manager.username}"
-				password="${manager.password}"
-				path="${app.path}"/>
-
+		<exec executable="touch">
+			<arg value="bin/WEB-INF/web.xml"/>
+		</exec>
 	</target>
 
 	<target name="remove" description="Remove application on servlet container">

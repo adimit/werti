@@ -14,16 +14,6 @@
       <description>Mail for trouble</description>
     </context-param>
 
-    <servlet>
-	    <servlet-name>Interface</servlet-name>
-	    <servlet-class>org.werti.Interface</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-	    <servlet-name>Interface</servlet-name>
-	    <url-pattern>/Interface</url-pattern>
-    </servlet-mapping>
-
     <session-config>
       <session-timeout>30</session-timeout> 
     </session-config>

@@ -3,7 +3,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="/home/aleks/opt/java/uima-an-tagger.jar"/>
 	<classpathentry kind="lib" path="/home/aleks/opt/java/uima-core.jar"/>
-	<classpathentry kind="lib" path="/home/aleks/opt/java/lib-0.1.jar"/>
 	<classpathentry kind="lib" path="/home/aleks/opt/java/servlet-api.jar"/>
 	<classpathentry kind="lib" path="/home/aleks/opt/java/lingpipe-3.5.0.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>

@@ -1,23 +1,48 @@
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
-  "http://www.w3.org/TR/html4/loose.dtd">
-
-  <!-- The HTML 4.01 Transitional DOCTYPE declaration-->
-<!-- above set at the top of the file will set     -->
-<!-- the browser's rendering engine into           -->
-<!-- "Standards Mode", which gives better cross    -->
-<!-- browser compatibility to the application.     -->
-<!-- Omitting this line leaves most browsers in    -->
-<!-- "Quirks mode", emulating the bugs in older    -->
-<!-- browser versions.                             -->
-
-<html>
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-      <title>WERTi</title>
-      <script type="text/javascript" language="javascript" src="org.werti.WERTi.nocache.js"></script>
-    </head>
-    <body>
-      <iframe src="javascript:''" id="__gwt_historyFrame" tabIndex='-1' style="position:absolute;width:0;height:0;border:0"></iframe>
-    </body>
-  </html>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <meta name="gwt:module" content="org.werti.WERTi"/>
+    <title>WERTi - Working with English Real Texts - interactively</title>
+    <link type="text/css" href="werti.css"/>
+    <script type="text/javascript" language="javascript" src="org.werti.WERTi.nocache.js"></script>
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/>
+    <meta http-equiv="content-type" content="text/html; UTF-8"/>
+    <meta http-equiv="content-language" content="de"/>
+  </head>
+  <body>
+    <iframe src="javascript:''" id="__gwt_historyFrame" tabIndex='-1' style="position:absolute;width:0;height:0;border:0"></iframe>
+    <div class="text">
+      <h1>Welcome to WERTi</h1>
+      <div class="notice">
+	This is the developer's backend of WERTi. If you're a user, we're sorry, but the user frontend
+	is not yet written. Check back later or try the 
+	<a href="http://prospero.ling.ohio-state.edu/WERTi/index.py/main?what=about"
+	    >original implementation of WERTi</a>.
+      </div>
+      Please spcify a URL you want to send through the system, an input enhancement method
+      and a set of tags you want to see enhanced in the website's tags. Please note that some pages
+      might still look different from what you expect. Please note problems to the
+      <a href="mailto:admtrov@sfs.uni-tuebingen.de">administrator</a>.
+    </div>
+    <div class="text">
+      <h2>Settings</h2>
+	<p>
+	  URL or search string: <span id="searchBox"></span>Target Language: <span id="languageChoice"></span>
+	</p>
+	<h4>Exercise Type</h4>
+	<span id="Exercises"></span>
+	<hr noshade>
+	<span id="submitButtons"></span>
+	<br />
+	<span id="statusBar"></span>
+    </div>
+    <div class="text">
+      <h2>Further Information</h2>
+      Should you have questions about the system, you may 
+      <a href="mailto:admtrov@sfs.uni-tuebingen.de">contact me</a>. You can also head over to 
+      <a href="docs/">the documentation</a>
+    </div>
+  </body>
+</html>

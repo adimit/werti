@@ -7,3 +7,5 @@
 *.jar
 *~
 uima.log*
+/www/org.werti.WERTi
+/www/.gwt-tmp
