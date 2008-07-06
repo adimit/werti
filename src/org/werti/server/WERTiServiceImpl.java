@@ -18,6 +18,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.uima.UIMAFramework;
 
 import org.apache.uima.analysis_engine.AnalysisEngine;
+import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 
 import org.apache.uima.cas.FSIndex;
 
@@ -26,6 +27,7 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.IntegerArray;
 import org.apache.uima.jcas.cas.StringArray;
 
+import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.ResourceSpecifier;
 
 import org.apache.uima.util.InvalidXMLException;
@@ -47,86 +49,84 @@ public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiServi
 	// maximum amount of of ms to wait for a web-page to load
 	private static final int MAX_WAIT = 1000 * 10;
 
-	private static WERTiContext context; 
+	public static WERTiContext context;
 
 	public static final long serialVersionUID = 0;
 
-	public String process(String method, String language, String[] tags, String url) 
-		throws MalformedURLException {
-		//DEBUG
+	public String process(String method, String language, String[] tags, String url) {
 		context = new WERTiContext(getServletContext());
-		log.debug("Arguments, pipeline:");
-		log.debug("Arguments, tags");
-		for (String e:tags) {
-			log.debug(e);
-		}
-		log.debug("Arguments, url: "+url);
-
-		for (Object path:getServletContext().getResourcePaths("/")) {
-			log.error("Path: "+path);
-		}
-
 		final URL descriptor;
-		descriptor = getServletContext().getResource(OPERATORS + "ptb-ptb-hil.xml");
+		try { // to load the descriptor
+			descriptor = getServletContext().getResource(OPERATORS + "ptb-ptb-hil.xml");
+		} catch (MalformedURLException murle) {
+			log.fatal("Unrecoverable: Couldn't find aggregate descriptor file!");
+			throw new RuntimeException(murle);
+		}
 
 		log.debug("Fetching site " + url);
 		final Fetcher fetcher = new Fetcher(url);
 		fetcher.start();
 
-		try {
-			// preprocessor
+		final JCas cas;
+		final AnalysisEngine preprocessor, postprocessor;
+
+		try { // to initialize UIMA components
 			final XMLInputSource pre_xmlin = new XMLInputSource(descriptor);
 			final ResourceSpecifier pre_spec = 
 				UIMAFramework.getXMLParser().parseResourceSpecifier(pre_xmlin);
-			final AnalysisEngine preprocessor  = UIMAFramework.produceAnalysisEngine(pre_spec);
-			final JCas cas = preprocessor.newJCas();
+			preprocessor  = UIMAFramework.produceAnalysisEngine(pre_spec);
+			cas = preprocessor.newJCas();
 
-			// postprocessor
 			final XMLInputSource post_xmlin = new XMLInputSource(ENHNCE);
 			final ResourceSpecifier post_spec = 
 				UIMAFramework.getXMLParser().parseResourceSpecifier(post_xmlin);
-			final AnalysisEngine postprocessor  = UIMAFramework.produceAnalysisEngine(post_spec);
+			postprocessor  = UIMAFramework.produceAnalysisEngine(post_spec);
+		} catch (InvalidXMLException ixmle) {
+			log.fatal("Error initializing XML code. Invalid?", ixmle);
+			throw new RuntimeException("Error initializing XML code. Invalid?", ixmle);
+		} catch (ResourceInitializationException rie) {
+			log.fatal("Error initializing resource", rie);
+			throw new RuntimeException("Error initializing resource", rie);
+		} catch (IOException ioe) {
+			log.fatal("Error accessing descriptor file", ioe);
+			throw new RuntimeException("Error accessing descriptor file", ioe);
+		}
+		log.debug("Initialized UIMA components.");
 
-			log.debug("Initialized UIMA components.");
-
-			// wait for document text to be available
+		try { // to wait for document text to be available
 			fetcher.join(MAX_WAIT);
+		} catch (InterruptedException itre) {
+			log.error("Fetcher recieved interrupt. This shouldn't happen, should it?", itre);
+		}
 
-			if (fetcher.getText() == null) {
-				throw new RuntimeException("Webpage retrieval failed.");
-			} 
+		if (fetcher.getText() == null) { // if we don't have text, that's bad
+			log.error("Webpage retrieval failed! " + fetcher.getBase_url());
+			throw new RuntimeException("Webpage retrieval failed.");
+		} 
 
-			cas.setDocumentText(fetcher.getText());
-
+		cas.setDocumentText(fetcher.getText());
+		try { // to process
 			preprocessor.process(cas);
-
 			postprocessor.setConfigParameterValue("Tags", tags);
 			postprocessor.setConfigParameterValue("enhance", method);
-
 			postprocessor.process(cas);
-
-			final String base_url = "http://" + fetcher.getBase_url() + ":" + fetcher.getPort();
-
-			final String enhanced = enhance(cas, base_url);
-
-			final long currentTime = System.currentTimeMillis();
-
-			final String file = "WERTi-"+currentTime+"-tmp.html";
-			final FileWriter out = new FileWriter(file);
-			try {
-				out.write(enhanced);
-			} catch (IOException ioe) {
-				log.error("Failed to create temporary file");
-			}
-			return file;
-		} catch (IOException ioe) {
-			log.error("Processing of " + descriptor + " encountered errors!", ioe);
-		} catch (InvalidXMLException ixmle) {
-			log.error("XML of " + descriptor + " seems to be invalid.", ixmle);
-		} catch (Exception e) {
-			log.error("Unknown problem occured: ", e);
+		} catch (AnalysisEngineProcessException aepe) {
+			log.fatal("Analysis Engine encountered errors!");
+			throw new RuntimeException("Text analysis failed.", aepe);
 		}
-		return null;
+
+		final String base_url = "http://" + fetcher.getBase_url() + ":" + fetcher.getPort();
+		final String enhanced = enhance(cas, base_url);
+		final long currentTime = System.currentTimeMillis();
+		final String file = "WERTi-"+currentTime+"-tmp.html";
+
+		try { // to write temp file
+			final FileWriter out = new FileWriter(file);
+			out.write(enhanced);
+		} catch (IOException ioe) {
+			log.error("Failed to create temporary file");
+		}
+		return file;
 	}
 
 	/** 
@@ -145,7 +145,9 @@ public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiServi
 		int skew = docText.indexOf("<head");
 		skew = docText.indexOf('>',skew)+1;
 
-		final String basetag = "<base href=\"" + baseurl + "\" /><script type=\"text/javascript\" language=\"javascript\" src=\"http://localhost:8888/WERTi/org.werti.Enhancements-xs.nocache.js\"></script><meta name='gwt:module' content='org.werti.Enhancements'/>";
+		final String basetag = "<base href=\"" + baseurl + "\" />"
+			// GWT main JS module
+			+ "<script type=\"text/javascript\" language=\"javascript\" src=\"/WERTi/org.werti.Enhancements-xs.nocache.js\"></script>";
 		rtext.insert(skew, basetag);
 		skew = basetag.length();
 
