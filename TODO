@@ -9,6 +9,7 @@
  * React smart on encountering html-entities
  * Improve tagger:
    - demonize
+   - test mulit-language stuff
 
 *** Bugs
  * fib is put into anchors currently, which is awkward.

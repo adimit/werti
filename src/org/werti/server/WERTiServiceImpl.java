@@ -31,6 +31,8 @@ import org.apache.uima.resource.ResourceSpecifier;
 import org.apache.uima.util.InvalidXMLException;
 import org.apache.uima.util.XMLInputSource;
 
+import org.werti.WERTiContext;
+
 import org.werti.client.WERTiService;
 
 import org.werti.uima.types.Enhancement;
@@ -45,11 +47,13 @@ public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiServi
 	// maximum amount of of ms to wait for a web-page to load
 	private static final int MAX_WAIT = 1000 * 10;
 
+	private static WERTiContext context; 
 
 	public static final long serialVersionUID = 0;
 
 	public String process(String method, String language, String[] tags, String url) {
 		//DEBUG
+		context = new WERTiContext(getServletContext());
 		log.debug("Arguments, pipeline:");
 		log.debug("Arguments, tags");
 		for (String e:tags) {
