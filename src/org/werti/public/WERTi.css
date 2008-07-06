@@ -1,33 +1,61 @@
-/** Add css rules here for your application. */
+/* common elements */
 body {
-  font-family:arial,sans-serif
+	background-color: #112;
+	color: #DDD;
+	font-family: Monospace;
+}
+h1,h2 {
+	background-color: #574;
+	border: 1px solid;
+	border-color: #251;
+	font-family: Helvetica;
+	color: #EEE;
+	padding: 5px;
+}
+form {
+	line-height: 150%;
+}
+.text {
+	background-color: #333;
+	border: 1px solid;
+	border-color: #999;
+	padding: 5px;
+	width: 80%;
+	margin-top: 2px;
+	margin-bottom: 2px;
+}
+div.notice {
+	margin: 5px;
+	padding: 2px;
+	font-style: italic;
+	border: 1px dotted;
+}
+input {
+	background-color: #444;
+	border-color: #000;
+	color: #DDD;
+	border: 1px solid;
+	font-family: Monospace;
 }
 
-div,td {
-  color:#000000
+.gwt-DialogBox .Caption {
+	background-color: #574;
+	color: #A11;
 }
 
+/* links */
 a:link {
-  color:#0000cc
+	color: #8a7;
 }
-     
 a:visited {
-  color:#551a8b
+	color: #47B;
 }
-
+a:focus {
+	text-decoration: underline;
+}
+a:hover {
+	background: #000;
+}
 a:active {
-  color:#ff0000
-}
-
-button {
-  display: block;
-  font-size: 16pt
-}
-
-.widePanel {
-  width: 100%
-}
-
-img {
-  margin-top: 20px;
+	color: #FFF;
 }

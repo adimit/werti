@@ -15,6 +15,6 @@
       <entry-point class='org.werti.client.WERTi'/>
     
       <!-- Specify the application specific style sheet.              -->
-      <stylesheet src='werti.css' />
+      <stylesheet src='WERTi.css' />
 	
 </module>
