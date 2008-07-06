@@ -1,4 +1,4 @@
-Reachable types computed on: Sun Jul 06 00:12:10 CEST 2008
+Reachable types computed on: Sun Jul 06 22:05:51 CEST 2008
 com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException
    Serialization status
       Instantiable
@@ -40,4 +40,22 @@ java.lang.Throwable
       Field serializable
    Path
       Started from 'com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException'
+
+org.werti.client.InitializationException
+   Serialization status
+      Instantiable
+   Path
+      Started from 'org.werti.client.InitializationException'
+
+org.werti.client.ProcessingException
+   Serialization status
+      Instantiable
+   Path
+      Started from 'org.werti.client.ProcessingException'
+
+org.werti.client.URLException
+   Serialization status
+      Instantiable
+   Path
+      Started from 'org.werti.client.URLException'
 

@@ -82,8 +82,6 @@
 		<copy  todir="${build.home}/WEB-INF/classes">
 			<fileset dir="${src.home}" excludes="**/*.java"/>
 		</copy>
-
-
 	</target>
 
 	<target name="dist" depends="compile,javadoc" description="Create binary distribution">

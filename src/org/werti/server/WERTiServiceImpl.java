@@ -37,6 +37,7 @@ import org.werti.WERTiContext;
 
 import org.werti.client.InitializationException;
 import org.werti.client.ProcessingException;
+import org.werti.client.URLException;
 import org.werti.client.WERTiService;
 
 import org.werti.uima.types.Enhancement;
@@ -56,7 +57,7 @@ public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiServi
 	public static final long serialVersionUID = 0;
 
 	public String process(String method, String language, String[] tags, String url) 
-		throws MalformedURLException, InitializationException, ProcessingException {
+		throws URLException, InitializationException, ProcessingException {
 		context = new WERTiContext(getServletContext());
 		final URL descriptor;
 		try { // to load the descriptor
@@ -67,7 +68,12 @@ public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiServi
 		}
 
 		log.debug("Fetching site " + url);
-		final Fetcher fetcher = new Fetcher(url);
+		final Fetcher fetcher;
+		try {
+			fetcher = new Fetcher(url);
+		} catch (MalformedURLException murle) {
+			throw new URLException(murle);
+		}
 		fetcher.start();
 
 		final JCas cas;

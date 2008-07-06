@@ -1,7 +1,5 @@
 package org.werti.client;
 
-import java.net.MalformedURLException;
-
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 
@@ -12,6 +10,7 @@ import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.DisclosureEvent;
 import com.google.gwt.user.client.ui.DisclosureHandler;
 import com.google.gwt.user.client.ui.DisclosurePanel;
@@ -32,8 +31,54 @@ public class WERTi implements EntryPoint {
 
 	final HTML status = new HTML("Ready.");
 
-	private void showError(String message, String execptionMessage, String cause) {
+	private void showError(String message, String exceptionMessage, String cause) {
+		final DialogBox dialogBox = new DialogBox();
+		dialogBox.setText("We encountered an Error!");
+		dialogBox.setAnimationEnabled(true);
 
+		VerticalPanel dialogVPanel = new VerticalPanel();
+		dialogVPanel.setWidth("100%");
+		dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_CENTER);
+
+		final HTML explanation = new HTML(message);
+
+		final DisclosurePanel moreInfo = new DisclosurePanel("More info:");
+		moreInfo.setAnimationEnabled(true);
+		final VerticalPanel moreInfos = new VerticalPanel();
+		final HTML exmes = new HTML(
+				"The message of the exception thrown:<br />" +exceptionMessage);
+		final HTML stacktrace = new HTML(cause);
+		
+		moreInfos.add(exmes);
+		moreInfos.add(stacktrace);
+		moreInfo.add(moreInfos);
+
+		final Button closeButton = new Button("close");
+		closeButton.addClickListener(new ClickListener() {
+			public void onClick(Widget sender) {
+				dialogBox.hide();
+			}
+		});
+
+		final HTML excuse = new HTML("<p>We're sorry this happened. "
+				+ "The error has been logged on server-side. However, if you "
+				+ "feel this really shouldn't have happened, please feel free "
+				+ "to <a href=\"mailto:admtrov@sfs.uni-tuebingen.de\">"
+				+ "drop the administrator a line</a> so we can fix the problem "
+				+ "sooner.");
+
+		dialogVPanel.add(explanation);
+		dialogVPanel.add(moreInfo);
+		dialogVPanel.add(excuse);
+		dialogVPanel.add(closeButton);
+		dialogVPanel.setStyleName("text");
+
+		// Set the contents of the Widget
+		dialogBox.setWidget(dialogVPanel);
+
+		dialogBox.setWidth("404px");
+		dialogBox.center();
+		dialogBox.show();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -66,9 +111,9 @@ public class WERTi implements EntryPoint {
 						+ "Maybe you could try a different option?"
 						, ie.getMessage()
 						, sb.toString());
-			} else if (reason instanceof MalformedURLException) {
-				final MalformedURLException murle = 
-					(MalformedURLException) reason;
+			} else if (reason instanceof URLException) {
+				final URLException murle = 
+					(URLException) reason;
 				showError("The URL you've entered seems invalid. "
 						+ "Try another."
 						, murle.getMessage()
@@ -123,7 +168,7 @@ public class WERTi implements EntryPoint {
 					, ie.getMessage()
 					, ie.toString()
 				 );
-		} catch (MalformedURLException murle) {
+		} catch (URLException murle) {
 			showError("The URL you've entered seems invalid. "
 					+ "Try another."
 					, murle.getMessage()
@@ -196,6 +241,7 @@ public class WERTi implements EntryPoint {
 		VerticalPanel gCats = new VerticalPanel();
 
 		DisclosurePanel advancedCats = new DisclosurePanel("Advanced...");
+		advancedCats.setAnimationEnabled(true);
 		VerticalPanel customCats = new VerticalPanel();
 
 
