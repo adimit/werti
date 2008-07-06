@@ -1,10 +1,5 @@
 package org.werti.uima.ae;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -14,8 +9,6 @@ import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_component.JCasAnnotator_ImplBase;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-
-import org.apache.uima.analysis_engine.annotator.AnnotatorConfigurationException;
 
 import org.apache.uima.cas.text.AnnotationIndex;
 
@@ -28,7 +21,7 @@ import org.apache.uima.jcas.JCas;
 
 import org.apache.uima.resource.ResourceInitializationException;
 
-import org.apache.uima.util.Level;
+import org.werti.WERTiContext;
 
 import org.werti.uima.types.annot.SentenceAnnotation;
 import org.werti.uima.types.annot.Token;
@@ -43,8 +36,7 @@ public class HMMTagger extends JCasAnnotator_ImplBase implements Tagger {
 	private int N;
 
 	// model generation
-	private static final String pModel = "MODEL_LOCATION";
-	private ModelGeneration model;
+	private final ModelGeneration model = WERTiContext.getHmmtagger("en");
 
 	/**
 	 * Initializes the HMMTagger with a model supplied by the configuration-resource
@@ -54,50 +46,7 @@ public class HMMTagger extends JCasAnnotator_ImplBase implements Tagger {
 	 */
 	public void initialize(final UimaContext context) throws ResourceInitializationException {
 		super.initialize(context);
-		try {
-			this.N = (Integer) context.getConfigParameterValue(pN);
-			this.model = get_model(context);
-		} catch (AnnotatorConfigurationException ace) {
-			throw new ResourceInitializationException(ace);
-		} catch (Exception e) {
-			throw new ResourceInitializationException(e);
-		}
-	}
-
-	// initialize the model from context
-	private static ModelGeneration get_model(final UimaContext context) 
-		throws AnnotatorConfigurationException {
-		return get_model(context, null);
-	}
-
-	// initialize the model
-	private static ModelGeneration get_model(final UimaContext context, final String loc)
-		throws AnnotatorConfigurationException {
-		final InputStream model;
-		try {
-			if (loc == null || loc.equals("")) {
-				// fetch model from Annotator configuration
-				final String resource = (String) context.getConfigParameterValue(pModel);
-				model = ClassLoader.getSystemResourceAsStream(resource);
-			} else {
-				model = new FileInputStream(loc);
-			}
-			final ObjectInputStream ois = new ObjectInputStream(model);
-			final ModelGeneration oRead = (ModelGeneration) ois.readObject();
-			return oRead;
-		} catch (IOException ioe) {
-			context.getLogger().log(Level.SEVERE,
-					"Input Output Error");
-			throw new AnnotatorConfigurationException(ioe);
-		} catch (ClassNotFoundException cnfe) {
-			context.getLogger().log(Level.SEVERE,
-					"Couldn't find required class");
-			throw new AnnotatorConfigurationException(cnfe);
-		} catch (Exception e) {
-			context.getLogger().log(Level.SEVERE,
-					"Unknown problem occured.");
-			throw new AnnotatorConfigurationException(e);
-		}
+		this.N = (Integer) context.getConfigParameterValue(pN);
 	}
 
 	/**

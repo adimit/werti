@@ -3,13 +3,11 @@ package org.werti.uima.ae;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 import java.util.Set;
 
-import edu.stanford.nlp.ling.Sentence;
-import edu.stanford.nlp.ling.TaggedWord;
 
-import edu.stanford.nlp.tagger.maxent.MaxentTagger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.apache.uima.analysis_component.JCasAnnotator_ImplBase;
 
@@ -17,13 +15,14 @@ import org.apache.uima.cas.FSIndex;
 
 import org.apache.uima.jcas.JCas;
 
-import org.apache.uima.util.Level;
-
 import org.werti.uima.types.annot.SentenceAnnotation;
 import org.werti.uima.types.annot.Token;
 
 
 public class SentenceBoundaryDetector extends JCasAnnotator_ImplBase {
+	private static final Log log =
+		LogFactory.getLog(SentenceBoundaryDetector.class);
+
 	private static final Set<String> sentenceBoundaries = 
 		new HashSet<String>(Arrays.asList(new String[]{".", "!", "?"}));
 	private static final Set<String> sentenceBoundaryFollowers =
@@ -37,8 +36,9 @@ public class SentenceBoundaryDetector extends JCasAnnotator_ImplBase {
 	 *
 	 * @param cas The Cas the Tokens come from and the sentences go to.
 	 */
+	@SuppressWarnings("unchecked")
 	public void process(JCas cas) {
-		getContext().getLogger().log(Level.INFO, "Starting sentence boundary detection.");
+		log.info("Starting sentence boundary detection.");
 
 		final FSIndex textIndex = cas.getAnnotationIndex(Token.type);
 		final Iterator<Token> tit = textIndex.iterator();
@@ -48,9 +48,8 @@ public class SentenceBoundaryDetector extends JCasAnnotator_ImplBase {
 		Token t;
 		while (tit.hasNext()) {
 			t = tit.next();
-			getContext().getLogger().log(Level.FINEST, "Looking at token: " + t);
+			log.debug("Looking at token: " + t);
 
-			final String w = t.getCoveredText();
 			SentenceAnnotation sa = new SentenceAnnotation(cas);
 			sa.setBegin(t.getBegin());
 
@@ -64,8 +63,7 @@ public class SentenceBoundaryDetector extends JCasAnnotator_ImplBase {
 			final double coherence = coherence(length, coh_gaps);
 
 			if (!(coherence < COH_TRESHOLD)
-			||  !(coherence == 1.0)) {
-				//skip sentence boundary followers
+			||  !(coherence == 1.0)) { //skip sentence boundary followers
 				while (tit.hasNext()
 				&&   sentenceBoundaryFollowers.contains(t.getCoveredText())) {
 					t = tit.next();
@@ -77,7 +75,7 @@ public class SentenceBoundaryDetector extends JCasAnnotator_ImplBase {
 			sa.addToIndexes();
 			coh_gaps = 0;
 		} 
-		getContext().getLogger().log(Level.INFO, "Finished sentence boundary detection.");
+		log.info("Finished sentence boundary detection.");
 	}
 
 	// holds the formula for calculating the coherence based on the length

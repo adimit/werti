@@ -1,7 +1,5 @@
 package org.werti.uima.ae;
 
-import java.net.URL;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -9,11 +7,14 @@ import java.util.List;
 import edu.stanford.nlp.ling.Sentence;
 import edu.stanford.nlp.ling.TaggedWord;
 
-import edu.stanford.nlp.tagger.maxent.*;
+import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 
-import org.apache.uima.UimaContext;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.apache.uima.analysis_component.JCasAnnotator_ImplBase;
+
+import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 
 import org.apache.uima.cas.text.AnnotationIndex;
 
@@ -21,76 +22,53 @@ import org.apache.uima.examples.tagger.Tagger;
 
 import org.apache.uima.jcas.JCas;
 
-import org.apache.uima.resource.ResourceInitializationException;
-
-import org.apache.uima.util.Level;
+import org.werti.WERTiContext;
 
 import org.werti.uima.types.annot.SentenceAnnotation;
 import org.werti.uima.types.annot.Token;
 
 
 public class PTBTagger extends JCasAnnotator_ImplBase implements Tagger {
-	
-	/*
-	 * Parameter definitions
-	 */
+	private static final Log log =
+		LogFactory.getLog(PTBTagger.class);
 
-	// Model file
-	private static final String pModel = "MODEL_LOCATION";
-
-	public void initialize(UimaContext context) throws ResourceInitializationException {
-		super.initialize(context);
-		try {
-			final String resource = (String) context.getConfigParameterValue(pModel);
-			getContext().getLogger().log(Level.INFO, "Resource file should be: " + resource);
-			final URL url = ClassLoader.getSystemClassLoader().getResource("jndi:/WERTi"+resource);
-			getContext().getLogger().log(Level.INFO, "Constructing tagger... url: "+url);
-			MaxentTagger.init(resource);
-			getContext().getLogger().log(Level.INFO, "Done.");
-		} catch (Exception e) {
-			context.getLogger().log(Level.SEVERE, "Failed to initialize tagger!");
-			throw new RuntimeException("No tagger, no game.", e);
-		}
-	}
+	private static final MaxentTagger tagger = WERTiContext.getPtbtagger("en");
 
 	@SuppressWarnings("unchecked")
-	public void process(JCas cas) {
-		Sentence<TaggedWord> sentence = new Sentence<TaggedWord>();
+	public void process(JCas cas) throws AnalysisEngineProcessException {
 		final List<Token> tlist = new ArrayList<Token>();
+		Sentence<TaggedWord> sentence = new Sentence<TaggedWord>();
 
-		getContext().getLogger().log(Level.INFO, "Tagging...");
-
+		log.info("Tagging...");
 		try {
 			final AnnotationIndex sentIndex = cas.getAnnotationIndex(SentenceAnnotation.type);
 			final AnnotationIndex toknIndex = cas.getAnnotationIndex(Token.type);
 
 			final Iterator<SentenceAnnotation> sit = sentIndex.iterator();
 
-			while (sit.hasNext()) {
+			while (sit.hasNext()) { // iterate over all sentences
 				sentence.clear();
 				tlist.clear();
 				final SentenceAnnotation sa = sit.next();
 				Iterator<Token> tit = toknIndex.subiterator(sa);
 
-				// fill sentence
-				while (tit.hasNext()) {
+				while (tit.hasNext()) { // fill sentence
 					final Token t = tit.next();
 					tlist.add(t);
 					sentence.add(new TaggedWord(t.getCoveredText()));
 				}
 
-				sentence = MaxentTagger.tagSentence(sentence);
+				sentence = tagger.processSentence(sentence);
 				assert true: tlist.size() == sentence.size();
-				final int size = tlist.size();
-				for (int i = 0; i < size; i++) {
+				final int size = tlist.size();   // tag the words in the CAS 
+				for (int i = 0; i < size; i++) { // that are tagged in the sentence
 					final Token t = tlist.get(i);
 					t.setTag(sentence.get(i).tag());
 				}
 			}
-
-			getContext().getLogger().log(Level.INFO, "Finished tagging.");
+			log.info("Finished tagging.");
 		} catch (Exception e) {
-			getContext().getLogger().log(Level.SEVERE, "Failed Tagging!", e);
+			throw new AnalysisEngineProcessException(e);
 		}
 	}
 }

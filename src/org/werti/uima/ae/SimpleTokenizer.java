@@ -2,18 +2,22 @@ package org.werti.uima.ae;
 
 import java.util.Iterator;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.apache.uima.analysis_component.JCasAnnotator_ImplBase;
 
 import org.apache.uima.cas.FSIndex;
 
 import org.apache.uima.jcas.JCas;
 
-import org.apache.uima.util.Level;
-
 import org.werti.uima.types.annot.RelevantText;
 import org.werti.uima.types.annot.Token;
 
 public class SimpleTokenizer extends JCasAnnotator_ImplBase {
+	private static final Log log =
+		LogFactory.getLog(SimpleTokenizer.class);
+
 
 	/**
 	 * Go through all relevant text areas in the RelevantText-AnnotationIndex and annotate them
@@ -24,7 +28,7 @@ public class SimpleTokenizer extends JCasAnnotator_ImplBase {
 	 */
 	@SuppressWarnings("unchecked")
 	public void process(JCas cas) {
-		getContext().getLogger().log(Level.INFO, "Starting tokenization process.");
+		log.info("Starting tokenization process.");
 		final FSIndex textIndex = cas.getAnnotationIndex(RelevantText.type);
 		final Iterator<RelevantText> tit = textIndex.iterator();
 
@@ -48,6 +52,6 @@ public class SimpleTokenizer extends JCasAnnotator_ImplBase {
 				}
 			}
 		}
-		getContext().getLogger().log(Level.INFO, "Finished tokenization process.");
+		log.info("Finished tokenization process.");
 	}
 }

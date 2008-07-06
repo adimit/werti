@@ -51,7 +51,8 @@ public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiServi
 
 	public static final long serialVersionUID = 0;
 
-	public String process(String method, String language, String[] tags, String url) {
+	public String process(String method, String language, String[] tags, String url) 
+		throws MalformedURLException {
 		//DEBUG
 		context = new WERTiContext(getServletContext());
 		log.debug("Arguments, pipeline:");
@@ -66,12 +67,7 @@ public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiServi
 		}
 
 		final URL descriptor;
-		try {
-			descriptor = getServletContext().getResource(OPERATORS + "ptb-ptb-hil.xml");
-		} catch (MalformedURLException murle) {
-			log.error("The Url is invalid!", murle);
-			throw new RuntimeException("Invalid URL!");
-		}
+		descriptor = getServletContext().getResource(OPERATORS + "ptb-ptb-hil.xml");
 
 		log.debug("Fetching site " + url);
 		final Fetcher fetcher = new Fetcher(url);

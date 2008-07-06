@@ -6,13 +6,16 @@ import java.util.Stack;
 
 import java.util.regex.Pattern;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.apache.uima.analysis_component.JCasAnnotator_ImplBase;
+
+import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 
 import org.apache.uima.cas.FSIndex;
 
 import org.apache.uima.jcas.JCas;
-
-import org.apache.uima.util.Level;
 
 import org.werti.uima.types.annot.HTML;
 import org.werti.uima.types.annot.RelevantText;
@@ -26,6 +29,9 @@ import org.werti.uima.types.annot.RelevantText;
  * Sometimes this will mark garbage. It might prove hard to actually fix this, though.
  */
 public class GenericRelevanceAnnotator extends JCasAnnotator_ImplBase {
+	private static final Log log =
+		LogFactory.getLog(GenericRelevanceAnnotator.class);
+
 
 	private static final Pattern whiteSpacePattern = Pattern.compile("^\\s*$");
 
@@ -36,16 +42,16 @@ public class GenericRelevanceAnnotator extends JCasAnnotator_ImplBase {
 	 * The 'relevance'-notion is a primitive one. We just don't care about stuff that is
 	 * enclosed in, say <i>&lt;script&gt;</i> tags.
 	 */
-	public void process(JCas cas) {
-		getContext().getLogger().log(Level.INFO,
-				"Starting relevance annotation");
+	@SuppressWarnings("unchecked")
+	public void process(JCas cas) throws AnalysisEngineProcessException {
+		log.info("Starting relevance annotation");
 		final Stack<String> tags = new Stack<String>();
 		final FSIndex tagIndex = cas.getAnnotationIndex(HTML.type);
 		final Iterator<HTML> tit = tagIndex.iterator();
 		HTML tag = tit.next();
 		if (tag == null) {
-			getContext().getLogger().log(Level.SEVERE, 
-					"HTML tag was null while starting to search for relevance.");
+			throw new AnalysisEngineProcessException(
+					new NullPointerException("No Html tags were found!"));
 		}
 
 		// skip ahead to the body
@@ -75,9 +81,7 @@ public class GenericRelevanceAnnotator extends JCasAnnotator_ImplBase {
 				try {
 					while (tags.pop().equals(tname)); // read: until not...
 				} catch (EmptyStackException ese) {
-					getContext().getLogger().log(Level.FINE,
-							"Tag Stack broken. Tried to match '"
-							+ tname + "';");
+					log.debug("Tag Stack broken. Tried to match " + tname);
 				}
 			}
 
@@ -89,7 +93,6 @@ public class GenericRelevanceAnnotator extends JCasAnnotator_ImplBase {
 			rt.setEnclosing_tag(tname);
 			rt.addToIndexes();
 		}
-		getContext().getLogger().log(Level.INFO,
-				"Finished relevance annotation");
+		log.info("Finished relevance annotation");
 	}
 }

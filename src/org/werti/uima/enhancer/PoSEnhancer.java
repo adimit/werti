@@ -2,6 +2,9 @@ package org.werti.uima.enhancer;
 
 import java.util.Iterator;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.apache.uima.UimaContext;
 
 import org.apache.uima.analysis_component.JCasAnnotator_ImplBase;
@@ -13,26 +16,26 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.IntegerArray;
 import org.apache.uima.jcas.cas.StringArray;
 
-import org.apache.uima.util.Level;
-
 import org.werti.uima.types.Enhancement;
 
 import org.werti.uima.types.annot.Token;
 
 
 public class PoSEnhancer extends JCasAnnotator_ImplBase {
-	@SuppressWarnings("unchecked")
+	private static final Log log =
+		LogFactory.getLog(PoSEnhancer.class);
+
 	public void process(JCas cas) {
-		getContext().getLogger().log(Level.INFO,
-				"Starting enhancement");
+		log.info("Starting enhancement");
 		Object o = getContext().getConfigParameterValue("Tags");
 		final String[] tags;
 		if (o instanceof String[]) {
 			tags = (String[]) o;
-			getContext().getLogger().log(Level.INFO, "Tags: ");
+			final StringBuilder sb = new StringBuilder();
 			for (String s:tags) {
-				getContext().getLogger().log(Level.INFO, s);
+				sb.append(s + " ");
 			}
+			log.debug("Tags: " + sb.toString());
 		} else {
 			throw new RuntimeException("Expected String Array as Paramater. Aborting");
 		}
@@ -49,8 +52,7 @@ public class PoSEnhancer extends JCasAnnotator_ImplBase {
 		else if (method.equals("fib")) fib(cas, tags, getContext());
 		else if (method.equals("ask")) ask(cas, tags, getContext());
 
-		getContext().getLogger().log(Level.INFO,
-				"Finished enhancement");
+		log.info("Finished enhancement");
 	}
 
 	// need thos two to supply JS-annotations with IDs.
@@ -113,8 +115,7 @@ public class PoSEnhancer extends JCasAnnotator_ImplBase {
 		}
 		iteratetokens: while (tit.hasNext()) {
 			if (t.getTag() == null) {
-				context.getLogger().log(Level.WARNING,
-						"Encountered token with NULL tag");
+				log.debug("Encountered token with NULL tag");
 				tit.next();
 				continue iteratetokens;
 			}
@@ -179,8 +180,7 @@ public class PoSEnhancer extends JCasAnnotator_ImplBase {
 		iteratetokens: while (tit.hasNext()) {
 			final Token t = tit.next();
 			if (t.getTag() == null) {
-				context.getLogger().log(Level.WARNING,
-						"Encountered token with NULL tag");
+				log.debug("Encountered token with NULL tag");
 				continue iteratetokens;
 			}
 			if (arrayContains(t.getTag(), tags)) {
@@ -212,8 +212,7 @@ public class PoSEnhancer extends JCasAnnotator_ImplBase {
 
 		iteratetokens: while (tit.hasNext()) {
 			if (t.getTag() == null) {
-				context.getLogger().log(Level.WARNING,
-						"Encountered token with NULL tag");
+				log.debug("Encountered token with NULL tag");
 				tit.next();
 				continue iteratetokens;
 			}

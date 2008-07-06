@@ -2,11 +2,12 @@ package org.werti.uima.ae;
 
 // import type
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.apache.uima.analysis_component.JCasAnnotator_ImplBase;
 
 import org.apache.uima.jcas.JCas;
-
-import org.apache.uima.util.Level;
 
 import org.werti.uima.types.annot.HTML;
 
@@ -16,7 +17,11 @@ import org.werti.uima.types.annot.HTML;
  * Properties include 'closing', 'irrelevant' and the 'tag_name'. Also their absolute
  * position in the CAS.
  */
+
 public class HTMLAnnotator extends JCasAnnotator_ImplBase {
+	private static final Log log =
+		LogFactory.getLog(HTMLAnnotator.class);
+
 	private static final char[] TAG_NAME_DELMTR = { ' ', '\t', '\n', '\r', '>'};
 
 	/**
@@ -26,8 +31,7 @@ public class HTMLAnnotator extends JCasAnnotator_ImplBase {
 	 * position in the CAS.
 	 */
 	public void process(JCas cas) {
-		getContext().getLogger().log(Level.INFO,
-				"Starting HTML tag recognition");
+		log.info("Starting HTML tag recognition");
 		final String s = cas.getDocumentText();
 		int tstart = 0;
 		int tend = 0;
@@ -36,13 +40,11 @@ public class HTMLAnnotator extends JCasAnnotator_ImplBase {
 			tag.setBegin(tstart);
 			tag.setEnd(tend = (s.indexOf('>', tstart) + 1));
 
-			getContext().getLogger().log(Level.FINEST,
-					"tstart = " + tstart + "; tend = " + tend);
+			log.debug("tstart = " + tstart + "; tend = " + tend);
 
 			final String tname = find_tname(s.substring(tstart, tend));
 
-			getContext().getLogger().log(Level.FINEST,
-					"Looking at tag " + tname);
+			log.debug("Looking at tag " + tname);
 
 			tstart = tend;
 
@@ -62,8 +64,7 @@ public class HTMLAnnotator extends JCasAnnotator_ImplBase {
 			tag.addToIndexes();
 
 		}
-		getContext().getLogger().log(Level.INFO,
-				"Finished HTML tag recognition");
+		log.info("Finished HTML tag recognition");
 	}
 
 	// skips ahead and marks irrelevant tags
