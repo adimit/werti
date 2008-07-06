@@ -1,8 +1,11 @@
 package org.werti.client;
 
+import java.net.MalformedURLException;
+
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface WERTiServiceAsync {
 	@SuppressWarnings("unchecked")
-	public void process(String method, String language, String[] tags, String url, AsyncCallback callback);
+	public void process(String method, String language, String[] tags, String url, AsyncCallback callback) 
+		throws ProcessingException, InitializationException, MalformedURLException;
 }

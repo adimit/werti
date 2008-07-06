@@ -35,6 +35,8 @@ import org.apache.uima.util.XMLInputSource;
 
 import org.werti.WERTiContext;
 
+import org.werti.client.InitializationException;
+import org.werti.client.ProcessingException;
 import org.werti.client.WERTiService;
 
 import org.werti.uima.types.Enhancement;
@@ -53,14 +55,15 @@ public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiServi
 
 	public static final long serialVersionUID = 0;
 
-	public String process(String method, String language, String[] tags, String url) {
+	public String process(String method, String language, String[] tags, String url) 
+		throws MalformedURLException, InitializationException, ProcessingException {
 		context = new WERTiContext(getServletContext());
 		final URL descriptor;
 		try { // to load the descriptor
 			descriptor = getServletContext().getResource(OPERATORS + "ptb-ptb-hil.xml");
 		} catch (MalformedURLException murle) {
 			log.fatal("Unrecoverable: Couldn't find aggregate descriptor file!");
-			throw new RuntimeException(murle);
+			throw new InitializationException("Couldn't instantiate operator.", murle);
 		}
 
 		log.debug("Fetching site " + url);
@@ -83,13 +86,13 @@ public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiServi
 			postprocessor  = UIMAFramework.produceAnalysisEngine(post_spec);
 		} catch (InvalidXMLException ixmle) {
 			log.fatal("Error initializing XML code. Invalid?", ixmle);
-			throw new RuntimeException("Error initializing XML code. Invalid?", ixmle);
+			throw new InitializationException("Error initializing XML code. Invalid?", ixmle);
 		} catch (ResourceInitializationException rie) {
 			log.fatal("Error initializing resource", rie);
-			throw new RuntimeException("Error initializing resource", rie);
+			throw new InitializationException("Error initializing resource", rie);
 		} catch (IOException ioe) {
 			log.fatal("Error accessing descriptor file", ioe);
-			throw new RuntimeException("Error accessing descriptor file", ioe);
+			throw new InitializationException("Error accessing descriptor file", ioe);
 		}
 		log.debug("Initialized UIMA components.");
 
@@ -101,7 +104,7 @@ public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiServi
 
 		if (fetcher.getText() == null) { // if we don't have text, that's bad
 			log.error("Webpage retrieval failed! " + fetcher.getBase_url());
-			throw new RuntimeException("Webpage retrieval failed.");
+			throw new InitializationException("Webpage retrieval failed.");
 		} 
 
 		cas.setDocumentText(fetcher.getText());
@@ -111,8 +114,8 @@ public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiServi
 			postprocessor.setConfigParameterValue("enhance", method);
 			postprocessor.process(cas);
 		} catch (AnalysisEngineProcessException aepe) {
-			log.fatal("Analysis Engine encountered errors!");
-			throw new RuntimeException("Text analysis failed.", aepe);
+			log.fatal("Analysis Engine encountered errors!", aepe);
+			throw new ProcessingException("Text analysis failed.", aepe);
 		}
 
 		final String base_url = "http://" + fetcher.getBase_url() + ":" + fetcher.getPort();

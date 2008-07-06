@@ -16,6 +16,10 @@
  * Don't screw up on html tags with &lt; and &gt; entities instead of < and >.
  * does the HTML annotation really need the tag-name field?
 
+*** Random
+ * Shouldn't the processing steps (post & pre) be encapsulated into
+   different try-blocks (WERTiServiceImpl)
+
 *** Showstoppers
  * Update README
 

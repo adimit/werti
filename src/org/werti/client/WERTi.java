@@ -1,9 +1,12 @@
 package org.werti.client;
 
+import java.net.MalformedURLException;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.rpc.InvocationException;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 
 import com.google.gwt.user.client.ui.Button;
@@ -29,9 +32,59 @@ public class WERTi implements EntryPoint {
 
 	final HTML status = new HTML("Ready.");
 
+	private void showError(String message, String execptionMessage, String cause) {
+
+	}
+
+	@SuppressWarnings("unchecked")
+	private class SearchCallback implements AsyncCallback {
+		public void onFailure(Throwable reason) {
+			StringBuilder sb = new StringBuilder();
+			for (StackTraceElement ste:reason.getStackTrace()) {
+				sb.append(ste.toString() + "<br />");
+			}
+			if (reason instanceof InvocationException) {
+				final InvocationException ie = (InvocationException) reason;
+				showError("Failed to contact Server!"
+						, ie.getMessage()
+						, sb.toString());
+			} else if (reason instanceof ProcessingException) {
+				final ProcessingException pe = (ProcessingException) reason;
+				showError("Failed Processing of <a href=\""
+						+ searchBox.getText() + "\">"
+						+ "the requested page.</a>"
+						+ "<br />. "
+						+ "Sorry. Maybe you'd like to try another?"
+						, pe.getMessage()
+						, sb.toString());
+			} else if (reason instanceof InitializationException) {
+				final InitializationException ie = 
+					(InitializationException) reason;
+				showError("Failed to initialize server-side context. "
+						+ "This probably means that one the option"
+						+ "you chose has some problems currently." 
+						+ "Maybe you could try a different option?"
+						, ie.getMessage()
+						, sb.toString());
+			} else if (reason instanceof MalformedURLException) {
+				final MalformedURLException murle = 
+					(MalformedURLException) reason;
+				showError("The URL you've entered seems invalid. "
+						+ "Try another."
+						, murle.getMessage()
+						, sb.toString());
+			}
+		}
+
+		public void onSuccess(Object result) {
+			status.setHTML("Result: " + result.toString());
+		}
+	}
+
 	/**
 	 * This is the entry point method.
 	 */
+	@SuppressWarnings("unchecked")
 	public void onModuleLoad() {
 		final Button submitURL = new Button("Submit URL");
 		submitURL.addClickListener(new ClickListener() {
@@ -44,29 +97,39 @@ public class WERTi implements EntryPoint {
 					tags[n-2] = data[n];
 				}
 				final WERTiServiceAsync service = 
-					(WERTiServiceAsync) GWT.create(WERTiService.class);
-				final ServiceDefTarget target = (ServiceDefTarget) service;
-				target.setServiceEntryPoint(GWT.getModuleBaseURL()+"/UIMAProcessor");
-
-				@SuppressWarnings("unchecked")
-				AsyncCallback callback = new AsyncCallback() {
-					public void onFailure(Throwable reason) {
-						StringBuilder sb = new StringBuilder();
-						for (StackTraceElement ste:reason.getStackTrace()) {
-							sb.append(ste.toString() + "<br />");
-						}
-						status.setHTML("Error processing " 
-								+ "(" + reason.getStackTrace().length + ")<br />"
-								+ sb.toString() + "<br />"
-								+ "ModulePath:" + GWT.getModuleBaseURL());
-					}
-
-					public void onSuccess(Object result) {
-						status.setHTML("Result: " + result.toString());
-					}
-				};
-
-				service.process(method, lang, tags, searchBox.getText(), callback);
+			(WERTiServiceAsync) GWT.create(WERTiService.class);
+		final ServiceDefTarget target = (ServiceDefTarget) service;
+		target.setServiceEntryPoint(GWT.getModuleBaseURL()+"/UIMAProcessor");
+		AsyncCallback callback = new SearchCallback();
+		try {
+			service.process(method, lang, tags, searchBox.getText(), callback);
+		} catch (InvocationException ie) {
+			showError("Failed to contact Server!"
+				, ie.getMessage()
+				, ie.toString());
+		} catch (ProcessingException pe) {
+			showError("Failed Processing of <a href=\""
+					+ searchBox.getText() + "\">"
+					+ "the requested page.</a>"
+					+ "<br />. "
+					+ "Sorry. Maybe you'd like to try another?"
+					, pe.getMessage()
+					, pe.toString());
+		} catch (InitializationException ie) {
+			showError("Failed to initialize server-side context. "
+					+ "This probably means that one the option"
+					+ "you chose has some problems currently." 
+					+ "Maybe you could try a different option?"
+					, ie.getMessage()
+					, ie.toString()
+				 );
+		} catch (MalformedURLException murle) {
+			showError("The URL you've entered seems invalid. "
+					+ "Try another."
+					, murle.getMessage()
+					, murle.toString()
+				 );
+		}
 			}
 		});
 
@@ -103,7 +166,7 @@ public class WERTi implements EntryPoint {
 
 		RootPanel.get("submitButtons").add(submitButtons);
 	}
-	
+
 	final TextBox searchBox = new TextBox();
 
 	final ECheckBox dets = new ECheckBox("DT", "Determiners");
@@ -120,7 +183,6 @@ public class WERTi implements EntryPoint {
 	final ETextBox moreCats = new ETextBox();
 
 	/*
-	 * FIXME
 	 * The order of the array contents is important. This is surely suboptimal.
 	 * We'll have to change it, once I write some RadioGroup or similar.
 	 * For now the Radio Button stuff needs to be in front
@@ -146,7 +208,7 @@ public class WERTi implements EntryPoint {
 			public void onClose(DisclosureEvent e) {
 				toggleCats(true);
 			}
-			
+
 			public void onOpen(DisclosureEvent e) {
 				toggleCats(false);
 			}
@@ -207,11 +269,11 @@ public class WERTi implements EntryPoint {
 		public String getData() {
 			return ((isEnabled())? getText(): "");
 		}
-		
+
 		public void setData(String data) {
 			setText(data);
 		}
-	
+
 	}
 
 	private class ECheckBox extends CheckBox implements HasData {
@@ -225,7 +287,7 @@ public class WERTi implements EntryPoint {
 		public String getData() {
 			return ((isChecked() && isEnabled())? data: "");
 		}
-		
+
 		public void setData(String data) {
 			this.data = data;
 		}
@@ -242,7 +304,7 @@ public class WERTi implements EntryPoint {
 		public String getData() {
 			return ((isChecked() && isEnabled())? data: "");
 		}
-		
+
 		public void setData(String data) {
 			this.data = data;
 		}
