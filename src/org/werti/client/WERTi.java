@@ -1,13 +1,25 @@
 package org.werti.client;
 
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.core.client.GWT;
+
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.rpc.ServiceDefTarget;
 
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.user.client.ui.DisclosureEvent;
+import com.google.gwt.user.client.ui.DisclosureHandler;
+import com.google.gwt.user.client.ui.DisclosurePanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.TabPanel;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -24,7 +36,37 @@ public class WERTi implements EntryPoint {
 		final Button submitURL = new Button("Submit URL");
 		submitURL.addClickListener(new ClickListener() {
 			public void onClick(Widget w) {
-				status.setHTML("Not implemented yet");
+				final String[] data = collectData();
+				final String method = data[0];
+				final String lang = data[1];
+				final String[] tags = new String[data.length-2];
+				for (int n = 2; n < data.length; n++) {
+					tags[n-2] = data[n];
+				}
+				final WERTiServiceAsync service = 
+					(WERTiServiceAsync) GWT.create(WERTiService.class);
+				final ServiceDefTarget target = (ServiceDefTarget) service;
+				target.setServiceEntryPoint(GWT.getModuleBaseURL()+"/UIMAProcessor");
+
+				@SuppressWarnings("unchecked")
+				AsyncCallback callback = new AsyncCallback() {
+					public void onFailure(Throwable reason) {
+						StringBuilder sb = new StringBuilder();
+						for (StackTraceElement ste:reason.getStackTrace()) {
+							sb.append(ste.toString() + "<br />");
+						}
+						status.setHTML("Error processing " 
+								+ "(" + reason.getStackTrace().length + ")<br />"
+								+ sb.toString() + "<br />"
+								+ "ModulePath:" + GWT.getModuleBaseURL());
+					}
+
+					public void onSuccess(Object result) {
+						status.setHTML("Result: " + result.toString());
+					}
+				};
+
+				service.process(method, lang, tags, searchBox.getText(), callback);
 			}
 		});
 
@@ -35,7 +77,6 @@ public class WERTi implements EntryPoint {
 			}
 		});
 
-		final TextBox searchBox = new TextBox();
 
 		final HorizontalPanel statusBar = new HorizontalPanel();
 		statusBar.add(status);
@@ -45,9 +86,165 @@ public class WERTi implements EntryPoint {
 		submitButtons.add(submitURL);
 		submitButtons.add(submitTerm);
 
+		createExercises();
+
+		HorizontalPanel languages = new HorizontalPanel();
+		en.setChecked(true);
+		de.setEnabled(false);
+		languages.add(en);
+		languages.add(de);
+
+		RootPanel.get("Exercises").add(exercises);
+
+		RootPanel.get("languageChoice").add(languages);
+
 		RootPanel.get("searchBox").add(searchBox);
 		RootPanel.get("statusBar").add(statusBar);
 
 		RootPanel.get("submitButtons").add(submitButtons);
+	}
+	
+	final TextBox searchBox = new TextBox();
+
+	final ECheckBox dets = new ECheckBox("DT", "Determiners");
+	final ECheckBox prps = new ECheckBox("PP", "Prepositions");
+
+	final ERadioButton clr = new ERadioButton("clr", "methods", "Color Enhancement");
+	final ERadioButton ask = new ERadioButton("ask", "methods", "Guess it!");
+	final ERadioButton fib = new ERadioButton("fib", "methods", "Cloze Test");
+
+	final ERadioButton de = new ERadioButton("de", "langs", "German");
+	final ERadioButton en = new ERadioButton("en", "langs", "English");
+
+	final TabPanel exercises = new TabPanel();
+	final ETextBox moreCats = new ETextBox();
+
+	/*
+	 * FIXME
+	 * The order of the array contents is important. This is surely suboptimal.
+	 * We'll have to change it, once I write some RadioGroup or similar.
+	 * For now the Radio Button stuff needs to be in front
+	 */
+	final HasData[] formData = { clr, ask, fib, en, de, dets, prps, moreCats };
+
+	private void createExercises() {
+		dets.setChecked(true);
+		clr.setChecked(true);
+
+		VerticalPanel gCats = new VerticalPanel();
+
+		DisclosurePanel advancedCats = new DisclosurePanel("Advanced...");
+		VerticalPanel customCats = new VerticalPanel();
+
+
+		customCats.add(new Label("Custom PoS Tags: [ .split(\\s*,\\s*) ]"));
+		customCats.add(moreCats);
+
+		advancedCats.setContent(customCats);
+
+		advancedCats.addEventHandler(new DisclosureHandler() {
+			public void onClose(DisclosureEvent e) {
+				toggleCats(true);
+			}
+			
+			public void onOpen(DisclosureEvent e) {
+				toggleCats(false);
+			}
+
+			private void toggleCats(boolean to) {
+				dets.setEnabled(to);
+				prps.setEnabled(to);
+				moreCats.setEnabled(!to);
+			}
+		});
+
+		gCats.add(dets);
+		gCats.add(prps);
+
+		gCats.add(advancedCats);
+
+		gCats.add(clr);
+		gCats.add(ask);
+		gCats.add(fib);
+
+		VerticalPanel tUdst = new VerticalPanel();
+
+		Label noop = new Label("This functionality is not implemented yet.");
+
+		tUdst.add(noop);
+
+		exercises.add(gCats, "Grammatical Categories");
+		exercises.add(tUdst, "Textual Understanding");
+
+		exercises.selectTab(0);
+	}
+
+	private String[] collectData() {
+		StringBuilder sb = new StringBuilder();
+		for (HasData o:formData) {
+			sb.append(o.getData() + ",");
+		}
+		// dirty regex hacking. Sure, there are better solutions...
+		return sb.toString().replaceAll("^[^\\w]*", "").split("(\\s*,\\s*)+");
+	}
+
+	private interface HasData {
+		public String getData();
+		public void setData(String data);
+	}
+
+	private class ETextBox extends TextBox implements HasData {
+
+		public ETextBox(String data) {
+			super();
+			setText(data);
+		}
+
+		public ETextBox() {
+			super();
+		}
+
+		public String getData() {
+			return ((isEnabled())? getText(): "");
+		}
+		
+		public void setData(String data) {
+			setText(data);
+		}
+	
+	}
+
+	private class ECheckBox extends CheckBox implements HasData {
+		String data;
+
+		public ECheckBox(String data, String name) {
+			super(name);
+			this.data = data;
+		}
+
+		public String getData() {
+			return ((isChecked() && isEnabled())? data: "");
+		}
+		
+		public void setData(String data) {
+			this.data = data;
+		}
+	}
+
+	private class ERadioButton extends RadioButton implements HasData {
+		String data;
+
+		public ERadioButton(String data, String group, String name) {
+			super(group, name);
+			this.data = data;
+		}
+
+		public String getData() {
+			return ((isChecked() && isEnabled())? data: "");
+		}
+		
+		public void setData(String data) {
+			this.data = data;
+		}
 	}
 }

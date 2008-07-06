@@ -37,6 +37,9 @@ input {
      border: 1px solid;
      font-family: Monospace;
 }
+fieldset {
+     border: 1px dotted;
+}
 
 /* links */
 a:link {

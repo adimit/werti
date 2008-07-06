@@ -9,7 +9,6 @@
 	<property name="app.path"      value="/${app.name}"/>
 	<property name="app.version"   value="0.1-dev"/>
 	<property name="build.home"    value="${basedir}/bin"/>
-	<property name="catalina.home" value="/usr/share/tomcat5.5"/>
 	<property name="dist.home"     value="${basedir}/dist"/>
 	<property name="docs.home"     value="${basedir}/docs"/>
 	<property name="manager.url"   value="http://localhost:8180/manager"/>
@@ -39,19 +38,16 @@
 
 		<!-- Include all elements that Tomcat exposes to applications -->
 		<pathelement location="${catalina.home}/common/classes"/>
-		<fileset dir="${catalina.home}/common/endorsed">
+		<fileset dir="${catalina.home}/lib">
 			<include name="*.jar"/>
 		</fileset>
-		<fileset dir="${catalina.home}/common/lib">
-			<include name="*.jar"/>
-		</fileset>
-		<pathelement location="${catalina.home}/shared/classes"/>
-		<fileset dir="${catalina.home}/shared/lib">
+		<pathelement location="${catalina.home}/classes"/>
+		<fileset dir="${catalina.home}/lib">
 			<include name="*.jar"/>
 		</fileset>
 
-		<pathelement location="/home/aleks/opt/java"/>
-		<fileset dir="/home/aleks/opt/java">
+		<pathelement location="${libraries.location}"/>
+		<fileset dir="${libraries.location}">
 			<include name="*.jar"/>
 		</fileset>
 	</path>
@@ -86,6 +82,7 @@
 		<copy  todir="${build.home}/WEB-INF/classes">
 			<fileset dir="${src.home}" excludes="**/*.java"/>
 		</copy>
+
 
 	</target>
 
@@ -145,9 +142,39 @@
 			<fileset dir="${web.home}"/>
 		</copy>
 
-		<copy todir="${build.home}">
+		<mkdir dir="${build.home}/desc"/>
+		<copy todir="${build.home}/desc">
 			<fileset dir="desc"/>
 		</copy>
+
+		<!-- Copy the neccessary libraries -->
+		<mkdir dir="${build.home}/WEB-INF/lib"/>
+		<copy todir="${build.home}/WEB-INF/lib">
+			<fileset dir="${libraries.location}">
+				<include name="gwt*jar"/>
+				<include name="uima*jar"/>
+				<include name="stanford*jar"/>
+				<include name="lib*jar"/>
+				<include name="commons-logging-api.jar"/>
+			</fileset>
+		</copy>
+
+		<!-- copy the model files -->
+		<mkdir dir="${build.home}/res/"/>
+		<mkdir dir="${build.home}/res/models/"/>
+		<mkdir dir="${build.home}/res/models/ptbtagger"/>
+		<mkdir dir="${build.home}/res/models/hmmtagger"/>
+		<copy todir="${build.home}/res/models/ptbtagger">
+			<fileset dir="${ptbtagger.models}">
+				<include name="*"/>
+			</fileset>
+		</copy>
+		<copy todir="${build.home}/res/models/hmmtagger">
+			<fileset dir="${hmmtagger.models}">
+				<include name="*"/>
+			</fileset>
+		</copy>
+	
 	</target>
 
 	<!-- Reload Target -->

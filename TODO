@@ -27,6 +27,7 @@
 - Use HTML entities in sentence boundary followers (like, for " or similar)
 - Internationalize the exceptions, logging, whole application following [1]
 - Interactive Passivator
+- Make up a RadioGroup for GWT
 
 
 References:

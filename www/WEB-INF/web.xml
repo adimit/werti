@@ -14,6 +14,16 @@
       <description>Mail for trouble</description>
     </context-param>
 
+    <servlet>
+	    <servlet-name>UIMAProcessor</servlet-name>
+	    <servlet-class>org.werti.server.WERTiServiceImpl</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+	    <servlet-name>UIMAProcessor</servlet-name>
+	    <url-pattern>/org.werti.WERTi/UIMAProcessor</url-pattern>
+    </servlet-mapping>
+
     <session-config>
       <session-timeout>30</session-timeout> 
     </session-config>
