@@ -6,6 +6,7 @@
 	<classpathentry kind="lib" path="/home/aleks/opt/java/servlet-api.jar"/>
 	<classpathentry kind="lib" path="/home/aleks/src/aleks/dist/lib-0.1.jar"/>
 	<classpathentry kind="lib" path="/home/aleks/opt/java/stanford-postagger.jar"/>
+	<classpathentry kind="lib" path="/home/aleks/opt/java/commons-logging-api.jar"/>
 	<classpathentry kind="lib" path="/home/aleks/opt/java/lingpipe-3.5.0.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="/home/aleks/opt/java/gwt-servlet.jar"/>

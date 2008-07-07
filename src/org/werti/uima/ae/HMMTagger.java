@@ -36,7 +36,7 @@ public class HMMTagger extends JCasAnnotator_ImplBase implements Tagger {
 	private int N;
 
 	// model generation
-	private final ModelGeneration model = WERTiContext.getHmmtagger("en");
+	private static ModelGeneration model; 
 
 	/**
 	 * Initializes the HMMTagger with a model supplied by the configuration-resource
@@ -46,6 +46,7 @@ public class HMMTagger extends JCasAnnotator_ImplBase implements Tagger {
 	 */
 	public void initialize(final UimaContext context) throws ResourceInitializationException {
 		super.initialize(context);
+		model =  WERTiContext.getHmmtagger("en");
 		this.N = (Integer) context.getConfigParameterValue(pN);
 	}
 
@@ -80,7 +81,7 @@ public class HMMTagger extends JCasAnnotator_ImplBase implements Tagger {
 				wlist.add(t.getCoveredText());
 			}
 
-			wlist = viterbi(this.N, this.model, wlist);
+			wlist = viterbi(this.N, model, wlist);
 
 			assert true: wlist.size() == tlist.size();
 

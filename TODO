@@ -15,10 +15,13 @@
  * fib is put into anchors currently, which is awkward.
  * Don't screw up on html tags with &lt; and &gt; entities instead of < and >.
  * does the HTML annotation really need the tag-name field?
+ * WERTiContext doesn't work for the Stanford tagger. Probably the Stanford api
+   needs a whole new reimplementation because it fucking blows.
 
 *** Random
  * Shouldn't the processing steps (post & pre) be encapsulated into
    different try-blocks (WERTiServiceImpl)
+ * Switch to a more decent logger
 
 *** Showstoppers
  * Update README
