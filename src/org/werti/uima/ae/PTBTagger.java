@@ -12,6 +12,8 @@ import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import org.apache.uima.UimaContext;
+
 import org.apache.uima.analysis_component.JCasAnnotator_ImplBase;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
@@ -21,6 +23,8 @@ import org.apache.uima.cas.text.AnnotationIndex;
 import org.apache.uima.examples.tagger.Tagger;
 
 import org.apache.uima.jcas.JCas;
+
+import org.apache.uima.resource.ResourceInitializationException;
 
 import org.werti.WERTiContext;
 
@@ -32,7 +36,11 @@ public class PTBTagger extends JCasAnnotator_ImplBase implements Tagger {
 	private static final Log log =
 		LogFactory.getLog(PTBTagger.class);
 
-	private static final MaxentTagger tagger = WERTiContext.getPtbtagger("en");
+	private static MaxentTagger tagger;
+
+	public void initialize(UimaContext context) throws ResourceInitializationException {
+		WERTiContext.getPtbtagger("en");
+	}
 
 	@SuppressWarnings("unchecked")
 	public void process(JCas cas) throws AnalysisEngineProcessException {
