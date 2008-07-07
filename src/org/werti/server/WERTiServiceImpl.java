@@ -127,10 +127,10 @@ public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiServi
 		final String base_url = "http://" + fetcher.getBase_url() + ":" + fetcher.getPort();
 		final String enhanced = enhance(cas, base_url);
 		final long currentTime = System.currentTimeMillis();
-		final String file = "WERTi-"+currentTime+"-tmp.html";
+		final String file = "WERTi/WERTi-"+currentTime+"-tmp.html";
 
 		try { // to write temp file
-			final FileWriter out = new FileWriter(file);
+			final FileWriter out = new FileWriter("webapps/" + file);
 			out.write(enhanced);
 		} catch (IOException ioe) {
 			log.error("Failed to create temporary file");

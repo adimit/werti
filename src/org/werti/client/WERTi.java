@@ -3,6 +3,8 @@ package org.werti.client;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 
+import com.google.gwt.user.client.Window;
+
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.InvocationException;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
@@ -122,7 +124,8 @@ public class WERTi implements EntryPoint {
 		}
 
 		public void onSuccess(Object result) {
-			status.setHTML("Result: " + result.toString());
+			status.setHTML("<a href=\"localhost:8080/" + result.toString() + "\">Result</a>.");
+			Window.open(result.toString(), "", "");
 		}
 	}
 
