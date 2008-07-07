@@ -100,7 +100,7 @@ public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiServi
 			log.fatal("Error accessing descriptor file", ioe);
 			throw new InitializationException("Error accessing descriptor file", ioe);
 		}
-		log.debug("Initialized UIMA components.");
+		log.info("Initialized UIMA components.");
 
 		try { // to wait for document text to be available
 			fetcher.join(MAX_WAIT);
@@ -108,11 +108,13 @@ public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiServi
 			log.error("Fetcher recieved interrupt. This shouldn't happen, should it?", itre);
 		}
 
+		log.error("fetcher-text:" + fetcher.getText());
 		if (fetcher.getText() == null) { // if we don't have text, that's bad
 			log.error("Webpage retrieval failed! " + fetcher.getBase_url());
 			throw new InitializationException("Webpage retrieval failed.");
 		} 
 
+		log.error("fetcher-text:" + fetcher.getText());
 		cas.setDocumentText(fetcher.getText());
 		try { // to process
 			preprocessor.process(cas);
