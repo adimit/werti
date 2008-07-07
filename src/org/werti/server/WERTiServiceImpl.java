@@ -45,10 +45,6 @@ import org.werti.uima.types.Enhancement;
 public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiService {
 	private static final Log log = LogFactory.getLog(WERTiServiceImpl.class);
 
-	private static final String PREFIX = "/desc/";
-	private static final String ENHNCE = PREFIX + "enhancers/PoSEnhancer.xml";
-	private static final String OPERATORS = PREFIX + "operators/";
-
 	// maximum amount of of ms to wait for a web-page to load
 	private static final int MAX_WAIT = 1000 * 10;
 
@@ -59,13 +55,6 @@ public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiServi
 	public String process(String method, String language, String[] tags, String url) 
 		throws URLException, InitializationException, ProcessingException {
 		context = new WERTiContext(getServletContext());
-		final URL descriptor;
-		try { // to load the descriptor
-			descriptor = getServletContext().getResource(OPERATORS + "ptb-ptb-hil.xml");
-		} catch (MalformedURLException murle) {
-			log.fatal("Unrecoverable: Couldn't find aggregate descriptor file!");
-			throw new InitializationException("Couldn't instantiate operator.", murle);
-		}
 
 		log.debug("Fetching site " + url);
 		final Fetcher fetcher;
@@ -78,15 +67,26 @@ public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiServi
 
 		final JCas cas;
 		final AnalysisEngine preprocessor, postprocessor;
+		final String descPath = context.getProperty("descriptorPath");
+		final URL preDesc, postDesc;
+		try { // to load the descriptor
+			preDesc = getServletContext().getResource(
+					descPath + context.getProperty("aggregate.default"));
+			postDesc = getServletContext().getResource(
+					descPath + context.getProperty("enhancer.default"));
+		} catch (MalformedURLException murle) {
+			log.fatal("Unrecoverable: Couldn't find aggregate descriptor file!");
+			throw new InitializationException("Couldn't instantiate operator.", murle);
+		}
 
 		try { // to initialize UIMA components
-			final XMLInputSource pre_xmlin = new XMLInputSource(descriptor);
+			final XMLInputSource pre_xmlin = new XMLInputSource(preDesc);
 			final ResourceSpecifier pre_spec = 
 				UIMAFramework.getXMLParser().parseResourceSpecifier(pre_xmlin);
 			preprocessor  = UIMAFramework.produceAnalysisEngine(pre_spec);
 			cas = preprocessor.newJCas();
 
-			final XMLInputSource post_xmlin = new XMLInputSource(ENHNCE);
+			final XMLInputSource post_xmlin = new XMLInputSource(postDesc);
 			final ResourceSpecifier post_spec = 
 				UIMAFramework.getXMLParser().parseResourceSpecifier(post_xmlin);
 			postprocessor  = UIMAFramework.produceAnalysisEngine(post_spec);

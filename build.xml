@@ -167,8 +167,13 @@
 				<include name="*"/>
 			</fileset>
 		</copy>
-		<copy todir="${build.home}/res/models/hmmtagger">
-			<fileset dir="${hmmtagger.models}">
+		<copy todir="${build.home}/res/models/hmmtagger/english">
+			<fileset dir="${hmmtagger.models}/english">
+				<include name="*"/>
+			</fileset>
+		</copy>
+		<copy todir="${build.home}/res/models/hmmtagger/german">
+			<fileset dir="${hmmtagger.models}/german">
 				<include name="*"/>
 			</fileset>
 		</copy>
