@@ -8,5 +8,5 @@
 *.jar
 *~
 uima.log*
-/www/org.werti.WERTi
+/www/org*
 /www/.gwt-tmp
