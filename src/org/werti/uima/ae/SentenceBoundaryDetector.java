@@ -5,9 +5,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 
 import org.apache.uima.analysis_component.JCasAnnotator_ImplBase;
 
@@ -20,8 +18,8 @@ import org.werti.uima.types.annot.Token;
 
 
 public class SentenceBoundaryDetector extends JCasAnnotator_ImplBase {
-	private static final Log log =
-		LogFactory.getLog(SentenceBoundaryDetector.class);
+	private static final Logger log =
+		Logger.getLogger(SentenceBoundaryDetector.class);
 
 	private static final Set<String> sentenceBoundaries = 
 		new HashSet<String>(Arrays.asList(new String[]{".", "!", "?"}));

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="/home/aleks/src/aleks/dist/lib-0.1.jar"/>
 	<classpathentry kind="lib" path="/home/aleks/opt/java/uima-an-tagger.jar"/>
+	<classpathentry kind="lib" path="/usr/share/java/log4j-1.2.15.jar"/>
 	<classpathentry kind="lib" path="/home/aleks/opt/java/uima-core.jar"/>
 	<classpathentry kind="lib" path="/home/aleks/opt/java/servlet-api.jar"/>
-	<classpathentry kind="lib" path="/home/aleks/src/aleks/dist/lib-0.1.jar"/>
 	<classpathentry kind="lib" path="/home/aleks/opt/java/stanford-postagger.jar"/>
 	<classpathentry kind="lib" path="/home/aleks/opt/java/commons-logging-api.jar"/>
 	<classpathentry kind="lib" path="/home/aleks/opt/java/lingpipe-3.5.0.jar"/>

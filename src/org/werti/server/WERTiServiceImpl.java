@@ -12,8 +12,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import lib.html.Fetcher;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 
 import org.apache.uima.UIMAFramework;
 
@@ -43,7 +42,9 @@ import org.werti.client.WERTiService;
 import org.werti.uima.types.Enhancement;
 
 public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiService {
-	private static final Log log = LogFactory.getLog(WERTiServiceImpl.class);
+	private static final Logger log =
+		Logger.getLogger(WERTiServiceImpl.class);
+
 
 	// maximum amount of of ms to wait for a web-page to load
 	private static final int MAX_WAIT = 1000 * 10;
