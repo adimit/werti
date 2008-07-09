@@ -14,8 +14,7 @@ import javax.servlet.ServletContext;
 
 import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 
 import org.apache.uima.examples.tagger.trainAndTest.ModelGeneration;
 
@@ -24,8 +23,9 @@ import org.apache.uima.resource.ResourceInitializationException;
 import org.werti.client.InitializationException;
 
 public class WERTiContext {
+	private static final Logger log = Logger.getLogger(WERTiContext.class);
+
 	private static final String PROPS = "/WERTi.properties";
-	private static final Log log = LogFactory.getLog(WERTiContext.class);
 
 	private static ServletContext servlet;
 
@@ -46,7 +46,8 @@ public class WERTiContext {
 	}
 
 	// return the appropriate tagger reference for the language
-	private static MaxentTagger get_ptbtagger(final String lang) throws ResourceInitializationException {
+	private static MaxentTagger get_ptbtagger(final String lang)
+		throws ResourceInitializationException {
 		if (ptbtagger_en != null) {
 			return ptbtagger_en;
 		}
@@ -82,7 +83,8 @@ public class WERTiContext {
 	 * @param lang The two letter language code
 	 * @return The ptbtagger.
 	 */
-	public static MaxentTagger getPtbtagger (final String lang) throws ResourceInitializationException {
+	public static MaxentTagger getPtbtagger (final String lang)
+		throws ResourceInitializationException {
 		log.warn(lang);
 		MaxentTagger ptbtagger = get_ptbtagger(lang);
 		return ptbtagger;

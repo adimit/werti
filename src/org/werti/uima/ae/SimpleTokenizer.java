@@ -2,8 +2,7 @@ package org.werti.uima.ae;
 
 import java.util.Iterator;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 
 import org.apache.uima.analysis_component.JCasAnnotator_ImplBase;
 
@@ -15,9 +14,8 @@ import org.werti.uima.types.annot.RelevantText;
 import org.werti.uima.types.annot.Token;
 
 public class SimpleTokenizer extends JCasAnnotator_ImplBase {
-	private static final Log log =
-		LogFactory.getLog(SimpleTokenizer.class);
-
+	private static final Logger log =
+		Logger.getLogger(SimpleTokenizer.class);
 
 	/**
 	 * Go through all relevant text areas in the RelevantText-AnnotationIndex and annotate them
