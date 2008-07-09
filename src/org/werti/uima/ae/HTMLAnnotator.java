@@ -2,8 +2,7 @@ package org.werti.uima.ae;
 
 // import type
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 
 import org.apache.uima.analysis_component.JCasAnnotator_ImplBase;
 
@@ -19,8 +18,9 @@ import org.werti.uima.types.annot.HTML;
  */
 
 public class HTMLAnnotator extends JCasAnnotator_ImplBase {
-	private static final Log log =
-		LogFactory.getLog(HTMLAnnotator.class);
+	private static final Logger log =
+		Logger.getLogger(HTMLAnnotator.class);
+
 
 	private static final char[] TAG_NAME_DELMTR = { ' ', '\t', '\n', '\r', '>'};
 

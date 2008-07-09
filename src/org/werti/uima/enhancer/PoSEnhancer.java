@@ -2,8 +2,7 @@ package org.werti.uima.enhancer;
 
 import java.util.Iterator;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 
 import org.apache.uima.UimaContext;
 
@@ -22,8 +21,8 @@ import org.werti.uima.types.annot.Token;
 
 
 public class PoSEnhancer extends JCasAnnotator_ImplBase {
-	private static final Log log =
-		LogFactory.getLog(PoSEnhancer.class);
+	private static final Logger log =
+		Logger.getLogger(PoSEnhancer.class);
 
 	public void process(JCas cas) {
 		log.info("Starting enhancement");

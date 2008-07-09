@@ -9,8 +9,7 @@ import edu.stanford.nlp.ling.TaggedWord;
 
 import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 
 import org.apache.uima.UimaContext;
 
@@ -33,8 +32,8 @@ import org.werti.uima.types.annot.Token;
 
 
 public class PTBTagger extends JCasAnnotator_ImplBase implements Tagger {
-	private static final Log log =
-		LogFactory.getLog(PTBTagger.class);
+	private static final Logger log =
+		Logger.getLogger(PTBTagger.class);
 
 	private static MaxentTagger tagger;
 

@@ -6,8 +6,7 @@ import java.util.Stack;
 
 import java.util.regex.Pattern;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 
 import org.apache.uima.analysis_component.JCasAnnotator_ImplBase;
 
@@ -29,9 +28,8 @@ import org.werti.uima.types.annot.RelevantText;
  * Sometimes this will mark garbage. It might prove hard to actually fix this, though.
  */
 public class GenericRelevanceAnnotator extends JCasAnnotator_ImplBase {
-	private static final Log log =
-		LogFactory.getLog(GenericRelevanceAnnotator.class);
-
+	private static final Logger log =
+		Logger.getLogger(GenericRelevanceAnnotator.class);
 
 	private static final Pattern whiteSpacePattern = Pattern.compile("^\\s*$");
 

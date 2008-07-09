@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import org.apache.uima.UimaContext;
 
 import org.apache.uima.analysis_component.JCasAnnotator_ImplBase;
@@ -27,6 +29,9 @@ import org.werti.uima.types.annot.SentenceAnnotation;
 import org.werti.uima.types.annot.Token;
 
 public class HMMTagger extends JCasAnnotator_ImplBase implements Tagger {
+	private static final Logger log =
+		Logger.getLogger(HMMTagger.class);
+
 
 	/*
 	 * Parameter Definitions
@@ -59,6 +64,7 @@ public class HMMTagger extends JCasAnnotator_ImplBase implements Tagger {
 	 */
 	@SuppressWarnings("unchecked")
 	public void process(final JCas cas) throws AnalysisEngineProcessException {
+		log.info("Starting tagging process...");
 		final List<Token> tlist = new ArrayList<Token>();
 		List<String> wlist = new ArrayList<String>();
 
@@ -91,6 +97,7 @@ public class HMMTagger extends JCasAnnotator_ImplBase implements Tagger {
 				t.setTag(tag);
 			}
 		}
+		log.info("Finished tagging process");
 	}
 
 	// A wrapper for the Viterbi algorithm, so it doesn't uglify the processing code.

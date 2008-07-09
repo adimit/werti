@@ -149,11 +149,11 @@
 		<mkdir dir="${build.home}/WEB-INF/lib"/>
 		<copy todir="${build.home}/WEB-INF/lib">
 			<fileset dir="${libraries.location}">
-				<include name="gwt*jar"/>
+				<include name="gwt-servlet.jar"/>
 				<include name="uima*jar"/>
 				<include name="stanford*jar"/>
 				<include name="lib*jar"/>
-				<include name="commons-logging-api.jar"/>
+				<include name="log4j.jar"/>
 			</fileset>
 		</copy>
 
