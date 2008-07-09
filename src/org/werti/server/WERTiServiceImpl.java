@@ -8,6 +8,9 @@ import java.net.URL;
 
 import java.util.Iterator;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import lib.html.Fetcher;
@@ -45,9 +48,8 @@ public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiServi
 	private static final Logger log =
 		Logger.getLogger(WERTiServiceImpl.class);
 
-
 	// maximum amount of of ms to wait for a web-page to load
-	private static final int MAX_WAIT = 1000 * 10;
+	private static final int MAX_WAIT = 1000 * 10; // 10 seconds
 
 	public static WERTiContext context;
 
@@ -138,6 +140,7 @@ public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiServi
 		} catch (IOException ioe) {
 			log.error("Failed to create temporary file");
 		}
+
 		return file;
 	}
 
