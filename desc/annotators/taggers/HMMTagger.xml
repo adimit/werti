@@ -34,7 +34,7 @@
       <nameValuePair>
         <name>MODEL_LOCATION</name>
         <value>
-		   <string>/res/models/hmmtagger/english/BrownModel.dat</string>
+          <string>/res/models/hmmtagger/english/BrownModel.dat</string>
         </value>
       </nameValuePair>
     </configurationParameterSettings>

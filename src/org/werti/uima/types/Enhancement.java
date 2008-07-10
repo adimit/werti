@@ -7,14 +7,11 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.JCasRegistry;
 import org.apache.uima.jcas.cas.TOP_Type;
 
-import org.apache.uima.jcas.cas.IntegerArray;
 import org.apache.uima.jcas.tcas.Annotation;
-import org.apache.uima.jcas.cas.IntegerList;
-import org.apache.uima.jcas.cas.StringArray;
 
 
 /** Describes an enhancment on the current spot.
- * Updated by JCasGen Fri Jun 06 03:17:53 CEST 2008
+ * Updated by JCasGen Thu Jul 10 17:54:07 CEST 2008
  * XML source: /home/aleks/src/werti/desc/WERTiTypeSystem.xml
  * @generated */
 public class Enhancement extends Annotation {
@@ -63,71 +60,39 @@ public class Enhancement extends Annotation {
  
     
   //*--------------*
-  //* Feature: enhancement_list
+  //* Feature: EnhanceStart
 
-  /** getter for enhancement_list - gets A list of enhancements this Enhancement stands for.
+  /** getter for EnhanceStart - gets The start tag of the enhancement annotation.
    * @generated */
-  public StringArray getEnhancement_list() {
-    if (Enhancement_Type.featOkTst && ((Enhancement_Type)jcasType).casFeat_enhancement_list == null)
-      jcasType.jcas.throwFeatMissing("enhancement_list", "org.werti.uima.types.Enhancement");
-    return (StringArray)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((Enhancement_Type)jcasType).casFeatCode_enhancement_list)));}
+  public String getEnhanceStart() {
+    if (Enhancement_Type.featOkTst && ((Enhancement_Type)jcasType).casFeat_EnhanceStart == null)
+      jcasType.jcas.throwFeatMissing("EnhanceStart", "org.werti.uima.types.Enhancement");
+    return jcasType.ll_cas.ll_getStringValue(addr, ((Enhancement_Type)jcasType).casFeatCode_EnhanceStart);}
     
-  /** setter for enhancement_list - sets A list of enhancements this Enhancement stands for. 
+  /** setter for EnhanceStart - sets The start tag of the enhancement annotation. 
    * @generated */
-  public void setEnhancement_list(StringArray v) {
-    if (Enhancement_Type.featOkTst && ((Enhancement_Type)jcasType).casFeat_enhancement_list == null)
-      jcasType.jcas.throwFeatMissing("enhancement_list", "org.werti.uima.types.Enhancement");
-    jcasType.ll_cas.ll_setRefValue(addr, ((Enhancement_Type)jcasType).casFeatCode_enhancement_list, jcasType.ll_cas.ll_getFSRef(v));}    
-    
-  /** indexed getter for enhancement_list - gets an indexed value - A list of enhancements this Enhancement stands for.
-   * @generated */
-  public String getEnhancement_list(int i) {
-    if (Enhancement_Type.featOkTst && ((Enhancement_Type)jcasType).casFeat_enhancement_list == null)
-      jcasType.jcas.throwFeatMissing("enhancement_list", "org.werti.uima.types.Enhancement");
-    jcasType.jcas.checkArrayBounds(jcasType.ll_cas.ll_getRefValue(addr, ((Enhancement_Type)jcasType).casFeatCode_enhancement_list), i);
-    return jcasType.ll_cas.ll_getStringArrayValue(jcasType.ll_cas.ll_getRefValue(addr, ((Enhancement_Type)jcasType).casFeatCode_enhancement_list), i);}
-
-  /** indexed setter for enhancement_list - sets an indexed value - A list of enhancements this Enhancement stands for.
-   * @generated */
-  public void setEnhancement_list(int i, String v) { 
-    if (Enhancement_Type.featOkTst && ((Enhancement_Type)jcasType).casFeat_enhancement_list == null)
-      jcasType.jcas.throwFeatMissing("enhancement_list", "org.werti.uima.types.Enhancement");
-    jcasType.jcas.checkArrayBounds(jcasType.ll_cas.ll_getRefValue(addr, ((Enhancement_Type)jcasType).casFeatCode_enhancement_list), i);
-    jcasType.ll_cas.ll_setStringArrayValue(jcasType.ll_cas.ll_getRefValue(addr, ((Enhancement_Type)jcasType).casFeatCode_enhancement_list), i, v);}
+  public void setEnhanceStart(String v) {
+    if (Enhancement_Type.featOkTst && ((Enhancement_Type)jcasType).casFeat_EnhanceStart == null)
+      jcasType.jcas.throwFeatMissing("EnhanceStart", "org.werti.uima.types.Enhancement");
+    jcasType.ll_cas.ll_setStringValue(addr, ((Enhancement_Type)jcasType).casFeatCode_EnhanceStart, v);}    
    
     
   //*--------------*
-  //* Feature: index_list
+  //* Feature: EnhanceEnd
 
-  /** getter for index_list - gets A list of indices where the elements of enhancement_list should be applied. Please note that your Enhancement must guarantee this.size() == enhancement_list.size()
+  /** getter for EnhanceEnd - gets The end tag of the enhancement annotation.
    * @generated */
-  public IntegerArray getIndex_list() {
-    if (Enhancement_Type.featOkTst && ((Enhancement_Type)jcasType).casFeat_index_list == null)
-      jcasType.jcas.throwFeatMissing("index_list", "org.werti.uima.types.Enhancement");
-    return (IntegerArray)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((Enhancement_Type)jcasType).casFeatCode_index_list)));}
+  public String getEnhanceEnd() {
+    if (Enhancement_Type.featOkTst && ((Enhancement_Type)jcasType).casFeat_EnhanceEnd == null)
+      jcasType.jcas.throwFeatMissing("EnhanceEnd", "org.werti.uima.types.Enhancement");
+    return jcasType.ll_cas.ll_getStringValue(addr, ((Enhancement_Type)jcasType).casFeatCode_EnhanceEnd);}
     
-  /** setter for index_list - sets A list of indices where the elements of enhancement_list should be applied. Please note that your Enhancement must guarantee this.size() == enhancement_list.size() 
+  /** setter for EnhanceEnd - sets The end tag of the enhancement annotation. 
    * @generated */
-  public void setIndex_list(IntegerArray v) {
-    if (Enhancement_Type.featOkTst && ((Enhancement_Type)jcasType).casFeat_index_list == null)
-      jcasType.jcas.throwFeatMissing("index_list", "org.werti.uima.types.Enhancement");
-    jcasType.ll_cas.ll_setRefValue(addr, ((Enhancement_Type)jcasType).casFeatCode_index_list, jcasType.ll_cas.ll_getFSRef(v));}    
-    
-  /** indexed getter for index_list - gets an indexed value - A list of indices where the elements of enhancement_list should be applied. Please note that your Enhancement must guarantee this.size() == enhancement_list.size()
-   * @generated */
-  public int getIndex_list(int i) {
-    if (Enhancement_Type.featOkTst && ((Enhancement_Type)jcasType).casFeat_index_list == null)
-      jcasType.jcas.throwFeatMissing("index_list", "org.werti.uima.types.Enhancement");
-    jcasType.jcas.checkArrayBounds(jcasType.ll_cas.ll_getRefValue(addr, ((Enhancement_Type)jcasType).casFeatCode_index_list), i);
-    return jcasType.ll_cas.ll_getIntArrayValue(jcasType.ll_cas.ll_getRefValue(addr, ((Enhancement_Type)jcasType).casFeatCode_index_list), i);}
-
-  /** indexed setter for index_list - sets an indexed value - A list of indices where the elements of enhancement_list should be applied. Please note that your Enhancement must guarantee this.size() == enhancement_list.size()
-   * @generated */
-  public void setIndex_list(int i, int v) { 
-    if (Enhancement_Type.featOkTst && ((Enhancement_Type)jcasType).casFeat_index_list == null)
-      jcasType.jcas.throwFeatMissing("index_list", "org.werti.uima.types.Enhancement");
-    jcasType.jcas.checkArrayBounds(jcasType.ll_cas.ll_getRefValue(addr, ((Enhancement_Type)jcasType).casFeatCode_index_list), i);
-    jcasType.ll_cas.ll_setIntArrayValue(jcasType.ll_cas.ll_getRefValue(addr, ((Enhancement_Type)jcasType).casFeatCode_index_list), i, v);}
+  public void setEnhanceEnd(String v) {
+    if (Enhancement_Type.featOkTst && ((Enhancement_Type)jcasType).casFeat_EnhanceEnd == null)
+      jcasType.jcas.throwFeatMissing("EnhanceEnd", "org.werti.uima.types.Enhancement");
+    jcasType.ll_cas.ll_setStringValue(addr, ((Enhancement_Type)jcasType).casFeatCode_EnhanceEnd, v);}    
   }
 
     

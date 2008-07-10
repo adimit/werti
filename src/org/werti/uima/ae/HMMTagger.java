@@ -94,7 +94,10 @@ public class HMMTagger extends JCasAnnotator_ImplBase implements Tagger {
 			for (int i = 0; i < tlist.size(); i++) {
 				final Token t = tlist.get(i);
 				final String tag = wlist.get(i);
-				t.setTag(tag);
+				t.setTag(tag.toUpperCase());
+				if (log.isDebugEnabled()) {
+					log.debug("Tagging " + t.getCoveredText() + " with " + t.getTag());
+				}
 			}
 		}
 		log.info("Finished tagging process");

@@ -22,20 +22,28 @@
  * Shouldn't the processing steps (post & pre) be encapsulated into
    different try-blocks (WERTiServiceImpl)
  * Switch to a more decent logger
+ * Make the tomcat logger log the time, too
 
 *** Showstoppers
  * Update README
 
 *** Wishlist
 ************
+
 - implement HTML parser [0]
 - Implement TreeTagger and lingpipe
-- put a DocumentAnnotation somewhere in the preamble that 
-  would hold <script>s for the enhancements to use
-- Use HTML entities in sentence boundary followers (like, for " or similar)
-- Internationalize the exceptions, logging, whole application following [1]
+- put a DocumentAnnotation somewhere in the preamble that would hold
+  <script>s for the enhancements to use
+- Use HTML entities in sentence boundary followers (like, for " or
+  similar)
+- get the CAS Visual Debugger to run with the new layout. This means that
+  the HMMTagger should probably have a fallback if WERTiContext is not
+  available.
+- Internationalize the exceptions, logging, whole application following
+  [1]
 - Interactive Passivator
 - Make up a RadioGroup for GWT
+- Use md5 hashing for tempfiles instead of nanoseconds.
 
 
 References:

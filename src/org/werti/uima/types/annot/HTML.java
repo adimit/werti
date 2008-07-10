@@ -11,7 +11,7 @@ import org.apache.uima.jcas.tcas.Annotation;
 
 
 /** Annotation spanning an HTML tag.
- * Updated by JCasGen Fri Jun 06 03:17:52 CEST 2008
+ * Updated by JCasGen Thu Jul 10 17:54:06 CEST 2008
  * XML source: /home/aleks/src/werti/desc/WERTiTypeSystem.xml
  * @generated */
 public class HTML extends Annotation {

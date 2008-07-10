@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
 /** A sentence in natural language on the page to be processed.
- * Updated by JCasGen Fri Jun 06 03:17:53 CEST 2008
+ * Updated by JCasGen Thu Jul 10 17:54:07 CEST 2008
  * @generated */
 public class SentenceAnnotation_Type extends Annotation_Type {
   /** @generated */

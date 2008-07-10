@@ -19,6 +19,16 @@
 	    <servlet-class>org.werti.server.WERTiServiceImpl</servlet-class>
     </servlet>
 
+    <servlet>
+	    <servlet-name>ShowPage</servlet-name>
+	    <servlet-class>org.werti.server.ShowPage</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+	    <servlet-name>ShowPage</servlet-name>
+	    <url-pattern>/ShowPage</url-pattern>
+    </servlet-mapping>
+
     <servlet-mapping>
 	    <servlet-name>UIMAProcessor</servlet-name>
 	    <url-pattern>/org.werti.WERTi/UIMAProcessor</url-pattern>

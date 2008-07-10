@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
 /** Describes an enhancment on the current spot.
- * Updated by JCasGen Fri Jun 06 03:17:53 CEST 2008
+ * Updated by JCasGen Thu Jul 10 17:54:07 CEST 2008
  * @generated */
 public class Enhancement_Type extends Annotation_Type {
   /** @generated */
@@ -42,78 +42,40 @@ public class Enhancement_Type extends Annotation_Type {
   public final static boolean featOkTst = JCasRegistry.getFeatOkTst("org.werti.uima.types.Enhancement");
  
   /** @generated */
-  final Feature casFeat_enhancement_list;
+  final Feature casFeat_EnhanceStart;
   /** @generated */
-  final int     casFeatCode_enhancement_list;
+  final int     casFeatCode_EnhanceStart;
   /** @generated */ 
-  public int getEnhancement_list(int addr) {
-        if (featOkTst && casFeat_enhancement_list == null)
-      jcas.throwFeatMissing("enhancement_list", "org.werti.uima.types.Enhancement");
-    return ll_cas.ll_getRefValue(addr, casFeatCode_enhancement_list);
+  public String getEnhanceStart(int addr) {
+        if (featOkTst && casFeat_EnhanceStart == null)
+      jcas.throwFeatMissing("EnhanceStart", "org.werti.uima.types.Enhancement");
+    return ll_cas.ll_getStringValue(addr, casFeatCode_EnhanceStart);
   }
   /** @generated */    
-  public void setEnhancement_list(int addr, int v) {
-        if (featOkTst && casFeat_enhancement_list == null)
-      jcas.throwFeatMissing("enhancement_list", "org.werti.uima.types.Enhancement");
-    ll_cas.ll_setRefValue(addr, casFeatCode_enhancement_list, v);}
+  public void setEnhanceStart(int addr, String v) {
+        if (featOkTst && casFeat_EnhanceStart == null)
+      jcas.throwFeatMissing("EnhanceStart", "org.werti.uima.types.Enhancement");
+    ll_cas.ll_setStringValue(addr, casFeatCode_EnhanceStart, v);}
     
-   /** @generated */
-  public String getEnhancement_list(int addr, int i) {
-        if (featOkTst && casFeat_enhancement_list == null)
-      jcas.throwFeatMissing("enhancement_list", "org.werti.uima.types.Enhancement");
-    if (lowLevelTypeChecks)
-      return ll_cas.ll_getStringArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_enhancement_list), i, true);
-    jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_enhancement_list), i);
-  return ll_cas.ll_getStringArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_enhancement_list), i);
-  }
-   
-  /** @generated */ 
-  public void setEnhancement_list(int addr, int i, String v) {
-        if (featOkTst && casFeat_enhancement_list == null)
-      jcas.throwFeatMissing("enhancement_list", "org.werti.uima.types.Enhancement");
-    if (lowLevelTypeChecks)
-      ll_cas.ll_setStringArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_enhancement_list), i, v, true);
-    jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_enhancement_list), i);
-    ll_cas.ll_setStringArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_enhancement_list), i, v);
-  }
- 
+  
  
   /** @generated */
-  final Feature casFeat_index_list;
+  final Feature casFeat_EnhanceEnd;
   /** @generated */
-  final int     casFeatCode_index_list;
+  final int     casFeatCode_EnhanceEnd;
   /** @generated */ 
-  public int getIndex_list(int addr) {
-        if (featOkTst && casFeat_index_list == null)
-      jcas.throwFeatMissing("index_list", "org.werti.uima.types.Enhancement");
-    return ll_cas.ll_getRefValue(addr, casFeatCode_index_list);
+  public String getEnhanceEnd(int addr) {
+        if (featOkTst && casFeat_EnhanceEnd == null)
+      jcas.throwFeatMissing("EnhanceEnd", "org.werti.uima.types.Enhancement");
+    return ll_cas.ll_getStringValue(addr, casFeatCode_EnhanceEnd);
   }
   /** @generated */    
-  public void setIndex_list(int addr, int v) {
-        if (featOkTst && casFeat_index_list == null)
-      jcas.throwFeatMissing("index_list", "org.werti.uima.types.Enhancement");
-    ll_cas.ll_setRefValue(addr, casFeatCode_index_list, v);}
+  public void setEnhanceEnd(int addr, String v) {
+        if (featOkTst && casFeat_EnhanceEnd == null)
+      jcas.throwFeatMissing("EnhanceEnd", "org.werti.uima.types.Enhancement");
+    ll_cas.ll_setStringValue(addr, casFeatCode_EnhanceEnd, v);}
     
-   /** @generated */
-  public int getIndex_list(int addr, int i) {
-        if (featOkTst && casFeat_index_list == null)
-      jcas.throwFeatMissing("index_list", "org.werti.uima.types.Enhancement");
-    if (lowLevelTypeChecks)
-      return ll_cas.ll_getIntArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_index_list), i, true);
-    jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_index_list), i);
-  return ll_cas.ll_getIntArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_index_list), i);
-  }
-   
-  /** @generated */ 
-  public void setIndex_list(int addr, int i, int v) {
-        if (featOkTst && casFeat_index_list == null)
-      jcas.throwFeatMissing("index_list", "org.werti.uima.types.Enhancement");
-    if (lowLevelTypeChecks)
-      ll_cas.ll_setIntArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_index_list), i, v, true);
-    jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_index_list), i);
-    ll_cas.ll_setIntArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_index_list), i, v);
-  }
- 
+  
 
 
 
@@ -124,12 +86,12 @@ public class Enhancement_Type extends Annotation_Type {
     casImpl.getFSClassRegistry().addGeneratorForType((TypeImpl)this.casType, getFSGenerator());
 
  
-    casFeat_enhancement_list = jcas.getRequiredFeatureDE(casType, "enhancement_list", "uima.cas.StringArray", featOkTst);
-    casFeatCode_enhancement_list  = (null == casFeat_enhancement_list) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_enhancement_list).getCode();
+    casFeat_EnhanceStart = jcas.getRequiredFeatureDE(casType, "EnhanceStart", "uima.cas.String", featOkTst);
+    casFeatCode_EnhanceStart  = (null == casFeat_EnhanceStart) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_EnhanceStart).getCode();
 
  
-    casFeat_index_list = jcas.getRequiredFeatureDE(casType, "index_list", "uima.cas.IntegerArray", featOkTst);
-    casFeatCode_index_list  = (null == casFeat_index_list) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_index_list).getCode();
+    casFeat_EnhanceEnd = jcas.getRequiredFeatureDE(casType, "EnhanceEnd", "uima.cas.String", featOkTst);
+    casFeatCode_EnhanceEnd  = (null == casFeat_EnhanceEnd) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_EnhanceEnd).getCode();
 
   }
 }

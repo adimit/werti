@@ -78,16 +78,14 @@ The rationale behind this is not confusing the tagger by randomly dropping words
       <supertypeName>uima.tcas.Annotation</supertypeName>
       <features>
         <featureDescription>
-          <name>enhancement_list</name>
-          <description>A list of enhancements this Enhancement stands for.Please note that your Enhancement must guarantee this.size() == index_list.size(). Assertions in the Code guarantee that.</description>
-          <rangeTypeName>uima.cas.StringArray</rangeTypeName>
-          <multipleReferencesAllowed>false</multipleReferencesAllowed>
+          <name>EnhanceStart</name>
+          <description>The start tag of the enhancement annotation.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
         </featureDescription>
         <featureDescription>
-          <name>index_list</name>
-          <description>A list of indices where the elements of enhancement_list should be applied. Please note that your Enhancement must guarantee this.size() == enhancement_list.size()</description>
-          <rangeTypeName>uima.cas.IntegerArray</rangeTypeName>
-          <multipleReferencesAllowed>false</multipleReferencesAllowed>
+          <name>EnhanceEnd</name>
+          <description>The end tag of the enhancement annotation.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
         </featureDescription>
       </features>
     </typeDescription>

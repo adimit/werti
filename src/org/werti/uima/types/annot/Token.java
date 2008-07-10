@@ -12,7 +12,7 @@ import org.apache.uima.jcas.tcas.Annotation;
 
 
 /** A relevant Token with PoS information attached.
- * Updated by JCasGen Fri Jun 06 03:17:52 CEST 2008
+ * Updated by JCasGen Thu Jul 10 17:54:06 CEST 2008
  * XML source: /home/aleks/src/werti/desc/WERTiTypeSystem.xml
  * @generated */
 public class Token extends Annotation {
@@ -74,5 +74,4 @@ public class Token extends Annotation {
     if (Token_Type.featOkTst && ((Token_Type)jcasType).casFeat_tag == null)
       jcasType.jcas.throwFeatMissing("tag", "org.werti.uima.types.annot.Token");
     jcasType.ll_cas.ll_setStringValue(addr, ((Token_Type)jcasType).casFeatCode_tag, v);}    
-      //*--------------*
-}
+  }

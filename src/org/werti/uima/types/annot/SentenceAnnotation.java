@@ -12,7 +12,7 @@ import org.apache.uima.jcas.tcas.Annotation;
 
 
 /** A sentence in natural language on the page to be processed.
- * Updated by JCasGen Fri Jun 06 03:16:34 CEST 2008
+ * Updated by JCasGen Thu Jul 10 17:54:07 CEST 2008
  * XML source: /home/aleks/src/werti/desc/WERTiTypeSystem.xml
  * @generated */
 public class SentenceAnnotation extends Annotation {
@@ -76,5 +76,5 @@ public class SentenceAnnotation extends Annotation {
     if (SentenceAnnotation_Type.featOkTst && ((SentenceAnnotation_Type)jcasType).casFeat_coherence == null)
       jcasType.jcas.throwFeatMissing("coherence", "org.werti.uima.types.annot.SentenceAnnotation");
     jcasType.ll_cas.ll_setDoubleValue(addr, ((SentenceAnnotation_Type)jcasType).casFeatCode_coherence, v);}    
-}
+  }
   

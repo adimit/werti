@@ -33,12 +33,13 @@ public class WERTiContext {
 	private static ModelGeneration hmmtagger_en;
 	private static ModelGeneration hmmtagger_de;
 
-	private static final Properties p = new Properties();
+	private static Properties p;
 
 	public WERTiContext(final ServletContext servlet) throws InitializationException {
 		WERTiContext.servlet = servlet;
-		InputStream is = servlet.getResourceAsStream(PROPS);
+		final InputStream is = servlet.getResourceAsStream(PROPS);
 		try {
+			p = new Properties();
 			p.load(is);
 		} catch (IOException ioe) {
 			throw new InitializationException("I don't know where the taggers are!", ioe);
@@ -105,35 +106,35 @@ public class WERTiContext {
 	 * @param lang The two-letter language code
 	 * @return The hmmtagger.
 	 */
-	public static ModelGeneration getHmmtagger(final String lang) throws ResourceInitializationException {
+	public static ModelGeneration getHmmtagger(String lang) throws ResourceInitializationException {
 		ModelGeneration hmmtagger = get_hmmtagger(lang);
 		if (hmmtagger == null) {
 			final String hmmloc = p.getProperty("hmmtagger.base")
 				+ p.getProperty("hmmtagger."+lang);
-			log.warn(hmmloc);
+			log.debug("Reading from: " + hmmloc);
 			final URL hmmpath;
 			try {
 				hmmpath = servlet.getResource(hmmloc);
 			} catch (MalformedURLException murle) {
 				final Object[] args = { hmmloc };
-				throw new ResourceInitializationException(
-						ResourceInitializationException.MALFORMED_URL, args , murle);
+				throw new ResourceInitializationException
+						(ResourceInitializationException.MALFORMED_URL, args , murle);
 			}
 			try {
 				ObjectInputStream ois = new ObjectInputStream(hmmpath.openStream());
 				hmmtagger = (ModelGeneration) ois.readObject();
 			} catch (IOException ioe) {
 				final Object[] args = { hmmloc };
-				throw new ResourceInitializationException(
-						ResourceInitializationException.COULD_NOT_ACCESS_DATA, args, ioe);
+				throw new ResourceInitializationException
+						(ResourceInitializationException.COULD_NOT_ACCESS_DATA, args, ioe);
 			} catch (NullPointerException npe) {
 				final Object[] args = { hmmloc };
-				throw new ResourceInitializationException(
-						ResourceInitializationException.COULD_NOT_ACCESS_DATA, args);
+				throw new ResourceInitializationException
+						(ResourceInitializationException.COULD_NOT_ACCESS_DATA, args);
 			} catch (ClassNotFoundException cnfe) {
 				final Object[] args = { hmmloc };
-				throw new ResourceInitializationException(
-						ResourceInitializationException.CLASS_NOT_FOUND, args, cnfe);
+				throw new ResourceInitializationException
+						(ResourceInitializationException.CLASS_NOT_FOUND, args, cnfe);
 			}
 		}
 		return hmmtagger;

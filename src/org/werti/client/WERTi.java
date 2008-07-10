@@ -124,8 +124,9 @@ public class WERTi implements EntryPoint {
 		}
 
 		public void onSuccess(Object result) {
-			status.setHTML("<a href=\"localhost:8080/" + result.toString() + "\">Result</a>.");
-			Window.open(result.toString(), "", "");
+			final String whattoload = "/WERTi" + result.toString();
+			status.setHTML("<a href=\"localhost:8080" + whattoload + "\">Result</a>.");
+			Window.open(whattoload, "", "");
 		}
 	}
 
@@ -220,9 +221,9 @@ public class WERTi implements EntryPoint {
 	final ECheckBox dets = new ECheckBox("DT", "Determiners");
 	final ECheckBox prps = new ECheckBox("PP", "Prepositions");
 
-	final ERadioButton clr = new ERadioButton("clr", "methods", "Color Enhancement");
-	final ERadioButton ask = new ERadioButton("ask", "methods", "Guess it!");
-	final ERadioButton fib = new ERadioButton("fib", "methods", "Cloze Test");
+	final ERadioButton clr = new ERadioButton("Colorize", "methods", "Color Enhancement");
+	final ERadioButton ask = new ERadioButton("Ask", "methods", "Guess it!");
+	final ERadioButton fib = new ERadioButton("Cloze", "methods", "Cloze Test");
 
 	final ERadioButton de = new ERadioButton("de", "langs", "German");
 	final ERadioButton en = new ERadioButton("en", "langs", "English");

@@ -23,9 +23,6 @@ import org.apache.uima.cas.FSIndex;
 
 import org.apache.uima.jcas.JCas;
 
-import org.apache.uima.jcas.cas.IntegerArray;
-import org.apache.uima.jcas.cas.StringArray;
-
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.ResourceSpecifier;
 
@@ -55,6 +52,15 @@ public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiServi
 	public String process(String method, String language, String[] tags, String url) 
 		throws URLException, InitializationException, ProcessingException {
 		context = new WERTiContext(getServletContext());
+
+		if (log.isDebugEnabled()) { // dump arguments to log
+			final StringBuilder sb = new StringBuilder();
+			sb.append( "\nMethod: " + method + "\nLanguage" + language + "\nTags: ");
+			for (int ii = 0; ii < tags.length; ii++) {
+				sb.append(tags[ii]+" ");
+			}
+			sb.append("\nURL: "+ url);
+		}
 
 		log.debug("Fetching site " + url);
 		final Fetcher fetcher;
@@ -116,10 +122,12 @@ public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiServi
 
 		log.error("fetcher-text:" + fetcher.getText());
 		cas.setDocumentText(fetcher.getText());
+
 		try { // to process
-			preprocessor.process(cas);
 			postprocessor.setConfigParameterValue("Tags", tags);
 			postprocessor.setConfigParameterValue("enhance", method);
+
+			preprocessor.process(cas);
 			postprocessor.process(cas);
 		} catch (AnalysisEngineProcessException aepe) {
 			log.fatal("Analysis Engine encountered errors!", aepe);
@@ -127,15 +135,19 @@ public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiServi
 		}
 
 		final String base_url = "http://" + fetcher.getBase_url() + ":" + fetcher.getPort();
-		final String enhanced = enhance(cas, base_url);
+		final String enhanced = enhance(method, cas, base_url);
 		final long currentTime = System.currentTimeMillis();
-		final String file = "WERTi/WERTi-"+currentTime+"-tmp.html";
+		final String file = "/tmp/WERTi-" + currentTime + ".html";
 
 		try { // to write temp file
-			final FileWriter out = new FileWriter("webapps/" + file);
+			if (log.isDebugEnabled()) {
+				log.debug("Writing to file: " + getServletContext().getRealPath(file));
+			}
+			final FileWriter out = new FileWriter(getServletContext().getRealPath(file));
 			out.write(enhanced);
 		} catch (IOException ioe) {
 			log.error("Failed to create temporary file");
+			throw new ProcessingException("Failed to create temporary file!", ioe);
 		}
 		return file;
 	}
@@ -149,7 +161,7 @@ public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiServi
 	 * @param cas The cas to enhance.
 	 */
 	@SuppressWarnings("unchecked")
-	private String enhance(JCas cas, String baseurl) {
+	private String enhance(final String method, final JCas cas, final String baseurl) {
 		final String docText = cas.getDocumentText();
 		final StringBuilder rtext = new StringBuilder(docText);
 
@@ -158,7 +170,12 @@ public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiServi
 
 		final String basetag = "<base href=\"" + baseurl + "\" />"
 			// GWT main JS module
-			+ "<script type=\"text/javascript\" language=\"javascript\" src=\"/WERTi/org.werti.Enhancements-xs.nocache.js\"></script>";
+			+ "<script type=\"text/javascript\" language=\"javascript\" src=\""
+			+ context.getProperty("this-server") + "/WERTi/org.werti.enhancements."
+			+ method
+			+ "/org.werti.enhancements."
+			+ method
+			+ ".nocache.js\"></script>";
 		rtext.insert(skew, basetag);
 		skew = basetag.length();
 
@@ -167,21 +184,19 @@ public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiServi
 
 		while (eit.hasNext()) {
 			final Enhancement e = eit.next();
-			final StringArray sa = e.getEnhancement_list();
-			final IntegerArray ia = e.getIndex_list();
-			if (sa == null || ia == null) {
-				log.warn("Found no eList or iList on Enhancement");
-				continue;
+			if (log.isTraceEnabled()){
+				log.trace("Enhancement starts at " + e.getBegin()
+					+ " and ends at " + e.getEnd()
+					+ "; Current skew is: " + skew);
 			}
-			assert true: sa.size() == ia.size();
-			for (int p = 0; p < sa.size(); p++) {
-				final String s = sa.get(p);
-				final int i = ia.get(p)+skew;
 
-				rtext.insert(i, s);
+			final String start_tag = e.getEnhanceStart();
+			rtext.insert(e.getBegin() + skew, start_tag);
+			skew += start_tag.length();
 
-				skew += s.length();
-			}
+			final String end_tag = e.getEnhanceEnd();
+			rtext.insert(e.getEnd() + skew, end_tag);
+			skew += end_tag.length();
 		}
 		return rtext.toString();
 	}
