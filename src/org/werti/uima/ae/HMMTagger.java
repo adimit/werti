@@ -51,7 +51,9 @@ public class HMMTagger extends JCasAnnotator_ImplBase implements Tagger {
 	 */
 	public void initialize(final UimaContext context) throws ResourceInitializationException {
 		super.initialize(context);
-		model =  WERTiContext.getHmmtagger("en");
+		if (model == null) {
+			model =  WERTiContext.getHmmtagger("en");
+		}
 		this.N = (Integer) context.getConfigParameterValue(pN);
 	}
 
