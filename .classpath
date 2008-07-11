@@ -30,5 +30,5 @@
 			<attribute name="javadoc_location" value="file:/home/aleks/etc/res/comp/lang/java/docs/gwt-1.5/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="output" path="build/WEB-INF/classes"/>
+	<classpathentry kind="output" path="bin/WEB-INF/classes"/>
 </classpath>

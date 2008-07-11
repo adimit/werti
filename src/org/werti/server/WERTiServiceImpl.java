@@ -78,8 +78,13 @@ public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiServi
 		try { // to load the descriptor
 			preDesc = getServletContext().getResource(
 					descPath + context.getProperty("aggregate.default"));
-			postDesc = getServletContext().getResource(
-					descPath + context.getProperty("enhancer.default"));
+			if (method.equals("Ask")) {
+				postDesc = getServletContext().getResource
+					(descPath + context.getProperty("enhancer.token"));
+			} else {
+				postDesc = getServletContext().getResource
+					(descPath + context.getProperty("enhancer.pos"));
+			}
 		} catch (MalformedURLException murle) {
 			log.fatal("Unrecoverable: Couldn't find aggregate descriptor file!");
 			throw new InitializationException("Couldn't instantiate operator.", murle);

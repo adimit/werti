@@ -2,7 +2,7 @@
 <analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
   <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
   <primitive>true</primitive>
-  <annotatorImplementationName>org.werti.uima.enhancer.PoSEnhancer</annotatorImplementationName>
+  <annotatorImplementationName>org.werti.uima.enhancer.TokenEnhancer</annotatorImplementationName>
   <analysisEngineMetaData>
     <name>PoSEnhancer</name>
     <description/>

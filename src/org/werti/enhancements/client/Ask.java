@@ -1,12 +1,14 @@
 package org.werti.enhancements.client;
 
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.user.client.ui.Button;
+
+import com.google.gwt.dom.client.Element;
+
+import com.google.gwt.user.client.DOM;
+
 import com.google.gwt.user.client.ui.ClickListener;
-import com.google.gwt.user.client.ui.DialogBox;
-import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -14,47 +16,49 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class Ask implements EntryPoint {
 
-  /**
-   * This is the entry point method.
-   */
-  public void onModuleLoad() {
-    Image img = new Image("http://code.google.com/webtoolkit/logo-185x175.png");
-    Button button = new Button("Click me");
+	/**
+	 * This is the entry point method.
+	 */
+	public void onModuleLoad() {
 
-    VerticalPanel vPanel = new VerticalPanel();
-    // We can add style names.
-    vPanel.addStyleName("widePanel");
-    vPanel.setHorizontalAlignment(VerticalPanel.ALIGN_CENTER);
-    vPanel.add(img);
-    vPanel.add(button);
+		Element domSpan;
+		int i = 1;
+		while ((domSpan = DOM.getElementById(getId(i))) != null) {
+			final String text = domSpan.getInnerText();
+			domSpan.setInnerHTML("");
+			i++;
+		}
+	}
 
-    // Add image and button to the RootPanel
-    RootPanel.get().add(vPanel);
+	private class AskListener implements ClickListener {
+		private final String target;
 
-    // Create the dialog box
-    final DialogBox dialogBox = new DialogBox();
-    dialogBox.setText("Welcome to GWT!");
-    dialogBox.setAnimationEnabled(true);
-    Button closeButton = new Button("close");
-    VerticalPanel dialogVPanel = new VerticalPanel();
-    dialogVPanel.setWidth("100%");
-    dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_CENTER);
-    dialogVPanel.add(closeButton);
+		public AskListener(final String s) {
+			this.target = s;
+		}
+		public void onClick(Widget w) {
+			if (w instanceof HTML) {
+				final HTML html = (HTML) w;
+				if (html.getText().equals(target)) {
+					w.setStyleName("WERTiAskLabelWin");
+					addWinCount();
+				} else {
+					w.setStyleName("WERTiAskLabelFail");
+					addFailCount();
+				}
+			}
+		}
+	}
 
-    closeButton.addClickListener(new ClickListener() {
-      public void onClick(Widget sender) {
-        dialogBox.hide();
-      }
-    });
+	public void addFailCount() {
+	
+	}
 
-    // Set the contents of the Widget
-    dialogBox.setWidget(dialogVPanel);
-    
-    button.addClickListener(new ClickListener() {
-      public void onClick(Widget sender) {
-        dialogBox.center();
-        dialogBox.show();
-      }
-    });
-  }
+	public void addWinCount() {
+	
+	}
+
+	private static String getId(int id) {
+		return "WERTi-span-" + id;
+	}
 }
