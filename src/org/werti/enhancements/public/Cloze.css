@@ -4,19 +4,31 @@ body {
 }
 
 .WERTiClozeText {
-	border: 1px solid;
+	border: none;
 }
 
 .WERTiClozeTextFail {
 	border: 1px #F00 solid;
+	color: #F00;
 }
 
 .WERTiClozeTextWin {
 	border: 1px #0F0 solid;
+	color: #0F0;
 }
 
 .WERTiClozeTextHelped {
 	border: 1px #00F solid;
+	color: #00F;
+}
+
+.WERTiClozeItem {
+	border: 1px dotted #333;
+}
+
+.WERTiHelpButton {
+	border: none;
+	font-size: 9pt;
 }
 
 div,td {
