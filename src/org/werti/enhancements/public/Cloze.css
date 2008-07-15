@@ -15,6 +15,10 @@ body {
 	border: 1px #0F0 solid;
 }
 
+.WERTiClozeTextHelped {
+	border: 1px #00F solid;
+}
+
 div,td {
   color:#000000
 }

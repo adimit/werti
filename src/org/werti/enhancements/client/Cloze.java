@@ -71,8 +71,6 @@ public class Cloze implements EntryPoint {
 	
 	}
 
-	private final Label failCount = new Label();
-	private final Label winCount = new Label();
 
 	/**
 	 * Inform the user when something didn't work out the way we expected to.
@@ -107,14 +105,14 @@ public class Cloze implements EntryPoint {
 	 */
 	public void onModuleLoad() {
 		Element domSpan;
-		TextBox tb0, tb1;
-		tb0 = tb1 = new TextBox();
+		ClozeItem tb0, tb1;
+		tb0 = tb1 = new ClozeItem("WERTiClozeText");
 		int i = 1;
 		while ((domSpan = DOM.getElementById(getId(i))) != null) {
 			tb0.setStyleName("WERTiClozeText");
-			tb0.addKeyboardListener(new ClozeListener(domSpan, tb1));
+			tb0.addListeners(domSpan, tb1);
 			RootPanel.get(getId(i)).add(tb0);
-			tb0 = tb1; tb1 = new TextBox();
+			tb0 = tb1; tb1 = new ClozeItem("WERTiClozeText");
 			i++;
 		}
 	}
@@ -124,23 +122,47 @@ public class Cloze implements EntryPoint {
 	}
 
 	private class ClozeItem extends HorizontalPanel {
-		final TextBox tb;
-		final Button  hb;
+		final TextBox target;
+		final Button  helpButton;
 
-		public ClozeItem() {
+		public ClozeItem(final String style) {
 			super();
-			this.tb = new TextBox();
-			this.hb = new Button("?");
-			this.add(tb);
-			this.add(hb);
+			target = new TextBox();
+			target.setStyleName(style);
+			helpButton = new Button("?");
+			this.add(target);
+			this.add(helpButton);
 		}
 
-		public void addKeyboardListener(KeyboardListener k) {
-			tb.addKeyboardListener(k);
+		public void addListeners(Element elem, ClozeItem next) {
+			target.addKeyboardListener(new ClozeListener(elem, next.target));
+			helpButton.addClickListener(new HelpListener(elem.getInnerText()
+					, target
+					, next.target));
 		}
 
 		public void setText(String t) {
-			tb.setText(t);
+			target.setText(t);
 		}
 	}
+
+	private class HelpListener implements ClickListener {
+		final TextBox next, current;
+		final String target;
+
+		public HelpListener(final String target
+				, final TextBox current
+				, final TextBox next) {
+			this.next = next;
+			this.current = current;
+			this.target = target;
+		}
+
+		public void onClick(Widget w) {
+			current.setStyleName("WERTiClozeTextHelped");
+			current.setEnabled(false);
+			current.setText(target);
+		}
+	}
+
 }
