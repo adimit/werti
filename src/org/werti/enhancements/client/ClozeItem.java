@@ -34,13 +34,13 @@ public class ClozeItem
 						item.setText(target);
 						item.setEnabled(false);
 						helps++;
+						next.item.setFocus(true);
 					} else if (item.getText().equals(target)) {
 						item.setStyleName("WERTiClozeTextWin");
 						item.setEnabled(false);
 						wins++;
 						next.item.setFocus(true);
-					} 
-					else {
+					} else {
 						item.setStyleName("WERTiClozeTextFail");
 						fails++;
 					}
