@@ -3,8 +3,12 @@ body {
   font-family:arial,sans-serif
 }
 
-.WERTiClozeText {
+.WERTiClozeItem {
 	border: none;
+}
+
+.WERTiClozeText {
+	border: 1px dotted #333;
 }
 
 .WERTiClozeTextFail {
