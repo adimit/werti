@@ -1,8 +1,13 @@
 package org.werti.uima.ae;
 
+import java.util.Set;
+import java.util.TreeSet;
+
 // import type
 
 import org.apache.log4j.Logger;
+
+import org.apache.uima.UimaContext;
 
 import org.apache.uima.analysis_component.JCasAnnotator_ImplBase;
 
@@ -23,6 +28,15 @@ public class HTMLAnnotator extends JCasAnnotator_ImplBase {
 
 
 	private static final char[] TAG_NAME_DELMTR = { ' ', '\t', '\n', '\r', '>'};
+
+	private static final Set<String> ignoredTags = new TreeSet<String>();
+
+	public void initialize(UimaContext context) {
+		// this should actually be placed in a .properties file...
+		ignoredTags.add("script");
+		ignoredTags.add("style");
+		ignoredTags.add("a");
+	}
 
 	/**
 	 * Mark up all html tags and all their properties.
@@ -67,17 +81,13 @@ public class HTMLAnnotator extends JCasAnnotator_ImplBase {
 		log.info("Finished HTML tag recognition");
 	}
 
-	// skips ahead and marks irrelevant tags
+	// skips and marks irrelevant tags
 	private int skip(HTML tag, int index, String s) {
 		if (!tag.getClosing()) {
 			// Regular tags
-			if (tag.getTag_name().equals("script")) {
+			if (ignoredTags.contains(tag.getTag_name())) {
 				tag.setIrrelevant(true);
-				return s.indexOf("</script", index) - 1;
-			}
-			if (tag.getTag_name().equals("style")) {
-				tag.setIrrelevant(true);
-				return s.indexOf("</style", index) - 1;
+				return s.indexOf("</"+tag.getTag_name(), index) - 1;
 			}
 			// Comment tags and functional commented tags
 			if (tag.getTag_name().equals("!--[if")) {
