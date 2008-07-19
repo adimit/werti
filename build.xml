@@ -17,12 +17,6 @@
 	<property name="src.home"      value="${basedir}/src"/>
 	<property name="web.home"      value="${basedir}/www"/>
 
-	<!-- Task definitions -->
-	<taskdef name="deploy"   classname="org.apache.catalina.ant.DeployTask"/>
-	<taskdef name="list"     classname="org.apache.catalina.ant.ListTask"/>
-	<taskdef name="reload"   classname="org.apache.catalina.ant.ReloadTask"/>
-	<taskdef name="undeploy" classname="org.apache.catalina.ant.UndeployTask"/>
-
 	<!--  Compilation Control Options -->
 
 	<property name="compile.debug"       value="true"/>
