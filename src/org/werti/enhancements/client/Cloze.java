@@ -50,18 +50,21 @@ public class Cloze implements EntryPoint {
 	/**
 	 * This is the entry point method.
 	 *
-	 * We make a linked list out of the text boxes, so we can forward focus.
+	 * We construct a linked list of ClozeItems and put them in the DOM, replacing 
+	 * the original text
 	 */
 	public void onModuleLoad() {
-		Element domSpan;
-		ClozeItem tb0;
-		int i = 1;
-		tb0 = new ClozeItem(RootPanel.get(getId(i)));
-		while ((domSpan = DOM.getElementById(getId(i))) != null) {
-			tb0.setTarget(domSpan.getInnerText());
+		Element domSpan; RootPanel rp;
+		ClozeItem ci = new ClozeItem(RootPanel.get(getId(1)));
+		for (int ii = 1; (domSpan = DOM.getElementById(getId(ii))) != null; /* see if clause */) {
+			ci.setTarget(domSpan.getInnerText());
 			domSpan.setInnerText("");
-			tb0.setNext(new ClozeItem(RootPanel.get(getId(i++))));
-			tb0 = tb0.getNext();
+			ci.finish();
+
+			if ((rp = RootPanel.get(getId(++ii))) != null) {
+				ci.setNext(new ClozeItem(rp));
+				ci = ci.getNext();
+			}
 		}
 	}
 

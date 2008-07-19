@@ -3,7 +3,6 @@ package org.werti.enhancements.client;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.ClickListener;
-import com.google.gwt.user.client.ui.FocusListener;
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -23,13 +22,19 @@ public class ClozeItem
 	private final TextBox item;
 	private final Button help;
 	private static int fails, wins, helps = 0;
+	private final RootPanel root;
 
 	public ClozeItem(final RootPanel root) {
 		this.item = new TextBox();
 		item.addKeyboardListener(new KeyboardListener() {
 			public void onKeyPress(Widget sender, char keyCode, int mods) {
 				if (keyCode == KeyboardListener.KEY_ENTER) {
-					if (item.getText().equals(target)) {
+					if (mods == 1) {
+						item.setStyleName("WERTiClozeTextHelped");
+						item.setText(target);
+						item.setEnabled(false);
+						helps++;
+					} else if (item.getText().equals(target)) {
 						item.setStyleName("WERTiClozeTextWin");
 						item.setEnabled(false);
 						wins++;
@@ -45,14 +50,6 @@ public class ClozeItem
 			public void onKeyUp(Widget w, char c, int i) { }
 		});
 		item.setStyleName("WERTiClozeText");
-		item.addFocusListener(new FocusListener() {
-			public void onFocus(Widget w) {
-				if (!item.isEnabled()) {
-					next.item.setFocus(true);
-				}
-			}
-			public void onLostFocus(Widget w) { }
-		});
 		this.help = new Button("?");
 		help.addClickListener(new ClickListener() {
 			public void onClick(Widget sender) {
@@ -63,7 +60,13 @@ public class ClozeItem
 			}
 		});
 		help.setStyleName("WERTiHelpButton");
+		this.root = root;
+	}
 
+	/**
+	 * Called to put everything onto the root panel of this item
+	 */
+	public void finish() {
 		root.add(item);
 		//root.add(help);
 	}
