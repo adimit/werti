@@ -21,9 +21,10 @@ public class Ask implements EntryPoint {
 		while ((domSpan = DOM.getElementById(getId(i))) != null) {
 			final String text = domSpan.getInnerText();
 			final String a_start = 
-				"<a href=\"javascript:void(null)\" style=\"color:black\" onclick=\"{this.style.color = '"
+				"<a href=\"javascript:void(null)\" style=\"color:black\" "
+				+ "onclick=\"{this.style.color = '"
 				+ ((domSpan.getAttribute("hit").equals("1"))? "green" : "red")
-				+"'; this.style.fontWeight = 'bold';}\">";
+				+ "'; this.style.fontWeight = 'bold';}\">";
 			domSpan.setInnerHTML(a_start + text + "</a>");
 			i++;
 		}
