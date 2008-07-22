@@ -1,5 +1,5 @@
-* WERTi - Providing a Platforrm for Second Language Learning Assistance *
-
+# WERTi
+## Providing a Platform for Second Language Learning Assistance
 
 WERTi is a web platform for second language learners and programmers interested
 in providing functionality for second language learning assistance. It is
@@ -10,15 +10,28 @@ to the user through an interactive interface. This should ultimately allow the
 learner to understand the underlying principles of the target language, and
 thus acquire a firmer grasp of the language itself.
 
+### Architecture
 The system currently only supports English as a target language, but is planned
 to be highly modular and thus extensible towards other languages.
 
 It runs is tested to run on a tomcat web server and relies on a recent JVM. It
-was only tested uisg the Sun JVM. The basic architecture relies on tomcat's
+was only tested using the Sun JVM. The basic architecture relies on tomcat's
 servlets API, the (incubating) Apache UIMA API and the Google Web Toolkit. Thus
 it makes use of Java, AJAX, HTML and XML peripheral (e.g. Ant, Eclipse
 EMF ...) technologies.
 
 The system is currently in early development. For more information, please
 refer to the documentation under /docs or contact the author
-admtrov@sfs.uni-tuebingen.de
+`admtrov@sfs.uni-tuebingen.de`
+
+### Requirements
+* A recent Tomcat (5 or higher, 6 recommended)
+* log4j in Tomcat
+* A recent version of Apache/IBM UIMA
+* GWT, version 1.5 or higher
+* The Lingpipe toolkit, Version 3.5 or higher, including model files
+* Currently, we also depend on the Stanford tagger (a recent build from around April 2008 would do)
+* The `lib` package, located at [github](http://github.com/adimit/lib)
+
+### Installation
+See `INSTALLATION` for instructions.
