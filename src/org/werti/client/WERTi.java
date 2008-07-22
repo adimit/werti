@@ -218,8 +218,8 @@ public class WERTi implements EntryPoint {
 
 	final TextBox searchBox = new TextBox();
 
-	final ECheckBox dets = new ECheckBox("DT", "Determiners");
-	final ECheckBox prps = new ECheckBox("PP", "Prepositions");
+	final ECheckBox dets = new ECheckBox("at", "Determiners");
+	final ECheckBox prps = new ECheckBox("pp,in", "Prepositions");
 
 	final ERadioButton clr = new ERadioButton("Colorize", "methods", "Color Enhancement");
 	final ERadioButton ask = new ERadioButton("Ask", "methods", "Guess it!");
