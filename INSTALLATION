@@ -1,5 +1,6 @@
 WERTi runs on Apache Tomcat version 5 or higher. Version 6 or higher is
-recommended.
+recommended. Note that your Tomcat installation will have to make use of log4j.
+See [1] for details on how you can set up log4j for Tomcat.
 
 You will have to adjust some paths on your system for everything to make work
 out as expected.
@@ -81,3 +82,5 @@ The ant task 'all' should build everything you need.
 The ant task 'reload' does nothing but touch the file bin/WEB-INF/web.xml,
 which Tomcat monitors by default to find out when to reload a servlet context.
 Use this if you symlink the webapp folder to the output directory 'bin'.
+
+[1] http://tomcat.apache.org/tomcat-6.0-doc/logging.html
