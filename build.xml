@@ -45,7 +45,7 @@
 	</path>
 
 	<!-- Targets -->
-	<target name="all" depends="clean,compile" description="Clean build and dist directories, then compile"/>
+	<target name="all" depends="clean,compile,gwt.compile,reload" description="Clean build and dist directories, then compile"/>
 
 	<target name="clean"
 			description="Delete old build and dist directories">
@@ -143,7 +143,7 @@
 		</copy>
 	</target>
 
-	<target name="dist" depends="compile,javadoc" description="Create binary distribution">
+	<target name="dist" depends="compile,gwt.compile,javadoc" description="Create binary distribution">
 
 		<!-- Copy documentation subdirectories -->
 		<mkdir   dir="${dist.home}/docs"/>
@@ -158,16 +158,6 @@
 
 	</target>
 
-	<target name="install" depends="compile" description="Install application to servlet container">
-
-		<deploy url="${manager.url}"
-				username="${manager.username}"
-				password="${manager.password}"
-				path="${app.path}"
-				localWar="file://${build.home}"/>
-
-	</target>
-
 	<target name="javadoc" depends="compile" description="Create Javadoc API documentation">
 
 		<mkdir          dir="${dist.home}/docs/api"/>
@@ -176,14 +166,6 @@
 				packagenames="*">
 			<classpath refid="compile.classpath"/>
 		</javadoc>
-
-	</target>
-
-	<target name="list" description="List installed applications on servlet container">
-
-		<list    url="${manager.url}"
-				username="${manager.username}"
-				password="${manager.password}"/>
 
 	</target>
 
@@ -243,7 +225,7 @@
 				<include name="*"/>
 			</fileset>
 		</copy>
-</target>
+	</target>
 
 	<!-- Reload Target -->
 
@@ -252,14 +234,4 @@
 			<arg value="bin/WEB-INF/web.xml"/>
 		</exec>
 	</target>
-
-	<target name="remove" description="Remove application on servlet container">
-
-		<undeploy url="${manager.url}"
-				username="${manager.username}"
-				password="${manager.password}"
-				path="${app.path}"/>
-
-	</target>
-
 </project>
