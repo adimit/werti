@@ -30,6 +30,19 @@ import org.werti.WERTiContext;
 import org.werti.uima.types.annot.SentenceAnnotation;
 import org.werti.uima.types.annot.Token;
 
+/**
+ * A wrapper around the Stanford tagger.
+ *
+ * This is currently not working properly, due to the Stanford tagger's
+ * API having been written by academic retards with no intuitions about
+ * software engeneering <em>whatsoever</em>. But the tagger is nice, and
+ * ultimately it would be nice to crack open the Stanford tagger's API and
+ * interface with it's guts directly to make use of their tagger.
+ *
+ *
+ * @author Aleksandar Dimitrov
+ * @version 0.1
+ */
 
 public class PTBTagger extends JCasAnnotator_ImplBase implements Tagger {
 	private static final Logger log =

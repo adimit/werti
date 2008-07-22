@@ -28,10 +28,14 @@ import org.werti.WERTiContext;
 import org.werti.uima.types.annot.SentenceAnnotation;
 import org.werti.uima.types.annot.Token;
 
+/**
+ * A basic wrapper around the uima-an-tagger implementation.
+ *
+ * @deprecated
+ */
 public class HMMTagger extends JCasAnnotator_ImplBase implements Tagger {
 	private static final Logger log =
 		Logger.getLogger(HMMTagger.class);
-
 
 	/*
 	 * Parameter Definitions

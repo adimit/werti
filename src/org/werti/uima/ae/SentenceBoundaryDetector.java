@@ -16,6 +16,22 @@ import org.apache.uima.jcas.JCas;
 import org.werti.uima.types.annot.SentenceAnnotation;
 import org.werti.uima.types.annot.Token;
 
+/**
+ * A simple sentence boundary detector.
+ *
+ * It does a good job at basic SB-detection, but it would be nice to
+ * use the lingpipe chunker for this instead, because it's probably better.
+ *
+ * We mark sentence boundaries at <tt>.</tt>, <tt>!</tt> and <tt>?<tt>. All sentenc
+ * boundaries can be followed by one or more tokens that typically follow our sentence
+ * boundary triggers without introducing a new sentence. (currently <tt>)</tt>, <tt>]</tt>,
+ * <tt>"</tt>, <tt>'</tt> and <tt>''</tt>.)
+ *
+ * This concept is taken from the Stanford tagger's way of doing SBD.
+ *
+ * @author Aleksandar Dimitrov
+ * @version 0.1
+ */
 
 public class SentenceBoundaryDetector extends JCasAnnotator_ImplBase {
 	private static final Logger log =
@@ -24,7 +40,7 @@ public class SentenceBoundaryDetector extends JCasAnnotator_ImplBase {
 	private static final Set<String> sentenceBoundaries = 
 		new HashSet<String>(Arrays.asList(new String[]{".", "!", "?"}));
 	private static final Set<String> sentenceBoundaryFollowers =
-		new HashSet<String>(Arrays.asList(new String[]{")", "]", "\"", "\'", "''", }));
+		new HashSet<String>(Arrays.asList(new String[]{")", "]", "\"", "'", "''", }));
 
 	private static final double COH_TRESHOLD = 0.1;
 

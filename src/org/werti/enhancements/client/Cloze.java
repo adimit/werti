@@ -15,6 +15,12 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
+ * Basic implementation of a controlled practice task without distractors.
+ *
+ * Have a look at <tt>ClozeItem</tt> Which does the dirty work. This module
+ * just constructs a linked list of <tt>ClozeItem</tt>s over all spans it
+ * finds.
+ *
  * Entry point classes define <code>onModuleLoad()</code>.
  */
 public class Cloze implements EntryPoint {

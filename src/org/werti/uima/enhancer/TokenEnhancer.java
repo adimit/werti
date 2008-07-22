@@ -16,11 +16,24 @@ import org.werti.uima.types.Enhancement;
 
 import org.werti.uima.types.annot.Token;
 
+/**
+ * An enhancement class that puts WERTi-<tt>&lt;span&gt;</tt>s around <em>all</em>
+ * tokens and optionally gives them the attribute 'hit' when they belong to a given
+ * PoS.
+ *
+ * @author Aleksandar Dimitrov
+ * @version 0.1
+ */
 
 public class TokenEnhancer extends JCasAnnotator_ImplBase {
 	private static final Logger log =
 		Logger.getLogger(PoSEnhancer.class);
 
+	/**
+	 * Iterate over all tokens and put a span around them. If a token matches one of the give
+	 * PoSTags, then go on and mark it up as a hit.
+	 *
+	 */
 	@SuppressWarnings("unchecked")
 	public void process(JCas cas) throws AnalysisEngineProcessException {
 		int id = 0;

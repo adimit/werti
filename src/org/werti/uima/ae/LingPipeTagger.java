@@ -25,6 +25,17 @@ import org.werti.WERTiContext;
 import org.werti.uima.types.annot.SentenceAnnotation;
 import org.werti.uima.types.annot.Token;
 
+/**
+ * A wrapper around the LingPipe Tagger.
+ *
+ * It retrieves a Hidden Markov model tagger from the <tt>WERTiContext</tt> and
+ * then iterates over all sentences and tags all their token annotations.
+ *
+ * This is currently the standard tagger, but supports only English.
+ *
+ * @author Aleksandar Dimitrov
+ * @version 0.1
+ */
 public class LingPipeTagger extends JCasAnnotator_ImplBase implements Tagger {
 	private static final Logger log =
 		Logger.getLogger(LingPipeTagger.class);
