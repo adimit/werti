@@ -35,7 +35,7 @@ public class LingPipeTokenizer extends JCasAnnotator_ImplBase {
 		final FSIndex textIndex = cas.getAnnotationIndex(RelevantText.type);
 		final Iterator<RelevantText> tit = textIndex.iterator();
 
-		int lskew = -1;
+		int lskew = 0;
 		while (tit.hasNext()) {
 			final RelevantText rt = tit.next();
 			final int gskew = rt.getBegin();
@@ -51,7 +51,8 @@ public class LingPipeTokenizer extends JCasAnnotator_ImplBase {
 			String token;
 			while ((token = tokenizer.nextToken()) != null) {
 				final Token t = new Token(cas);
-				final int start = gskew + (lskew = span.indexOf(token, ++lskew));
+				final int start = gskew + (lskew = span.indexOf(token, lskew));
+				lskew += token.length();
 				t.setBegin(start);
 				t.setEnd(start + token.length());
 				t.addToIndexes();
@@ -60,7 +61,7 @@ public class LingPipeTokenizer extends JCasAnnotator_ImplBase {
 				}
 			}
 			// reset lskew for next span (where .indexOf(String, int) doesn't make sense)
-			lskew = -1;
+			lskew = 0;
 		}
 		log.info("Finished tokenization");
 	}
