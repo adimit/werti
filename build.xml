@@ -213,6 +213,7 @@
 				<include name="stanford*jar"/>
 				<include name="lib*jar"/>
 				<include name="log4j.jar"/>
+				<include name="lingpipe*jar"/>
 			</fileset>
 		</copy>
 
@@ -221,6 +222,7 @@
 		<mkdir dir="${build.home}/res/models/"/>
 		<mkdir dir="${build.home}/res/models/ptbtagger"/>
 		<mkdir dir="${build.home}/res/models/hmmtagger"/>
+		<mkdir dir="${build.home}/res/models/lgptagger"/>
 		<copy todir="${build.home}/res/models/ptbtagger">
 			<fileset dir="${ptbtagger.models}">
 				<include name="*"/>
@@ -236,8 +238,12 @@
 				<include name="*"/>
 			</fileset>
 		</copy>
-	
-	</target>
+		<copy todir="${build.home}/res/models/lgptagger">
+			<fileset dir="${lgptagger.models}">
+				<include name="*"/>
+			</fileset>
+		</copy>
+</target>
 
 	<!-- Reload Target -->
 

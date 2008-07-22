@@ -1,20 +1,93 @@
 package org.werti.uima.ae;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import com.aliasi.hmm.HmmDecoder;
+
+import org.apache.log4j.Logger;
+
 import org.apache.uima.UimaContext;
 
 import org.apache.uima.analysis_component.JCasAnnotator_ImplBase;
+
+import org.apache.uima.cas.text.AnnotationIndex;
 
 import org.apache.uima.examples.tagger.Tagger;
 
 import org.apache.uima.jcas.JCas;
 
-public class LingPipeTagger extends JCasAnnotator_ImplBase implements Tagger {
+import org.apache.uima.resource.ResourceInitializationException;
 
-	public void process(JCas cas) {
-	
+import org.werti.WERTiContext;
+
+import org.werti.uima.types.annot.SentenceAnnotation;
+import org.werti.uima.types.annot.Token;
+
+public class LingPipeTagger extends JCasAnnotator_ImplBase implements Tagger {
+	private static final Logger log =
+		Logger.getLogger(LingPipeTagger.class);
+
+	// the average length of a sentence (for performance reasons, this denotes our 
+	// dynamic data structure's initial capacity)
+	private static final int SENTENCE_LENGTH = 30;
+
+	private static HmmDecoder tagger;
+
+	public void initialize(UimaContext context) throws ResourceInitializationException {
+		super.initialize(context);
+		if (tagger == null) {
+			tagger = WERTiContext.getLpgtagger();
+		}
 	}
 
-	public void initialize(UimaContext context) {
-	
+	/**
+	 * Tag using the lingPipe <code>HmmDecoder</code>.
+	 *
+	 * We have to make a three pass, as usual, since the HmmDecoder just gives strings
+	 * and also expects to find a static String[].
+	 *
+	 * @param cas The CAS with token and sentence annotations.
+	 */
+	@SuppressWarnings("unchecked")
+	public void process(JCas cas) {
+		log.info("Starting tagging process...");
+
+		// don't forget to .clear() the list on every new sentence.
+		final List<Token> tlist = new ArrayList<Token>(SENTENCE_LENGTH);
+
+		final AnnotationIndex sindex = cas.getAnnotationIndex(SentenceAnnotation.type);
+		final AnnotationIndex tindex = cas.getAnnotationIndex(Token.type);
+
+		final Iterator<SentenceAnnotation> sit = sindex.iterator();
+
+		while (sit.hasNext()) {
+			final Iterator<Token> tit = tindex.subiterator(sit.next());
+			while (tit.hasNext()) {
+				tlist.add(tit.next());
+			}
+			final String[] words = new String[tlist.size()];
+			for (int ii = 0; ii < words.length; ii++) {
+				words[ii] = tlist.get(ii).getCoveredText();
+			}
+			final String[] tags = tagger.firstBest(words);
+			assert true: words.length == tags.length;
+			for (int ii = 0; ii < tags.length; ii++) {
+				tlist.get(ii).setTag(tags[ii]);
+				if (log.isDebugEnabled()) {
+					if (!words[ii].equals(tlist.get(ii).getCoveredText())) {
+						log.debug("Mismatching word fields: words = " 
+								+ words[ii]
+								+ "; tlist = " + tlist.get(ii).getCoveredText());
+					}
+					log.debug("Tagging " + words[ii] + " with " + tags[ii] + ".");
+				}
+				// Do NOT even THINK ABOUT calling addToIndexes(). The Tokens are already
+				// there. We just modified their field 'tag'.
+			}
+			tlist.clear();
+		}
+		log.info("Finished tagging.");
 	}
 }

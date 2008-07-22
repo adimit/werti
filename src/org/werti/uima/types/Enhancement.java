@@ -11,8 +11,8 @@ import org.apache.uima.jcas.tcas.Annotation;
 
 
 /** Describes an enhancment on the current spot.
- * Updated by JCasGen Thu Jul 17 16:39:40 CEST 2008
- * XML source: /home/aleks/src/werti/desc/testers/IfTester.xml
+ * Updated by JCasGen Tue Jul 22 02:03:04 CEST 2008
+ * XML source: /home/aleks/src/werti/desc/testers/LingPipeTester.xml
  * @generated */
 public class Enhancement extends Annotation {
   /** @generated

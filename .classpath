@@ -23,7 +23,11 @@
 			<attribute name="javadoc_location" value="file:/home/aleks/etc/res/comp/lang/java/docs/stanford-2008-05-19/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/home/aleks/opt/java/lingpipe-3.5.0.jar"/>
+	<classpathentry kind="lib" path="/home/aleks/opt/java/lingpipe.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/home/aleks/var/tmp/lingpipe/lingpipe-3.5.0/docs/api"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="/home/aleks/opt/java/gwt-servlet.jar">
 		<attributes>

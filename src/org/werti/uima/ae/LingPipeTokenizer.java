@@ -2,6 +2,10 @@ package org.werti.uima.ae;
 
 import java.util.Iterator;
 
+import com.aliasi.tokenizer.IndoEuropeanTokenizerFactory;
+import com.aliasi.tokenizer.Tokenizer;
+import com.aliasi.tokenizer.TokenizerFactory;
+
 import org.apache.log4j.Logger;
 
 import org.apache.uima.analysis_component.JCasAnnotator_ImplBase;
@@ -17,41 +21,48 @@ public class LingPipeTokenizer extends JCasAnnotator_ImplBase {
 	private static final Logger log =
 		Logger.getLogger(LingPipeTokenizer.class);
 
+	private static final TokenizerFactory tFactory =
+		new IndoEuropeanTokenizerFactory();
 
 	/**
 	 * Go through all relevant text areas in the RelevantText-AnnotationIndex and annotate them
 	 * with Token-Annotations.
-	 *
-	 * We only set the CAS-relative Begin and End, but also set the Word-Property of Token for now. This may
-	 * change in the future for efficiency reasons.
 	 */
 	@SuppressWarnings("unchecked")
 	public void process(JCas cas) {
 		log.info("Starting tokenization");
+
 		final FSIndex textIndex = cas.getAnnotationIndex(RelevantText.type);
 		final Iterator<RelevantText> tit = textIndex.iterator();
 
+		int lskew = 0;
 		while (tit.hasNext()) {
 			final RelevantText rt = tit.next();
-			final char[] span = rt.getCoveredText().toLowerCase().toCharArray();
-
-			// global and local skews
 			final int gskew = rt.getBegin();
-			int lskew = gskew;
+			final String span = rt.getCoveredText();
+			if (log.isTraceEnabled()) {
+				log.trace("Tokenizing: " + span);
+				log.trace("Starting at " + rt.getBegin());
+			}
 
-			// note that we guarantee a length of 1 in the GenericRelevanceAnnotator
-			for (int i = 1; i < span.length; i++) {
-				if ((Character.getType(span[i]) != Character.getType(span[i-1]))
-				||   Character.getType(span[i]) == Character.DIRECTIONALITY_WHITESPACE
-				||   span[i] == '.') {
-					final Token t = new Token(cas);
-					t.setBegin(lskew);
-					t.setEnd((lskew = gskew + i));
-					t.addToIndexes();
+			final Tokenizer tokenizer =
+				tFactory.tokenizer(span.toCharArray(),0,span.length());
+
+			String token;
+			while ((token = tokenizer.nextToken()) != null) {
+				final Token t = new Token(cas);
+				final int start = gskew + (lskew = span.indexOf(token, lskew));
+				lskew += token.length();
+				t.setBegin(start);
+				t.setEnd(start + token.length());
+				t.addToIndexes();
+				if (log.isTraceEnabled()) {
+					log.trace("Token: " + start + " " + t.getCoveredText() + " " + t.getEnd());
 				}
 			}
+			// reset lskew for next span (where .indexOf(String, int) doesn't make sense)
+			lskew = 0;
 		}
 		log.info("Finished tokenization");
 	}
-
 }

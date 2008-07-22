@@ -46,7 +46,9 @@ public class SentenceBoundaryDetector extends JCasAnnotator_ImplBase {
 		Token t;
 		while (tit.hasNext()) {
 			t = tit.next();
-			log.debug("Looking at token: " + t);
+			if (log.isDebugEnabled()) {
+				log.debug("Looking at token: " + t.getCoveredText());
+			}
 
 			SentenceAnnotation sa = new SentenceAnnotation(cas);
 			sa.setBegin(t.getBegin());
@@ -57,6 +59,7 @@ public class SentenceBoundaryDetector extends JCasAnnotator_ImplBase {
 				coh_gaps -= t.getEnd() - (t = tit.next()).getBegin();
 			}
 
+			if (tit.hasNext()) tit.next(); // skip over sentence boundary.
 			final int length = sa.getBegin() + t.getEnd();
 			final double coherence = coherence(length, coh_gaps);
 

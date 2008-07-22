@@ -30,6 +30,8 @@
 *** Wishlist
 ************
 
+- put the lingpipe sentence boundary detector to use 
+  (we'd have to re-implement its API for this)
 - implement HTML parser [0]
 - Implement TreeTagger and lingpipe
 - put a DocumentAnnotation somewhere in the preamble that would hold
