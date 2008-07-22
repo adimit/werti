@@ -1,0 +1,4 @@
+#Mon Jul 21 06:10:30 CEST 2008
+eclipse.preferences.version=1
+org.eclim.java.doc.version=$Revision$
+org.eclim.java.logging.impl=log4j
