@@ -38,6 +38,26 @@ import org.werti.client.WERTiService;
 
 import org.werti.uima.types.Enhancement;
 
+/**
+ * The server side implementation of the WERTi service.
+ *
+ * This is were the work is coordinated. The rough outline of the procedure is as follows:
+ *
+ * <li>We take a request via the <tt>process</tt> method</li>
+ * <li>We Construct the analysis engines (post and preprocessing) according to the request</li> 
+ * <li>In the meantime lib.html.Fetcher is invoked to fetch the requested site off the Internet</li>
+ * <li>Then everything is pre-processed in UIMA, invoking the right pre processor for the task at hand</li>
+ * <li>We take the resulting CAS and post-process it, invoking the right post processor for the task at hand</li>
+ * <li>We add some neccessary headers to the page (<tt>&lt;base&gt;</tt> tag and JS sources).</li>
+ * <li>Afterwards we take the CAS and insert enhancement annotations
+ * (<tt>WERTi</tt>-<tt>&lt;span&gt;</tt>s) according to the target annotations by the post-processing.</li>
+ * <li>Finally, a temporary file is written to, which holds the results</li>
+ *
+ * In order to incorporate new features changes to this are probably neccessary.
+ *
+ * @author Aleksandar Dimitrov
+ * @version 0.1
+ */
 public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiService {
 	private static final Logger log =
 		Logger.getLogger(WERTiServiceImpl.class);
@@ -47,8 +67,16 @@ public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiServi
 
 	public static WERTiContext context;
 
-	public static final long serialVersionUID = 0;
+	public static final long serialVersionUID = 10;
 
+	/**
+	 * The implementation of the process method according to the interface specifications.
+	 *
+	 * @param method The task the user has requested.
+	 * @param language The language the user says the target is in.
+	 * @param tags A bunch of part-of-speech tags you want to highlight.
+	 * @param url The URL of the page the user has requested.
+	 */
 	public String process(String method, String language, String[] tags, String url) 
 		throws URLException, InitializationException, ProcessingException {
 		context = new WERTiContext(getServletContext());

@@ -7,15 +7,20 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.DOM;
 
 /**
+ * This class provides an example implementation of a trivial productive
+ * presentation task.
+ *
  * Entry point classes define <code>onModuleLoad()</code>.
  */
 public class Ask implements EntryPoint {
 
 	/**
 	 * This is the entry point method.
+	 *
+	 * It replaces every token span it finds with a link to void. If it's a
+	 * hit, then it will be green on clicking, otherwise red.
 	 */
 	public void onModuleLoad() {
-
 		Element domSpan;
 		int i = 1;
 		while ((domSpan = DOM.getElementById(getId(i))) != null) {

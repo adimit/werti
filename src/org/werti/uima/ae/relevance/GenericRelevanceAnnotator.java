@@ -20,12 +20,17 @@ import org.werti.uima.types.annot.HTML;
 import org.werti.uima.types.annot.RelevantText;
 
 /**
- * Generic Relevance annotator.
+ * Generic relevance annotator.
  *
  * Looks at the HTML tags of a document and determines what would be suitable input 
  * for the PoS tagger and the input enhancer.
  *
  * Sometimes this will mark garbage. It might prove hard to actually fix this, though.
+ *
+ * Tha tags currently ignored are stored in the <tt>HTMLAnnotator</tt>'s code.
+ *
+ * @author Aleksandar Dimitrov
+ * @version 0.1
  */
 public class GenericRelevanceAnnotator extends JCasAnnotator_ImplBase {
 	private static final Logger log =
@@ -38,7 +43,11 @@ public class GenericRelevanceAnnotator extends JCasAnnotator_ImplBase {
 	 * relevant as RelevantTag.
 	 *
 	 * The 'relevance'-notion is a primitive one. We just don't care about stuff that is
-	 * enclosed in, say <i>&lt;script&gt;</i> tags.
+	 * enclosed in, say <i>&lt;script&gt;</i> tags. Whether or not a tag is relevant is
+	 * determined by the <tt>HTMLAnnotator</tt>. We only look at an html tag's 'relevance'
+	 * field here.
+	 *
+	 * @param cas The document's cas.
 	 */
 	@SuppressWarnings("unchecked")
 	public void process(JCas cas) throws AnalysisEngineProcessException {

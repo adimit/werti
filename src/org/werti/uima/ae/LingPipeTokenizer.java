@@ -17,6 +17,19 @@ import org.apache.uima.jcas.JCas;
 import org.werti.uima.types.annot.RelevantText;
 import org.werti.uima.types.annot.Token;
 
+/**
+ * A wrapper around the LingPipe tokenizer.
+ * 
+ * We use the tokenizer's "IndoEuropean" model, because we still only support
+ * English.
+ *
+ * This goes through all <tt>RelevantTextAnnotations</tt> and tokenizes their
+ * content.
+ *
+ * @author Aleksandar Dimitrov
+ * @version 0.1
+ */
+
 public class LingPipeTokenizer extends JCasAnnotator_ImplBase {
 	private static final Logger log =
 		Logger.getLogger(LingPipeTokenizer.class);
@@ -27,6 +40,8 @@ public class LingPipeTokenizer extends JCasAnnotator_ImplBase {
 	/**
 	 * Go through all relevant text areas in the RelevantText-AnnotationIndex and annotate them
 	 * with Token-Annotations.
+	 *
+	 * @param cas The Document's CAS.
 	 */
 	@SuppressWarnings("unchecked")
 	public void process(JCas cas) {

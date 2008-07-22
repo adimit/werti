@@ -16,11 +16,27 @@ import org.werti.uima.types.Enhancement;
 
 import org.werti.uima.types.annot.Token;
 
+/**
+ * An enhancer that takes an annotated cas and marks puts enhancement annotations
+ * in the same cas where Part-of-Speech tags meet the tags it's been given in the
+ * paramaters.
+ *
+ * @author Aleksandar Dimitrov
+ * @version 0.1
+ */
 
 public class PoSEnhancer extends JCasAnnotator_ImplBase {
 	private static final Logger log =
 		Logger.getLogger(PoSEnhancer.class);
 
+	/**
+	 * Iterate over all <tt>Token</tt>s in the CAS and match their PoStags.
+	 *
+	 * If they belong to the target class, then annotate them with enhancement
+	 * annotations.
+	 *
+	 * @param cas The document's CAS.
+	 */
 	@SuppressWarnings("unchecked")
 	public void process(JCas cas) throws AnalysisEngineProcessException {
 		int id = 0;

@@ -20,6 +20,9 @@ import org.werti.uima.types.annot.HTML;
  *
  * Properties include 'closing', 'irrelevant' and the 'tag_name'. Also their absolute
  * position in the CAS.
+ *
+ * @author Aleksandar Dimitrov
+ * @version 1.0
  */
 
 public class HTMLAnnotator extends JCasAnnotator_ImplBase {

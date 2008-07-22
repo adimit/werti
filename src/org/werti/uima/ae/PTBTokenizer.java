@@ -17,6 +17,18 @@ import org.apache.uima.jcas.JCas;
 import org.werti.uima.types.annot.RelevantText;
 import org.werti.uima.types.annot.Token;
 
+/**
+ * A wrapper about the Stanford tagger's tokenizer.
+ *
+ * While functional, curretnly we prefer the LingPipeTokenizer because it is
+ * <em>a lot</em> smarter. But for using the <tt>PTBTagger</tt> this class may
+ * be more suitable.
+ *
+ *
+ * @author Aleksandar Dimitrov
+ * @version 0.1
+ */
+
 public class PTBTokenizer extends JCasAnnotator_ImplBase {
 	private static final Logger log =
 		Logger.getLogger(PTBTokenizer.class);
@@ -27,6 +39,8 @@ public class PTBTokenizer extends JCasAnnotator_ImplBase {
 	 *
 	 * We only set the CAS-relative Begin and End, but also set the Word-Property of Token for now. This may
 	 * change in the future for efficiency reasons.
+	 *
+	 * @param cas The document' cas.
 	 */
 	@SuppressWarnings("unchecked")
 	public void process(JCas cas) {

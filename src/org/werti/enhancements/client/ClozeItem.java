@@ -12,6 +12,16 @@ import com.google.gwt.user.client.ui.SourcesKeyboardEvents;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
+/**
+ * A basic cloze item.
+ *
+ * Checks against a preset target, knows about its successor and will focus it
+ * before it disables itself. Use the styles <tt>WERTiClozeText{,Helped,Win,Fail}</tt>
+ * to indicate user's success.
+ *
+ * @author Aleksandar Dimitrov
+ * @version 0.1
+ */
 public class ClozeItem
 		implements HasText
 			   , SourcesClickEvents
@@ -24,6 +34,12 @@ public class ClozeItem
 	private static int fails, wins, helps = 0;
 	private final RootPanel root;
 
+	/**
+	 * Construct the cloze item in the given <tt>RootPanel</tt>.
+	 * 
+	 * @param root The RootPanel the cloze item has to be added to.
+	 * Ideally a <tt>&lt;span&gt;</tt>
+	 */
 	public ClozeItem(final RootPanel root) {
 		this.item = new TextBox();
 		item.addKeyboardListener(new KeyboardListener() {

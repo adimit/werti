@@ -30,6 +30,9 @@ import org.werti.client.InitializationException;
  *
  * Stores static references to different tagger instances. In theory not many of those are
  * going to be used.
+ *
+ * @author Aleksandar Dimitrov
+ * @version 0.1
  */
 public final class WERTiContext {
 	private static final Logger log = Logger.getLogger(WERTiContext.class);
@@ -46,6 +49,11 @@ public final class WERTiContext {
 
 	private static HmmDecoder lgptagger;
 
+	/**
+	 * Initialize our context from a given servlet context.
+	 *
+	 * @param servlet The running servlet's context
+	 */
 	public WERTiContext(final ServletContext servlet) throws InitializationException {
 		WERTiContext.servlet = servlet;
 		final InputStream is = servlet.getResourceAsStream(PROPS);
@@ -91,6 +99,8 @@ public final class WERTiContext {
 
 	/**
 	 * Gets the ptbtagger for this instance.
+	 *
+	 * @deprecated Note that we currently to don support the Stanford tagger anymore
 	 *
 	 * @param lang The two letter language code
 	 * @return The ptbtagger.

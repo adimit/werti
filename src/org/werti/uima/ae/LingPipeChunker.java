@@ -13,6 +13,14 @@ import org.apache.uima.jcas.JCas;
 
 import org.werti.uima.types.annot.Token;
 
+/**
+ * This class is still not working. Do not use!
+ *
+ * This will ultimately supersede <tt>SentenceBoundaryDetector</tt>
+ *
+ * @author Aleksandar Dimitrov
+ * @version 0
+ */
 public class LingPipeChunker extends JCasAnnotator_ImplBase {
 	private static final SentenceModel sModel =
 		new IndoEuropeanSentenceModel();
