@@ -3,6 +3,12 @@
 /temp
 /bin
 /docs/api
+/docs/paper
+!/docs/paper/*tex
+!/docs/paper/*dot
+!/docs/paper/*png
+!/docs/paper/*pdf
+!/docs/paper/*bib
 
 .*.sw?
 *.jar
