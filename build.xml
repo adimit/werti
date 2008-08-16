@@ -22,7 +22,7 @@
 	<property name="compile.debug"       value="true"/>
 	<property name="compile.deprecation" value="false"/>
 	<property name="compile.optimize"    value="true"/>
-	<property name="target.version"      value="1.6"/>
+	<property name="target.version"      value="1.5"/>
 
 
 	<!-- Compilation Classpath -->
@@ -175,6 +175,9 @@
 		<mkdir  dir="${build.home}"/>
 		<mkdir  dir="${build.home}/WEB-INF"/>
 		<mkdir  dir="${build.home}/WEB-INF/classes"/>
+		
+		<!-- we need a tmp directory -->
+		<mkdir dir="${build.home}/tmp"/>
 
 		<!-- Copy static content of this web application -->
 		<copy todir="${build.home}">
@@ -194,7 +197,7 @@
 				<include name="uima*jar"/>
 				<include name="stanford*jar"/>
 				<include name="lib*jar"/>
-				<include name="log4j.jar"/>
+				<include name="log4j*jar"/>
 				<include name="lingpipe*jar"/>
 			</fileset>
 		</copy>
