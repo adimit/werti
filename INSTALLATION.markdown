@@ -96,10 +96,11 @@ a different operating system, you should, of course, use the gwt-dev-OS.jar that
 you need.
 
 #### Note:
-The `.classpath` file that is currently also under version control will not
-work for your system. We should probably take it out of version control. Feel
-free to modify it in your own branch. I will take care to merge it manually in
-my tree if you ask me to pull.
+The `.classpath` file that is currently also under version control, and expects
+libraries to be in the www/WEB-INF/lib folder. It has annotations for
+documentation, some of which are local and will therefore not work for you.
+Feel free to modify it in your own branch. I will take care to merge it
+manually in my tree if you ask me to pull.
 
 ### System-specific locations (Compile time)
 
