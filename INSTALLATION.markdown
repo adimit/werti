@@ -17,7 +17,6 @@ recommended. Note that your Tomcat installation will have to make use of log4j.
 
 ### Building requirements
 * A recent [Tomcat](http://tomcat.apache.org/download-60.cgi) (5 or higher, 6 recommended)
-* [log4j in Tomcat](http://tomcat.apache.org/tomcat-6.0-doc/logging.html#log4j)
 * A recent version of [Apache/IBM UIMA](http://incubator.apache.org/uima/downloads.cgi)
 * [GWT](http://code.google.com/webtoolkit/download.html), version **1.5** or higher
 * [The Lingpipe toolkit](http://alias-i.com/lingpipe/web/download.html), 
@@ -30,35 +29,11 @@ recommended. Note that your Tomcat installation will have to make use of log4j.
 * Peripherals, like `git`, `mvn` (maven), `ant` and `svn` (subversion).
 
 #### Notes:
-- You will need to download the Tomcat source package in order to enable log4j
-support in tomcat and compile the extra log4j library. Once you downloaded the
-source package of tomcat the commands should look something like this:
-
-		cp /path/to/log4j.jar $CATALINA_HOME/lib
-		cd /path/to/apache-tomcat-src
-		ant -f extras.xml commons-logging
-		cp output/extras/tomcat-juli.jar $CATALINA_HOME/bin/ # You should overwrite the existing tomcat-juli.jar
-		cp output/extras/tomcat-juli-adapters.jar $CATALINA_HOME/lib
-		edit $CATALINA_HOME/lib/log4j.properties
-
-	The content of `$CATALINA_HOME/lib/log4j.properties` on my system looks like
-	this currently:
-
-		handlers = org.apache.juli.FileHandler, java.util.logging.ConsoleHandler
-
-		############################################################
-		# Handler specific properties.
-		# Describes specific configuration info for Handlers.
-		############################################################
-
-		log4j.rootLogger=SEVERE R
-		log4j.appender.R=org.apache.log4j.RollingFileAppender
-		log4j.appender.R.File=${catalina.home}/logs/tomcat.log
-		log4j.appender.R.MaxFileSize=10MB
-		log4j.appender.R.MaxBackupIndex=10
-		log4j.appender.R.layout=org.apache.log4j.PatternLayout
-		log4j.appender.R.layout.ConversionPattern=%p %t %c - %m%n
-		log4j.logger.org.apache.catalina=INFO, R
+- In order to get logging to work, you just need to have log4j's .jar somewhere
+  Tomcat can see it (e.g. werti's `lib` folder or Tomcat's `lib` folder) and
+  put a log4j.properties in werti's WEB-INF/lib folder.  If you want to have
+  log4j-logging within Catalina itself, use the [following
+  instructions](http://tomcat.apache.org/tomcat-6.0-doc/logging.html#log4j).
 
 - To build the `uima-an-tagger`, just download the uima sandbox and compile the
   tagger. The steps involved look something like this:
