@@ -91,8 +91,9 @@ In the end, you should end up with the following `.jar`s:
 * `lingpipe*jar`
 * `gwt-servlet.jar`
 
-You should also have the `gwt-user.jar` and `gwt-dev-linux.jar` (If you're
-running Linux, that is. You'd be crazy if you don't, anyway)
+You should also have the `gwt-user.jar` and `gwt-dev-linux.jar`. If you are on
+a different operating system, you should, of course, use the gwt-dev-OS.jar that
+you need.
 
 #### Note:
 The `.classpath` file that is currently also under version control will not
