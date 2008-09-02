@@ -56,7 +56,7 @@
 	<target name="WERTi.compile" description="Compile WERTi AJAX with GWT">
 		<echo>Compiling GWT classes for WERTi. This may take some time...</echo>
 		<exec executable="java">
-			<arg value="-Xmx256M"/>
+			<arg value="-Xmx512M"/>
 			<arg value="-cp"/>
 			<arg value="${basedir}/src:${basedir}/bin:${gwt-user.location}:${gwt-dev.location}"/>
 			<arg value="com.google.gwt.dev.GWTCompiler"/>
@@ -85,7 +85,7 @@
 	<target name="Ask.compile" description="Compile Ask AJAX with GWT">
 		<echo>Compiling GWT classes for Ask. This may take some time...</echo>
 		<exec executable="java">
-			<arg value="-Xmx256M"/>
+			<arg value="-Xmx512M"/>
 			<arg value="-cp"/>
 			<arg value="${basedir}/src:${basedir}/bin:${gwt-user.location}:${gwt-dev.location}"/>
 			<arg value="com.google.gwt.dev.GWTCompiler"/>
@@ -98,7 +98,7 @@
 	<target name="Cloze.compile" description="Compile Cloze AJAX with GWT">
 		<echo>Compiling GWT classes for Cloze. This may take some time...</echo>
 		<exec executable="java">
-			<arg value="-Xmx256M"/>
+			<arg value="-Xmx512M"/>
 			<arg value="-cp"/>
 			<arg value="${basedir}/src:${basedir}/bin:${gwt-user.location}:${gwt-dev.location}"/>
 			<arg value="com.google.gwt.dev.GWTCompiler"/>
@@ -111,7 +111,7 @@
 	<target name="Colorize.compile" description="Compile Colorize AJAX with GWT">
 		<echo>Compiling GWT classes for Colorize. This may take some time...</echo>
 		<exec executable="java">
-			<arg value="-Xmx256M"/>
+			<arg value="-Xmx512M"/>
 			<arg value="-cp"/>
 			<arg value="${basedir}/src:${basedir}/bin:${gwt-user.location}:${gwt-dev.location}"/>
 			<arg value="com.google.gwt.dev.GWTCompiler"/>
