@@ -35,16 +35,9 @@ recommended. Note that your Tomcat installation will have to make use of log4j.
   log4j-logging within Catalina itself, use the [following
   instructions](http://tomcat.apache.org/tomcat-6.0-doc/logging.html#log4j).
 
-- To build the `uima-an-tagger`, just download the uima sandbox and compile the
-  tagger. The steps involved look something like this:
-
-		svn co http://svn.apache.org/repos/asf/incubator/uima/sandbox/trunk/ uima-sandbox
-		cd uima-sandbox/Tagger
-		mvn resources:resources compiler:compile resources:testResources\
-			compiler:testCompile surefire:test jar:jar
-		ln -s target/uima-an-tagger.jar /somewhere/else
-	
-	This should leave you with a working version of the uima-an-tagger.
+- The UIMA-an-tagger is available in the UIMA Annotator Addons package,
+  located [here](http://incubator.apache.org/uima/downloads.cgi). Just unpack it,
+  and look for the file `uima-an-tagger.jar`.
 
 - to build my utility library package:
 
