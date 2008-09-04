@@ -25,7 +25,6 @@ recommended. Note that your Tomcat installation will have to make use of log4j.
 * Currently, we also depend on the 
   [Stanford tagger](http://nlp.stanford.edu/software/tagger.shtml#Download) 
   (a recent build from around April 2008 would do)
-* The `lib` package, located at [github](http://github.com/adimit/lib)
 * Peripherals, like `git`, `mvn` (maven), `ant` and `svn` (subversion).
 
 #### Notes:
@@ -38,15 +37,6 @@ recommended. Note that your Tomcat installation will have to make use of log4j.
 - The UIMA-an-tagger is available in the UIMA Annotator Addons package,
   located [here](http://incubator.apache.org/uima/downloads.cgi). Just unpack it,
   and look for the file `uima-an-tagger.jar`.
-
-- to build my utility library package:
-
-		git clone git://github.com/adimit/lib.git
-		cd lib
-		ant dist
-		ln -s dist/lib-0.1.jar /somewhere/else
-
-	That's it. You just have to copy or link `dist/lib-0.1.jar` where `build.xml` can find it. 
 
 - In order for everything to work, you'll also need the model files for the
 taggers. Take a look at `WERTi.properties` to find out what they are. Their

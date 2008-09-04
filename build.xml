@@ -277,7 +277,6 @@
 				<include name="gwt-servlet.jar"/>
 				<include name="uima*jar"/>
 				<include name="stanford*jar"/>
-				<include name="lib*jar"/>
 				<include name="log4j*jar"/>
 				<include name="lingpipe*jar"/>
 			</fileset>
