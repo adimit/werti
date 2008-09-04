@@ -10,7 +10,7 @@ import java.util.Iterator;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-import lib.html.Fetcher;
+import org.werti.util.Fetcher;
 
 import org.apache.log4j.Logger;
 
