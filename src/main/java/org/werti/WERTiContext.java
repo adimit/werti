@@ -15,8 +15,6 @@ import javax.servlet.ServletContext;
 import com.aliasi.hmm.HiddenMarkovModel;
 import com.aliasi.hmm.HmmDecoder;
 
-import edu.stanford.nlp.tagger.maxent.MaxentTagger;
-
 import org.apache.log4j.Logger;
 
 import org.apache.uima.examples.tagger.trainAndTest.ModelGeneration;
@@ -41,7 +39,6 @@ public final class WERTiContext {
 
 	private static ServletContext servlet;
 
-	private static MaxentTagger ptbtagger_en;
 	private static ModelGeneration hmmtagger_en;
 	private static ModelGeneration hmmtagger_de;
 
@@ -64,56 +61,6 @@ public final class WERTiContext {
 		} catch (IOException ioe) {
 			throw new InitializationException("I don't know where the taggers are!", ioe);
 		}
-	}
-
-	// return the appropriate tagger reference for the language
-	private static MaxentTagger get_ptbtagger(final String lang)
-		throws ResourceInitializationException {
-		if (ptbtagger_en != null) {
-			return ptbtagger_en;
-		}
-		final String ptbloc = p.getProperty("ptbtagger.base")
-			+ p.getProperty("ptbtagger."+lang);
-		final URL ptbpath;
-		try {
-			ptbpath = servlet.getResource(ptbloc);
-		} catch (MalformedURLException murle) {
-			final Object[] args = { ptbloc };
-			throw new ResourceInitializationException(
-					ResourceInitializationException.MALFORMED_URL, args , murle);
-		}
-		try {
-			final File f = new File(ptbpath.toURI());
-			log.debug("Trying to fetch from " + ptbpath + "; getFile(): " + ptbpath.getFile());
-			ptbtagger_en = new MaxentTagger(f.getAbsolutePath());
-			return ptbtagger_en;
-		} catch (NullPointerException npe) {
-			final Object[] args = { ptbloc };
-			throw new ResourceInitializationException(
-					ResourceInitializationException.COULD_NOT_ACCESS_DATA, args);
-		} catch (Exception e) {
-			final Object[] args = { "MaxentTagger" };
-			throw new ResourceInitializationException(
-					ResourceInitializationException.COULD_NOT_INSTANTIATE, args, e);
-		}
-	}
-
-	/**
-	 * Gets the ptbtagger for this instance.
-	 *
-	 * @deprecated Note that we currently to don support the Stanford tagger anymore
-	 *
-	 * @param lang The two letter language code
-	 * @return The ptbtagger.
-	 */
-	public static MaxentTagger getPtbtagger (final String lang)
-		throws ResourceInitializationException {
-		throw new UnsupportedOperationException("The Stanford Tagger's API is crap."
-				+ " We can't currently work with it. An implementation of the "
-				+ "Stanford Tagger might be provided in the future.");
-		//log.warn(lang);
-		//MaxentTagger ptbtagger = get_ptbtagger(lang);
-		//return ptbtagger;
 	}
 
 	public static HmmDecoder getLpgtagger() throws ResourceInitializationException {
