@@ -27,7 +27,6 @@
 
 	<!-- Compilation Classpath -->
 	<path id="compile.classpath">
-
 		<!-- Include all elements that Tomcat exposes to applications -->
 		<pathelement location="${catalina.home}/common/classes"/>
 		<fileset dir="${catalina.home}/lib">
@@ -37,7 +36,6 @@
 		<fileset dir="${catalina.home}/lib">
 			<include name="*.jar"/>
 		</fileset>
-
 		<pathelement location="${libraries.location}"/>
 		<fileset dir="${libraries.location}">
 			<include name="*.jar"/>
@@ -120,6 +118,89 @@
 			<arg value="org.werti.enhancements.Colorize"/>
 		</exec>
 	</target>
+
+	<property name="gwt.location" value="/home/aleks/opt/gwt-linux-1.5.2"/>
+
+	<target name="WERTi.test" description="Run WERTi in hosted mode.">
+		<java classname="com.google.gwt.dev.GWTShell" fork="true">
+			<jvmarg value="-Xmx256M"/>
+			<arg line="-out ${web.home} org.werti.WERTi/WERTi.html"/>
+			<classpath>
+				<fileset dir="${gwt.location}">
+					<include name="*.jar"/>
+				</fileset>
+				<pathelement path="${src.home}"/>
+				<pathelement path="${build.home}"/>
+			</classpath>
+		</java>
+	</target>
+
+	<target name="Cloze.test" description="Run Cloze in hosted mode.">
+		<java classname="com.google.gwt.dev.GWTShell" fork="true">
+			<jvmarg value="-Xmx256M"/>
+			<arg line="-out ${web.home} org.werti.enhancements.Cloze/Cloze.html"/>
+			<classpath>
+				<fileset dir="${gwt.location}">
+					<include name="*.jar"/>
+				</fileset>
+				<pathelement path="${src.home}"/>
+			</classpath>
+		</java>
+	</target>
+
+	<macrodef name="gwtTest">
+		<attribute name="module"/>
+		<attribute name="site"/>
+		<attribute name="classpathref" default="gwt.compile.classpath"/>
+		<attribute name="output" default="${web.home}"/>
+		<sequential>
+			<java classpathref="@{classpathref}" fork="true">
+				<jvmarg value="-Xmx256M"/>
+				<arg value="-out"/>
+				<arg value="@{output}"/>
+				<arg value="@{module}/@{site}"/>
+			</java>
+		</sequential>
+	</macrodef>
+
+	<target name="foo">
+		<gwtCompile module="org.werti.enhancements.Ask" package="org/werti/enhancements/client"/>
+	</target>
+
+	<macrodef name="gwtCompile">
+		<attribute name="module"/>
+		<attribute name="package"/>
+		<attribute name="classpathref" default="gwt.compile.classpath"/>
+		<attribute name="output" default="www"/>
+		<sequential>
+			<uptodate
+					property="gwtCompile.module.compiled" 
+					targetfile="${build.home}/@{module}/@{module}.nocache.js">
+				<srcfiles dir="${src.home}/@{package}" includes="**/*.*"/>
+			</uptodate>
+			<if>
+				<not>
+					<equals arg1="${gwtCompile.module.compiled}" arg2="true"/>
+				</not>
+				<then>
+					<java classpathref="@{classpathref}" fork="true">
+						<jvmarg value="-Xmx512M"/>
+						<arg value="-out"/>
+						<arg value="@{output}"/>
+						<arg value="@{module}"/>
+					</java>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<path id="gwt.compile.classpath">
+		<pathelement location="${src.home}" />
+		<pathelement location="${build.home}"/>
+		<fileset dir="${gwt.location}">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
 
 	<target name="gwt.compile" 
 			depends="Cloze.compile,WERTi.compile,Colorize.compile,Ask.compile" 
@@ -229,8 +310,6 @@
 			</fileset>
 		</copy>
 	</target>
-
-	<!-- Reload Target -->
 
 	<target name="reload" depends="compile" description="Reload application on servlet container">
 		<exec executable="touch">
