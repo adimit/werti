@@ -9,6 +9,7 @@
 !/docs/paper/*png
 !/docs/paper/*pdf
 !/docs/paper/*bib
+/target
 
 .*.sw?
 *.jar
