@@ -193,9 +193,5 @@
 			<id>gwt-maven</id>
 			<url>http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/</url>
 		</pluginRepository> 
-		<pluginRepository>
-			<id>internal</id>
-			<url>http://build-1.rack.sourcelabs.com/repos/internal/</url>
-		</pluginRepository>
 	</pluginRepositories>
 </project>
