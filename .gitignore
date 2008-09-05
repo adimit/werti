@@ -15,6 +15,8 @@
 *.jar
 *~
 /.classpath
+/.settings
+/.project
 uima.log*
 /src/main/webapp/org*
 /src/main/webapp/.gwt-tmp
