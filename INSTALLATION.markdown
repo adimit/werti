@@ -6,7 +6,7 @@ seems unclear, I will try to keep the documentation as clean as possible.
 ##Installation instructions
 
 WERTi runs on Apache Tomcat version 5 or higher. Version 6 or higher is
-recommended. Note that your Tomcat installation will have to make use of log4j.
+recommended.
 
 ### Building requirements
 * A recent [Tomcat](http://tomcat.apache.org/download-60.cgi) (5 or higher, 6 recommended)
@@ -26,9 +26,9 @@ GWT plugin.
 
 ### Model Files for the LingPipe Tagger
 
-You should download the full distribution of the LingPipe package, version
-3.5.1.  It is located [here](http://alias-i.com/lingpipe/web/download.html).
-You should download the *full* *distribution*.
+You should download the LingPipe package, version 3.5.1.  It is located
+[here](http://alias-i.com/lingpipe/web/download.html).  You should download the
+*full* *distribution*.
 
 Maven needs to be able to find the LingPipe package. Currently there is no repository
 for LingPipe, so you need to add it yourself:
