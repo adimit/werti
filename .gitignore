@@ -9,10 +9,14 @@
 !/docs/paper/*png
 !/docs/paper/*pdf
 !/docs/paper/*bib
+/target
 
 .*.sw?
 *.jar
 *~
+/.classpath
 uima.log*
-/www/org*
-/www/.gwt-tmp
+/src/main/webapp/org*
+/src/main/webapp/.gwt-tmp
+/src/main/webapp/tmp
+/src/main/resources
