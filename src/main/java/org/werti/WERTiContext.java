@@ -1,6 +1,5 @@
 package org.werti;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -46,7 +45,6 @@ public final class WERTiContext {
 
 	private static HmmDecoder lgptagger;
 
-	
 	/**
 	 * Initialize our context from a given servlet context.
 	 *
