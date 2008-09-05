@@ -85,21 +85,16 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-				<version>2.0</version>
-				<configuration>
-					<webXml>target/web.xml</webXml>
-				</configuration>
-			</plugin>
-			<plugin>
 				<groupId>com.totsp.gwt</groupId>
 				<artifactId>maven-googlewebtoolkit2-plugin</artifactId>
 				<configuration>
-					<logLevel>WARN</logLevel>
+					<logLevel>TRACE</logLevel>
 					<runTarget>org.werti.WERTi/WERTi.html</runTarget>
 					<compileTargets>
 						<param>org.werti.WERTi</param>
+						<param>org.werti.enhancements.Ask</param>
+						<param>org.werti.enhancements.Colorize</param>
+						<param>org.werti.enhancements.Cloze</param>
 					</compileTargets>
 					<generatorDestinationPackage>org.werti.client</generatorDestinationPackage>
 				</configuration>
