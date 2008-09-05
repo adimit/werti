@@ -82,5 +82,24 @@ big. All compilation results are in the `target` folder.
 
 ## Testing
 
+Testing WERTi involves running it in GWT hoted mode for debugging of client-side
+JavaScript code, and usually analysing the logging output.
 
+### Note
+
+
+### GWT
+To test WERTi in hosted mode, you need to be running a Tomcat webserver. The
+current `pom.xml` assumes that Tomcat is running on `localhost:8080`, so on
+your machine, on port 8080. You can change that in the pom.xml. I will look
+into making this a bit easier to adjust.
+
+**Ipmortant Note:** you *need* to adjust `WERTi.properties`, too, to inform
+WERTi about what server it is running on if you are not deploying it from this
+port and your local machine.
+
+### Logging
+
+The logging configuration is in
+`src/main/webapp/WEB-INF/classes/log4j.properties`.
 
