@@ -16,8 +16,6 @@ import com.aliasi.hmm.HmmDecoder;
 
 import org.apache.log4j.Logger;
 
-import org.apache.uima.examples.tagger.trainAndTest.ModelGeneration;
-
 import org.apache.uima.resource.ResourceInitializationException;
 
 import org.werti.client.InitializationException;
@@ -37,9 +35,6 @@ public final class WERTiContext {
 	private static final String PROPS = "/WERTi.properties";
 
 	private static ServletContext servlet;
-
-	private static ModelGeneration hmmtagger_en;
-	private static ModelGeneration hmmtagger_de;
 
 	private static Properties p;
 
@@ -143,33 +138,6 @@ public final class WERTiContext {
 		} catch (NullPointerException npe) {
 			throw noAccess("Couldn't load path: "+path, npe);
 		}
-	}
-
-	// return the appropriate tagger reference for the language
-	private static ModelGeneration get_hmmtagger(final String lang) {
-		if (lang.equals("de")) {
-			return WERTiContext.hmmtagger_de;
-		} else  {
-			return WERTiContext.hmmtagger_en;
-		}
-	}
-
-	/**
-	 * Gets the hmmtagger for this instance.
-	 *
-	 * @param lang The two-letter language code
-	 * @return The hmmtagger.
-	 */
-	public static ModelGeneration getHmmtagger(String lang) 
-		throws ResourceInitializationException {
-		ModelGeneration hmmtagger = get_hmmtagger(lang);
-		if (hmmtagger == null) {
-			final String hmmloc = p.getProperty("hmmtagger.base")
-				+ p.getProperty("hmmtagger."+lang);
-			log.debug("Reading from: " + hmmloc);
-			hmmtagger = (ModelGeneration) getModel(hmmloc);
-		}
-		return hmmtagger;
 	}
 
 	/**

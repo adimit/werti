@@ -23,18 +23,6 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.uima</groupId>
-			<artifactId>Tagger</artifactId>
-			<version>2.2.2-incubating</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.uima</groupId>
-			<artifactId>PearPackagingMavenPlugin</artifactId>
-			<version>2.2.2-incubating</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-user</artifactId>
 			<version>1.5.2</version>

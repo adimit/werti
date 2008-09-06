@@ -14,8 +14,6 @@ import org.apache.uima.analysis_component.JCasAnnotator_ImplBase;
 
 import org.apache.uima.cas.text.AnnotationIndex;
 
-import org.apache.uima.examples.tagger.Tagger;
-
 import org.apache.uima.jcas.JCas;
 
 import org.apache.uima.resource.ResourceInitializationException;
@@ -36,7 +34,7 @@ import org.werti.uima.types.annot.Token;
  * @author Aleksandar Dimitrov
  * @version 0.1
  */
-public class LingPipeTagger extends JCasAnnotator_ImplBase implements Tagger {
+public class LingPipeTagger extends JCasAnnotator_ImplBase {
 	private static final Logger log =
 		Logger.getLogger(LingPipeTagger.class);
 

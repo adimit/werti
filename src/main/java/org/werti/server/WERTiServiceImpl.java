@@ -102,6 +102,7 @@ public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiServi
 		final JCas cas;
 		final AnalysisEngine preprocessor, postprocessor;
 		final String descPath = context.getProperty("descriptorPath");
+		log.trace("Loading from descriptor path: " + descPath);
 		final URL preDesc, postDesc;
 		try { // to load the descriptor
 			preDesc = getServletContext().getResource(
@@ -138,6 +139,10 @@ public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiServi
 		} catch (IOException ioe) {
 			log.fatal("Error accessing descriptor file", ioe);
 			throw new InitializationException("Error accessing descriptor file", ioe);
+		} catch (NullPointerException npe) {
+			log.fatal("Error accessing descriptor files or creating analysis objects", npe);
+			throw new InitializationException
+				("Error accessing descriptor files or creating analysis objects", npe);
 		}
 		log.info("Initialized UIMA components.");
 
