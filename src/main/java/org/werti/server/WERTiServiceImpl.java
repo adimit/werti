@@ -1,5 +1,6 @@
 package org.werti.server;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -9,8 +10,6 @@ import java.net.URL;
 import java.util.Iterator;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-
-import org.werti.util.Fetcher;
 
 import org.apache.log4j.Logger;
 
@@ -37,6 +36,8 @@ import org.werti.client.URLException;
 import org.werti.client.WERTiService;
 
 import org.werti.uima.types.Enhancement;
+
+import org.werti.util.Fetcher;
 
 /**
  * The server side implementation of the WERTi service.
@@ -173,20 +174,25 @@ public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiServi
 
 		final String base_url = "http://" + fetcher.getBase_url() + ":" + fetcher.getPort();
 		final String enhanced = enhance(method, cas, base_url);
-		final long currentTime = System.currentTimeMillis();
-		final String file = "/tmp/WERTi-" + currentTime + ".html";
-
-		try { // to write temp file
-			if (log.isDebugEnabled()) {
-				log.debug("Writing to file: " + getServletContext().getRealPath(file));
-			}
-			final FileWriter out = new FileWriter(getServletContext().getRealPath(file));
-			out.write(enhanced);
+		final String tempDir = getServletContext().getRealPath("/tmp");
+		final File temp;
+		try { // to create a temporary file
+			temp = File.createTempFile("WERTi", ".tmp.html", new File(tempDir));
 		} catch (IOException ioe) {
 			log.error("Failed to create temporary file");
 			throw new ProcessingException("Failed to create temporary file!", ioe);
 		}
-		return file;
+		try { // to write temp file
+			if (log.isDebugEnabled()) {
+				log.debug("Writing to file: " + temp.getAbsoluteFile());
+			}
+			final FileWriter out = new FileWriter(temp);
+			out.write(enhanced);
+		} catch (IOException ioe) {
+			log.error("Failed to write to temporary file");
+			throw new ProcessingException("Failed write to temporary file!", ioe);
+		}
+		return "/tmp/" + temp.getName();
 	}
 
 	/** 
