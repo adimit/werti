@@ -38,7 +38,7 @@ public class LingPipeTagger extends JCasAnnotator_ImplBase {
 	private static final Logger log =
 		Logger.getLogger(LingPipeTagger.class);
 
-	// the average length of a sentence (for performance reasons, this denotes our 
+	// the average length of a sentence (for performance reasons, this denotes our
 	// dynamic data structure's initial capacity)
 	private static final int SENTENCE_LENGTH = 30;
 
@@ -74,7 +74,12 @@ public class LingPipeTagger extends JCasAnnotator_ImplBase {
 		while (sit.hasNext()) {
 			final Iterator<Token> tit = tindex.subiterator(sit.next());
 			while (tit.hasNext()) {
-				tlist.add(tit.next());
+				final Token t = tit.next();
+				// The LingPipe tagger incorrectly marks compound dashes,
+				// like in mother-daughter as prepositions.
+				if (!t.getCoveredText().equals("-")) {
+					tlist.add(t);
+				}
 			}
 			final String[] words = new String[tlist.size()];
 			for (int ii = 0; ii < words.length; ii++) {
@@ -86,7 +91,7 @@ public class LingPipeTagger extends JCasAnnotator_ImplBase {
 				tlist.get(ii).setTag(tags[ii]);
 				if (log.isDebugEnabled()) {
 					if (!words[ii].equals(tlist.get(ii).getCoveredText())) {
-						log.debug("Mismatching word fields: words = " 
+						log.warn("Mismatching word fields: words = " 
 								+ words[ii]
 								+ "; tlist = " + tlist.get(ii).getCoveredText());
 					}
