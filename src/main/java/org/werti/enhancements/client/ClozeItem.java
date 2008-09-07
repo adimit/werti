@@ -1,5 +1,7 @@
 package org.werti.enhancements.client;
 
+import com.google.gwt.user.client.Element;
+
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.ClickListener;
@@ -35,6 +37,55 @@ public class ClozeItem
 	private final RootPanel root;
 
 	/**
+	 * A keyboard listener for ClozeItems.
+	 *
+	 * On shift+Enter it will give the result to the user,
+	 * on Enter it will checkt the user's answer.
+	 *
+	 * When giving a result or showing a correct answer, the ClozeItem disappears
+	 * and a text consisting of the target word with a corresponding style shows
+	 * up.
+	 *
+	 * <li>When the user enters a wrong answer, the ClozeItem will be assigend the
+	 * style id <i>WERTiClozeTextFail</i>.</li>
+	 *
+	 * <li>The style for a correct answer (the target word in a <code>&lt;span&gt;</code>)
+	 * is <i>WERTiClozeTextWin</i>.</li>
+	 *
+	 * <li>The style for an item the user did ask for (also a word in a <code>&lt;span&gt;</code>)
+	 * is <i>WERTiClozeTextHelped</i>.</li>
+	 */
+	private class ClozeItemListener implements KeyboardListener {
+		public void onKeyPress(Widget sender, char keyCode, int mods) {
+			if (keyCode == KeyboardListener.KEY_ENTER) {
+				if (mods == 1) {
+					setText("WERTiClozeTextHelped");
+					helps++;
+					next.item.setFocus(true);
+				} else if (item.getText().trim().toLowerCase().equals
+						(target.toLowerCase())) {
+					setText("WERTiClozeTextWin");
+					wins++;
+					next.item.setFocus(true);
+				} else {
+					item.setStyleName("WERTiClozeTextFail");
+					fails++;
+				}
+			}
+		}
+
+		public void onKeyDown(Widget w, char c, int i) { }
+		public void onKeyUp(Widget w, char c, int i) { }
+
+		private void setText(String style) {
+			final Element e = root.getElement();
+			e.setInnerHTML("<span class=\"" + style + "\">"
+					+ target
+					+ "</span>");
+		}
+	}
+
+	/**
 	 * Construct the cloze item in the given <tt>RootPanel</tt>.
 	 * 
 	 * @param root The RootPanel the cloze item has to be added to.
@@ -42,29 +93,7 @@ public class ClozeItem
 	 */
 	public ClozeItem(final RootPanel root) {
 		this.item = new TextBox();
-		item.addKeyboardListener(new KeyboardListener() {
-			public void onKeyPress(Widget sender, char keyCode, int mods) {
-				if (keyCode == KeyboardListener.KEY_ENTER) {
-					if (mods == 1) {
-						item.setStyleName("WERTiClozeTextHelped");
-						item.setText(target);
-						item.setEnabled(false);
-						helps++;
-						next.item.setFocus(true);
-					} else if (item.getText().equals(target)) {
-						item.setStyleName("WERTiClozeTextWin");
-						item.setEnabled(false);
-						wins++;
-						next.item.setFocus(true);
-					} else {
-						item.setStyleName("WERTiClozeTextFail");
-						fails++;
-					}
-				}
-			}
-			public void onKeyDown(Widget w, char c, int i) { }
-			public void onKeyUp(Widget w, char c, int i) { }
-		});
+		item.addKeyboardListener(new ClozeItemListener());
 		item.setStyleName("WERTiClozeText");
 		this.help = new Button("?");
 		help.addClickListener(new ClickListener() {
