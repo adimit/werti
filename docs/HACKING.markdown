@@ -105,8 +105,19 @@ The logging configuration is in
 
 ## Setting up Eclipse
 
-The following steps should get you going with Eclipse. They are inteded for
-Eclipse Ganymede.
+Eclipse is a powerful integrated IDE for Java. WERTi will strive to remain as
+compatible as possible with Eclipse. Currently, only the newest version of
+Eclipse is supported, Ganymede. The following documentation shall help you
+getting started with testing, building and debugging WERTi inside the Eclipse
+IDE.
+
+### Eclipse Maven Plugin
+
+As an alternative to a manual setup for Eclipse, you can use the Eclipse Maven
+Plugin located at [Codehaus](http://m2eclipse.codehaus.org/). Please refer to
+the Documentation of the plug-in for importing projects.
+
+### Manual Eclipse Maven Setup
 
 Maven can generate all necessary files (including `.classpath`, complete with
 sources and documentation) with one command:
@@ -127,6 +138,8 @@ first.
 Maven set up Eclipse to search for libraries under a classpath variable named
 `M2_REPO`. You should add this classpath variable (globally) to Eclipse. On
 most UNIX-like systems, this will point to `$HOME/.m2/repository`.
+
+### GWT Setup
 
 By now you should be able to compile the project. At this stage, it is probably
 not a bad idea to type
