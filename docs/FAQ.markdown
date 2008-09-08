@@ -31,12 +31,13 @@ If the error message looks similar to this one:
 
 
 	Project ID: org.werti:WERTi
-	POM Location: /home/nott/Eclipse-Workspace/WERTi/pom.xml
+	POM Location: /home/me.myself.i/Eclipse-Workspace/WERTi/pom.xml
 	Validation Messages:
 
 	    [0]  For dependency Dependency {groupId=com.google.gwt, artifactId=gwt-dev-linux, version=1.5.2, type=jar}: system-scoped dependency must specify an absolute path systemPath.
 
-	Reason: Failed to validate POM for project org.werti:WERTi at /home/nott/Eclipse-Workspace/WERTi/pom.xml
+	Reason: Failed to validate POM for project org.werti:WERTi at /home/me.myself.i/Eclipse-Workspace/WERTi/pom.xml
 
-then you have not set the GWT_HOME environment variable as described in INSTALLATION.markdown
+then you have not set the GWT_HOME environment variable as described in INSTALLATION.markdown. Check
+in your shell using echo $GWT_HOME.
 	
