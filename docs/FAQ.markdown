@@ -20,3 +20,23 @@ This means that on your system you are missing the old version of libstdc, which
 Google Web Toolkit. Use the package manager of your system and search for libstdc++ and 
 install version 5 of this library. The package name in Ubuntu/Debian is libstdc++5.
 
+## mvn package Reports "Error building POM (may not be this project's POM)"
+
+If the error message looks similar to this one:
+
+	[INFO] ------------------------------------------------------------------------
+	[ERROR] FATAL ERROR
+	[INFO] ------------------------------------------------------------------------
+	[INFO] Error building POM (may not be this project's POM).
+
+
+	Project ID: org.werti:WERTi
+	POM Location: /home/nott/Eclipse-Workspace/WERTi/pom.xml
+	Validation Messages:
+
+	    [0]  For dependency Dependency {groupId=com.google.gwt, artifactId=gwt-dev-linux, version=1.5.2, type=jar}: system-scoped dependency must specify an absolute path systemPath.
+
+	Reason: Failed to validate POM for project org.werti:WERTi at /home/nott/Eclipse-Workspace/WERTi/pom.xml
+
+then you have not set the GWT_HOME environment variable as described in INSTALLATION.markdown
+	
