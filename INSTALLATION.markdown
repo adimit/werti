@@ -72,6 +72,27 @@ This will take a while. The GWT modules are slow to compile, and a *lot* of
 dependencies will be downloaded. Make sure you have a good Internet connection
 and some coffee (or other favored beverage).
 
+## Deploying
+
+While WERTi may run on other Servlet containers, it has so far only been tested with Tomcat 6.x. There are several ways of deploying the application.
+
+### Local Development: Using Symlinks
+
+If WERTi is installed to your local system, then placing a symlink from
+`$CATALINA_HOME/webapps` to `target/WERTi` is the easiest way to deploy WERTi
+on your local development server. You can use the `mvn war:exploded` tasks to
+redeploy the application this way. Note that Tomcat will require you to `touch`
+WERTi's `web.xml` for it to notice a change and reload.
+
+### Local Development: Using the Maven Tomcat Plug in
+
+Maven's Tomcat Plug in can deploy webapps on a local or remote tomcat server.
+See the [documentation for
+deploying](http://mojo.codehaus.org/tomcat-maven-plugin/deployment.html) and
+the [usage and configuration
+documentation](http://mojo.codehaus.org/tomcat-maven-plugin/usage.html) on the
+official site.
+
 ### System-specific locations (Runtime)
 
 The file `src/main/webapp/WERTi.properties` contains runtime paths and adjustments that

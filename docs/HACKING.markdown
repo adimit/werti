@@ -1,6 +1,6 @@
 # Hacking WERTi
 
-This document tells you how to modify WERTi.
+This document should help you get started with modifying WERTi's internals.
 
 ## The File Hierarchy
 
@@ -78,11 +78,30 @@ The standard Maven targets will help you. Type `mvn compile` to compile and
 `mvn clean` to delete any results of previous compilations. `mvn package`
 creates the `.war` file to deploy on a server. It should contain everything,
 including a set of model files and all libraries, which will make it incredibly
-big. All compilation results are in the `target` folder.
+big.
+
+Typically, you will not want to build the whole .war archive, as it is quite
+big (at least 50 MB) and thus takes a while to build. You can instead use the
+Maven webapp-plug in to create an 'exploded' archive, viz. the directory
+structure and all files without actually packaging it, by issuing the command
+`mvn war:exploded`
+
+All compilation results are in the `target` folder.
+
+#### Notes:
+
+- Maven will typically search its repositories for updates and also for online
+  sources of the lingpipe toolkit. You should let Maven do that from time to
+  time, but for everyday compiles, the `-o` switch will prevent Maven from going
+  online, and thus speed up compilation quite a bit.
+
+- Take care to always have the GWT_HOME variable properly set in your current
+  environment. This is a bit cumbersome, and we are looking into ways to address
+  this issue.
 
 ## Testing
 
-Testing WERTi involves running it in GWT hoted mode for debugging of client-side
+Testing WERTi involves running it in GWT hosted mode for debugging of client-side
 JavaScript code, and usually analysing the logging output.
 
 ### Note
@@ -94,9 +113,10 @@ current `pom.xml` assumes that Tomcat is running on `localhost:8080`, so on
 your machine, on port 8080. You can change that in the pom.xml. I will look
 into making this a bit easier to adjust.
 
-**Ipmortant Note:** you *need* to adjust `WERTi.properties`, too, to inform
-WERTi about what server it is running on if you are not deploying it from this
-port and your local machine.
+#### **Important Note:**
+You *need* to adjust `WERTi.properties`, too, to inform WERTi about what server
+it is running on if you are not deploying it from this port and your local
+machine.
 
 ### Logging
 
@@ -174,3 +194,9 @@ Next, click on the 'Classpath' tab. Click on 'User Entries', then on the button
 'Advanced…'.  Then, select 'Add Folders', and add `src/main/java`.
 
 Then all you have to do is click on 'Apply' and then 'Debug'.
+
+### Setting up Tomcat
+
+You can set up Tomcat so that it notices whenever you change a file in your
+project and then reloads the application for the changes to take effect. Please
+ask Ramon about it, he should know. `:-)`
