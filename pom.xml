@@ -9,6 +9,10 @@
 	<version>0.1-dev</version>
 	<name>WERTi ― a Platform for ICALL Systems</name>
 	<url>http://github.com/adimit/werti</url>
+	
+	<properties>
+		<gwtVersion>1.5.2</gwtVersion>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -24,14 +28,30 @@
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-user</artifactId>
-			<version>1.5.2</version>
+			<version>${gwtVersion}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-servlet</artifactId>
-			<version>1.5.2</version>
+			<version>${gwtVersion}</version>
+			<scope>runtime</scope>
 		</dependency>
+		<dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-dev</artifactId>
+            <version>${gwtVersion}</version>
+            <classifier>${platform}-libs</classifier>
+            <type>zip</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-dev</artifactId>
+            <version>${gwtVersion}</version>
+            <classifier>${platform}</classifier>
+            <scope>provided</scope>
+        </dependency>
 		<dependency>
 			<groupId>com.googlecode.gwtx</groupId>
 			<artifactId>GWTx</artifactId>
@@ -86,6 +106,9 @@
 					</compileTargets>
 					<generatorDestinationPackage>org.werti.client</generatorDestinationPackage>
 					<noServer>true</noServer>
+					<!--  this parameter is VERY important with automatic mode - has to match the version in your declared deps -->
+                    <!--  if this is set incorrect (not a match), or left out (default is 1.5.1 for 2.0-beta22) you will have mysterious errors -->
+                    <gwtVersion>${gwtVersion}</gwtVersion>
 				</configuration>
 				<executions>
 					<execution>
@@ -96,71 +119,72 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>unpack</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>com.google.gwt</groupId>
+                                    <artifactId>gwt-dev</artifactId>
+                                    <version>${gwtVersion}</version>
+                                    <classifier>${platform}-libs</classifier>
+                                    <type>zip</type>
+                                    <overWrite>false</overWrite>
+                                    <outputDirectory>${settings.localRepository}/com/google/gwt/gwt-dev/${gwtVersion}</outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 		</plugins>
 	</build>
 	<profiles>
 		<profile>
-			<id>gwt-1.5.2-mac</id>
+			<id>gwt-dev-mac</id>
 			<activation>
+				<activeByDefault>false</activeByDefault>
 				<os>
 					<family>mac</family>
 				</os>
 			</activation>
 			<properties>
-				<google.webtoolkit.home>${env.GWT_HOME}/gwt-mac-1.5.2</google.webtoolkit.home>
+				<platform>mac</platform>
 				<!-- XstartOnFirstThread needed only on the mac -->
 				<google.webtoolkit.extrajvmargs>-XstartOnFirstThread</google.webtoolkit.extrajvmargs>
 			</properties>
-			<dependencies>
-				<dependency>
-					<groupId>com.google.gwt</groupId>
-					<artifactId>gwt-dev-mac</artifactId>
-					<version>1.5.2</version>
-					<scope>system</scope>
-					<systemPath>${google.webtoolkit.home}/gwt-dev-mac.jar</systemPath>
-				</dependency>
-			</dependencies>
 		</profile>
 		<profile>
-			<id>gwt-1.5.2-linux</id>
+			<id>gwt-dev-linux</id>
 			<activation>
+				<activeByDefault>true</activeByDefault>
 				<os>
 					<name>Linux</name>
 				</os>
 			</activation>
 			<properties>
-				<google.webtoolkit.home>${env.GWT_HOME}/gwt-linux-1.5.2</google.webtoolkit.home>
+				<platform>linux</platform>
 			</properties>
-			<dependencies>
-				<dependency>
-					<groupId>com.google.gwt</groupId>
-					<artifactId>gwt-dev-linux</artifactId>
-					<version>1.5.2</version>
-					<scope>system</scope>
-					<systemPath>${google.webtoolkit.home}/gwt-dev-linux.jar</systemPath>
-				</dependency>
-			</dependencies>
 		</profile>
 		<profile>
-			<id>gwt-1.5.2-windows</id>
+			<id>gwt-dev-windows</id>
 			<activation>
+				<activeByDefault>false</activeByDefault>
 				<os>
 					<family>windows</family>
 				</os>
 			</activation>
 			<properties>
-				<google.webtoolkit.home>${env.GWT_HOME}/gwt-windows-1.5.2
-				</google.webtoolkit.home>
+				<platform>windows</platform>
 			</properties>
-			<dependencies>
-				<dependency>
-					<groupId>com.google.gwt</groupId>
-					<artifactId>gwt-dev-linux</artifactId>
-					<version>1.5.2</version>
-					<scope>system</scope>
-					<systemPath>${google.webtoolkit.home}/gwt-dev-windows.jar</systemPath>
-				</dependency>
-			</dependencies>
 		</profile>
 	</profiles>
 	<repositories>
