@@ -3,12 +3,19 @@
 This file should get you going on installing WERTi. Please ask if something
 seems unclear, I will try to keep the documentation as clean as possible.
 
-##Installation instructions
+## Additional Documentation
+
+On the Github page of WERTi, there is a wiki that holds troubleshooting
+advice and a guide on how to develop WERTi in Eclipse: 
+http://github.com/adimit/werti/wikis/home
+
+## Installation instructions
 
 WERTi runs on Apache Tomcat version 5 or higher. Version 6 or higher is
 recommended.
 
 ### Building requirements
+
 * A recent [Tomcat](http://tomcat.apache.org/download-60.cgi) (5 or higher, 6 recommended)
 * [The Lingpipe toolkit](http://alias-i.com/lingpipe/web/download.html), 
   Version 3.5 or higher, including model files
@@ -50,18 +57,6 @@ need `pos-en-general-brown.HiddenMarkovModel`. Put them into
 `src/main/resources/models/lgptagger` (you may have to create the directory
 first).
 
-### GWT setup
-
-In order to set up the GWT plugins for Maven, you need to first download GWT,
-version 1.5.2 [here](http://code.google.com/webtoolkit/download.html). When you
-extract the archive, you should end up with a folder named `gwt-OSNAME-1.5.2`.
-You should put the directory it sits in into an environment variable named `GWT_HOME`.
-
-	wget http://google-web-toolkit.googlecode.com/files/gwt-linux-1.5.2.tar.bz2
-	tar xjf gwt-linux-*.tar.bz2
-	export GWT_HOME=`pwd`
-
-
 ## Building
 
 After everything is in place, just go ahead and type
@@ -71,6 +66,9 @@ After everything is in place, just go ahead and type
 This will take a while. The GWT modules are slow to compile, and a *lot* of
 dependencies will be downloaded. Make sure you have a good Internet connection
 and some coffee (or other favored beverage).
+
+Please note that you are not entirely done yet. It is still necesarry to
+compile gwt:gwt, which should be done after deploying.
 
 ## Deploying
 
@@ -106,3 +104,13 @@ work when deploying to a *real* server. Will have to look into this.
 
 The rest of the variables are explained in the documentation. Typically, you
 shouldn't have to touch them.
+
+## Building GWT
+
+Now that everything is in place, start your Tomcat server and run
+
+	mvn gwt:gwt
+
+This will compile the parts of WERTi that use the Google Web Toolkit (GWT). This can
+take a while. In the end, it should open the Google Web Toolkit Development Shell
+with a running WERTi in it.
