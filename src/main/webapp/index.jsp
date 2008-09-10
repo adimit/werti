@@ -11,16 +11,24 @@
 			I'm a header
 		</div>
 		<div id="navbar">
-			<%@include file="menu.jsp"%>
+			<ul>
+				<li><a href="/WERTi/index.jsp?content=home">Home</a></li>
+				<li><a href="/WERTi/index.jsp?content=start">Start</a></li>
+				<li><a href="/WERTi/index.jsp?content=about">About</a></li>
+				<li><a href="/WERTi/index.jsp?content=help">Help</a></li>
+				<li><a href="/WERTi/index.jsp?content=links">Links</a></li>
+			</ul>
 		</div>
 		<div id="main">
-			<div class="text">
-				<h1>Welcome to WERTi</h1>
-				<p>Nothing to see here.</p>
-			</div>
-			<div class="text">
-				<h2>News</h2>
-				<p>There once was a linen sack in China. It was filled with rice…</p>
+			<% 
+			String content = request.getParameter("content");
+			if (content == null) {
+				content = "tmpl/home.jsp";
+			} else {
+				content = "tmpl/" + content + ".jsp";
+			}
+			%>
+			<jsp:include page="<%= content %>" />
 		</div>
 	</body>
 </html>

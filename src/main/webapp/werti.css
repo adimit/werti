@@ -1,15 +1,21 @@
 body {
-	background-color: #ddd;
+	background-color: #bbb;
 	color: #111;
+	font-family: sans-serif;
+	margin: 0px;
+	border: 0px;
+	padding: 0px;
+	font-size: small;
 }
 
 #main {
 	margin-left: 20%;
 	margin-right: 10%;
-	margin-top: 20px;
+	margin-top: 5px;
 }
+
 div.text {
-	padding: 3px;
+	padding: 10px;
 	border: 1px solid #aaa;
 	background: #fff;
 	margin-bottom: 2px;
@@ -23,12 +29,12 @@ div.text {
 }
 
 #navbar {
-	margin-top: 20px;
+	margin-top: 5px;
 	float: left;
-	background: #66D;
+	background: #349;
 	color: #EEE;
 	margin-left: 5%;
-	width: 14%;
+	width: 14.5%;
 	border: 1px #aaa solid;
 }
 
@@ -38,4 +44,96 @@ div.text {
 
 #navbar li {
 	margin: 0.5em;
+}
+
+#navbar a {
+	text-decoration: none;
+}
+
+.gwt-TabBar .gwt-TabBarItem {
+	margin-left: 6px;
+	padding: 3px 6px 3px 6px;
+	cursor: pointer;
+	color: #fff;
+	font-weight: bold;
+	text-align: center;
+	background: #aaa;
+}
+
+.gwt-TabPanelBottom {
+	border: 1px solid #aaa;
+	overflow: hidden;
+	padding: 6px;
+}
+
+.gwt-TabBar .gwt-TabBarItem-selected {
+	cursor: default;
+	background: #349;
+}
+
+.gwt-Button {
+	margin: 0;
+	padding: 2px;
+	text-decoration: none;
+	font-size: small;
+	background: #ccc;
+	border: 1px outset #ccc;
+	color: #111;
+}
+
+.gwt-Button:active {
+	border: 1px inset #ccc;
+	color: #111;
+}
+
+.gwt-Button:hover {
+	border-color: #9cf #69e #69e #7af;
+}
+
+.gwt-Button[disabled] {
+	cursor: default;
+	color: #888;
+}
+
+.gwt-Button[disabled]:hover {
+	border: 1px outset #ccc;
+}
+
+#navbar a:link {
+	color: #EE4;
+	font-weight:bold;
+}
+
+#navbar a:visited {
+	color: #4E4;
+	font-weight:bold;
+}
+
+div.notice {
+	margin: 5px;
+	padding: 2px;
+	font-style: italic;
+	border: 1px dotted;
+}
+
+h1,h2,h3 {
+	background-color: #349;
+	width: 80%;
+	margin-left: 10px;
+	border: 1px solid;
+	border-color: #aaa;
+	font-family: Helvetica;
+	color: #EEE;
+	padding: 5px;
+}
+
+input {
+	border-color: #000;
+	border: 1px solid;
+	font-family: Monospace;
+}
+
+.gwt-DialogBox .Caption {
+	background-color: #574;
+	color: #A11;
 }

@@ -97,7 +97,7 @@
 				<version>2.0-beta22</version>
 				<configuration>
 					<logLevel>TRACE</logLevel>
-					<runTarget>http://localhost:8080/WERTi/org.werti.WERTi/WERTi.html</runTarget>
+					<runTarget>http://localhost:8080/WERTi/index.jsp?content=start</runTarget>
 					<compileTargets>
 						<param>org.werti.WERTi</param>
 						<param>org.werti.enhancements.Ask</param>
