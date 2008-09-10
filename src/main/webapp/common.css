@@ -1,0 +1,11 @@
+body {
+	background-color: #ddd;
+	color: #111;
+}
+
+div.text {
+	margin-left: 10%;
+	margin-right: 10%;
+	border: 1px solid #aaa;
+	background: #fff;
+}
