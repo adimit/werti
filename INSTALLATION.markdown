@@ -67,8 +67,9 @@ This will take a while. The GWT modules are slow to compile, and a *lot* of
 dependencies will be downloaded. Make sure you have a good Internet connection
 and some coffee (or other favored beverage).
 
-Please note that you are not entirely done yet. It is still necesarry to
-compile gwt:gwt, which should be done after deploying.
+In order to develop and debug GWT parts of WERTi, it is
+necessary to run the GWT Shell. This is described below
+as it must to be done after deploying.
 
 ## Deploying
 
@@ -105,12 +106,12 @@ work when deploying to a *real* server. Will have to look into this.
 The rest of the variables are explained in the documentation. Typically, you
 shouldn't have to touch them.
 
-## Building GWT
+## Building and Running GWT the Shell 
 
 Now that everything is in place, start your Tomcat server and run
 
 	mvn gwt:gwt
 
-This will compile the parts of WERTi that use the Google Web Toolkit (GWT). This can
-take a while. In the end, it should open the Google Web Toolkit Development Shell
-with a running WERTi in it.
+After some compiling, this should open the Google Web Toolkit Development Shell
+with a running WERTi in it. This shell allows the development and debugging of
+GWT Java classes.
