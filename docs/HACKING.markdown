@@ -104,9 +104,6 @@ All compilation results are in the `target` folder.
 Testing WERTi involves running it in GWT hosted mode for debugging of client-side
 JavaScript code, and usually analysing the logging output.
 
-### Note
-
-
 ### GWT
 To test WERTi in hosted mode, you need to be running a Tomcat webserver. The
 current `pom.xml` assumes that Tomcat is running on `localhost:8080`, so on
@@ -122,81 +119,3 @@ machine.
 
 The logging configuration is in
 `src/main/webapp/WEB-INF/classes/log4j.properties`.
-
-## Setting up Eclipse
-
-Eclipse is a powerful integrated IDE for Java. WERTi will strive to remain as
-compatible as possible with Eclipse. Currently, only the newest version of
-Eclipse is supported, Ganymede. The following documentation shall help you
-getting started with testing, building and debugging WERTi inside the Eclipse
-IDE.
-
-### Eclipse Maven Plugin
-
-As an alternative to a manual setup for Eclipse, you can use the Eclipse Maven
-Plugin located at [Codehaus](http://m2eclipse.codehaus.org/). Please refer to
-the Documentation of the plug-in for importing projects.
-
-### Manual Eclipse Maven Setup
-
-Maven can generate all necessary files (including `.classpath`, complete with
-sources and documentation) with one command:
-
-	mvn eclipse:eclipse -DdownloadSources=true -DdownloadJavadocs=true
-
-Unfortunately, this will not give you sources and JDocs for every class, but at
-least for some. You might be interested in adding JavaDoc-Entries for the
-LingPipe tagger, if you will use it.
-
-Now you should import the project into the Eclipse workspace. If you have
-previously imported it, issue
-
-	mvn eclipse:clean
-
-first.
-
-Maven set up Eclipse to search for libraries under a classpath variable named
-`M2_REPO`. You should add this classpath variable (globally) to Eclipse. On
-most UNIX-like systems, this will point to `$HOME/.m2/repository`.
-
-### GWT Setup
-
-By now you should be able to compile the project. At this stage, it is probably
-not a bad idea to type
-
-	mvn gwt:gwt
-
-at a command prompt, so maven generates all needed files and downloads all
-dependencies. It will present you a hosted mode browser, running WERTi.
-
-Now you need to set up an Apache Tomcat Server inside Eclipse, under the
-'Servers' entry in Eclipse's preferences.
-
-In order to enable debugging in hosted mode, select the project, and edit the
-debugging configuration und Run->Debug Configurations… Select 'Java
-Application', create a new one, called WERTi. Set the main class to
-`com.google.gwt.dev.GWTShell`.
-
-Click on the 'Arguments' tab inside the same dialog. As program arguments, type:
-
-	-out target/WERTi/WEB-INF/classes
-	-noserver -port 8080 -logLevel ALL
-	WERTi/org.werti.WERTi/WERTi.html
-
-and as VM arguments type
-
-	-Xmx512M
-
-Note that you have to substitute your Tomcat's port number for 8080 in the
-program's arguments.
-
-Next, click on the 'Classpath' tab. Click on 'User Entries', then on the button
-'Advanced…'.  Then, select 'Add Folders', and add `src/main/java`.
-
-Then all you have to do is click on 'Apply' and then 'Debug'.
-
-### Setting up Tomcat
-
-You can set up Tomcat so that it notices whenever you change a file in your
-project and then reloads the application for the changes to take effect. Please
-ask Ramon about it, he should know. `:-)`
