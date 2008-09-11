@@ -3,10 +3,22 @@
 /temp
 /bin
 /docs/api
+/docs/paper
+!/docs/paper/*tex
+!/docs/paper/*dot
+!/docs/paper/*png
+!/docs/paper/*pdf
+!/docs/paper/*bib
+/target
 
 .*.sw?
 *.jar
 *~
+/.classpath
+/.settings
+/.project
 uima.log*
-/www/org*
-/www/.gwt-tmp
+/src/main/webapp/org*
+/src/main/webapp/.gwt-tmp
+/src/main/webapp/tmp
+/src/main/resources

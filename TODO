@@ -12,11 +12,6 @@
 *** Bugs
  * Don't screw up on html tags with &lt; and &gt; entities instead of < and >.
  * does the HTML annotation really need the tag-name field?
- * WERTiContext doesn't work for the Stanford tagger. Probably the Stanford api
-   needs a whole new reimplementation because it fucking blows.
-
-*** Random
- * Make the tomcat logger log the time, too
 
 *** Wishlist
 ************
@@ -24,15 +19,13 @@
 - put the lingpipe sentence boundary detector to use 
   (we'd have to re-implement its API for this)
 - implement HTML parser [0]
+- Implement TreeTagger
 - Use HTML entities in sentence boundary followers (like, for " or
   similar)
-- get the CAS Visual Debugger to run with the new layout. This means that
-  the HMMTagger should probably have a fallback if WERTiContext is not
-  available.
 - Internationalize the exceptions, logging, whole application following
   [1]
 - Interactive Passivator
-- Use md5 hashing for tempfiles instead of nanoseconds.
+- Make up a RadioGroup for GWT
 
 References:
 ===========

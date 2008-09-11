@@ -6,9 +6,11 @@
     <delegateAnalysisEngine key="HTMLAnnotator">
       <import location="../annotators/HTMLAnnotator.xml"/>
     </delegateAnalysisEngine>
+    <!-- 
     <delegateAnalysisEngine key="WholeText">
       <import location="../annotators/relevance/WholeText.xml"/>
     </delegateAnalysisEngine>
+    -->
     <delegateAnalysisEngine key="SentencBoundaryDetector">
       <import location="../annotators/SentenceBoundaryDetector.xml"/>
     </delegateAnalysisEngine>
