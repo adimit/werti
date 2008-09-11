@@ -326,14 +326,17 @@ public class WERTi implements EntryPoint {
 		gCats.add(ask);
 		gCats.add(fib);
 
-		VerticalPanel tUdst = new VerticalPanel();
+		VerticalPanel gerunds = new VerticalPanel();
+		VerticalPanel conditionals = new VerticalPanel();
 
 		Label noop = new Label("This functionality is not implemented yet.");
 
-		tUdst.add(noop);
+		gerunds.add(noop);
+		conditionals.add(noop);
 
 		exercises.add(gCats, "Grammatical Categories");
-		exercises.add(tUdst, "Textual Understanding");
+		exercises.add(gerunds, "Gerunds");
+		exercises.add(conditionals, "Conditionals");
 
 		exercises.selectTab(0);
 	}
