@@ -158,8 +158,8 @@
 			</activation>
 			<properties>
 				<platform>mac</platform>
-				<!-- XstartOnFirstThread needed only on the mac -->
-				<google.webtoolkit.extrajvmargs>-XstartOnFirstThread</google.webtoolkit.extrajvmargs>
+				<!-- XstartOnFirstThread and Xmx256M needed only on the mac -->
+				<google.webtoolkit.extrajvmargs>-XstartOnFirstThread -Xmx256M</google.webtoolkit.extrajvmargs>
 			</properties>
 		</profile>
 		<profile>
