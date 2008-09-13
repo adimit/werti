@@ -3,6 +3,7 @@ package org.werti.client.tasks;
 import com.google.gwt.user.client.ui.DisclosureEvent;
 import com.google.gwt.user.client.ui.DisclosureHandler;
 import com.google.gwt.user.client.ui.DisclosurePanel;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -40,6 +41,8 @@ public class Categories implements Task {
 		targets.add(dets);
 		targets.add(prps);
 
+		dets.setChecked(true);
+
 		final DisclosurePanel advanced = new DisclosurePanel("Advanced…");
 		advanced.setAnimationEnabled(true);
 
@@ -66,6 +69,8 @@ public class Categories implements Task {
 			}
 		});
 
+		clr.setChecked(true);
+
 		enhancements.add(clr);
 		enhancements.add(ask);
 		enhancements.add(fib);
@@ -77,7 +82,7 @@ public class Categories implements Task {
 		return main;
 	}
 
-	public RunConfiguration configure(final String url) {
+	public RunConfiguration configure() {
 		// dirty regex hacking. Sure, there are better solutions…
 		final StringBuilder sb_tags = new StringBuilder();
 		for (final HasData o:tagConfig) {
@@ -94,5 +99,13 @@ public class Categories implements Task {
 		final org.werti.client.run.Categories config =
 			new org.werti.client.run.Categories(tags, module.toString());
 		return config;
+	}
+
+	public Widget helpText() {
+		HTML text = new HTML
+			( "<h4>Part of Speech</h4>"
+			+ "<p>Train your understanding of English parts of speech."
+			);
+		return text;
 	}
 }

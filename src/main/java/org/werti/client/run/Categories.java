@@ -1,5 +1,7 @@
 package org.werti.client.run;
 
+import java.io.Serializable;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,14 +12,20 @@ import org.werti.client.util.Tuple;
  *
  * PoS-tags the input. Enhancement is applied according to PoS Tags.
  */
-public class Categories implements RunConfiguration {
+public class Categories implements RunConfiguration, Serializable {
 
-	final String[] tags;
-	final String enhancer;
+	private String[] tags;
+	private String enhancer;
 
 	public Categories(String[] tags, String enhancer) {
 		this.tags = tags;
 		this.enhancer = enhancer;
+	}
+
+	public Categories() {
+		this.tags = new String[1];
+		tags[0] = "pp";
+		this.enhancer = "Colorize";
 	}
 
 	public static final long serialVersionUID = 0;
