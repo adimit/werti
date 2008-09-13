@@ -41,6 +41,7 @@ public class WERTi implements EntryPoint {
 
 		final Task gc = new Categories();
 		taskPanel.add(gc);
+		taskPanel.selectTab(0);
 
 		form.add(taskPanel);
 
@@ -63,6 +64,7 @@ public class WERTi implements EntryPoint {
 				}
 			}
 		});
+
 		final HorizontalPanel location = new HorizontalPanel();
 		location.setStyleName("WERTiLocationBar");
 
