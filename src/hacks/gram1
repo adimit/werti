@@ -8,12 +8,15 @@ LIST INFIN = VV VB VH;     # infinitives
 
 BEFORE-SECTIONS
 
-SUBSTITUTE (VBG) (GERUND) PPART;
-SUBSTITUTE (VHG) (GERUND) PPART;
-SUBSTITUTE (VVG) (GERUND) PPART;
+# add gerund reading
+APPEND ("" GERUND) PPART
 
+# add present participle reading
 # need to insert "" as empty wordform, otherwise things break
 APPEND ("" PRESENTPART) (GERUND);
+
+# remove original reading
+REMOVE PPART
 
 # tree tagger: always TO for "to" -> "IN" before non-infinitives
 # attention: incomplete, missing the possibility to have adverbs
