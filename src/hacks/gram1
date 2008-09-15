@@ -8,11 +8,17 @@ LIST INFIN = VV VB VH;     # infinitives
 
 BEFORE-SECTIONS
 
-APPEND ("testfuck" GERUND) PPART;
+SUBSTITUTE (VBG) (GERUND) PPART;
+SUBSTITUTE (VHG) (GERUND) PPART;
+SUBSTITUTE (VVG) (GERUND) PPART;
+
+# need to insert "" as empty wordform, otherwise things break
+APPEND ("" PRESENTPART) (GERUND);
 
 # tree tagger: always TO for "to" -> "IN" before non-infinitives
 # attention: incomplete, missing the possibility to have adverbs
-REPLACE (IN) (TO)  (NOT +1 INFIN);
+# SUBSTITUTE has a more logical syntax than REPLACE
+SUBSTITUTE (TO) (IN) (TO) (NOT +1 INFIN);
 
 CONSTRAINTS
 #empty
