@@ -3,20 +3,19 @@ DELIMITERS = "<.>" "<!>" "<?>" ; # sentence window
 
 SETS
 LIST PPART = VBG VHG VVG ; # possible gerunds
+LIST INFIN = VV VB VH;     # infinitives
 
 
 BEFORE-SECTIONS
 
 APPEND ("testfuck" GERUND) PPART;
 
-#SUBSTITUTE (PPART)  (GERUND PRESENTPART);
+# tree tagger: always TO for "to" -> "IN" before non-infinitives
+# attention: incomplete, missing the possibility to have adverbs
+REPLACE (IN) (TO)  (NOT +1 INFIN);
 
-#SUBSTITUTE (PPART)  (GERUND PRESENTPART) PPART;
-
-
-
-#CONSTRAINTS
+CONSTRAINTS
+#empty
 
 AFTER-SECTIONS
-#ADD  (GERUND) IF (VVG);
-#REMOVE (VVG) IF (*1 (VVG));
+#empty
