@@ -1,0 +1,12 @@
+#!/bin/bash
+
+TEXT="$1"
+GRAMMAR="$2"
+
+TT="/opt/tree-tagger/cmd/tree-tagger-english"
+VISLCG="/opt/vislcg/bin/vislcg3"
+
+cat "$TEXT" \
+   | "$TT"  \
+   | awk '{print("\"<" $1 ">\"") ; print("\t" $2)}' \
+   | "$VISLCG" -g "$GRAMMAR"

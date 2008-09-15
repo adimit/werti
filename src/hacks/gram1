@@ -1,0 +1,16 @@
+
+DELIMITERS = "<.>" "<!>" "<?>" ; # sentence window
+
+SETS
+LIST PPART = VBG VHG VVG ; # possible gerunds
+
+
+BEFORE-SECTIONS
+
+SUBSTITUTE (PPART)  (GERUND PRESENTPART);
+
+#CONSTRAINTS
+
+#AFTER-SECTIONS
+#ADD (VBG) (GERUND);
+
