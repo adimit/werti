@@ -12,8 +12,8 @@ import org.apache.uima.jcas.tcas.Annotation;
 
 
 /** A relevant Token with PoS information attached.
- * Updated by JCasGen Tue Jul 22 02:03:04 CEST 2008
- * XML source: /home/aleks/src/werti/desc/testers/LingPipeTester.xml
+ * Updated by JCasGen Tue Sep 16 17:07:11 GMT+01:00 2008
+ * XML source: /home/nott/Eclipse-Workspace/WERTi/desc/WERTiTypeSystem.xml
  * @generated */
 public class Token extends Annotation {
 	/** @generated
@@ -74,4 +74,22 @@ public class Token extends Annotation {
     if (Token_Type.featOkTst && ((Token_Type)jcasType).casFeat_tag == null)
       jcasType.jcas.throwFeatMissing("tag", "org.werti.uima.types.annot.Token");
     jcasType.ll_cas.ll_setStringValue(addr, ((Token_Type)jcasType).casFeatCode_tag, v);}    
+   
+    
+  //*--------------*
+  //* Feature: lemma
+
+  /** getter for lemma - gets The lemma of the word in this token. May remain empty if there is no lemmatizer around.
+   * @generated */
+  public String getLemma() {
+    if (Token_Type.featOkTst && ((Token_Type)jcasType).casFeat_lemma == null)
+      jcasType.jcas.throwFeatMissing("lemma", "org.werti.uima.types.annot.Token");
+    return jcasType.ll_cas.ll_getStringValue(addr, ((Token_Type)jcasType).casFeatCode_lemma);}
+    
+  /** setter for lemma - sets The lemma of the word in this token. May remain empty if there is no lemmatizer around. 
+   * @generated */
+  public void setLemma(String v) {
+    if (Token_Type.featOkTst && ((Token_Type)jcasType).casFeat_lemma == null)
+      jcasType.jcas.throwFeatMissing("lemma", "org.werti.uima.types.annot.Token");
+    jcasType.ll_cas.ll_setStringValue(addr, ((Token_Type)jcasType).casFeatCode_lemma, v);}    
   }
