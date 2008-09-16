@@ -4,6 +4,7 @@ DELIMITERS = "<.>" "<!>" "<?>" ; # sentence window
 SETS
 LIST PPART = VBG VHG VVG ; # possible gerunds
 LIST INFIN = VV VB VH;     # infinitives
+LIST ADVER = RB RBR RBS;   #  adverbs
 
 
 BEFORE-SECTIONS
@@ -19,9 +20,11 @@ APPEND ("" PRESENTPART) (GERUND);
 REMOVE PPART
 
 # tree tagger: always TO for "to" -> "IN" before non-infinitives
-# attention: incomplete, missing the possibility to have adverbs
 # SUBSTITUTE has a more logical syntax than REPLACE
-SUBSTITUTE (TO) (IN) (TO) (NOT +1 INFIN);
+SUBSTITUTE (TO) (IN) (TO) (NOT +1 ADVER) (NOT +1 INFIN); 
+SUBSTITUTE (TO) (IN) (TO) (NOT +1 ADVER) (NOT +2 INFIN); 
+
+
 
 CONSTRAINTS
 #empty
