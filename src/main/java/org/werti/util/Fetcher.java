@@ -46,6 +46,11 @@ public class Fetcher extends Thread {
 
 	// converts a buffered reader to a String. Don't forget to close it.
 	private static String bis2str(BufferedReader in) {
+		
+		// cache newline for later use.
+		String nl = System.getProperty("line.separator");
+		
+		// collect data from the BufferedReader until there is no more to read
 		final StringBuilder sb = new StringBuilder();
 		try {
 			if (!in.ready()) {
@@ -55,7 +60,7 @@ public class Fetcher extends Thread {
 			}
 			String inLine;
 			while ((inLine = in.readLine()) != null) {
-				sb.append(inLine);
+				sb.append(inLine + nl);
 			}
 			log.debug("Last line I read: " + inLine);
 		} catch (IOException ioe) {
