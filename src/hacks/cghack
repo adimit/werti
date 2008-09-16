@@ -10,4 +10,4 @@ VISLCG="`which vislcg3`"
 cat "$TEXT" \
    | "$TT"  \
    | awk '{print("\"<" $1 ">\"") ; print("\t\"\"",$2)}' \
-   | "$VISLCG" -g "$GRAMMAR"
+   | "$VISLCG" -g "$GRAMMAR" --trace
