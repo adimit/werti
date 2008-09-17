@@ -2,42 +2,69 @@
 # fist real test grammar for gerund detection
 #
 # ATTENTION: uses Linigpipe interpretatiom of Brown/Penn Tagset
-
 #
+# ATTENTION: sets with underscores are ment to be abstract concepts
+#     which are independent from the tagset.
+#
+
+############################################################################# 
+#
+# Common definitions
+# -> tagset-dependent 
+#
+############################################################################# 
 
 DELIMITERS = "<.>" "<!>" "<?>" ; # sentence window
 
 SETS
-#LIST PPART = VBG VHG VVG ; # possible gerunds
+LIST _INGFORMS = VBG HVG BEG ; # gerunds or present participle
 
-LIST INFIN = BE-INF DO-INF HV-INF VB-INF; # infinitives
-LIST ADVER = RB RBR RBT; 	#  some types ofadverbs
+LIST _INFIN = BE-INF DO-INF HV-INF VB-INF; # infinitives (introduced below)
+LIST _ADVER = RB RBR RBT; 	#  some types of adverbs used with infinitives
+LIST _TO = TO;
 
+
+############################################################################# 
+#
+# Fixing tagger issues and inferring information used later on.
+# -> tagset-dependent 
+#
+############################################################################# 
 
 BEFORE-SECTIONS
-
 # repair mistagged "to" before two or more adverbs 
-LIST UINFLECTED = BE DO GV VB;
-"<To>" SUBSTITUTE (IN) (TO) (IN) ( +1*C UINFLECTED BARRIER (*) - ADVER );
-"<to>" SUBSTITUTE (IN) (TO) (IN) ( +1*C UINFLECTED BARRIER (*) - ADVER );
+LIST UNINFLECTED = BE DO GV VB;
+"<To>" SUBSTITUTE (IN) (TO) (IN) ( +1*C UNINFLECTED BARRIER (*) - _ADVER );
+"<to>" SUBSTITUTE (IN) (TO) (IN) ( +1*C UNINFLECTED BARRIER (*) - _ADVER );
 
 # introduce infinitive tags (Brown tagset only knows "uninflected forms")
-SUBSTITUTE (BE) (BE-INF) (BE) (-1*C (TO) BARRIER (*) - ADVER);
-SUBSTITUTE (DO) (DO-INF) (DO) (-1*C (TO) BARRIER (*) - ADVER);
-SUBSTITUTE (HV) (HV-INF) (HV) (-1*C (TO) BARRIER (*) - ADVER);
-SUBSTITUTE (VB) (VB-INF) (VB) (-1*C (TO) BARRIER (*) - ADVER);
+SUBSTITUTE (BE) (BE-INF) (BE) (-1*C (TO) BARRIER (*) - _ADVER);
+SUBSTITUTE (DO) (DO-INF) (DO) (-1*C (TO) BARRIER (*) - _ADVER);
+SUBSTITUTE (HV) (HV-INF) (HV) (-1*C (TO) BARRIER (*) - _ADVER);
+SUBSTITUTE (VB) (VB-INF) (VB) (-1*C (TO) BARRIER (*) - _ADVER);
 
 
-
+############################################################################# 
+#
+# Rules: Marking relevant phrases/chunks
+# -> not tagset-dependent 
+#
+############################################################################# 
 
 SECTION
-#empty
 
 # marking infinitive constructions: TO ADVER* INFIN
-ADD (^INF-B) (TO);
-ADD (^INF-I) INFIN (-*1C (TO) BARRIER (*) - ADVER );
-ADD (^INF-I) ADVER (-*1C (TO) BARRIER (*) - ADVER ) (+*1C INFIN BARRIER (*) - ADVER );
+# INF-B: beginning of chunk. INF-I: inside of chunk.
+ADD (^INF-B) _TO    (+*1C _INFIN BARRIER (*) - _ADVER ); 
+ADD (^INF-I) _INFIN (-*1C _TO BARRIER (*) - _ADVER );
+ADD (^INF-I) _ADVER (-*1C _TO BARRIER (*) - _ADVER ) (+*1C _INFIN BARRIER (*) - _ADVER );
 
+
+############################################################################# 
+#
+# Repairing things after rules applied
+#
+############################################################################# 
 
 AFTER-SECTIONS
 #empty
