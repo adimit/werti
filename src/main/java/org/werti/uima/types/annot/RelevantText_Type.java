@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
 /** Optional annotation to specify which text to work on.
- * Updated by JCasGen Wed Sep 17 14:36:52 CEST 2008
+ * Updated by JCasGen Thu Sep 18 00:51:17 CEST 2008
  * @generated */
 public class RelevantText_Type extends Annotation_Type {
   /** @generated */

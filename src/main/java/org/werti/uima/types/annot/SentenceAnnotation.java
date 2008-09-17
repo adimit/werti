@@ -12,8 +12,8 @@ import org.apache.uima.jcas.tcas.Annotation;
 
 
 /** A sentence in natural language on the page to be processed.
- * Updated by JCasGen Wed Sep 17 14:36:52 CEST 2008
- * XML source: /home/aleks/src/WERTi/desc/enhancers/TokenEnhancer.xml
+ * Updated by JCasGen Thu Sep 18 00:51:17 CEST 2008
+ * XML source: /home/aleks/src/WERTi/desc/WERTiTypeSystem.xml
  * @generated */
 public class SentenceAnnotation extends Annotation {
 	/** @generated
