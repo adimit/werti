@@ -1,0 +1,43 @@
+#
+# fist real test grammar for gerund detection
+#
+# ATTENTION: uses Linigpipe interpretatiom of Brown/Penn Tagset
+
+#
+
+DELIMITERS = "<.>" "<!>" "<?>" ; # sentence window
+
+SETS
+#LIST PPART = VBG VHG VVG ; # possible gerunds
+
+LIST INFIN = BE-INF DO-INF HV-INF VB-INF; # infinitives
+LIST ADVER = RB RBR RBT; 	#  some types ofadverbs
+
+
+BEFORE-SECTIONS
+
+# repair mistagged "to" before two or more adverbs 
+LIST UINFLECTED = BE DO GV VB;
+"<To>" SUBSTITUTE (IN) (TO) (IN) ( +1*C UINFLECTED BARRIER (*) - ADVER );
+"<to>" SUBSTITUTE (IN) (TO) (IN) ( +1*C UINFLECTED BARRIER (*) - ADVER );
+
+# introduce infinitive tags (Brown tagset only knows "uninflected forms")
+SUBSTITUTE (BE) (BE-INF) (BE) (-1*C (TO) BARRIER (*) - ADVER);
+SUBSTITUTE (DO) (DO-INF) (DO) (-1*C (TO) BARRIER (*) - ADVER);
+SUBSTITUTE (HV) (HV-INF) (HV) (-1*C (TO) BARRIER (*) - ADVER);
+SUBSTITUTE (VB) (VB-INF) (VB) (-1*C (TO) BARRIER (*) - ADVER);
+
+
+
+
+SECTION
+#empty
+
+# marking infinitive constructions: TO ADVER* INFIN
+ADD (^INF-B) (TO);
+ADD (^INF-I) INFIN (-*1C (TO) BARRIER (*) - ADVER );
+ADD (^INF-I) ADVER (-*1C (TO) BARRIER (*) - ADVER ) (+*1C INFIN BARRIER (*) - ADVER );
+
+
+AFTER-SECTIONS
+#empty
