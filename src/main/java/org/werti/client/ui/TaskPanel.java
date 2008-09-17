@@ -9,16 +9,33 @@ import com.google.gwt.user.client.ui.Widget;
 
 import org.werti.client.tasks.Task;
 
+/**
+ * A more specialized <code>Panel<code> to hold several <code>Task</code>s.
+ *
+ * Users of this panel should be aware that using the default panel's 
+ * <code>add(Widget)</code> is not really supported and may result in undefined
+ * behaviour. Use <code>add(Task)</code> instead.
+ *
+ * @author Aleksandar Dimitrov
+ * @version 0.1
+ */
 public class TaskPanel extends TabPanel {
 
 	private final ArrayList<Task> tasks;
 
 	public TaskPanel() {
+		super();
 		tasks = new ArrayList<Task>();
 	}
 
 	private Task currentTask;
 
+	/**
+	 * Add a task to this panel.
+	 *
+	 * @param t A task (implementing the <code>Task</code>) interface.
+	 * @return The position in the task list that this task will receive.
+	 */
 	public int add(Task t) {
 		tasks.add(t);
 
@@ -36,11 +53,21 @@ public class TaskPanel extends TabPanel {
 		return tasks.size();
 	}
 
+	/**
+	 * Select the task and adjust the current active configuration.
+	 *
+	 * @param index The TabIndex of the task to be selected.
+	 */
 	@Override public void selectTab(int index) {
 		super.selectTab(index);
 		currentTask = tasks.get(index);
 	}
 
+	/**
+	 * Request the currently active (for the open tab) task.
+	 *
+	 * @return This Tab's <code>Task</code>
+	 */
 	public Task currentTask() {
 		return currentTask;
 	}

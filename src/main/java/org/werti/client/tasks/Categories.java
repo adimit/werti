@@ -17,9 +17,20 @@ import org.werti.client.ui.ERadioButton;
 import org.werti.client.ui.ETextBox;
 import org.werti.client.ui.HasData;
 
+/**
+ * A task that mimics the standard Python WERTi capabilities.
+ *
+ * More precisely, this task allows the user to select certain parts-of-speech
+ * to enhance and a method to enhancem them (currently Cloze test, Active and Passive presentation)
+ *
+ * @author Aleksandar Dimitrov
+ * @version 0.1
+ */
 public class Categories implements Task {
 
-	private static final String NAME = "Grammatical Categories";
+
+	// the title of this task, as it will appear in the menu.
+	private static final String NAME = "Parts of Speech";
 
 	private static final ECheckBox dets = new ECheckBox("at", "Determiners");
 	private static final ECheckBox prps = new ECheckBox("pp,in", "Prepositions");
@@ -32,8 +43,21 @@ public class Categories implements Task {
 	private static final HasData[] tagConfig = { dets, prps, customCats };
 	private static final HasData[] enhConfig = { clr, ask, fib };
 
+	/**
+	 * The name of this component.
+	 *
+	 * @return This component's name.
+	 */
 	public String name() { return NAME; }
 
+	/**
+	 * Build a user interface for this component.
+	 *
+	 * This component allows selection of one enhancement method and several
+	 * PoS tags as targets.
+	 *
+	 * @return A GWT <code>Widget</code> that allows the user to configure this task.
+	 */
 	public Widget userInterface() {
 		final VerticalPanel main = new VerticalPanel();
 
@@ -84,6 +108,16 @@ public class Categories implements Task {
 		return main;
 	}
 
+	/**
+	 * Build a Server-Side configuration object.
+	 *
+	 * This task uses <code>CategoriesConfiguration</code> adjusting tags
+	 * and method according to the user interface settings.
+	 *
+	 * @return A server-side configuration object knowing about the
+	 * <code>AnalysisEngine</code>s to use and how to configure them and also
+	 * what enhancement module to use.
+	 */
 	public RunConfiguration configure() {
 		// dirty regex hacking. Sure, there are better solutions…
 		final StringBuilder sb_tags = new StringBuilder();
@@ -101,6 +135,11 @@ public class Categories implements Task {
 		return config;
 	}
 
+	/**
+	 * A help widget to inform the user.
+	 *
+	 * @return A widget containing an explanatory text.
+	 */
 	public Widget helpText() {
 		HTML text = new HTML
 			( "<h4>Part of Speech</h4>"

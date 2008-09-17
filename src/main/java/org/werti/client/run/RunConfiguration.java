@@ -11,11 +11,16 @@ import org.werti.client.util.Tuple;
  *
  * A <code>RunConfiguration</code> knows which descriptors to call to
  * instantiate pre- and postprocessing <code>AnalysisEngines</code>, what the
- * configuration parameters for them are and which GWT module to use on
+ * configuration parameters for them are, and which GWT module to use on
  * client-side to enhance the content of the processed document.
+ *
+ * Currently, configuration can only happen via the <code>Tuple</code>, which can
+ * only have <code>String</code> members. This will change in the future.
+ *
+ * @author Aleksandar Dimitrov
+ * @version 0.1
  */
 public interface RunConfiguration extends Serializable {
-
 	/**
 	 * Returns a path to an <code>AnalysisEngine</code> descriptor file
 	 * under the <code>/desc</code> path that instantiates a suitable preprocessor.
