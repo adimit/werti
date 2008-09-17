@@ -17,11 +17,12 @@
 DELIMITERS = "<.>" "<!>" "<?>" ; # sentence window
 
 SETS
-LIST _INGFORMS = VBG HVG BEG ; # gerunds or present participle
+LIST _INGFORM = VBG HVG BEG ; # gerunds or present participle
 
 LIST _INFIN = BE-INF DO-INF HV-INF VB-INF; # infinitives (introduced below)
 LIST _ADVER = RB RBR RBT; 	#  some types of adverbs used with infinitives
 LIST _TO = TO;
+LIST _PROGINTRO = BEM BEZ BER BEN BE;
 
 
 ############################################################################# 
@@ -32,6 +33,7 @@ LIST _TO = TO;
 ############################################################################# 
 
 BEFORE-SECTIONS
+
 # repair mistagged "to" before two or more adverbs 
 LIST UNINFLECTED = BE DO GV VB;
 "<To>" SUBSTITUTE (IN) (TO) (IN) ( +1*C UNINFLECTED BARRIER (*) - _ADVER );
@@ -42,6 +44,11 @@ SUBSTITUTE (BE) (BE-INF) (BE) (-1*C (TO) BARRIER (*) - _ADVER);
 SUBSTITUTE (DO) (DO-INF) (DO) (-1*C (TO) BARRIER (*) - _ADVER);
 SUBSTITUTE (HV) (HV-INF) (HV) (-1*C (TO) BARRIER (*) - _ADVER);
 SUBSTITUTE (VB) (VB-INF) (VB) (-1*C (TO) BARRIER (*) - _ADVER);
+
+# append gerund reading to -ing forms
+# FIXME: what to do about empty lemmata inserted?
+# FIXME: this is beta
+APPEND ("" GERUND) _INGFORM;
 
 
 ############################################################################# 
@@ -58,6 +65,13 @@ SECTION
 ADD (^INF-B) _TO    (+*1C _INFIN BARRIER (*) - _ADVER ); 
 ADD (^INF-I) _INFIN (-*1C _TO BARRIER (*) - _ADVER );
 ADD (^INF-I) _ADVER (-*1C _TO BARRIER (*) - _ADVER ) (+*1C _INFIN BARRIER (*) - _ADVER );
+
+
+
+# progressives are no gerunds
+# FIXME: this is beta
+REMOVE ("" GERUND) (-1C _PROGINTRO);
+
 
 
 ############################################################################# 
