@@ -43,9 +43,8 @@ public class PoSEnhancer extends JCasAnnotator_ImplBase {
 		log.info("Starting enhancement");
 		Object o = getContext().getConfigParameterValue("Tags");
 		final String[] tags;
-		log.debug("Object is: " + o.getClass().getName());
-		if (o instanceof String) {
-			tags = ((String) o).split("(\\s*,\\s*)+");
+		if (o instanceof String[]) {
+			tags = (String[]) o;
 			if (log.isDebugEnabled()) {
 				final StringBuilder sb = new StringBuilder();
 				for (String s:tags) {
@@ -54,7 +53,7 @@ public class PoSEnhancer extends JCasAnnotator_ImplBase {
 				log.debug("Tags: " + sb.toString());
 			}
 		} else {
-			Object[] args = { o.toString(), "Tags" };
+			Object[] args = { "Tags" };
 			throw new AnalysisEngineProcessException
 				(AnalysisEngineProcessException.RESOURCE_DATA_NOT_VALID, args);
 		}

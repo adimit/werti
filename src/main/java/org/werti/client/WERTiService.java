@@ -2,8 +2,6 @@ package org.werti.client;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 
-import org.werti.client.run.RunConfiguration;
-
 /**
  * The service interface to the server.
  *
@@ -19,6 +17,6 @@ public interface WERTiService extends RemoteService {
 	 * @param tags A bunch of part-of-speech tags you want to highlight.
 	 * @param url The URL of the page the user has requested.
 	 */
-	public String process(RunConfiguration config, String url)
+	public String process(String method, String language, String[] tags, String url)
 		throws ProcessingException, InitializationException, URLException;
 }

@@ -11,13 +11,19 @@
 </div>
 <div class="text">
 	<h2>Settings</h2>
-	<span id="exercises"></span>
-	<span id="status"></span>
+	<p>
+		URL: <span id="searchBox"></span><br />
+		Target Language: <span id="languageChoice"></span>
+	</p>
+	<span id="Exercises"></span>
+	<span id="submitButtons"></span>
+	<br />
+	Status: <span id="statusBar"></span>
 </div>
 <div class="text">
 	<h2>Further Information</h2>
-	Should you have questions about the system, you may
-	<a href="mailto:admtrov@sfs.uni-tuebingen.de">contact me</a>. You can
-	also head over to <a href="docs/">the documentation</a>
+	Should you have questions about the system, you may 
+	<a href="mailto:admtrov@sfs.uni-tuebingen.de">contact me</a>. You can also head over to 
+	<a href="docs/">the documentation</a>
 </div>
 

@@ -2,8 +2,6 @@ package org.werti.client;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-import org.werti.client.run.RunConfiguration;
-
 /**
  * The asynchronous service interface to the server.
  *
@@ -22,6 +20,6 @@ public interface WERTiServiceAsync {
 	 * @param callback The callback object of this call.
 	 */
 	@SuppressWarnings("unchecked")
-	public void process(RunConfiguration config, String url, AsyncCallback callback) 
+	public void process(String method, String language, String[] tags, String url, AsyncCallback callback) 
 		throws ProcessingException, InitializationException, URLException;
 }

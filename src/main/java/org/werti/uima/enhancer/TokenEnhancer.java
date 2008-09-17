@@ -41,7 +41,7 @@ public class TokenEnhancer extends JCasAnnotator_ImplBase {
 		Object o = getContext().getConfigParameterValue("Tags");
 		final String[] tags;
 		if (o instanceof String[]) {
-			tags = ((String) o).split("(\\s*,\\s*)+");
+			tags = (String[]) o;
 			if (log.isDebugEnabled()) {
 				final StringBuilder sb = new StringBuilder();
 				for (String s:tags) {
