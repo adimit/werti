@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
 /** Describes an enhancment on the current spot.
- * Updated by JCasGen Tue Jul 22 02:03:04 CEST 2008
+ * Updated by JCasGen Wed Sep 17 14:36:52 CEST 2008
  * @generated */
 public class Enhancement_Type extends Annotation_Type {
   /** @generated */
