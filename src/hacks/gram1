@@ -1,3 +1,7 @@
+#
+# sandbox grammar
+# ATTENTION: uses TreeTagger interpretatiom of Penn TB Tagset
+#
 
 DELIMITERS = "<.>" "<!>" "<?>" ; # sentence window
 

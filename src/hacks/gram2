@@ -1,6 +1,9 @@
 #
 # fist real test grammar for gerund detection
 #
+# # ATTENTION: uses TreeTagger interpretatiom of Penn TB Tagset
+
+#
 
 DELIMITERS = "<.>" "<!>" "<?>" ; # sentence window
 

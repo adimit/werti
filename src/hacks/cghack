@@ -1,13 +1,21 @@
 #!/bin/bash
 
+#
+# Wrapper that runs 
+#
+
 TEXT="$1"
 GRAMMAR="$2"
 
-TT="`which tree-tagger-english`"
+LPT="`which cmd_pos_en_general_brown.sh`"
 VISLCG="`which vislcg3`"
 
-# empty baseform needs to be put into input, otherwise vislcg3 messes up
+LPTDIR=`dirname ${LPT}`
+
+
 cat "$TEXT" \
-   | "$TT"  \
-   | awk '{print("\"<" $1 ">\"") ; print("\t\"\"",$2)}' \
-   | "$VISLCG" -g "$GRAMMAR" --trace
+	| ( cd $LPTDIR  ; $LPT ) \
+	| perl -wne 'while ( m/<token pos="([^"]*)">([^<]*)<\/token>/g ) { print "\n\"<$2>\"\n\t\"\" " . uc($1); }' \
+	| "$VISLCG" -g "$GRAMMAR" --trace
+	
+
