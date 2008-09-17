@@ -9,6 +9,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
+import org.werti.client.run.CategoriesConfiguration;
 import org.werti.client.run.RunConfiguration;
 
 import org.werti.client.ui.ECheckBox;
@@ -17,6 +18,7 @@ import org.werti.client.ui.ETextBox;
 import org.werti.client.ui.HasData;
 
 public class Categories implements Task {
+
 	private static final String NAME = "Grammatical Categories";
 
 	private static final ECheckBox dets = new ECheckBox("at", "Determiners");
@@ -88,16 +90,14 @@ public class Categories implements Task {
 		for (final HasData o:tagConfig) {
 			sb_tags.append(o.getData() + ",");
 		}
-		final String[] tags =
-			sb_tags.toString().replaceAll("^[^\\w]*", "").split("(\\s*,\\s*)+");
+		final String tags = sb_tags.toString().replaceAll("^[^\\w]*", "");
 
 		final StringBuilder module = new StringBuilder();
 		for (final HasData o:enhConfig) {
 			module.append(o.getData());
 		}
 
-		final org.werti.client.run.Categories config =
-			new org.werti.client.run.Categories(tags, module.toString());
+		final CategoriesConfiguration config = new CategoriesConfiguration(tags, module.toString());
 		return config;
 	}
 

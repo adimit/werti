@@ -1,7 +1,5 @@
 package org.werti.client.run;
 
-import java.io.Serializable;
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,19 +10,18 @@ import org.werti.client.util.Tuple;
  *
  * PoS-tags the input. Enhancement is applied according to PoS Tags.
  */
-public class Categories implements RunConfiguration, Serializable {
+public class CategoriesConfiguration implements RunConfiguration {
 
-	private String[] tags;
+	private String tags;
 	private String enhancer;
 
-	public Categories(String[] tags, String enhancer) {
+	public CategoriesConfiguration(String tags, String enhancer) {
 		this.tags = tags;
 		this.enhancer = enhancer;
 	}
 
-	public Categories() {
-		this.tags = new String[1];
-		tags[0] = "pp";
+	public CategoriesConfiguration() {
+		tags = "pp";
 		this.enhancer = "Colorize";
 	}
 
@@ -42,13 +39,13 @@ public class Categories implements RunConfiguration, Serializable {
 		}
 	}
 
-	public List<Tuple<String,Object>> preconfig() {
+	public List<Tuple> preconfig() {
 		return null;
 	}
 
-	public List<Tuple<String,Object>> postconfig() {
-		final List<Tuple<String,Object>> config = new LinkedList<Tuple<String,Object>>();
-		config.add(new Tuple<String,Object>("tags", tags));
+	public List<Tuple> postconfig() {
+		final List<Tuple> config = new LinkedList<Tuple>();
+		config.add(new Tuple("tags", tags));
 		return config;
 	}
 

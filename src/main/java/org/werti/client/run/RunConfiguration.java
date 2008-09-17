@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.werti.client.util.Tuple;
 
-/** 
+/**
  * A generic interface for specifying server-side behaviour.
  *
  * A <code>RunConfiguration</code> knows which descriptors to call to
@@ -14,7 +14,6 @@ import org.werti.client.util.Tuple;
  * configuration parameters for them are and which GWT module to use on
  * client-side to enhance the content of the processed document.
  */
-
 public interface RunConfiguration extends Serializable {
 
 	/**
@@ -39,7 +38,7 @@ public interface RunConfiguration extends Serializable {
 	 *
 	 * @return Preprocessor's configuration parameters.
 	 */
-	public List<Tuple<String,Object>> preconfig();
+	public List<Tuple> preconfig();
 
 	/**
 	 * Returns a list of name/value pairs representing the postprocessing
@@ -47,7 +46,7 @@ public interface RunConfiguration extends Serializable {
 	 *
 	 * @return Postprocessor's configuration parameters.
 	 */
-	public List<Tuple<String,Object>> postconfig();
+	public List<Tuple> postconfig();
 
 	/**
 	 * Denotes the GWT-module (in org.werti.enhancements) that

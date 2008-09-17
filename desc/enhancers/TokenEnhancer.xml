@@ -19,9 +19,9 @@ This is currently not needed anymore, but may still be useful at a later time an
       </configurationParameter>
       <configurationParameter>
         <name>Tags</name>
-        <description>A list of tags to mark up.</description>
+        <description>A list of tags to mark up, comma separated</description>
         <type>String</type>
-        <multiValued>true</multiValued>
+        <multiValued>false</multiValued>
         <mandatory>true</mandatory>
       </configurationParameter>
     </configurationParameters>
@@ -35,12 +35,7 @@ This is currently not needed anymore, but may still be useful at a later time an
       <nameValuePair>
         <name>Tags</name>
         <value>
-          <array>
-            <string>NN</string>
-            <string>nn</string>
-            <string>np</string>
-            <string>NP</string>
-          </array>
+          <string>in,to</string>
         </value>
       </nameValuePair>
     </configurationParameterSettings>

@@ -76,8 +76,15 @@ public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiServi
 
 	public static final long serialVersionUID = 10;
 
-	private static void configEngine(AnalysisEngine ae, List<Tuple<String,Object>> config) {
-		for (Tuple<String,Object> e:config) {
+	private static void configEngine(AnalysisEngine ae, List<Tuple> config) {
+		if (config == null) {
+			log.warn("No configuration found for " + ae.getClass().getName());
+			return;
+		}
+
+		log.debug("Configuring " + ae.getClass().getName());
+		for (Tuple e:config) {
+			log.debug("Configuring: " + e.fst() + " with " + e.snd());
 			ae.setConfigParameterValue(e.fst(), e.snd());
 		}
 	}
@@ -153,6 +160,7 @@ public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiServi
 				("Error accessing descriptor files or creating analysis objects", npe);
 		}
 		log.info("Initialized UIMA components.");
+		log.info("Configuring UIMA components...");
 
 		configEngine(preprocessor, config.preconfig());
 		configEngine(postprocessor, config.postconfig());

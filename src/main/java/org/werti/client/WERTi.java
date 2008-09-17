@@ -60,6 +60,7 @@ public class WERTi implements EntryPoint {
 						 , url.getText()
 						 , callback);
 				} catch(Throwable t) {
+					status.setHTML("ClickListener caught error.");
 					showError(t);
 				}
 			}
@@ -177,6 +178,7 @@ public class WERTi implements EntryPoint {
 		 * @param reason An exception we recieved from the server.
 		 */
 		public void onFailure(Throwable reason) {
+			status.setHTML("Callback caught error");
 			showError(reason);
 		}
 
