@@ -432,3 +432,15 @@ To be or not to be, this is the question.
 To only just break the system instead of fixing it wasn't such a brilliant plan.
 
 Nobody told you to do such a stupid thing!
+
+I am singing in the rain.
+We are singing in the rain.
+He is singing in the rain.
+
+I will be singing in the rain.
+I was be singing in the rain.
+I have been singing in the rain.
+I would have been singing in the rain.
+I might have been seen singing in the rain.
+I am going to be singing in the rain.
+
