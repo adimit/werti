@@ -1,44 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
-  <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
-  <primitive>true</primitive>
-  <annotatorImplementationName>org.werti.uima.ae.LingPipeTagger</annotatorImplementationName>
-  <analysisEngineMetaData>
-    <name>LGPTagger</name>
-    <description/>
-    <version>1.0</version>
-    <vendor/>
-    <configurationParameters/>
-    <configurationParameterSettings/>
-    <typeSystemDescription>
-      <imports>
-        <import location="../../WERTiTypeSystem.xml"/>
-      </imports>
-    </typeSystemDescription>
-    <typePriorities/>
-    <fsIndexCollection/>
-    <capabilities>
-      <capability>
-        <inputs>
-          <type>org.werti.uima.types.annot.Token</type>
-          <type>org.werti.uima.types.annot.SentenceAnnotation</type>
-          <feature>org.werti.uima.types.annot.Token:sofa</feature>
-          <feature>org.werti.uima.types.annot.SentenceAnnotation:end</feature>
-          <feature>org.werti.uima.types.annot.SentenceAnnotation:begin</feature>
-          <feature>org.werti.uima.types.annot.SentenceAnnotation:sofa</feature>
-        </inputs>
-        <outputs>
-          <type>org.werti.uima.types.annot.Token</type>
-          <feature>org.werti.uima.types.annot.Token:tag</feature>
-        </outputs>
-        <languagesSupported/>
-      </capability>
-    </capabilities>
-    <operationalProperties>
-      <modifiesCas>true</modifiesCas>
-      <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
-      <outputsNewCASes>false</outputsNewCASes>
-    </operationalProperties>
-  </analysisEngineMetaData>
-  <resourceManagerConfiguration/>
+<frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+<primitive>true</primitive>
+<annotatorImplementationName>org.werti.uima.ae.LingPipeTagger</annotatorImplementationName>
+<analysisEngineMetaData>
+<name>LGPTagger</name>
+<description></description>
+<version>1.0</version>
+<vendor></vendor>
+<configurationParameters>
+<configurationParameter>
+<name>runningOnServer</name>
+<description>Flag indicating whether we are running on a server or not.</description>
+<type>Boolean</type>
+<multiValued>false</multiValued>
+<mandatory>false</mandatory>
+</configurationParameter>
+<configurationParameter>
+<name>modelLocation</name>
+<description>Location of the model file used for tagging.</description>
+<type>String</type>
+<multiValued>false</multiValued>
+<mandatory>false</mandatory>
+</configurationParameter>
+</configurationParameters>
+<configurationParameterSettings>
+<nameValuePair>
+<name>runningOnServer</name>
+<value>
+<boolean>false</boolean>
+</value>
+</nameValuePair>
+<nameValuePair>
+<name>modelLocation</name>
+<value>
+<string>/Users/rziai/Uni/icall/workspace/WERTi/src/main/resources/models/lgptagger/pos-en-general-brown.HiddenMarkovModel</string>
+</value>
+</nameValuePair>
+</configurationParameterSettings>
+<typeSystemDescription>
+<imports>
+<import location="../../WERTiTypeSystem.xml"/>
+</imports>
+</typeSystemDescription>
+<typePriorities/>
+<fsIndexCollection/>
+<capabilities>
+<capability>
+<inputs>
+<type>org.werti.uima.types.annot.Token</type>
+<type>org.werti.uima.types.annot.SentenceAnnotation</type>
+<feature>org.werti.uima.types.annot.Token:sofa</feature>
+<feature>org.werti.uima.types.annot.SentenceAnnotation:end</feature>
+<feature>org.werti.uima.types.annot.SentenceAnnotation:begin</feature>
+<feature>org.werti.uima.types.annot.SentenceAnnotation:sofa</feature>
+</inputs>
+<outputs>
+<type>org.werti.uima.types.annot.Token</type>
+<feature>org.werti.uima.types.annot.Token:tag</feature>
+</outputs>
+<languagesSupported/>
+</capability>
+</capabilities>
+<operationalProperties>
+<modifiesCas>true</modifiesCas>
+<multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+<outputsNewCASes>false</outputsNewCASes>
+</operationalProperties>
+</analysisEngineMetaData>
+<resourceManagerConfiguration/>
 </analysisEngineDescription>
