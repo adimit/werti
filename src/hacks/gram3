@@ -10,7 +10,6 @@
 ############################################################################# 
 #
 # Common definitions
-# -> tagset-dependent 
 #
 ############################################################################# 
 
@@ -32,9 +31,9 @@ LIST _ADVER = RB RBR RBT; 	#  some types of adverbs used with infinitives
 BEFORE-SECTIONS
 
 # repair mistagged "to" before two or more adverbs 
-LIST UNINFLECTED = BE DO GV VB;
-"<To>" SUBSTITUTE (IN) (TO) (IN) ( +1*C UNINFLECTED BARRIER (*) - _ADVER );
-"<to>" SUBSTITUTE (IN) (TO) (IN) ( +1*C UNINFLECTED BARRIER (*) - _ADVER );
+LIST _UNINFLECTED = BE DO GV VB;
+"<To>" SUBSTITUTE (IN) (TO) (IN) ( +1*C _UNINFLECTED BARRIER (*) - _ADVER );
+"<to>" SUBSTITUTE (IN) (TO) (IN) ( +1*C _UNINFLECTED BARRIER (*) - _ADVER );
 
 # introduce infinitive tags (Brown tagset only knows "uninflected forms")
 SUBSTITUTE (BE) (BE-INF) (BE) (-1*C (TO) BARRIER (*) - _ADVER);
@@ -43,13 +42,13 @@ SUBSTITUTE (HV) (HV-INF) (HV) (-1*C (TO) BARRIER (*) - _ADVER);
 SUBSTITUTE (VB) (VB-INF) (VB) (-1*C (TO) BARRIER (*) - _ADVER);
 
 # append gerund reading to -ing forms
-# FIXME: what to do about empty lemmata inserted?
-# FIXME: this is beta
+# this version would not keep the original tags
 #APPEND ("" GERUND) _INGFORM;
 #APPEND ("" PROGRE) _INGFORM;
 #APPEND ("" PARTIC) _INGFORM;
 
 # add readings for all -ing forms (this should be done in a smarter way)
+# 
 SUBSTITUTE ("" VBG) ("---remove---" VBG) (VBG);
 APPEND ("" VBG GERU)   (VBG);
 APPEND ("" HVG GERU)   (HVG);
@@ -63,6 +62,12 @@ APPEND ("" BEG PART)   (BEG);
 # remove readings without  tags.
 LIST X = GERU PROG PART;
 REMOVE ("---remove---" VBG);
+
+# add reading for going-to-future
+"<going>" APPEND ("" VGB GOFU) (VBG);
+
+# add reading for going-to-future in the past
+"<going>" APPEND ("" VGB GOFUPA) (VBG);
 
 
 
@@ -81,14 +86,25 @@ ADD (INF-B) (TO)    (+*1C _INFIN BARRIER (*) - _ADVER );
 ADD (INF-I) _INFIN (-*1C (TO) BARRIER (*) - _ADVER );
 ADD (INF-I) _ADVER (-*1C (TO) BARRIER (*) - _ADVER ) (+*1C _INFIN BARRIER (*) - _ADVER );
 
+# -ing: going-to-future
+SELECT (GOFU) (-1 (BER)) (+1 (TO));
+
+# add reading for going-to-future in the past
+SELECT (GOFUPA) (-1 (BED)) (+1 (TO));
+SELECT (GOFUPA) (-1 (BEDZ)) (+1 (TO));
 
 
-# progressives are no gerunds
-# FIXME: this is beta
-#REMOVE ("" GERUND) (-1C _PROGINTRO);
-#REMOVE ("" VBG);
-LIST PROGINTRO = BEM BEZ BER BEN BE;
-SELECT (PROG) (-1 PROGINTRO);
+# -ing: select progressive form readings
+# TOOD: questions
+LIST _PROGINTRO = BEM BEZ BER BEN BE;
+SELECT (PROG) (-1* _PROGINTRO BARRIER (*) - _ADVER);
+
+# -ing: select participle readings
+# TODO
+
+# -ing: select gerund readings
+# TODO
+
 
 ############################################################################# 
 #
