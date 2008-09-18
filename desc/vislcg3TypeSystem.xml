@@ -24,7 +24,7 @@
 <typeDescription>
 <name>org.werti.uima.types.annot.CGReading</name>
 <description>A reading in a constraint grammar cohort.</description>
-<supertypeName>uima.cas.StringList</supertypeName>
+<supertypeName>uima.cas.NonEmptyStringList</supertypeName>
 </typeDescription>
 </types>
 </typeSystemDescription>

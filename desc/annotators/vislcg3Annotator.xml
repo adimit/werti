@@ -40,7 +40,7 @@
 </configurationParameterSettings>
 <typeSystemDescription>
 <imports>
-<import name="vislcg3TypeSystem"/>
+<import location="../vislcg3TypeSystem.xml"/>
 </imports>
 </typeSystemDescription>
 <typePriorities/>
