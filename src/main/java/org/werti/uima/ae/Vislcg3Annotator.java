@@ -108,6 +108,7 @@ public class Vislcg3Annotator extends JCasAnnotator_ImplBase {
 		
 		// write input
 		toCG.write(input);
+		toCG.close();
 		// get back output
 		StringBuilder output = new StringBuilder();
 		String line = null;
@@ -116,7 +117,7 @@ public class Vislcg3Annotator extends JCasAnnotator_ImplBase {
 			output.append(line);
 			output.append("\n");
 		}
-		
+		fromCG.close();
 		return output.toString();
 	}
 
