@@ -11,8 +11,11 @@ import java.util.List;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_component.JCasAnnotator_ImplBase;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
+import org.apache.uima.cas.FSIterator;
 import org.apache.uima.jcas.JCas;
+import org.apache.uima.jcas.cas.FSArray;
 import org.apache.uima.resource.ResourceInitializationException;
+import org.werti.uima.types.annot.CGReading;
 import org.werti.uima.types.annot.CGToken;
 import org.werti.uima.types.annot.Token;
 
@@ -31,7 +34,43 @@ public class Vislcg3Annotator extends JCasAnnotator_ImplBase {
 
 	@Override
 	public void process(JCas jcas) throws AnalysisEngineProcessException {
-		// TODO implement, call various helper methods
+		// collect original tokens here
+		ArrayList<Token> originalTokens = new ArrayList<Token>();
+		FSIterator tokenIter = jcas.getAnnotationIndex(Token.type).iterator();
+		while (tokenIter.hasNext()) {
+			originalTokens.add((Token)tokenIter.next());
+		}
+		// convert token list to cg input
+		String cg3input = toCG3Input(originalTokens);
+		try {
+			// run vislcg3
+			String cg3output = runVislcg3(cg3input);
+			// parse cg output
+			List<CGToken> newTokens = parseCGOutput(cg3output, jcas);
+			// assert that we got as many tokens back as we provided
+			assert true: newTokens.size() == originalTokens.size();
+			// complete new tokens with information from old ones
+			for (int i = 0; i < originalTokens.size(); i++) {
+				Token origT = originalTokens.get(i);
+				CGToken newT = newTokens.get(i);
+				copy(origT, newT);
+				// update CAS
+				jcas.removeFsFromIndexes(origT);
+				jcas.addFsToIndexes(newT);
+			}
+		} catch (IOException e) {
+			throw new AnalysisEngineProcessException(e);
+		}
+	}
+	
+	/*
+	 * helper for copying over information from Token to CGToken
+	 */
+	private void copy(Token source, CGToken target) {
+		target.setBegin(source.getBegin());
+		target.setEnd(source.getEnd());
+		target.setTag(source.getTag());
+		target.setLemma(source.getLemma());
 	}
 	
 	/*
@@ -84,8 +123,42 @@ public class Vislcg3Annotator extends JCasAnnotator_ImplBase {
 	/*
 	 * helper for parsing output from vislcg3 back into our CGTokens
 	 */
-	private List<CGToken> parseCGOutput(String cgOutput) {
-		// TODO implement
-		return null;
+	private List<CGToken> parseCGOutput(String cgOutput, JCas jcas) {
+		ArrayList<CGToken> result = new ArrayList<CGToken>();
+		
+		// current token and its readings
+		CGToken current = null;
+		ArrayList<CGReading> currentReadings = new ArrayList<CGReading>();
+		// read output line by line, eat multiple newlines
+		for (String line : cgOutput.split("\n+")) {
+			// case 1: new cohort
+			if (line.startsWith("\"<")) {
+				if (current != null) {
+					// save previous token
+					current.setReadings(new FSArray(jcas, currentReadings.size()));
+					int i = 0;
+					for (CGReading cgr : currentReadings) {
+						current.setReadings(i, cgr);
+						i++;
+					}
+					result.add(current);
+				}
+				// create new token
+				current = new CGToken(jcas);
+			// case 2: a reading in the current cohort
+			} else {
+				CGReading reading = new CGReading(jcas);
+				// split reading line into tags
+				String[] temp = line.split("\\s");
+				// iterate backwards due to UIMAs prolog list disease
+				for (int i = temp.length-1; i >= 0; i--) {
+					reading.setTail(reading);
+					reading.setHead(temp[i]);
+				}
+				// add the reading
+				currentReadings.add(reading);
+			}
+		}
+		return result;
 	}
 }
