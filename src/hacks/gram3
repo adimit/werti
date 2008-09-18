@@ -20,6 +20,7 @@ LIST _INGFORM = VBG HVG BEG ; # gerunds or present participle
 
 LIST _INFIN = BE-INF DO-INF HV-INF VB-INF; # infinitives (introduced below)
 LIST _ADVER = RB RBR RBT; 	#  some types of adverbs used with infinitives
+#SET _ADVERNOT = _ADVER + ('*');  #  adverbs including "not"
 
 
 ############################################################################# 
@@ -80,18 +81,17 @@ REMOVE ("---remove---" VBG);
 
 SECTION
 
-# marking infinitive constructions: TO ADVER* INFIN
-# INF-B: beginning of chunk. INF-I: inside of chunk.
-ADD (INF-B) (TO)    (+*1C _INFIN BARRIER (*) - _ADVER ); 
-ADD (INF-I) _INFIN (-*1C (TO) BARRIER (*) - _ADVER );
-ADD (INF-I) _ADVER (-*1C (TO) BARRIER (*) - _ADVER ) (+*1C _INFIN BARRIER (*) - _ADVER );
-
 # -ing: going-to-future
-SELECT (GOFU) (-1 (BER)) (+1 (TO));
+# TODO: missing negation (tag *)
+SELECT (GOFU) (-1* (BER) BARRIER (*) - _ADVER) (+1 (TO)) (+2 _INFIN);
+SELECT (GOFU) (-1* (BEM) BARRIER (*) - _ADVER) (+1 (TO)) (+2 _INFIN);
+SELECT (GOFU) (-1* (BEZ) BARRIER (*) - _ADVER) (+1 (TO)) (+2 _INFIN);
+
 
 # add reading for going-to-future in the past
-SELECT (GOFUPA) (-1 (BED)) (+1 (TO));
-SELECT (GOFUPA) (-1 (BEDZ)) (+1 (TO));
+# TODO: missing negation (tag *)
+SELECT (GOFUPA) (-1* (BED)  BARRIER (*) - _ADVER) (+1 (TO)) (+2 _INFIN);
+SELECT (GOFUPA) (-1* (BEDZ) BARRIER (*) - _ADVER) (+1 (TO)) (+2 _INFIN);
 
 
 # -ing: select progressive form readings
@@ -108,9 +108,17 @@ SELECT (PROG) (-1* _PROGINTRO BARRIER (*) - _ADVER);
 
 ############################################################################# 
 #
-# Repairing things after rules applied
+# After inferring the needed information, mark chunks
 #
 ############################################################################# 
 
 AFTER-SECTIONS
-#empty
+
+# marking infinitive constructions: TO ADVER* INFIN
+# INF-B: beginning of chunk. INF-I: inside of chunk.
+ADD (INF-B) (TO)    (+*1C _INFIN BARRIER (*) - _ADVER ); 
+ADD (INF-I) _INFIN (-*1C (TO) BARRIER (*) - _ADVER );
+ADD (INF-I) _ADVER (-*1C (TO) BARRIER (*) - _ADVER ) (+*1C _INFIN BARRIER (*) - _ADVER );
+
+
+
