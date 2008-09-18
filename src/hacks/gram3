@@ -21,14 +21,11 @@ LIST _INGFORM = VBG HVG BEG ; # gerunds or present participle
 
 LIST _INFIN = BE-INF DO-INF HV-INF VB-INF; # infinitives (introduced below)
 LIST _ADVER = RB RBR RBT; 	#  some types of adverbs used with infinitives
-LIST _TO = TO;
-LIST _PROGINTRO = BEM BEZ BER BEN BE;
 
 
 ############################################################################# 
 #
 # Fixing tagger issues and inferring information used later on.
-# -> tagset-dependent 
 #
 ############################################################################# 
 
@@ -48,13 +45,31 @@ SUBSTITUTE (VB) (VB-INF) (VB) (-1*C (TO) BARRIER (*) - _ADVER);
 # append gerund reading to -ing forms
 # FIXME: what to do about empty lemmata inserted?
 # FIXME: this is beta
-APPEND ("" GERUND) _INGFORM;
+#APPEND ("" GERUND) _INGFORM;
+#APPEND ("" PROGRE) _INGFORM;
+#APPEND ("" PARTIC) _INGFORM;
+
+# add readings for all -ing forms (this should be done in a smarter way)
+SUBSTITUTE ("" VBG) ("---remove---" VBG) (VBG);
+APPEND ("" VBG GERU)   (VBG);
+APPEND ("" HVG GERU)   (HVG);
+APPEND ("" BEG GERU)   (BEG);
+APPEND ("" VBG PROG)   (VBG);
+APPEND ("" HVG PROG)   (HVG);
+APPEND ("" BEG PROG)   (BEG);
+APPEND ("" VBG PART)   (VBG);
+APPEND ("" HVG PART)   (HVG);
+APPEND ("" BEG PART)   (BEG);
+# remove readings without  tags.
+LIST X = GERU PROG PART;
+REMOVE ("---remove---" VBG);
+
+
 
 
 ############################################################################# 
 #
 # Rules: Marking relevant phrases/chunks
-# -> not tagset-dependent 
 #
 ############################################################################# 
 
@@ -62,17 +77,18 @@ SECTION
 
 # marking infinitive constructions: TO ADVER* INFIN
 # INF-B: beginning of chunk. INF-I: inside of chunk.
-ADD (^INF-B) _TO    (+*1C _INFIN BARRIER (*) - _ADVER ); 
-ADD (^INF-I) _INFIN (-*1C _TO BARRIER (*) - _ADVER );
-ADD (^INF-I) _ADVER (-*1C _TO BARRIER (*) - _ADVER ) (+*1C _INFIN BARRIER (*) - _ADVER );
+ADD (INF-B) (TO)    (+*1C _INFIN BARRIER (*) - _ADVER ); 
+ADD (INF-I) _INFIN (-*1C (TO) BARRIER (*) - _ADVER );
+ADD (INF-I) _ADVER (-*1C (TO) BARRIER (*) - _ADVER ) (+*1C _INFIN BARRIER (*) - _ADVER );
 
 
 
 # progressives are no gerunds
 # FIXME: this is beta
-REMOVE ("" GERUND) (-1C _PROGINTRO);
-
-
+#REMOVE ("" GERUND) (-1C _PROGINTRO);
+#REMOVE ("" VBG);
+LIST PROGINTRO = BEM BEZ BER BEN BE;
+SELECT (PROG) (-1 PROGINTRO);
 
 ############################################################################# 
 #
