@@ -15,17 +15,15 @@
 
 DELIMITERS = "<.>" "<!>" "<?>" ; # sentence window
 
-SETS
 LIST _INGFORM = VBG HVG BEG ; # gerunds or present participle
-
 LIST _INFIN = BE-INF DO-INF HV-INF VB-INF; # infinitives (introduced below)
 LIST _ADVER = RB RBR RBT; 	#  some types of adverbs used with infinitives
-#SET _ADVERNOT = _ADVER + ('*');  #  adverbs including "not"
+LIST _NEG   = "<not>" "<Not>";  # negation words, TODO: contractions?!
 
 
 ############################################################################# 
 #
-# Fixing tagger issues and inferring information used later on.
+# Preprocessing: fixing tagger issues and introducing ambiguous readings
 #
 ############################################################################# 
 
@@ -35,6 +33,7 @@ BEFORE-SECTIONS
 LIST _UNINFLECTED = BE DO GV VB;
 "<To>" SUBSTITUTE (IN) (TO) (IN) ( +1*C _UNINFLECTED BARRIER (*) - _ADVER );
 "<to>" SUBSTITUTE (IN) (TO) (IN) ( +1*C _UNINFLECTED BARRIER (*) - _ADVER );
+
 
 # introduce infinitive tags (Brown tagset only knows "uninflected forms")
 SUBSTITUTE (BE) (BE-INF) (BE) (-1*C (TO) BARRIER (*) - _ADVER);
@@ -75,29 +74,29 @@ REMOVE ("---remove---" VBG);
 
 ############################################################################# 
 #
-# Rules: Marking relevant phrases/chunks
+# Rules: disambiguating -ing forms
 #
 ############################################################################# 
 
 SECTION
 
 # -ing: going-to-future
-# TODO: missing negation (tag *)
-SELECT (GOFU) (-1* (BER) BARRIER (*) - _ADVER) (+1 (TO)) (+2 _INFIN);
-SELECT (GOFU) (-1* (BEM) BARRIER (*) - _ADVER) (+1 (TO)) (+2 _INFIN);
-SELECT (GOFU) (-1* (BEZ) BARRIER (*) - _ADVER) (+1 (TO)) (+2 _INFIN);
+# TOOD: questions
+SELECT (GOFU) (-1* (BER) BARRIER (*) - _NEG - _ADVER) (+1 (TO)) (+2 _INFIN);
+SELECT (GOFU) (-1* (BEM) BARRIER (*) - _NEG - _ADVER) (+1 (TO)) (+2 _INFIN);
+SELECT (GOFU) (-1* (BEZ) BARRIER (*) - _NEG - _ADVER) (+1 (TO)) (+2 _INFIN);
 
 
 # add reading for going-to-future in the past
-# TODO: missing negation (tag *)
-SELECT (GOFUPA) (-1* (BED)  BARRIER (*) - _ADVER) (+1 (TO)) (+2 _INFIN);
-SELECT (GOFUPA) (-1* (BEDZ) BARRIER (*) - _ADVER) (+1 (TO)) (+2 _INFIN);
+# TOOD: questions
+SELECT (GOFUPA) (-1* (BED)  BARRIER (*) - _NEG - _ADVER) (+1 (TO)) (+2 _INFIN);
+SELECT (GOFUPA) (-1* (BEDZ) BARRIER (*) - _NEG - _ADVER) (+1 (TO)) (+2 _INFIN);
 
 
 # -ing: select progressive form readings
 # TOOD: questions
 LIST _PROGINTRO = BEM BEZ BER BEN BE;
-SELECT (PROG) (-1* _PROGINTRO BARRIER (*) - _ADVER);
+SELECT (PROG) (-1* _PROGINTRO BARRIER (*) - _NEG - _ADVER);
 
 # -ing: select participle readings
 # TODO
@@ -108,7 +107,7 @@ SELECT (PROG) (-1* _PROGINTRO BARRIER (*) - _ADVER);
 
 ############################################################################# 
 #
-# After inferring the needed information, mark chunks
+# After inferring the required information: marking of the chunks
 #
 ############################################################################# 
 
