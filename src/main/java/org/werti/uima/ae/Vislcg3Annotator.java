@@ -14,7 +14,9 @@ import org.apache.uima.analysis_component.JCasAnnotator_ImplBase;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.cas.FSIterator;
 import org.apache.uima.jcas.JCas;
+import org.apache.uima.jcas.cas.EmptyStringList;
 import org.apache.uima.jcas.cas.FSArray;
+import org.apache.uima.jcas.cas.NonEmptyStringList;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.werti.uima.types.annot.CGReading;
 import org.werti.uima.types.annot.CGToken;
@@ -85,7 +87,11 @@ public class Vislcg3Annotator extends JCasAnnotator_ImplBase {
 			// parse cg output
 			List<CGToken> newTokens = parseCGOutput(cg3output, jcas);
 			// assert that we got as many tokens back as we provided
-			assert true: newTokens.size() == originalTokens.size();
+			if (newTokens.size() != originalTokens.size()) {
+				throw new IllegalArgumentException("Token list size mismatch: " +
+				"Original tokens: " + originalTokens.size() + ", After CG3: " + newTokens.size());
+			}
+				
 			// complete new tokens with information from old ones
 			for (int i = 0; i < originalTokens.size(); i++) {
 				Token origT = originalTokens.get(i);
@@ -96,6 +102,8 @@ public class Vislcg3Annotator extends JCasAnnotator_ImplBase {
 				jcas.addFsToIndexes(newT);
 			}
 		} catch (IOException e) {
+			throw new AnalysisEngineProcessException(e);
+		} catch (IllegalArgumentException e) {
 			throw new AnalysisEngineProcessException(e);
 		}
 	}
@@ -196,19 +204,38 @@ public class Vislcg3Annotator extends JCasAnnotator_ImplBase {
 				}
 				// create new token
 				current = new CGToken(jcas);
+				currentReadings = new ArrayList<CGReading>();
 			// case 2: a reading in the current cohort
 			} else {
 				CGReading reading = new CGReading(jcas);
 				// split reading line into tags
-				String[] temp = line.split("\\s");
+				String[] temp = line.split("\\s+");
+				reading.setTail(new EmptyStringList(jcas));
+				reading.setHead(temp[temp.length-1]);
 				// iterate backwards due to UIMAs prolog list disease
-				for (int i = temp.length-1; i >= 0; i--) {
-					reading.setTail(reading);
+				for (int i = temp.length-2; i >= 0; i--) {
+					if (temp[i].equals("")) {
+						break;
+					}
+					// in order to extend the list, we have to set the old one as tail and the new element as head
+					NonEmptyStringList old = reading;
+					reading = new CGReading(jcas);
+					reading.setTail(old);
 					reading.setHead(temp[i]);
 				}
 				// add the reading
 				currentReadings.add(reading);
 			}
+		}
+		if (current != null) {
+			// save last token
+			current.setReadings(new FSArray(jcas, currentReadings.size()));
+			int i = 0;
+			for (CGReading cgr : currentReadings) {
+				current.setReadings(i, cgr);
+				i++;
+			}
+			result.add(current);
 		}
 		return result;
 	}
