@@ -8,6 +8,7 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_component.JCasAnnotator_ImplBase;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
@@ -20,6 +21,42 @@ import org.werti.uima.types.annot.CGToken;
 import org.werti.uima.types.annot.Token;
 
 public class Vislcg3Annotator extends JCasAnnotator_ImplBase {
+
+	private static final Logger log =
+		Logger.getLogger(Vislcg3Annotator.class);	
+	
+	/**
+	 * A runnable class that reads from a reader (that may
+	 * be fed by {@link Process}) and puts stuff read to
+	 * the logger as debug messages.
+	 * @author nott
+	 */
+	public class ExtCommandConsume2Logger implements Runnable {
+		
+		BufferedReader reader;
+		String msgPrefix;
+
+		public ExtCommandConsume2Logger(BufferedReader reader, String msgPrefix) {
+			super();
+			this.reader = reader;
+			this.msgPrefix = msgPrefix;
+		}
+
+		/**
+		 * Reads from the external command linewise and puts the result to the logger.
+		 * Exceptions are never thrown but stuffed into the logger as well.
+		 */
+		public void run() {
+			String line = null;
+			try {
+				while ( (line = reader.readLine()) != null ) {
+					log.debug(msgPrefix + line);
+				}
+			} catch (IOException e) {
+				log.error("Error in reading STDERR from external command.", e);
+			}
+		}
+	}
 
 	private String vislcg3Loc;
 	private String vislcg3GrammarLoc;
@@ -114,27 +151,24 @@ public class Vislcg3Annotator extends JCasAnnotator_ImplBase {
 		BufferedReader fromCG = new BufferedReader(new InputStreamReader(process.getInputStream()));
 		BufferedReader errorCG = new BufferedReader(new InputStreamReader(process.getErrorStream()));
 		
-		// get error stream
-		String error = "";
-		String errline = null;
-		while ((errline = errorCG.readLine()) != null) {
-			error += errline;
-		}
-		errorCG.close();
+		// take care of VislCG's STDERR inside a special thread.
+		(new Thread(new ExtCommandConsume2Logger(errorCG, "VislCG STDERR: "),
+			"VislCG STDERR catcher")).start();
 		
 		// write input
+		// FIXME: is it guaranteed that the buffers are large enough for doing this?
 		toCG.write(input);
 		toCG.close();
 		// get back output
-		StringBuilder output = new StringBuilder();
+		String output ="";
 		String line = null;
 		
-		while ((line = fromCG.readLine()) != null) {
-			output.append(line);
-			output.append("\n");
+		while ( ( line = fromCG.readLine() ) != null ) {
+			output += line + "\n";
 		}
 		fromCG.close();
-		return output.toString();
+		errorCG.close();
+		return output;
 	}
 
 	/*
