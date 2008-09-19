@@ -79,12 +79,19 @@ public class Vislcg3Annotator extends JCasAnnotator_ImplBase {
 	private String toCG3Input(List<Token> tokenList) {
 		StringBuilder result = new StringBuilder();
 		for (Token t : tokenList) {
-			result.append("\"<" + t + ">\"\n");
+			result.append("\"<" + t.getCoveredText() + ">\"\n");
 			result.append("\t\"");
 			if (t.getLemma() != null) {
 				result.append(t.getLemma());
 			}
-			result.append(" " + t.getTag() + "\n");
+			result.append("\"");
+			String tag = t.getTag();
+			if (tag != null) {
+				tag = tag.toUpperCase();
+			} else {
+				tag = "NOTAG";
+			}
+			result.append(" " + tag + "\n");
 		}
 		return result.toString();
 	}
@@ -105,6 +112,15 @@ public class Vislcg3Annotator extends JCasAnnotator_ImplBase {
 		// get input and output streams (are they internally buffered??)
 		BufferedWriter toCG =  new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));
 		BufferedReader fromCG = new BufferedReader(new InputStreamReader(process.getInputStream()));
+		BufferedReader errorCG = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+		
+		// get error stream
+		String error = "";
+		String errline = null;
+		while ((errline = errorCG.readLine()) != null) {
+			error += errline;
+		}
+		errorCG.close();
 		
 		// write input
 		toCG.write(input);
