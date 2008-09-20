@@ -8,6 +8,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.Iterator;
+import java.util.List;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -35,6 +36,10 @@ import org.werti.client.ProcessingException;
 import org.werti.client.URLException;
 import org.werti.client.WERTiService;
 
+import org.werti.client.run.RunConfiguration;
+
+import org.werti.client.util.Tuple;
+
 import org.werti.uima.types.Enhancement;
 
 import org.werti.util.Fetcher;
@@ -45,7 +50,7 @@ import org.werti.util.Fetcher;
  * This is were the work is coordinated. The rough outline of the procedure is as follows:
  *
  * <li>We take a request via the <tt>process</tt> method</li>
- * <li>We Construct the analysis engines (post and preprocessing) according to the request</li> 
+ * <li>We Construct the analysis engines (post and preprocessing) according to the request</li>
  * <li>In the meantime lib.html.Fetcher is invoked to fetch the requested site off the Internet</li>
  * <li>Then everything is pre-processed in UIMA, invoking the right pre processor for the task at hand</li>
  * <li>We take the resulting CAS and post-process it, invoking the right post processor for the task at hand</li>
@@ -54,10 +59,11 @@ import org.werti.util.Fetcher;
  * (<tt>WERTi</tt>-<tt>&lt;span&gt;</tt>s) according to the target annotations by the post-processing.</li>
  * <li>Finally, a temporary file is written to, which holds the results</li>
  *
- * In order to incorporate new features changes to this are probably neccessary.
+ * Currently, there is no real API for binding into this procedure. This should ultimately change.
+ * In order to incorporate new features, modifications to this file will have to be made... :-(
  *
  * @author Aleksandar Dimitrov
- * @version 0.1
+ * @version 0.2
  */
 public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiService {
 	private static final Logger log =
@@ -70,25 +76,38 @@ public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiServi
 
 	public static final long serialVersionUID = 10;
 
+	private static void configEngine(AnalysisEngine ae, List<Tuple> config) {
+		if (config == null) {
+			log.warn("No configuration found for " + ae.getClass().getName());
+			return;
+		}
+
+		log.debug("Configuring " + ae.getClass().getName());
+		for (Tuple e:config) {
+			log.debug("Configuring: " + e.fst() + " with " + e.snd());
+			ae.setConfigParameterValue(e.fst(), e.snd());
+		}
+	}
+
 	/**
 	 * The implementation of the process method according to the interface specifications.
 	 *
-	 * @param method The task the user has requested.
-	 * @param language The language the user says the target is in.
-	 * @param tags A bunch of part-of-speech tags you want to highlight.
+	 * @param config The <code>RunConfiguration</code> for this request.
 	 * @param url The URL of the page the user has requested.
 	 */
-	public String process(String method, String language, String[] tags, String url) 
+	public String process(RunConfiguration config, String url)
 		throws URLException, InitializationException, ProcessingException {
 		context = new WERTiContext(getServletContext());
 
-		if (log.isDebugEnabled()) { // dump arguments to log
+		if (log.isDebugEnabled()) { // dump configuration to log
 			final StringBuilder sb = new StringBuilder();
-			sb.append( "\nMethod: " + method + "\nLanguage" + language + "\nTags: ");
-			for (int ii = 0; ii < tags.length; ii++) {
-				sb.append(tags[ii]+" ");
-			}
 			sb.append("\nURL: "+ url);
+			sb.append("\nConfiguration: " + config.getClass().getName());
+			sb.append("\nPre-processor: " + config.preprocessor());
+			sb.append("\n\tlocation: : " + context.getProperty(config.preprocessor()));
+			sb.append("\nPost-processor: " + config.postprocessor());
+			sb.append("\n\tlocation: : " + context.getProperty(config.postprocessor()));
+			log.debug(sb.toString());
 		}
 
 		log.debug("Fetching site " + url);
@@ -105,19 +124,14 @@ public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiServi
 		final String descPath = context.getProperty("descriptorPath");
 		log.trace("Loading from descriptor path: " + descPath);
 		final URL preDesc, postDesc;
-		try { // to load the descriptor
-			preDesc = getServletContext().getResource(
-					descPath + context.getProperty("aggregate.default"));
-			if (method.equals("Ask")) {
-				postDesc = getServletContext().getResource
-					(descPath + context.getProperty("enhancer.token"));
-			} else {
-				postDesc = getServletContext().getResource
-					(descPath + context.getProperty("enhancer.pos"));
-			}
+		try { // to load the descriptors
+			preDesc = getServletContext().getResource
+				(descPath + context.getProperty(config.preprocessor()));
+			postDesc = getServletContext().getResource
+				(descPath + context.getProperty(config.postprocessor()));
 		} catch (MalformedURLException murle) {
-			log.fatal("Unrecoverable: Couldn't find aggregate descriptor file!");
-			throw new InitializationException("Couldn't instantiate operator.", murle);
+			log.fatal("Unrecoverable: Invalid descriptor file!");
+			throw new InitializationException("Could not instantiate operator.", murle);
 		}
 
 		try { // to initialize UIMA components
@@ -146,6 +160,10 @@ public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiServi
 				("Error accessing descriptor files or creating analysis objects", npe);
 		}
 		log.info("Initialized UIMA components.");
+		log.info("Configuring UIMA components...");
+
+		configEngine(preprocessor, config.preconfig());
+		configEngine(postprocessor, config.postconfig());
 
 		try { // to wait for document text to be available
 			fetcher.join(MAX_WAIT);
@@ -153,18 +171,14 @@ public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiServi
 			log.error("Fetcher recieved interrupt. This shouldn't happen, should it?", itre);
 		}
 
-		if (fetcher.getText() == null) { // if we don't have text, that's bad
+		if (fetcher.getText() == null) { // we don't have text, that's bad
 			log.error("Webpage retrieval failed! " + fetcher.getBase_url());
 			throw new InitializationException("Webpage retrieval failed.");
 		} 
 
-		log.error("fetcher-text:" + fetcher.getText());
 		cas.setDocumentText(fetcher.getText());
 
 		try { // to process
-			postprocessor.setConfigParameterValue("Tags", tags);
-			postprocessor.setConfigParameterValue("enhance", method);
-
 			preprocessor.process(cas);
 			postprocessor.process(cas);
 		} catch (AnalysisEngineProcessException aepe) {
@@ -173,7 +187,7 @@ public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiServi
 		}
 
 		final String base_url = "http://" + fetcher.getBase_url() + ":" + fetcher.getPort();
-		final String enhanced = enhance(method, cas, base_url);
+		final String enhanced = enhance(config.enhancer(), cas, base_url);
 		final String tempDir = getServletContext().getRealPath("/tmp");
 		final File temp;
 		try { // to create a temporary file
@@ -182,7 +196,7 @@ public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiServi
 			log.error("Failed to create temporary file");
 			throw new ProcessingException("Failed to create temporary file!", ioe);
 		}
-		try { // to write temp file
+		try { // to write to the temporary file
 			if (log.isDebugEnabled()) {
 				log.debug("Writing to file: " + temp.getAbsoluteFile());
 			}
