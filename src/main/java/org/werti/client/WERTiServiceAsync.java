@@ -22,6 +22,6 @@ public interface WERTiServiceAsync {
 	 * @param callback The callback object of this call.
 	 */
 	@SuppressWarnings("unchecked")
-	public void process(RunConfiguration config, String url, AsyncCallback callback) 
-		throws ProcessingException, InitializationException, URLException;
+	public void process(RunConfiguration config, String url, AsyncCallback callback); 
+		//throws ProcessingException, InitializationException, URLException;
 }
