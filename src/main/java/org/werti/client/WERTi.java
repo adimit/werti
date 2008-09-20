@@ -54,15 +54,15 @@ public class WERTi implements EntryPoint {
 				target.setServiceEntryPoint
 					(GWT.getModuleBaseURL()+"/UIMAProcessor");
 				final AsyncCallback callback = new SearchCallback();
-				try {
+				//try {
 					service.process
 						(taskPanel.currentTask().configure()
 						 , url.getText()
 						 , callback);
-				} catch(Throwable t) {
+				/*} catch(Throwable t) {
 					status.setHTML("ClickListener caught error.");
 					showError(t);
-				}
+				}*/
 			}
 		});
 
