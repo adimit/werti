@@ -2,6 +2,9 @@
 
 ... is not too straightforward at the moment.
 
+_ATTENTION! ACHTUNG! ATTENZIONE!_ The entire procedure is under heavy
+development. This document might become deprecated the moment you read it.
+
 ## 1. Create a Class implementing org.werti.client.tasks.Task
 
 Your class will serve as the part of the graphical interfaces written in
@@ -33,16 +36,25 @@ in the query form.
 
 ## 5. Create a Activity GWT Module in org.werti.client.enhancement
 
-The module must have the name as specified in your RunConfiguration implementation. 
+The module must have the name as specified in your RunConfiguration implementation,
+suffixed with .java. 
 
 ### 5.1 Create a GWT Module Descriptor in org.werti.client.enhancement.public
 
-The XML file must have the very same name as the module from the previous step.
+The XML file must have the very same name as the module from the previous step,
+suffixed with .gwt.xml.
 
 ### 5.2 Create a CSS in org.werti.client.enhancement.public
 
-The CSS file must have the very same name as the module from the previous step.
+The CSS file must have the very same name as the module from the previous step,
+suffixed with .css.
 
-## 6. And then it still doesn't work
+## 6. Introduce the New Module in /pom.xml and Compile GWT.
 
-TODO: Find out why and edit here:
+Add something like
+
+	<param>org.werti.enhancements.GerundsColorize</param>
+
+to pom.xml so that Maven is willing to compile your new GWT stuff. Then run
+
+	mvn gwt:compile
