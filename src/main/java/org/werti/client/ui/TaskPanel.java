@@ -3,6 +3,7 @@ package org.werti.client.ui;
 import java.util.ArrayList;
 
 import com.google.gwt.user.client.ui.Panel;
+import com.google.gwt.user.client.ui.SourcesTabEvents;
 import com.google.gwt.user.client.ui.TabPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -60,7 +61,6 @@ public class TaskPanel extends TabPanel {
 	 */
 	@Override public void selectTab(int index) {
 		super.selectTab(index);
-		currentTask = tasks.get(index);
 	}
 
 	/**
@@ -70,5 +70,14 @@ public class TaskPanel extends TabPanel {
 	 */
 	public Task currentTask() {
 		return currentTask;
+	}
+
+	/**
+	 * Listener that gets invoked whenever a tab is selected.
+	 */
+	@Override
+	public void onTabSelected(SourcesTabEvents sender, int tabIndex) {
+		super.onTabSelected(sender, tabIndex);
+		currentTask = tasks.get(tabIndex);
 	}
 }
