@@ -35,9 +35,13 @@ public class Vislcg3Annotator extends JCasAnnotator_ImplBase {
 	 */
 	public class ExtCommandConsume2Logger implements Runnable {
 		
-		BufferedReader reader;
-		String msgPrefix;
+		private BufferedReader reader;
+		private String msgPrefix;
 
+		/**
+		 * @param reader the reader to read from.
+		 * @param msgPrefix a string to prefix the read lines with.
+		 */
 		public ExtCommandConsume2Logger(BufferedReader reader, String msgPrefix) {
 			super();
 			this.reader = reader;
@@ -45,7 +49,7 @@ public class Vislcg3Annotator extends JCasAnnotator_ImplBase {
 		}
 
 		/**
-		 * Reads from the external command linewise and puts the result to the logger.
+		 * Reads from the reader linewise and puts the result to the logger.
 		 * Exceptions are never thrown but stuffed into the logger as well.
 		 */
 		public void run() {
@@ -55,10 +59,68 @@ public class Vislcg3Annotator extends JCasAnnotator_ImplBase {
 					log.debug(msgPrefix + line);
 				}
 			} catch (IOException e) {
-				log.error("Error in reading STDERR from external command.", e);
+				log.error("Error in reading from external command.", e);
 			}
 		}
 	}
+	
+	/**
+	 * A runnable class that reads from a reader (that may
+	 * be fed by {@link Process}) and puts stuff read into a variable.
+	 * @author nott
+	 */
+	public class ExtCommandConsume2String implements Runnable {
+		
+		private BufferedReader reader;
+		private boolean finished;
+		private String buffer;
+
+		/**
+		 * @param reader the reader to read from.
+		 */
+		public ExtCommandConsume2String(BufferedReader reader) {
+			super();
+			this.reader = reader;
+			finished = false;
+			buffer = "";
+		}
+
+		/**
+		 * Reads from the reader linewise and puts the result to the buffer.
+		 * See also {@link #getBuffer()} and {@link #isDone()}.
+		 */
+		public void run() {
+			String line = null;
+			try {
+				while ( (line = reader.readLine()) != null ) {
+					buffer += line + "\n";
+				}
+			} catch (IOException e) {
+				log.error("Error in reading from external command.", e);
+			}
+			finished = true;
+		}
+
+		/**
+		 * @return true if the reader read by this class has reached its end.
+		 */
+		public boolean isDone() {
+			return finished;
+		}
+		
+		/**
+		 * @return the string collected by this class or null if the stream has not reached
+		 * its end yet.
+		 */
+		public String getBuffer() {
+			if ( ! finished ) {
+				return null;
+			}
+			
+			return buffer;
+		}
+		
+	}	
 
 	private String vislcg3Loc;
 	private String vislcg3GrammarLoc;
@@ -154,29 +216,39 @@ public class Vislcg3Annotator extends JCasAnnotator_ImplBase {
 		// obtain process
 		ProcessBuilder builder = new ProcessBuilder(argList);
 		Process process = builder.start();
+		
 		// get input and output streams (are they internally buffered??)
 		BufferedWriter toCG =  new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));
 		BufferedReader fromCG = new BufferedReader(new InputStreamReader(process.getInputStream()));
 		BufferedReader errorCG = new BufferedReader(new InputStreamReader(process.getErrorStream()));
 		
 		// take care of VislCG's STDERR inside a special thread.
-		(new Thread(new ExtCommandConsume2Logger(errorCG, "VislCG STDERR: "),
-			"VislCG STDERR catcher")).start();
+		ExtCommandConsume2Logger stderrConsumer = new ExtCommandConsume2Logger(errorCG, "VislCG STDERR: "); 
+		Thread stderrConsumerThread = new Thread(stderrConsumer, "VislCG STDERR catcher");
+		stderrConsumerThread.start();
 		
-		// write input
-		// FIXME: is it guaranteed that the buffers are large enough for doing this?
+		// take care of VislCG's STDOUT in the very same fashion
+		ExtCommandConsume2String stdoutConsumer = new ExtCommandConsume2String(fromCG);
+		Thread stdoutConsumerThread = new Thread(stdoutConsumer);
+		stdoutConsumerThread.start();
+	
+		// write input to VislCG. VislCG may block the entire pipe if its output
+		// buffers run full. However, they will sooner or later be emptied by 
+		// the consumer threads started above, which will then cause unblocking.
 		toCG.write(input);
 		toCG.close();
-		// get back output
-		String output ="";
-		String line = null;
-		
-		while ( ( line = fromCG.readLine() ) != null ) {
-			output += line + "\n";
+
+		// wait until the output consumer has read all of VislCGs output,
+		// close all streams and return contents of the buffer.
+		try {
+			stdoutConsumerThread.join();
+		} catch (InterruptedException e) {
+			log.error("Error in joining output consumer of VislCG with regular thread, going mad.", e);
+			return null;
 		}
 		fromCG.close();
 		errorCG.close();
-		return output;
+		return stdoutConsumer.getBuffer();
 	}
 
 	/*
