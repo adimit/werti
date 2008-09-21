@@ -40,6 +40,8 @@ public class Vislcg3Enhancer extends JCasAnnotator_ImplBase {
 		for (String chunkT : chunkTags) {
 			classCounts.put(chunkT, 0);
 		}
+		// remember previous token so we can getEnd() from it
+		CGToken prev = null;
 		
 		// go through tokens
 		while (cgTokenIter.hasNext()) {
@@ -68,12 +70,13 @@ public class Vislcg3Enhancer extends JCasAnnotator_ImplBase {
 						&& !containsTag(reading, chunkT + CHUNK_INSIDE_SUFFIX)) {
 					// finish enhancement
 					Enhancement e = enhancements.pop();
-					e.setEnd(cgt.getEnd());
+					e.setEnd(prev.getEnd());
 					e.setEnhanceEnd("</span>");
 					// update CAS
 					cas.addFsToIndexes(e);
 				}
 			}
+			prev = cgt;
 		}
 	}
 	
