@@ -47,7 +47,7 @@ public class Vislcg3Enhancer extends JCasAnnotator_ImplBase {
 		while (cgTokenIter.hasNext()) {
 			CGToken cgt = (CGToken) cgTokenIter.next();
 			// more than one reading? don't markup!
-			if (!is_Safe(cgt)) {
+			if (!isSafe(cgt)) {
 				continue;
 			}
 			
@@ -61,7 +61,7 @@ public class Vislcg3Enhancer extends JCasAnnotator_ImplBase {
 					e.setBegin(cgt.getBegin());
 					// increment id
 					int newId = classCounts.get(chunkT) + 1;
-					e.setEnhanceStart("<span id=\"" + EnhancerUtils.get_id("WERTi-span" + chunkT, newId) + "\">");
+					e.setEnhanceStart("<span id=\"" + EnhancerUtils.get_id("WERTi-span-" + chunkT, newId) + "\">");
 					classCounts.put(chunkT, newId);
 					// push onto stack
 					enhancements.push(e);
@@ -83,7 +83,7 @@ public class Vislcg3Enhancer extends JCasAnnotator_ImplBase {
 	/*
 	 * Determines whether the given token is safe, i.e. unambiguous
 	 */
-	private boolean is_Safe(CGToken t) {
+	private boolean isSafe(CGToken t) {
 		return t.getReadings() != null && t.getReadings().size() == 1;
 	}
 	
