@@ -224,7 +224,7 @@ public class Vislcg3Annotator extends JCasAnnotator_ImplBase {
 		
 		// take care of VislCG's STDERR inside a special thread.
 		ExtCommandConsume2Logger stderrConsumer = new ExtCommandConsume2Logger(errorCG, "VislCG STDERR: "); 
-		Thread stderrConsumerThread = new Thread(stderrConsumer, "VislCG STDERR sonumer");
+		Thread stderrConsumerThread = new Thread(stderrConsumer, "VislCG STDERR consumer");
 		stderrConsumerThread.start();
 		
 		// take care of VislCG's STDOUT in the very same fashion
