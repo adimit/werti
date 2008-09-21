@@ -15,6 +15,7 @@ import org.apache.uima.jcas.JCas;
 import org.werti.uima.types.Enhancement;
 
 import org.werti.uima.types.annot.Token;
+import org.werti.util.EnhancerUtils;
 
 /**
  * An enhancement class that puts WERTi-<tt>&lt;span&gt;</tt>s around <em>all</em>
@@ -73,13 +74,13 @@ public class TokenEnhancer extends JCasAnnotator_ImplBase {
 				if (t.getTag() == null) {
 					log.debug("Encountered token with NULL tag");
 					hit = "0";
-				} else if (arrayContains(t.getTag(), tags)) {
+				} else if (EnhancerUtils.arrayContains(t.getTag(), tags)) {
 					hit = "1";
 				} else {
 					hit = "0";
 				}
 
-				e.setEnhanceStart("<span id=\"" + get_id(id) 
+				e.setEnhanceStart("<span id=\"" + EnhancerUtils.get_id(id) 
 						+ "\" hit =\"" + hit + "\">");
 				e.setEnhanceEnd("</span>");
 
@@ -97,16 +98,5 @@ public class TokenEnhancer extends JCasAnnotator_ImplBase {
 		log.info("Finished enhancement");
 	}
 
-	// need thos two to supply JS-annotations with IDs.
-	private static String get_id(int id) {
-		return "WERTi-span-" + id;
-	}
-
-	// does an array of Strings contain a given String?
-	private static boolean arrayContains(String data, String[] sa) {
-		for (String s:sa) {
-			if (s.equals(data)) return true;
-		}
-		return false;
-	}
+	
 }
