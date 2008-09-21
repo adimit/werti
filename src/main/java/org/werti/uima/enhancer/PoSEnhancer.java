@@ -79,7 +79,7 @@ public class PoSEnhancer extends JCasAnnotator_ImplBase {
 				e.setEnd(t.getEnd());
 
 				id++;
-				e.setEnhanceStart("<span id=\"" + EnhancerUtils.get_id(id) + "\">");
+				e.setEnhanceStart("<span id=\"" + EnhancerUtils.get_id("WERTi-span",id) + "\">");
 				e.setEnhanceEnd("</span>");
 
 				if (log.isTraceEnabled()) {

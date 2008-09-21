@@ -80,7 +80,7 @@ public class TokenEnhancer extends JCasAnnotator_ImplBase {
 					hit = "0";
 				}
 
-				e.setEnhanceStart("<span id=\"" + EnhancerUtils.get_id(id) 
+				e.setEnhanceStart("<span id=\"" + EnhancerUtils.get_id("WERTi-span",id) 
 						+ "\" hit =\"" + hit + "\">");
 				e.setEnhanceEnd("</span>");
 
