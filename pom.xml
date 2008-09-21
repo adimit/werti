@@ -9,7 +9,6 @@
 	<version>0.1-dev</version>
 	<name>WERTi ― a Platform for ICALL Systems</name>
 	<url>http://github.com/adimit/werti</url>
-	
 	<properties>
 		<gwtVersion>1.5.2</gwtVersion>
 	</properties>
@@ -43,20 +42,20 @@
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
-            <groupId>com.google.gwt</groupId>
-            <artifactId>gwt-dev</artifactId>
-            <version>${gwtVersion}</version>
-            <classifier>${platform}-libs</classifier>
-            <type>zip</type>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.google.gwt</groupId>
-            <artifactId>gwt-dev</artifactId>
-            <version>${gwtVersion}</version>
-            <classifier>${platform}</classifier>
-            <scope>provided</scope>
-        </dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-dev</artifactId>
+			<version>${gwtVersion}</version>
+			<classifier>${platform}-libs</classifier>
+			<type>zip</type>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-dev</artifactId>
+			<version>${gwtVersion}</version>
+			<classifier>${platform}</classifier>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>com.googlecode.gwtx</groupId>
 			<artifactId>GWTx</artifactId>
@@ -112,8 +111,8 @@
 					<generatorDestinationPackage>org.werti.client</generatorDestinationPackage>
 					<noServer>true</noServer>
 					<!--  this parameter is VERY important with automatic mode - has to match the version in your declared deps -->
-                    <!--  if this is set incorrect (not a match), or left out (default is 1.5.1 for 2.0-beta22) you will have mysterious errors -->
-                    <gwtVersion>${gwtVersion}</gwtVersion>
+					<!--  if this is set incorrect (not a match), or left out (default is 1.5.1 for 2.0-beta22) you will have mysterious errors -->
+					<gwtVersion>${gwtVersion}</gwtVersion>
 				</configuration>
 				<executions>
 					<execution>
@@ -125,31 +124,31 @@
 				</executions>
 			</plugin>
 			<plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>unpack</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>unpack</goal>
-                        </goals>
-                        <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>com.google.gwt</groupId>
-                                    <artifactId>gwt-dev</artifactId>
-                                    <version>${gwtVersion}</version>
-                                    <classifier>${platform}-libs</classifier>
-                                    <type>zip</type>
-                                    <overWrite>false</overWrite>
-                                    <outputDirectory>${settings.localRepository}/com/google/gwt/gwt-dev/${gwtVersion}</outputDirectory>
-                                </artifactItem>
-                            </artifactItems>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>unpack</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>com.google.gwt</groupId>
+									<artifactId>gwt-dev</artifactId>
+									<version>${gwtVersion}</version>
+									<classifier>${platform}-libs</classifier>
+									<type>zip</type>
+									<overWrite>false</overWrite>
+									<outputDirectory>${settings.localRepository}/com/google/gwt/gwt-dev/${gwtVersion}</outputDirectory>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 	<profiles>
