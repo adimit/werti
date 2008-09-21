@@ -13,6 +13,7 @@ public class GerundsColorizeConfiguration implements RunConfiguration {
 
 	public String enhancer() {
 		return "GerundsColorize";
+		//return "Colorize";
 	}
 
 	public List<Tuple> postconfig() {
