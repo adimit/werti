@@ -9,6 +9,7 @@
 	<version>0.1-dev</version>
 	<name>WERTi ― a Platform for ICALL Systems</name>
 	<url>http://github.com/adimit/werti</url>
+
 	<properties>
 		<gwtVersion>1.5.2</gwtVersion>
 	</properties>
@@ -26,8 +27,9 @@
 		</dependency>
 		<dependency>
 			<groupId>org.apache.uima</groupId>
-			<artifactId>uimaj-examples</artifactId>
+			<artifactId>uimaj-tools</artifactId>
 			<version>2.2.2-incubating</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.google.gwt</groupId>
@@ -60,6 +62,26 @@
 			<groupId>com.googlecode.gwtx</groupId>
 			<artifactId>GWTx</artifactId>
 			<version>20070605</version>
+		</dependency>
+		<dependency>
+			<groupId>opennlp.tools</groupId>
+			<artifactId>OpenNLP-Toolkit</artifactId>
+			<version>1.4.0</version>
+		</dependency>
+		<dependency>
+			<groupId>opennlp.tools</groupId>
+			<artifactId>OpenNLP-Maxent</artifactId>
+			<version>2.5.0</version>
+		</dependency>
+		<dependency>
+			<groupId>trove</groupId>
+			<artifactId>trove</artifactId>
+			<version>1.0.2</version>
+		</dependency>
+		<dependency>
+			<groupId>net.didion</groupId>
+			<artifactId>jwnl</artifactId>
+			<version>1.4</version>
 		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>
@@ -106,6 +128,7 @@
 						<param>org.werti.WERTi</param>
 						<param>org.werti.enhancements.Ask</param>
 						<param>org.werti.enhancements.Colorize</param>
+						<param>org.werti.enhancements.GerundsColorize</param>
 						<param>org.werti.enhancements.Cloze</param>
 					</compileTargets>
 					<generatorDestinationPackage>org.werti.client</generatorDestinationPackage>
@@ -203,6 +226,10 @@
 			<!-- GWT Stuff -->
 			<id>gwt-maven</id>
 			<url>http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/</url>
+		</repository>
+		<repository>
+			<id>JWNL</id>
+			<url>http://www.americannationalcorpus.org/maven/thirdparty/</url>
 		</repository>
 	</repositories>
 	<pluginRepositories>

@@ -31,7 +31,7 @@ You will need to download the model files for the LingPipe tagger and also add
 it to your local Maven repository. You will also need to initialize Maven's the
 GWT plugin.
 
-### Model Files for the LingPipe Tagger
+### Installing the LingPipe Tagger
 
 You should download the LingPipe package, version 3.5.1.  It is located
 [here](http://alias-i.com/lingpipe/web/download.html).  You should download the
@@ -56,6 +56,37 @@ you did not download the full package, the model files are located
 need `pos-en-general-brown.HiddenMarkovModel`. Put them into
 `src/main/resources/models/lgptagger` (you may have to create the directory
 first).
+
+### Installing the OpenNLP Toolkit
+
+You can download the OpenNLP toolkit at [sourceforge](http://opennlp.sf.net).
+OpenNLP, too needs model files, located [here](http://opennlp.sf.net/models.html).
+
+OpenNLP does not have a Maven repository, so you need to install it manually. Simlar
+to the way you treated LingPipe, you have to download and (probably) build the code,
+then check in the OpenNLP jar into your maven repository with the following command:
+
+	mvn install:install-file \
+		-DgroupId=opennlp.tools \
+		-DartifactId=OpenNLP-Toolkit \
+		-Dversion=1.4.0 \
+		-Dfile=opennlp-tools-1.4.0.jar \
+		-Dpackaging=jar
+
+You will also need the maxent package from the `/lib` directory in the root of the
+OpenNLP distribution.
+
+	mvn install:install-file \
+		-DgroupId=opennlp.tools \
+		-DartifactId=OpenNLP-Maxent \
+		-Dversion=1.4.0 \
+		-Dfile=maxent-2.5.0 \
+		-Dpackaging=jar
+
+The resource files for the OpenNLP toolkit are by default located in 
+`src/main/resources/models/opennlp`. You will need the
+[english parser models](http://opennlp.sourceforge.net/models/english/parser/).
+Be sure to first unzip the model files.
 
 ## Building
 
