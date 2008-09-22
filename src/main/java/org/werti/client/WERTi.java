@@ -21,6 +21,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 import org.werti.client.tasks.Categories;
+import org.werti.client.tasks.If;
 import org.werti.client.tasks.Task;
 
 import org.werti.client.ui.ETextBox;
@@ -39,7 +40,9 @@ public class WERTi implements EntryPoint {
 		final VerticalPanel form = new VerticalPanel();
 
 		final Task gc = new Categories();
+		final Task ift = new If();
 		taskPanel.add(gc);
+		taskPanel.add(ift);
 		taskPanel.selectTab(0);
 
 		form.add(taskPanel);
