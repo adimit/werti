@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Stack;
 
+import org.apache.log4j.Logger;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_component.JCasAnnotator_ImplBase;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
@@ -19,6 +20,9 @@ import org.werti.util.StringListIterable;
 
 public class Vislcg3Enhancer extends JCasAnnotator_ImplBase {
 
+	private static final Logger log =
+		Logger.getLogger(Vislcg3Enhancer.class);
+	
 	private List<String> chunkTags;
 	private static String CHUNK_BEGIN_SUFFIX = "-B";
 	private static String CHUNK_INSIDE_SUFFIX = "-I";
@@ -78,6 +82,7 @@ public class Vislcg3Enhancer extends JCasAnnotator_ImplBase {
 			}
 			prev = cgt;
 		}
+		log.debug("Enhancement stack is " + (enhancements.empty() ? "empty, OK" : "not empty, WTF??"));
 	}
 	
 	/*
