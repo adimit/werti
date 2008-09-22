@@ -19,6 +19,7 @@ LIST _INGFORM = VBG HVG BEG ; # gerunds or present participle
 LIST _INFIN = BE-INF DO-INF HV-INF VB-INF; # infinitives (introduced below)
 LIST _ADVER = RB RBR RBT; 	#  some types of adverbs used with infinitives
 LIST _NEG   = "<not>" "<Not>";  # negation words, TODO: contractions?!
+LIST _ADJEC = JJ JJT JJS JJR;
 
 
 ############################################################################# 
@@ -103,6 +104,16 @@ SELECT (PROG) (-1* _PROGINTRO BARRIER (*) - _NEG - _ADVER);
 
 # -ing: select gerund readings
 # TODO
+# ... first easy rules for testing
+SELECT (GERU) (-2 _ADVER) (-1 (IN));
+SELECT (GERU) (-2 _ADVER) (-1 (CS));
+SELECT (GERU) (-2 _ADJEC) (-1 (IN));
+SELECT (GERU) (-2 _ADJEC) (-1 (CS));
+
+# this will overgenerate?!
+SELECT (GERU) (-1 (IN));
+SELECT (GERU) (-1 (CS));
+
 
 
 ############################################################################# 
@@ -119,5 +130,7 @@ ADD (INF-B) (TO)    (+*1C _INFIN BARRIER (*) - _ADVER );
 ADD (INF-I) _INFIN (-*1C (TO) BARRIER (*) - _ADVER );
 ADD (INF-I) _ADVER (-*1C (TO) BARRIER (*) - _ADVER ) (+*1C _INFIN BARRIER (*) - _ADVER );
 
+# marking gerund constructions
+ADD (GER-B) (GERU);
 
 
