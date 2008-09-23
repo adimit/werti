@@ -64,14 +64,9 @@
 			<version>20070605</version>
 		</dependency>
 		<dependency>
-			<groupId>opennlp.tools</groupId>
-			<artifactId>OpenNLP-Toolkit</artifactId>
-			<version>1.4.0</version>
-		</dependency>
-		<dependency>
-			<groupId>opennlp.tools</groupId>
-			<artifactId>OpenNLP-Maxent</artifactId>
-			<version>2.5.0</version>
+			<groupId>danbikel</groupId>
+			<artifactId>Parser</artifactId>
+			<version>1.0</version>
 		</dependency>
 		<dependency>
 			<groupId>trove</groupId>
