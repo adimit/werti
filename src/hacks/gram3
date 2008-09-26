@@ -20,7 +20,7 @@ LIST _INFIN = BE-INF DO-INF HV-INF VB-INF; # infinitives (introduced below)
 LIST _ADVER = RB RBR RBT; 	#  some types of adverbs used with infinitives
 LIST _NEG   = "<not>" "<Not>";  # negation words, TODO: contractions?!
 LIST _ADJEC = JJ JJT JJS JJR;
-
+LIST _NOUNS = NN NN$ NNS NNS$ NP NP$ NPS NPS$;
 
 ############################################################################# 
 #
@@ -99,9 +99,6 @@ SELECT (GOFUPA) (-1* (BEDZ) BARRIER (*) - _NEG - _ADVER) (+1 (TO)) (+2 _INFIN);
 LIST _PROGINTRO = BEM BEZ BER BEN BE;
 SELECT (PROG) (-1* _PROGINTRO BARRIER (*) - _NEG - _ADVER);
 
-# -ing: select participle readings
-# TODO
-
 # -ing: select gerund readings
 # TODO
 # ... first easy rules for testing
@@ -111,8 +108,37 @@ SELECT (GERU) (-2 _ADJEC) (-1 (IN));
 SELECT (GERU) (-2 _ADJEC) (-1 (CS));
 
 # this will overgenerate?!
+# TODO
 SELECT (GERU) (-1 (IN));
 SELECT (GERU) (-1 (CS));
+
+# utility: definition of a noun phrase context including adjectives 
+#LIST NP_DETPREP = AT PP$;
+#TEMPLATE DET_QL_AP_NP (+1 NP_DETPREP) (+2* _ADJEC BARRIER (*) - (QL) LINK +1* _NOUNS BARRIER (*) - _ADJEC  LINK +1* ("<,>") BARRIER (*) - _NOUNS);
+#TEMPLATE DET_AP_NP (+1 PART_NP_DETPREP) (+2* _NOUNS BARRIER (*) - _ADJEC LINK +1* ("<,>") BARRIER (*) - _NOUNS);
+#TEMPLATE DET_NP (+1 PART_NP_DETPREP) (+2* ("<,>") BARRIER (*) - _NOUNS  );
+
+
+# -ing: select participle readings
+# TODO
+# ... first easy rules for sentence initial participles
+# NOTE: this is rather complex and inconvenient
+LIST PART_NP_DETPREP = AT PP$;
+
+
+# Participle + Noun Phrase
+SELECT (PART) (@1 (PART)) (+1* ("<,>") BARRIER (*) - _NOUNS  );
+SELECT (PART) (@1 (PART)) (+1 PART_NP_DETPREP) (+2* ("<,>") BARRIER (*) - _NOUNS  );
+# Participle + Noun Phrase with Adjectives
+SELECT (PART) (@1 (PART)) (+1 PART_NP_DETPREP) (+2* _NOUNS BARRIER (*) - _ADJEC LINK +1* ("<,>") BARRIER (*) - _NOUNS);
+# Participle + Noun Phrase with Adjectives with a single Qualifier
+SELECT (PART) (@1 (PART)) (+1 PART_NP_DETPREP) (+2* _ADJEC BARRIER (*) - (QL) LINK +1* _NOUNS BARRIER (*) - _ADJEC  LINK +1* ("<,>") BARRIER (*) - _NOUNS);
+
+# Participle + Prepositional Phrase including Noun Phrase. Same as above for all cases
+SELECT (PART) (@1 (PART)) (+1 (IN)) (+2* ("<,>") BARRIER (*) - _NOUNS  );
+SELECT (PART) (@1 (PART)) (+1 (IN)) (+2 PART_NP_DETPREP) (+3* ("<,>") BARRIER (*) - _NOUNS  );
+SELECT (PART) (@1 (PART)) (+1 (IN)) (+2 PART_NP_DETPREP) (+3* _NOUNS BARRIER (*) - _ADJEC LINK +1* ("<,>") BARRIER (*) - _NOUNS);
+SELECT (PART) (@1 (PART)) (+1 (IN)) (+2 PART_NP_DETPREP) (+3* _ADJEC BARRIER (*) - (QL) LINK +1* _NOUNS BARRIER (*) - _ADJEC  LINK +1* ("<,>") BARRIER (*) - _NOUNS);
 
 
 
