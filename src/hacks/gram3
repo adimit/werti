@@ -112,6 +112,10 @@ SELECT (GERU) (-2 _ADJEC) (-1 (CS));
 SELECT (GERU) (-1 (IN));
 SELECT (GERU) (-1 (CS));
 
+# select gerund after inflected verbs and optional noun in between
+# FIXME doesn't work...
+SELECT (GERU) (-1C* (VBD OR VBZ) BARRIER (*) - (NN OR NP));
+
 # utility: definition of a noun phrase context including adjectives 
 LIST NP_DETPREP = DT DTS DTI AT PP$ PP$$ PPL PPLS PPO PPS PPSS;
 TEMPLATE DET_QL_AP_NP = (+1 NP_DETPREP LINK +1* (QL) BARRIER (*) - (QL) LINK +1* _ADJEC BARRIER (*) - _ADJEC LINK +1* _NOUNS BARRIER (*) - _NOUNS );
@@ -148,6 +152,6 @@ ADD (INF-I) _INFIN (-*1C (TO) BARRIER (*) - _ADVER );
 ADD (INF-I) _ADVER (-*1C (TO) BARRIER (*) - _ADVER ) (+*1C _INFIN BARRIER (*) - _ADVER );
 
 # marking gerund constructions
-ADD (GER-B) (GERU);
+ADD (GER-B) (GERU) (0C (GERU));
 
 
