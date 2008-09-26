@@ -113,32 +113,23 @@ SELECT (GERU) (-1 (IN));
 SELECT (GERU) (-1 (CS));
 
 # utility: definition of a noun phrase context including adjectives 
-#LIST NP_DETPREP = AT PP$;
-#TEMPLATE DET_QL_AP_NP (+1 NP_DETPREP) (+2* _ADJEC BARRIER (*) - (QL) LINK +1* _NOUNS BARRIER (*) - _ADJEC  LINK +1* ("<,>") BARRIER (*) - _NOUNS);
-#TEMPLATE DET_AP_NP (+1 PART_NP_DETPREP) (+2* _NOUNS BARRIER (*) - _ADJEC LINK +1* ("<,>") BARRIER (*) - _NOUNS);
-#TEMPLATE DET_NP (+1 PART_NP_DETPREP) (+2* ("<,>") BARRIER (*) - _NOUNS  );
-
+LIST NP_DETPREP = DT DTS DTI AT PP$ PP$$ PPL PPLS PPO PPS PPSS;
+TEMPLATE DET_QL_AP_NP = (+1 NP_DETPREP LINK +1* (QL) BARRIER (*) - (QL) LINK +1* _ADJEC BARRIER (*) - _ADJEC LINK +1* _NOUNS BARRIER (*) - _NOUNS );
+TEMPLATE DET_AP_NP    = (+1 NP_DETPREP LINK +1* _ADJEC BARRIER (*) - _ADJEC LINK +1* _NOUNS BARRIER (*) - _NOUNS );
+TEMPLATE DET_NP       = (+1 NP_DETPREP LINK +1* _NOUNS BARRIER (*) - _NOUNS ) ;
+TEMPLATE SIMPLE_NP    = (+1* _NOUNS BARRIER (*) - _NOUNS );
+TEMPLATE NP_CONTEXT   = ( (T:DET_QL_AP_NP) OR  (T:DET_AP_NP) OR  (T:DET_NP) OR  (T:SIMPLE_NP)  );
 
 # -ing: select participle readings
 # TODO
 # ... first easy rules for sentence initial participles
-# NOTE: this is rather complex and inconvenient
-LIST PART_NP_DETPREP = AT PP$;
-
+TEMPLATE COMMA_CONTEXT = ( +1 ("<,>") );
 
 # Participle + Noun Phrase
-SELECT (PART) (@1 (PART)) (+1* ("<,>") BARRIER (*) - _NOUNS  );
-SELECT (PART) (@1 (PART)) (+1 PART_NP_DETPREP) (+2* ("<,>") BARRIER (*) - _NOUNS  );
-# Participle + Noun Phrase with Adjectives
-SELECT (PART) (@1 (PART)) (+1 PART_NP_DETPREP) (+2* _NOUNS BARRIER (*) - _ADJEC LINK +1* ("<,>") BARRIER (*) - _NOUNS);
-# Participle + Noun Phrase with Adjectives with a single Qualifier
-SELECT (PART) (@1 (PART)) (+1 PART_NP_DETPREP) (+2* _ADJEC BARRIER (*) - (QL) LINK +1* _NOUNS BARRIER (*) - _ADJEC  LINK +1* ("<,>") BARRIER (*) - _NOUNS);
+SELECT (PART) (@1 (PART) LINK T:NP_CONTEXT LINK T:COMMA_CONTEXT );
 
-# Participle + Prepositional Phrase including Noun Phrase. Same as above for all cases
-SELECT (PART) (@1 (PART)) (+1 (IN)) (+2* ("<,>") BARRIER (*) - _NOUNS  );
-SELECT (PART) (@1 (PART)) (+1 (IN)) (+2 PART_NP_DETPREP) (+3* ("<,>") BARRIER (*) - _NOUNS  );
-SELECT (PART) (@1 (PART)) (+1 (IN)) (+2 PART_NP_DETPREP) (+3* _NOUNS BARRIER (*) - _ADJEC LINK +1* ("<,>") BARRIER (*) - _NOUNS);
-SELECT (PART) (@1 (PART)) (+1 (IN)) (+2 PART_NP_DETPREP) (+3* _ADJEC BARRIER (*) - (QL) LINK +1* _NOUNS BARRIER (*) - _ADJEC  LINK +1* ("<,>") BARRIER (*) - _NOUNS);
+# Participle + Prepositional Phrase including Noun Phrase. 
+SELECT (PART) (@1 (PART) LINK +1 (IN) LINK T:NP_CONTEXT LINK T:COMMA_CONTEXT );
 
 
 
