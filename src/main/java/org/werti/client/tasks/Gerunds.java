@@ -10,16 +10,20 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
+/**
+ * A task panel used in WERTi's input dialog that offers options for learning gerunds.
+ */
 public class Gerunds implements Task {
 
 	// activity type radio buttons
 	private final ERadioButton clr = new ERadioButton("Colorize", "methods", "Color Enhancement");
 	private final ERadioButton ask = new ERadioButton("Ask", "methods", "Active Presentation");
 	private final ERadioButton fib = new ERadioButton("Cloze", "methods", "Cloze Test");
+	private static final ECheckBox showAll = new ECheckBox("all", "Debug: Highlight other ingforms as well");
 	
 	
 	public RunConfiguration configure() {
-		return new GerundsColorizeConfiguration();
+		return new GerundsColorizeConfiguration(showAll.isChecked());
 	}
 
 	public Widget helpText() {
@@ -38,6 +42,8 @@ public class Gerunds implements Task {
 
 		// main pane
 		final VerticalPanel main = new VerticalPanel();
+		
+		
 
 		// panel for activity type
 		final HorizontalPanel enhancements = new HorizontalPanel();
@@ -45,6 +51,8 @@ public class Gerunds implements Task {
 		enhancements.add(clr);
 		enhancements.add(ask);
 		enhancements.add(fib);
+		
+		main.add(showAll);
 		main.add(enhancements);
 
 		return main;		

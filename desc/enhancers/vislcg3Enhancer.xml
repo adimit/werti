@@ -21,7 +21,7 @@
       <nameValuePair>
         <name>chunkTags</name>
         <value>
-          <string>INF,GER,CLU</string>
+          <string>INF,GER,CLU,PRO,PAR,GOI,GOP,AMB</string>
         </value>
       </nameValuePair>
     </configurationParameterSettings>

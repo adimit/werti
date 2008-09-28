@@ -109,6 +109,7 @@
 						<param>org.werti.enhancements.Ask</param>
 						<param>org.werti.enhancements.Colorize</param>
 						<param>org.werti.enhancements.GerundsColorize</param>
+						<param>org.werti.enhancements.GerundsColorizeAll</param>
 						<param>org.werti.enhancements.Cloze</param>
 					</compileTargets>
 					<generatorDestinationPackage>org.werti.client</generatorDestinationPackage>
