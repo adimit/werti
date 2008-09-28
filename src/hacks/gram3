@@ -16,12 +16,13 @@
 DELIMITERS = "<.>" "<!>" "<?>" ; # sentence window
 
 LIST _INGFORM = VBG HVG BEG ; # gerunds or present participle
-LIST _INFIN = BE-INF DO-INF HV-INF VB-INF; # infinitives (introduced below)
+LIST _INFIN = BE-INF DO-INF HV-INF VB-INF; # to-infinitives (introduced below)
+LIST _UNINF = BE DO GV VB;           # uninflected (infinitives or imperatives without to)
 LIST _ADVER = RB RBR RBT; 	#  some types of adverbs used with infinitives
 LIST _NEG   = "<not>" "<Not>";  # negation words, TODO: contractions?!
 LIST _ADJEC = JJ JJT JJS JJR;
 LIST _NOUNS = NN NN$ NNS NNS$ NP NP$ NPS NPS$;
-LIST _ANYVERB_ANYFORM = VB VBD VBG VBN VBZ BE BED BEDZ BEG BEM BEN BER BEZ DO DOD DOZ HV HVD HVG HVN HVZ;
+LIST _ANYVERB_ANYFORM = VB VBD VBG VBN VBZ BE BED BEDZ BEG BEM BEN BER BEZ DO DOD DOZ HV HVD HVG HVN HVZ MD;
 
 ############################################################################# 
 #
@@ -32,9 +33,8 @@ LIST _ANYVERB_ANYFORM = VB VBD VBG VBN VBZ BE BED BEDZ BEG BEM BEN BER BEZ DO DO
 BEFORE-SECTIONS
 
 # repair mistagged "to" before two or more adverbs 
-LIST _UNINFLECTED = BE DO GV VB;
-"<To>" SUBSTITUTE (IN) (TO) (IN) ( +1*C _UNINFLECTED BARRIER (*) - _ADVER );
-"<to>" SUBSTITUTE (IN) (TO) (IN) ( +1*C _UNINFLECTED BARRIER (*) - _ADVER );
+"<To>" SUBSTITUTE (IN) (TO) (IN) ( +1*C _UNINF BARRIER (*) - _ADVER );
+"<to>" SUBSTITUTE (IN) (TO) (IN) ( +1*C _UNINF BARRIER (*) - _ADVER );
 
 # double quotes are double quotes, introduce a new tag for them as 
 # the tagset does not know them.
@@ -48,17 +48,14 @@ APPEND ("" BED)  ("<Were>")(+1 (PPSS));
 APPEND ("" BEDZ) ("<was>") (+1 (PPSS));
 APPEND ("" BED) ("<was>") (+1 (PPSS));
 
+# 's contraction is always BEZ
+APPEND ("" BEZ) ("<s>") (-1 ("<'>"));
+
 # introduce infinitive tags (Brown tagset only knows "uninflected forms")
 SUBSTITUTE (BE) (BE-INF) (BE) (-1*C (TO) BARRIER (*) - _ADVER);
 SUBSTITUTE (DO) (DO-INF) (DO) (-1*C (TO) BARRIER (*) - _ADVER);
 SUBSTITUTE (HV) (HV-INF) (HV) (-1*C (TO) BARRIER (*) - _ADVER);
 SUBSTITUTE (VB) (VB-INF) (VB) (-1*C (TO) BARRIER (*) - _ADVER);
-
-# append gerund reading to -ing forms
-# this version would not keep the original tags
-#APPEND ("" GERUND) _INGFORM;
-#APPEND ("" PROGRE) _INGFORM;
-#APPEND ("" PARTIC) _INGFORM;
 
 # add readings for all -ing forms (this should be done in a smarter way)
 # 
@@ -97,6 +94,24 @@ SECTION
 # (TODO: imperative? good or bad idea?)
 #LIST _BE_FINITE = BEM BEZ BER BEN BE;
 LIST _BE_FINITE = BEM BEZ BER BEN BED BEDZ;
+
+# utility: definition of a noun phrase context including adjectives 
+LIST _NP_DETPREP = DT DTS DTI AT PP$ PP$$ PPL PPLS PPO PPS PPSS;
+TEMPLATE ACC_PRON   = (+1 (PPO));
+TEMPLATE SIMPLE_NP  = (+1 _NOUNS LINK T:SIMPLE_NP) OR (+1 _NOUNS);
+TEMPLATE SIMPLE_AP  = (+1 _ADJEC LINK T:SIMPLE_AP) OR  (+1 _ADJEC);
+TEMPLATE SIMPLE_QLP = (+1 (QL) LINK T:SIMPLE_QLP) OR  (+1 (QL));
+#TEMPLATE DET_NP     = (+1 _NP_DETPREP LINK T:SIMPLE_NP );
+TEMPLATE AP_NP  = (T:SIMPLE_AP LINK T:SIMPLE_NP);
+TEMPLATE QL_AP_NP  = (T:SIMPLE_QLP LINK T:SIMPLE_AP LINK T:SIMPLE_NP);
+
+TEMPLATE NP_CONTEXT_NODET   = ( (T:QL_AP_NP) OR (T:AP_NP) OR (T:SIMPLE_NP) ); 
+TEMPLATE NP_CONTEXT_DET     = (+1 _NP_DETPREP LINK T:NP_CONTEXT_NODET );
+TEMPLATE NP_CONTEXT = ( (T:NP_CONTEXT_DET) OR  (T:NP_CONTEXT_NODET) OR (T:ACC_PRON) );
+
+
+# a context for a prepositional phrase with a noun phrase or just a noun phrase
+TEMPLATE NP_OR_PP_CONTEXT = ( (T:NP_CONTEXT) OR (+1 (IN) LINK T:NP_CONTEXT) );
 
 # cluster of negation and adverbs as a context
 #SET _ADVNEG = _ADVER + _NEG;
@@ -142,18 +157,20 @@ SELECT (GERU) (-1 (CS));
 
 # select gerund after inflected verbs and optional noun in between
 # FIXME doesn't work...
-SELECT (GERU) (-1C* (VBD OR VBZ) BARRIER (*) - (NN OR NP));
+#SELECT (GERU) (-1C* (VBD OR VBZ) BARRIER (*) - (NN OR NP));
 
-# utility: definition of a noun phrase context including adjectives 
-LIST NP_DETPREP = DT DTS DTI AT PP$ PP$$ PPL PPLS PPO PPS PPSS;
-TEMPLATE SIMPLE_NP  = (+1 _NOUNS LINK T:SIMPLE_NP) OR  (+1 _NOUNS);
-TEMPLATE SIMPLE_AP  = (+1 _ADJEC LINK T:SIMPLE_AP) OR  (+1 _ADJEC);
-TEMPLATE SIMPLE_QLP = (+1 (QL) LINK T:SIMPLE_QLP) OR  (+1 (QL));
-TEMPLATE DET_NP     = (+1 NP_DETPREP LINK T:SIMPLE_NP );
-TEMPLATE DET_AP_NP  = (+1 NP_DETPREP LINK T:SIMPLE_AP LINK T:SIMPLE_NP);
-TEMPLATE DET_QL_AP_NP  = (+1 NP_DETPREP LINK T:SIMPLE_QLP LINK T:SIMPLE_AP LINK T:SIMPLE_NP);
-TEMPLATE NP_CONTEXT   = ( (T:DET_QL_AP_NP) OR  (T:DET_AP_NP) OR  (T:DET_NP) OR (T:SIMPLE_NP) );
+# gerund as directly preceding subject argument to the verb in 3rd person
+# and/or past tense or will-future
+LIST _3P_PRES = VBZ | BEZ | DOZ | VHZ;
+LIST _3P_PAST = BEDZ DOD HVD VBD;
+SELECT (GERU) (+1 _3P_PRES);
+SELECT (GERU) (+1 _3P_PAST);
+SELECT (GERU) (+1 (MD)) (+2 _UNINF);
 
+# and the same with gerund + NP and gerund + PP(NP)
+SELECT (GERU) (T:NP_OR_PP_CONTEXT LINK +1 _3P_PRES);
+SELECT (GERU) (T:NP_OR_PP_CONTEXT LINK +1 _3P_PAST);
+SELECT (GERU) (T:NP_OR_PP_CONTEXT LINK +1 (MD) LINK +1 _UNINF);
 
 # -ing: select participle readings
 # TODO
@@ -161,11 +178,13 @@ TEMPLATE NP_CONTEXT   = ( (T:DET_QL_AP_NP) OR  (T:DET_AP_NP) OR  (T:DET_NP) OR (
 TEMPLATE COMMA_CONTEXT = ( +1 ("<,>") );
 
 # Participle + Noun Phrase
-SELECT (PART) (-1 (<<<)) (T:NP_CONTEXT LINK T:COMMA_CONTEXT );
-
+# or
 # Participle + Prepositional Phrase including Noun Phrase. 
-SELECT (PART) (-1 (<<<)) (+1 (IN) LINK T:NP_CONTEXT LINK T:COMMA_CONTEXT);
+SELECT (PART) (-1 (<<<)) (T:NP_OR_PP_CONTEXT LINK T:COMMA_CONTEXT );
 
+# "... , she sitting on the seat beside him, ... "-parentheses
+SELECT (PART) (-1* ("<,>") BARRIER _ANYVERB_ANYFORM) (T:NP_CONTEXT LINK +1* ("<,>") BARRIER _ANYVERB_ANYFORM );
+SELECT (PART) (-1* ("<,>") BARRIER _ANYVERB_ANYFORM) (+1 (IN) LINK T:NP_CONTEXT LINK +1* ("<,>") BARRIER _ANYVERB_ANYFORM );
 
 
 ############################################################################# 
