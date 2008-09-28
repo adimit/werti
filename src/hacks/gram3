@@ -118,11 +118,14 @@ SELECT (GERU) (-1C* (VBD OR VBZ) BARRIER (*) - (NN OR NP));
 
 # utility: definition of a noun phrase context including adjectives 
 LIST NP_DETPREP = DT DTS DTI AT PP$ PP$$ PPL PPLS PPO PPS PPSS;
-TEMPLATE DET_QL_AP_NP = (+1 NP_DETPREP LINK +1* (QL) BARRIER (*) - (QL) LINK +1* _ADJEC BARRIER (*) - _ADJEC LINK +1* _NOUNS BARRIER (*) - _NOUNS );
-TEMPLATE DET_AP_NP    = (+1 NP_DETPREP LINK +1* _ADJEC BARRIER (*) - _ADJEC LINK +1* _NOUNS BARRIER (*) - _NOUNS );
-TEMPLATE DET_NP       = (+1 NP_DETPREP LINK +1* _NOUNS BARRIER (*) - _NOUNS ) ;
-TEMPLATE SIMPLE_NP    = (+1* _NOUNS BARRIER (*) - _NOUNS );
-TEMPLATE NP_CONTEXT   = ( (T:DET_QL_AP_NP) OR  (T:DET_AP_NP) OR  (T:DET_NP) OR  (T:SIMPLE_NP)  );
+TEMPLATE SIMPLE_NP  = (+1 _NOUNS LINK T:SIMPLE_NP) OR  (+1 _NOUNS);
+TEMPLATE SIMPLE_AP  = (+1 _ADJEC LINK T:SIMPLE_AP) OR  (+1 _ADJEC);
+TEMPLATE SIMPLE_QLP = (+1 (QL) LINK T:SIMPLE_QLP) OR  (+1 (QL));
+TEMPLATE DET_NP     = (+1 NP_DETPREP LINK T:SIMPLE_NP );
+TEMPLATE DET_AP_NP  = (+1 NP_DETPREP LINK T:SIMPLE_AP LINK T:SIMPLE_NP);
+TEMPLATE DET_QL_AP_NP  = (+1 NP_DETPREP LINK T:SIMPLE_QLP LINK T:SIMPLE_AP LINK T:SIMPLE_NP);
+TEMPLATE NP_CONTEXT   = ( (T:DET_QL_AP_NP) OR  (T:DET_AP_NP) OR  (T:DET_NP) OR (T:SIMPLE_NP) );
+
 
 # -ing: select participle readings
 # TODO
@@ -130,10 +133,10 @@ TEMPLATE NP_CONTEXT   = ( (T:DET_QL_AP_NP) OR  (T:DET_AP_NP) OR  (T:DET_NP) OR  
 TEMPLATE COMMA_CONTEXT = ( +1 ("<,>") );
 
 # Participle + Noun Phrase
-SELECT (PART) (@1 (PART) LINK T:NP_CONTEXT LINK T:COMMA_CONTEXT );
+SELECT (PART) (-1 (<<<)) (T:NP_CONTEXT LINK T:COMMA_CONTEXT );
 
 # Participle + Prepositional Phrase including Noun Phrase. 
-SELECT (PART) (@1 (PART) LINK +1 (IN) LINK T:NP_CONTEXT LINK T:COMMA_CONTEXT );
+SELECT (PART) (-1 (<<<)) (+1 (IN) LINK T:NP_CONTEXT LINK T:COMMA_CONTEXT);
 
 
 
@@ -144,6 +147,10 @@ SELECT (PART) (@1 (PART) LINK +1 (IN) LINK T:NP_CONTEXT LINK T:COMMA_CONTEXT );
 ############################################################################# 
 
 AFTER-SECTIONS
+
+# ATTENTION: since we do not want ambigous annotations to be marked,
+# every constraint here must be careful (marked with C). This will
+# ommit ambigous readings.
 
 # marking infinitive constructions: TO ADVER* INFIN
 # INF-B: beginning of chunk. INF-I: inside of chunk.
