@@ -11,6 +11,7 @@ Nobody told you to do such a stupid thing!
 I am singing in the rain.
 We are singing in the rain.
 He is singing in the rain.
+They were singing in the rain.
 
 I will be singing in the rain.
 I have been singing in the rain.
@@ -74,3 +75,19 @@ Aunt Sarah doesn't like Steve watching horror films.
 He likes fishing.
 
 Waiting for the hippie bus, he sat thinking about smoking another one.
+
+Are you waiting for me?
+Are you coming for dinner?
+Am I bothering you?
+Am I really disturbing you?
+Are they seriously trying to do this?
+Am I not listening?
+
+What are you going to do now?
+Are they really going to kill me for writing bad grammars?
+
+Was he going to come home?
+Was he drinking alone again?
+Were they getting wasted again?
+Was I becoming a geek or was he just boring?
+

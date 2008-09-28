@@ -21,6 +21,7 @@ LIST _ADVER = RB RBR RBT; 	#  some types of adverbs used with infinitives
 LIST _NEG   = "<not>" "<Not>";  # negation words, TODO: contractions?!
 LIST _ADJEC = JJ JJT JJS JJR;
 LIST _NOUNS = NN NN$ NNS NNS$ NP NP$ NPS NPS$;
+LIST _ANYVERB_ANYFORM = VB VBD VBG VBN VBZ BE BED BEDZ BEG BEM BEN BER BEZ DO DOD DOZ HV HVD HVG HVN HVZ;
 
 ############################################################################# 
 #
@@ -40,6 +41,12 @@ LIST _UNINFLECTED = BE DO GV VB;
 APPEND ("" QUOT) ("<&quot;>");
 SELECT (QUOT) (0 (QUOT));
 
+# Simple sentence-initial question forms may have been assigned any
+# funny tag.
+APPEND ("" BEDZ) ("<Was>") (+1 (PPSS));
+APPEND ("" BED)  ("<Were>")(+1 (PPSS));
+APPEND ("" BEDZ) ("<was>") (+1 (PPSS));
+APPEND ("" BED) ("<was>") (+1 (PPSS));
 
 # introduce infinitive tags (Brown tagset only knows "uninflected forms")
 SUBSTITUTE (BE) (BE-INF) (BE) (-1*C (TO) BARRIER (*) - _ADVER);
@@ -86,23 +93,39 @@ REMOVE ("---remove---" VBG);
 
 SECTION
 
+# finite forms of to be, including imperative
+# (TODO: imperative? good or bad idea?)
+#LIST _BE_FINITE = BEM BEZ BER BEN BE;
+LIST _BE_FINITE = BEM BEZ BER BEN BED BEDZ;
+
+# cluster of negation and adverbs as a context
+#SET _ADVNEG = _ADVER + _NEG;
+#TEMPLATE NAD_CLUSTER = (+1 _ADVNEG LINK T:NAD_CLUSTER) OR (+1 _ADVNEG);
+
 # -ing: going-to-future
-# TOOD: questions
+# sentences
 SELECT (GOFU) (-1* (BER) BARRIER (*) - _NEG - _ADVER) (+1 (TO)) (+2 _INFIN);
 SELECT (GOFU) (-1* (BEM) BARRIER (*) - _NEG - _ADVER) (+1 (TO)) (+2 _INFIN);
 SELECT (GOFU) (-1* (BEZ) BARRIER (*) - _NEG - _ADVER) (+1 (TO)) (+2 _INFIN);
-
+# qestions
+SELECT (GOFU) (-1* (BER) BARRIER _ANYVERB_ANYFORM) (+1 (TO)) (+2 _INFIN) (+3* ("<?>"));
+SELECT (GOFU) (-1* (BEM) BARRIER _ANYVERB_ANYFORM) (+1 (TO)) (+2 _INFIN) (+3* ("<?>"));
+SELECT (GOFU) (-1* (BEZ) BARRIER _ANYVERB_ANYFORM) (+1 (TO)) (+2 _INFIN) (+3* ("<?>"));
 
 # add reading for going-to-future in the past
 # TOOD: questions
 SELECT (GOFUPA) (-1* (BED)  BARRIER (*) - _NEG - _ADVER) (+1 (TO)) (+2 _INFIN);
 SELECT (GOFUPA) (-1* (BEDZ) BARRIER (*) - _NEG - _ADVER) (+1 (TO)) (+2 _INFIN);
-
+# question
+SELECT (GOFUPA) (-1* (BED) BARRIER _ANYVERB_ANYFORM) (+1 (TO)) (+2 _INFIN) (+3* ("<?>"));
+SELECT (GOFUPA) (-1* (BEDZ) BARRIER _ANYVERB_ANYFORM) (+1 (TO)) (+2 _INFIN) (+3* ("<?>"));
 
 # -ing: select progressive form readings
-# TOOD: questions
-LIST _PROGINTRO = BEM BEZ BER BEN BE;
-SELECT (PROG) (-1* _PROGINTRO BARRIER (*) - _NEG - _ADVER);
+# sentence
+SELECT (PROG) (-1* _BE_FINITE BARRIER (*) - _NEG - _ADVER);
+# question
+SELECT (PROG) (-1* _BE_FINITE BARRIER _ANYVERB_ANYFORM) (+1* ("<?>"));
+
 
 # -ing: select gerund readings
 # TODO
