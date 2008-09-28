@@ -36,8 +36,8 @@ public class GerundsColorize implements EntryPoint {
 	private final String gerColor = "#ce6006";
 	private final String infColor = "#8c01c0";
 	private final String cluColor = "#2222ff";
-	private final String ingformColor = "#black";
-	private final String ambiguousColor = "#red";
+	private final String ingformColor = "black";
+	private final String ambiguousColor = "red";
 	
 	
 	/**
