@@ -167,11 +167,11 @@ ADD (GOP-B) (GOFUPA) (0C (GOFUPA));
 ADD (PRO-B) (PROG) (0C (PROG));
 ADD (PAR-B) (PART) (0C (PART));
 
-# and this marks the ones which are still ambiguous
-ADD (AMB-B) (GERU) (NOT 0 (GER-B)) (NOT 0 (GOI-B)) (NOT 0 (GOP-B)) (NOT 0 (PRO-B)) (NOT 0 (PAR-B))
-ADD (AMB-B) (PROG) (NOT 0 (GER-B))(NOT 0 (GOI-B)) (NOT 0 (GOP-B)) (NOT 0 (PRO-B)) (NOT 0 (PAR-B))
-ADD (AMB-B) (PART) (NOT 0 (GER-B))(NOT 0 (GOI-B)) (NOT 0 (GOP-B)) (NOT 0 (PRO-B)) (NOT 0 (PAR-B))
-ADD (AMB-B) (GOFU) (NOT 0 (GER-B))(NOT 0 (GOI-B)) (NOT 0 (GOP-B)) (NOT 0 (PRO-B)) (NOT 0 (PAR-B))
-ADD (AMB-B) (GOFUPA) (NOT 0 (GER-B)) (NOT 0 (GOI-B)) (NOT 0 (GOP-B)) (NOT 0 (PRO-B)) (NOT 0 (PAR-B))
-
-
+# and this marks the ones which are still ambiguous, ...
+APPEND ("" AMB-B) (GERU) (NOT 0 (GER-B));
+APPEND ("" AMB-B) (PROG) (NOT 0 (PRO-B)) (NOT 0 (AMB-B));
+APPEND ("" AMB-B) (PART) (NOT 0 (PAR-B)) (NOT 0 (AMB-B));
+APPEND ("" AMB-B) (GOFU) (NOT 0 (GOI-B)) (NOT 0 (AMB-B));
+APPEND ("" AMB-B) (GOFUPA) (NOT 0 (GOP-B))  (NOT 0 (AMB-B));
+# ... and then delete the rest (better comment out this during grammar development!)
+SELECT  (AMB-B) (0 (AMB-B));
