@@ -3,8 +3,8 @@
 #
 # ATTENTION: uses Linigpipe interpretatiom of Brown/Penn Tagset
 #
-# ATTENTION: sets with underscores are ment to be abstract concepts
-#     which are independent from the tagset.
+# ATTENTION: sets and templates with underscores are meant to be used 
+# globally in the entire section they are specified in.
 #
 
 ############################################################################# 
@@ -13,7 +13,14 @@
 #
 ############################################################################# 
 
+#----- HANDLING PUNCTUATION PROPERLY ----------------------------------------
+
+# TODO: abbreviations are broken.
+
 DELIMITERS = "<.>" "<!>" "<?>" ; # sentence window
+
+
+#----- GLOBAL ABSTRACT SETS OF POS ------------------------------------------
 
 LIST _INGFORM = VBG HVG BEG ; # gerunds or present participle
 LIST _INFIN = BE-INF DO-INF HV-INF VB-INF; # to-infinitives (introduced below)
@@ -36,8 +43,9 @@ BEFORE-SECTIONS
 "<To>" SUBSTITUTE (IN) (TO) (IN) ( +1*C _UNINF BARRIER (*) - _ADVER );
 "<to>" SUBSTITUTE (IN) (TO) (IN) ( +1*C _UNINF BARRIER (*) - _ADVER );
 
-# double quotes are double quotes, introduce a new tag for them as 
-# the tagset does not know them.
+# Introduce a new tag for double quotes. The tagset is missing this one. As the
+# tagger does not know them, it produces all kinds of funny analyses instead.
+APPEND ("" QUOT) ("<">");
 APPEND ("" QUOT) ("<&quot;>");
 SELECT (QUOT) (0 (QUOT));
 
@@ -194,7 +202,7 @@ SELECT (PART) (-1 (<<<)) (T:_NP_OR_PP_CONTEXT LINK +1 ("<,>")  );
 
 # "... , she sitting on the seat beside him, ... "-parentheses
 LIST COMMA  = "<,>" "<;>";
-SET COMMA_OR_SUBORD = COMMA +  (CS);
+LIST COMMA_OR_SUBORD =  "<,>" "<;>" CS; 
 
 SELECT (PART) (-1* COMMA BARRIER _ANYVERB_ANYFORM) (T:_NP_OR_PP_CONTEXT LINK +1* ("<,>") BARRIER _ANYVERB_ANYFORM );
 SELECT (PART) (-1* COMMA BARRIER _ANYVERB_ANYFORM) (+1 _ADVER LINK T:_NP_OR_PP_CONTEXT LINK +1* COMMA_OR_SUBORD  BARRIER _ANYVERB_ANYFORM );
