@@ -90,6 +90,8 @@ REMOVE ("---remove---" VBG);
 
 SECTION
 
+#----- UTILITY TEMPLATES AND LISTS/SETS -------------------------------------
+
 # finite forms of to be, including imperative
 # (TODO: imperative? good or bad idea?)
 #LIST _BE_FINITE = BEM BEZ BER BEN BE;
@@ -118,6 +120,8 @@ TEMPLATE _NP_OR_PP_CONTEXT = ( (T:_NP_CONTEXT) OR (+1 (IN) LINK T:_NP_CONTEXT) )
 
 
 
+#----- GOING-TO FUTURE AND FUTURE-IN-THE-PAST -------------------------------
+
 # cluster of negation and adverbs as a context
 #SET _ADVNEG = _ADVER + _NEG;
 #TEMPLATE NAD_CLUSTER = (+1 _ADVNEG LINK T:NAD_CLUSTER) OR (+1 _ADVNEG);
@@ -133,21 +137,23 @@ SELECT (GOFU) (-1* (BEM) BARRIER _ANYVERB_ANYFORM) (+1 (TO)) (+2 _INFIN) (+3* ("
 SELECT (GOFU) (-1* (BEZ) BARRIER _ANYVERB_ANYFORM) (+1 (TO)) (+2 _INFIN) (+3* ("<?>"));
 
 # add reading for going-to-future in the past
-# TOOD: questions
 SELECT (GOFUPA) (-1* (BED)  BARRIER (*) - _NEG - _ADVER) (+1 (TO)) (+2 _INFIN);
 SELECT (GOFUPA) (-1* (BEDZ) BARRIER (*) - _NEG - _ADVER) (+1 (TO)) (+2 _INFIN);
 # question
 SELECT (GOFUPA) (-1* (BED) BARRIER _ANYVERB_ANYFORM) (+1 (TO)) (+2 _INFIN) (+3* ("<?>"));
 SELECT (GOFUPA) (-1* (BEDZ) BARRIER _ANYVERB_ANYFORM) (+1 (TO)) (+2 _INFIN) (+3* ("<?>"));
 
-# -ing: select progressive form readings
+
+#----- OTHER PROGRESSIVE FORM READINGS --------------------------------------
+
 # sentence
 SELECT (PROG) (-1* _BE_FINITE BARRIER (*) - _NEG - _ADVER);
 # question
 SELECT (PROG) (-1* _BE_FINITE BARRIER _ANYVERB_ANYFORM) (+1* ("<?>"));
 
 
-# -ing: select gerund readings
+#----- GERUND READINGS ------------------------------------------------------
+
 # TODO
 # ... first easy rules for testing
 SELECT (GERU) (-2 _ADVER) (-1 (IN));
@@ -177,8 +183,8 @@ SELECT (GERU) (T:_NP_OR_PP_CONTEXT LINK +1 _3P_PRES);
 SELECT (GERU) (T:_NP_OR_PP_CONTEXT LINK +1 _3P_PAST);
 SELECT (GERU) (T:_NP_OR_PP_CONTEXT LINK +1 (MD) LINK +1 _UNINF);
 
-# -ing: select participle readings
-# TODO
+
+#----- PARTICIPLE READINGS --------------------------------------------------
 
 # Participle + Noun Phrase
 # or
@@ -186,11 +192,12 @@ SELECT (GERU) (T:_NP_OR_PP_CONTEXT LINK +1 (MD) LINK +1 _UNINF);
 # at the sentence beginning
 SELECT (PART) (-1 (<<<)) (T:_NP_OR_PP_CONTEXT LINK +1 ("<,>")  );
 
-
 # "... , she sitting on the seat beside him, ... "-parentheses
-LIST COMMA_OR_SUBORD = "<,>" CS;
-SELECT (PART) (-1* ("<,>") BARRIER _ANYVERB_ANYFORM) (T:_NP_OR_PP_CONTEXT LINK +1* ("<,>") BARRIER _ANYVERB_ANYFORM );
-SELECT (PART) (-1* ("<,>") BARRIER _ANYVERB_ANYFORM) (+1 _ADVER LINK T:_NP_OR_PP_CONTEXT LINK +1* COMMA_OR_SUBORD  BARRIER _ANYVERB_ANYFORM );
+LIST COMMA  = "<,>" "<;>";
+SET COMMA_OR_SUBORD = COMMA +  (CS);
+
+SELECT (PART) (-1* COMMA BARRIER _ANYVERB_ANYFORM) (T:_NP_OR_PP_CONTEXT LINK +1* ("<,>") BARRIER _ANYVERB_ANYFORM );
+SELECT (PART) (-1* COMMA BARRIER _ANYVERB_ANYFORM) (+1 _ADVER LINK T:_NP_OR_PP_CONTEXT LINK +1* COMMA_OR_SUBORD  BARRIER _ANYVERB_ANYFORM );
 
 
 ############################################################################# 
