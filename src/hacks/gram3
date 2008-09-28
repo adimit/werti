@@ -161,4 +161,17 @@ ADD (INF-I) _ADVER (-*1C (TO) BARRIER (*) - _ADVER ) (+*1C _INFIN BARRIER (*) - 
 # marking gerund constructions
 ADD (GER-B) (GERU) (0C (GERU));
 
+# these are used for the debug option of showing all known ingforms
+ADD (GOI-B) (GOFU) (0C (GOFU));
+ADD (GOP-B) (GOFUPA) (0C (GOFUPA));
+ADD (PRO-B) (PROG) (0C (PROG));
+ADD (PAR-B) (PART) (0C (PART));
+
+# and this marks the ones which are still ambiguous
+ADD (AMB-B) (GERU) (NOT 0 (GER-B)) (NOT 0 (GOI-B)) (NOT 0 (GOP-B)) (NOT 0 (PRO-B)) (NOT 0 (PAR-B))
+ADD (AMB-B) (PROG) (NOT 0 (GER-B))(NOT 0 (GOI-B)) (NOT 0 (GOP-B)) (NOT 0 (PRO-B)) (NOT 0 (PAR-B))
+ADD (AMB-B) (PART) (NOT 0 (GER-B))(NOT 0 (GOI-B)) (NOT 0 (GOP-B)) (NOT 0 (PRO-B)) (NOT 0 (PAR-B))
+ADD (AMB-B) (GOFU) (NOT 0 (GER-B))(NOT 0 (GOI-B)) (NOT 0 (GOP-B)) (NOT 0 (PRO-B)) (NOT 0 (PAR-B))
+ADD (AMB-B) (GOFUPA) (NOT 0 (GER-B)) (NOT 0 (GOI-B)) (NOT 0 (GOP-B)) (NOT 0 (PRO-B)) (NOT 0 (PAR-B))
+
 
