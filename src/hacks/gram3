@@ -95,7 +95,8 @@ SECTION
 #LIST _BE_FINITE = BEM BEZ BER BEN BE;
 LIST _BE_FINITE = BEM BEZ BER BEN BED BEDZ;
 
-# utility: definition of a noun phrase context including adjectives 
+# utility: definition of a noun phrase context including adjectives
+# and an adjective phrase 
 LIST _NP_DETPREP = DT DTS DTI AT PP$ PP$$ PPL PPLS PPO PPS PPSS;
 TEMPLATE ACC_PRON   = (+1 (PPO));
 TEMPLATE SIMPLE_NP  = (+1 _NOUNS LINK T:SIMPLE_NP) OR (+1 _NOUNS);
@@ -107,11 +108,15 @@ TEMPLATE QL_AP_NP  = (T:SIMPLE_QLP LINK T:SIMPLE_AP LINK T:SIMPLE_NP);
 
 TEMPLATE NP_CONTEXT_NODET   = ( (T:QL_AP_NP) OR (T:AP_NP) OR (T:SIMPLE_NP) ); 
 TEMPLATE NP_CONTEXT_DET     = (+1 _NP_DETPREP LINK T:NP_CONTEXT_NODET );
-TEMPLATE NP_CONTEXT = ( (T:NP_CONTEXT_DET) OR  (T:NP_CONTEXT_NODET) OR (T:ACC_PRON) );
 
+TEMPLATE _NP_CONTEXT = ( (T:NP_CONTEXT_DET) OR  (T:NP_CONTEXT_NODET) OR (T:ACC_PRON) );
+
+#TEMPLATE _AP_CONTEXT = ( (T:SIMPLE_QLP LINK T:SIMPLE_AP) OR (T:SIMPLE_AP) );
 
 # a context for a prepositional phrase with a noun phrase or just a noun phrase
-TEMPLATE NP_OR_PP_CONTEXT = ( (T:NP_CONTEXT) OR (+1 (IN) LINK T:NP_CONTEXT) );
+TEMPLATE _NP_OR_PP_CONTEXT = ( (T:_NP_CONTEXT) OR (+1 (IN) LINK T:_NP_CONTEXT) );
+
+
 
 # cluster of negation and adverbs as a context
 #SET _ADVNEG = _ADVER + _NEG;
@@ -168,23 +173,24 @@ SELECT (GERU) (+1 _3P_PAST);
 SELECT (GERU) (+1 (MD)) (+2 _UNINF);
 
 # and the same with gerund + NP and gerund + PP(NP)
-SELECT (GERU) (T:NP_OR_PP_CONTEXT LINK +1 _3P_PRES);
-SELECT (GERU) (T:NP_OR_PP_CONTEXT LINK +1 _3P_PAST);
-SELECT (GERU) (T:NP_OR_PP_CONTEXT LINK +1 (MD) LINK +1 _UNINF);
+SELECT (GERU) (T:_NP_OR_PP_CONTEXT LINK +1 _3P_PRES);
+SELECT (GERU) (T:_NP_OR_PP_CONTEXT LINK +1 _3P_PAST);
+SELECT (GERU) (T:_NP_OR_PP_CONTEXT LINK +1 (MD) LINK +1 _UNINF);
 
 # -ing: select participle readings
 # TODO
-# ... first easy rules for sentence initial participles
-TEMPLATE COMMA_CONTEXT = ( +1 ("<,>") );
 
 # Participle + Noun Phrase
 # or
 # Participle + Prepositional Phrase including Noun Phrase. 
-SELECT (PART) (-1 (<<<)) (T:NP_OR_PP_CONTEXT LINK T:COMMA_CONTEXT );
+# at the sentence beginning
+SELECT (PART) (-1 (<<<)) (T:_NP_OR_PP_CONTEXT LINK +1 ("<,>")  );
+
 
 # "... , she sitting on the seat beside him, ... "-parentheses
-SELECT (PART) (-1* ("<,>") BARRIER _ANYVERB_ANYFORM) (T:NP_CONTEXT LINK +1* ("<,>") BARRIER _ANYVERB_ANYFORM );
-SELECT (PART) (-1* ("<,>") BARRIER _ANYVERB_ANYFORM) (+1 (IN) LINK T:NP_CONTEXT LINK +1* ("<,>") BARRIER _ANYVERB_ANYFORM );
+LIST COMMA_OR_SUBORD = "<,>" CS;
+SELECT (PART) (-1* ("<,>") BARRIER _ANYVERB_ANYFORM) (T:_NP_OR_PP_CONTEXT LINK +1* ("<,>") BARRIER _ANYVERB_ANYFORM );
+SELECT (PART) (-1* ("<,>") BARRIER _ANYVERB_ANYFORM) (+1 _ADVER LINK T:_NP_OR_PP_CONTEXT LINK +1* COMMA_OR_SUBORD  BARRIER _ANYVERB_ANYFORM );
 
 
 ############################################################################# 
