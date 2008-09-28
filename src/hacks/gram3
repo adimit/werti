@@ -35,6 +35,11 @@ LIST _UNINFLECTED = BE DO GV VB;
 "<To>" SUBSTITUTE (IN) (TO) (IN) ( +1*C _UNINFLECTED BARRIER (*) - _ADVER );
 "<to>" SUBSTITUTE (IN) (TO) (IN) ( +1*C _UNINFLECTED BARRIER (*) - _ADVER );
 
+# double quotes are double quotes, introduce a new tag for them as 
+# the tagset does not know them.
+APPEND ("" QUOT) ("<&quot;>");
+SELECT (QUOT) (0 (QUOT));
+
 
 # introduce infinitive tags (Brown tagset only knows "uninflected forms")
 SUBSTITUTE (BE) (BE-INF) (BE) (-1*C (TO) BARRIER (*) - _ADVER);
