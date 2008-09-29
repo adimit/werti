@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -28,6 +29,8 @@ import org.werti.WERTiContext;
 import org.werti.uima.types.annot.SentenceAnnotation;
 import org.werti.uima.types.annot.Token;
 
+import org.werti.util.Resources;
+
 /**
  * A wrapper around the LingPipe Tagger.
  *
@@ -49,7 +52,7 @@ public class LingPipeTagger extends JCasAnnotator_ImplBase {
 
 	private static HmmDecoder tagger;
 
-	public void initialize(UimaContext context) throws ResourceInitializationException {
+	public void initialize2(UimaContext context) throws ResourceInitializationException {
 		super.initialize(context);
 		if (tagger == null) {
 			if (context.getConfigParameterValue("runningOnServer") != null) {
@@ -58,7 +61,7 @@ public class LingPipeTagger extends JCasAnnotator_ImplBase {
 					tagger = WERTiContext.getLpgtagger();
 				} else {
 					try {
-						tagger = getLpgtagger((String)context.getConfigParameterValue("modelLocation"));
+						tagger = (HmmDecoder) Resources.getResource((String)context.getConfigParameterValue("modelLocation"));
 					} catch (Exception e) {
 						throw new ResourceInitializationException(e);
 					}
@@ -66,6 +69,15 @@ public class LingPipeTagger extends JCasAnnotator_ImplBase {
 			} else {
 				tagger = WERTiContext.getLpgtagger();
 			}
+		}
+	}
+	public void initialize(UimaContext context) throws ResourceInitializationException {
+		super.initialize(context);
+		try {
+			tagger = new HmmDecoder((HiddenMarkovModel) Resources.getResource
+				("/home/aleks/src/werti/src/main/resources/models/lgptagger/pos-en-general-brown.HiddenMarkovModel"));
+		} catch (Exception e) {
+			throw new ResourceInitializationException(e);
 		}
 	}
 
