@@ -19,6 +19,58 @@
 
 DELIMITERS = "<.>" "<!>" "<?>" ; # sentence window
 
+#----- LEXICAL BITS AND PIECES ----------------------------------------------
+
+
+LIST _LEX_ALWAYS_GERUND = "<appreciat(s|ed)?>"r
+   "<quit(s)?>"r
+   "<finish(s|ed)?>"r 
+   "<postpone(s|ed)?>"r
+   "<enjoy(s|ed)?>"r
+   "<(keep(s)?)|(kept)>"r
+   "<delay(s|ed)?>"r
+   "<consider(s|ed)?>"r
+   "<discuss(es|ed)?>"r
+   "<mention(s|ed)?>"r
+   "<suggest(s|ed)?>"r
+   "<mind(s|d)?>"r;
+
+LIST _LEX_GERUND_OR_TOINF_MEANING_CHANGE = "<stop(s|ped)?>"r 
+   "<remember(s|ed)?>"r
+   "<regret(s|ed)?>"r
+   "<(forget(s)?)|(forgot)>"r
+   "<(try)|(tries)|(tried)>"r;
+
+
+LIST _LEX_GERUND_OR_TOINF_NO_MEANING_CHANGE = "<like(s|d)?>"r
+   "<hate(s|d)?>"r
+   "(<begin(s)?)|(began)>"r
+   "<love(s|ed)?>"r 
+   "<start(s|ed)?>"r
+   "<prefer(s|red)?>"r
+   "<continue(s|ed)?>"r;
+
+
+SET _LEX_GERUND_OR_TOINF = _LEX_GERUND_OR_TOINF_MEANING_CHANGE + _LEX_GERUND_OR_TOINF_NO_MEANING_CHANGE;
+
+LIST _LEX_ALWAYS_TOINF = "<hope(s|d)?>"r
+   "<plan(s|ned)?>"r
+   "<intend(s|ed)?>"r 
+   "<decide(s|d)?>"r
+   "<promise(s|d)?>"r
+   "<agree(s|d)?>"r
+   "<offer(s|ed)?>"r
+   "<refuse(s|d)?>"r
+   "<seem(s|ed)?>"r
+   "<appear(s|ed)?>"r
+   "<pretend(s|ed)?>"r
+   "<ask(s|ed)?>"r
+   "<expect(s|ed)?>"r
+   "<want(s|ed)?>"r
+   "<need(s|ed)?>"r;
+
+SET _LEX_GERUND_CANDIDATES = _LEX_GERUND_OR_TOINF + _LEX_ALWAYS_GERUND;
+
 
 #----- GLOBAL ABSTRACT SETS OF POS ------------------------------------------
 
@@ -30,6 +82,9 @@ LIST _NEG   = "<not>" "<Not>";  # negation words, TODO: contractions?!
 LIST _ADJEC = JJ JJT JJS JJR;
 LIST _NOUNS = NN NN$ NNS NNS$ NP NP$ NPS NPS$;
 LIST _ANYVERB_ANYFORM = VB VBD VBG VBN VBZ BE BED BEDZ BEG BEM BEN BER BEZ DO DOD DOZ HV HVD HVG HVN HVZ MD;
+
+
+
 
 ############################################################################# 
 #
@@ -163,27 +218,16 @@ SELECT (PROG) (-1* _BE_FINITE BARRIER _ANYVERB_ANYFORM) (+1* ("<?>"));
 SELECT (GERU) (-1 (IN));
 SELECT (GERU) (-1 (CS));
 
-# lexical sure-fires
-LIST LEX_SUREFIRES = "<like(s|d)?>"r
-   "<hate(s|d)?>"r
-   "<stop(s|ped)?>"r 
-   "<start(s|ed)?>"r
-   "<enjoy(s|ed)?>"r
-   "<continue(s|ed)?>"r
-   "<remember(s|ed)?>"r
-   "<regret(s|ed)?>"r
-   "<(forget(s)?)|(forgot)>"r
-   "<mind(s|d)?>"r
-   "<mind(s|d)?>"r;
+### treat lexical sure-fires
 
 # without subject
-SELECT (GERU) (-1 LEX_SUREFIRES);
+SELECT (GERU) (-1 _LEX_GERUND_CANDIDATES);
 
 # and with a subject 
 # TODO: does this overgenerate?
-SELECT (GERU) (-1 _NOUNS LINK -1 LEX_SUREFIRES);
-SELECT (GERU) (-1 (PPO) LINK -1 LEX_SUREFIRES);
-SELECT (GERU) (-1 (PP$) LINK -1 LEX_SUREFIRES);
+SELECT (GERU) (-1 _NOUNS LINK -1 _LEX_GERUND_CANDIDATES);
+SELECT (GERU) (-1 (PPO) LINK -1 _LEX_GERUND_CANDIDATES);
+SELECT (GERU) (-1 (PP$) LINK -1 _LEX_GERUND_CANDIDATES);
 
 
 
