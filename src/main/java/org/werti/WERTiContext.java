@@ -20,6 +20,8 @@ import org.apache.uima.resource.ResourceInitializationException;
 
 import org.werti.client.InitializationException;
 
+import org.werti.util.Resources;
+
 /**
  * Your random garden variety memory hog.
  *
@@ -62,7 +64,7 @@ public final class WERTiContext {
 				+ p.getProperty("lgptagger.en");
 			
 			final HiddenMarkovModel hmm;
-			hmm = (HiddenMarkovModel) getModel(lgpmodel);
+			hmm = (HiddenMarkovModel) Resources.getResource(lgpmodel, servlet);
 			WERTiContext.lgptagger = new HmmDecoder(hmm);
 		}
 		return lgptagger;
