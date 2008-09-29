@@ -199,32 +199,11 @@ SECTION
 # finite forms of to be, including imperative
 LIST _BE_FINITE = BEM BEZ BER BEN BED BEDZ;
 
-# utility: definition of a noun phrase context including adjectives
-# and an adjective phrase 
-LIST _NP_DETPREP = DT DTS DTI AT PP$ PP$$ PPL PPLS PPO PPS PPSS;
-TEMPLATE ACC_PRON   = (+1 (PPO));
-TEMPLATE SIMPLE_NP  = (+1 _NOUNS LINK T:SIMPLE_NP) OR (+1 _NOUNS);
-TEMPLATE SIMPLE_AP  = (+1 _ADJEC LINK T:SIMPLE_AP) OR  (+1 _ADJEC);
-TEMPLATE SIMPLE_QLP = (+1 (QL) LINK T:SIMPLE_QLP) OR  (+1 (QL));
-TEMPLATE AP_NP  = (T:SIMPLE_AP LINK T:SIMPLE_NP);
-TEMPLATE QL_AP_NP  = (T:SIMPLE_QLP LINK T:SIMPLE_AP LINK T:SIMPLE_NP);
-TEMPLATE NP_CONTEXT_NODET   = ( (T:QL_AP_NP) OR (T:AP_NP) OR (T:SIMPLE_NP) ); 
-TEMPLATE NP_CONTEXT_DET     = (+1 _NP_DETPREP LINK T:NP_CONTEXT_NODET );
-
-# result of the above: a noun phrase context and an adjective phrase context.
-TEMPLATE _NP_CONTEXT = ( (T:NP_CONTEXT_DET) OR  (T:NP_CONTEXT_NODET) OR (T:ACC_PRON) );
-TEMPLATE _AP_CONTEXT = ( (T:SIMPLE_QLP LINK T:SIMPLE_AP) OR (T:SIMPLE_AP) );
-
-# a context for a prepositional phrase with a noun phrase or just a noun phrase
-TEMPLATE _NP_OR_PP_CONTEXT = ( (T:_NP_CONTEXT) OR (+1 (IN) LINK T:_NP_CONTEXT) );
-
+# determiners and pronouns used in NPs
+LIST _NP_DETPRON = DT DTS DTI AT PP$ PP$$ PPL PPLS PPO PPS PPSS;
 
 
 #----- GOING-TO FUTURE AND FUTURE-IN-THE-PAST -------------------------------
-
-# cluster of negation and adverbs as a context
-#SET _ADVNEG = _ADVER + _NEG;
-#TEMPLATE NAD_CLUSTER = (+1 _ADVNEG LINK T:NAD_CLUSTER) OR (+1 _ADVNEG);
 
 # -ing: going-to-future
 # sentences
@@ -255,10 +234,10 @@ SELECT (PROG) (-1* _BE_FINITE BARRIER _ANYVERB_ANYFORM) (+1* ("<?>"));
 #----- PARTICIPLE READINGS --------------------------------------------------
 
 LIST _COMMA  = "<,>" "<;>";
-LIST _COMMA_OR_SUBORD =  "<,>" "<;>" CS; 
+LIST _COMMA_OR_SUBORD = _COMMA OR (CS); 
 
 # "... the (not) very brightly shining gem ..."
-SELECT (PART) (-1* _NP_DETPREP BARRIER (*) - _ADVER - _NEG - (QL)) (+1 _NOUNS);
+SELECT (PART) (-1* _NP_DETPRON BARRIER (*) - _ADVER - _NEG - (QL)) (+1 _NOUNS);
 # "... of him having stolen ..."
 #SELECT (PART) (-3 _NOUNS) (-2 (IN)) (-1 (PPO));
 # "... you racing ..."
@@ -272,10 +251,13 @@ SELECT (PART) (-1 (PPO));
 # TODO: does this quite sledgehammery rule overgenerate??
 SELECT (PART) (-1 (>>>)) (+1*  _COMMA_OR_SUBORD BARRIER _ANYVERB_ANYFORM );
 
-# "... , she sitting on the seat beside him, ... "-parentheses
+# parenthesis
+# "... , she sitting on the seat beside him, ... "
+# "... , Peter talking loudly to the mirror, ..."
 # TODO: this does overgenerate!
-SELECT (PART) (-1* _COMMA BARRIER _ANYVERB_ANYFORM ) (NOT -1* (IN) BARRIER_COMMA ) (T:_NP_OR_PP_CONTEXT LINK +1* ( _COMMA_OR_SUBORD) BARRIER _ANYVERB_ANYFORM );
-SELECT (PART) (-1* _COMMA BARRIER _ANYVERB_ANYFORM ) (NOT -1* (IN) BARRIER_COMMA ) (+1 _ADVER LINK T:_NP_OR_PP_CONTEXT LINK +1* _COMMA_OR_SUBORD  BARRIER _ANYVERB_ANYFORM );
+SELECT (PART) (-1* _COMMA BARRIER _ANYVERB_ANYFORM ) (+1* ( _COMMA_OR_SUBORD) BARRIER _ANYVERB_ANYFORM );
+ 
+
 
 # "..., not noticing that..."
 # TODO: this does overgenerate!
@@ -326,7 +308,7 @@ SELECT (GERU) ( +1* (MD) BARRIER _COMMA_OR_SUBORD OR _ANYVERB_ANYFORM LINK +1 _U
 
 
 # 'predicative gerund' such as "Being good is bad."
-SELECT (GERU) (0 (BEG)) (T:_AP_CONTEXT);
+SELECT (GERU) (0 (BEG)) (+1* _ADVER BARRIER (*) - (QL) );
 
 ############################################################################# 
 #
