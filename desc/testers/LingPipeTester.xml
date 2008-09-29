@@ -6,17 +6,17 @@
     <delegateAnalysisEngine key="HTMLAnnotator">
       <import location="../annotators/HTMLAnnotator.xml"/>
     </delegateAnalysisEngine>
-    <delegateAnalysisEngine key="WholeText">
-      <import location="../annotators/relevance/WholeText.xml"/>
+    <delegateAnalysisEngine key="ConditionalAnnotator">
+      <import location="../annotators/ConditionalAnnotator.xml"/>
     </delegateAnalysisEngine>
     <delegateAnalysisEngine key="SentencBoundaryDetector">
       <import location="../annotators/SentenceBoundaryDetector.xml"/>
     </delegateAnalysisEngine>
-    <delegateAnalysisEngine key="LGPTagger">
-      <import location="../annotators/taggers/LGPTagger.xml"/>
-    </delegateAnalysisEngine>
     <delegateAnalysisEngine key="GenericRelevanceAnnotator">
       <import location="../annotators/relevance/GenericRelevanceAnnotator.xml"/>
+    </delegateAnalysisEngine>
+    <delegateAnalysisEngine key="LGPTagger">
+      <import location="../annotators/taggers/LGPTagger.xml"/>
     </delegateAnalysisEngine>
     <delegateAnalysisEngine key="LGPTokenizer">
       <import location="../annotators/LGPTokenizer.xml"/>
@@ -27,7 +27,7 @@
     <description/>
     <version>1.0</version>
     <vendor/>
-    <configurationParameters/>
+    <configurationParameters searchStrategy="language_fallback"/>
     <configurationParameterSettings/>
     <flowConstraints>
       <fixedFlow>
@@ -36,6 +36,7 @@
         <node>LGPTokenizer</node>
         <node>SentencBoundaryDetector</node>
         <node>LGPTagger</node>
+        <node>ConditionalAnnotator</node>
       </fixedFlow>
     </flowConstraints>
     <fsIndexCollection/>

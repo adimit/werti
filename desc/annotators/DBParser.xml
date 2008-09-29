@@ -2,7 +2,7 @@
 <analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
   <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
   <primitive>true</primitive>
-  <annotatorImplementationName>org.werti.uima.ae.ConditionalAnnotator</annotatorImplementationName>
+  <annotatorImplementationName>org.werti.uima.ae.DBParser</annotatorImplementationName>
   <analysisEngineMetaData>
     <name>ConditionalAnnotator</name>
     <description/>
@@ -12,16 +12,14 @@
     <configurationParameterSettings/>
     <typeSystemDescription>
       <imports>
-        <import location="../WERTiTypeSystem.xml"/>
+        <import name="WERTiTypeSystem"/>
       </imports>
     </typeSystemDescription>
     <typePriorities/>
     <fsIndexCollection/>
     <capabilities>
       <capability>
-        <inputs>
-          <type allAnnotatorFeatures="true">org.werti.uima.types.annot.SentenceAnnotation</type>
-        </inputs>
+        <inputs/>
         <outputs>
           <type allAnnotatorFeatures="true">org.werti.uima.types.annot.Conditional</type>
         </outputs>
