@@ -87,6 +87,7 @@ LIST _LEX_GERUND_OR_TOINF_NO_MEANING_CHANGE =
    "<love(s|ed)?>"r 
    "<prefer(s|red)?>"r
    "<start(s|ed)?>"r
+   "<intend(s|ed)?>"r 
 ;
 
 
@@ -97,7 +98,6 @@ LIST _LEX_ALWAYS_TOINF =
    "<decide(s|d)?>"r
    "<expect(s|ed)?>"r
    "<hope(s|d)?>"r
-   "<intend(s|ed)?>"r 
    "<need(s|ed)?>"r
    "<offer(s|ed)?>"r
    "<plan(s|ned)?>"r
@@ -257,8 +257,13 @@ SELECT (PROG) (-1* _BE_FINITE BARRIER _ANYVERB_ANYFORM) (+1* ("<?>"));
 LIST _COMMA  = "<,>" "<;>";
 LIST _COMMA_OR_SUBORD =  "<,>" "<;>" CS; 
 
-# "... the shining gem ..."
-SELECT (PART) (-1 _NP_DETPREP) (+1 _NOUNS);
+# "... the very brightly shining gem ..."
+SELECT (PART) (-1* _NP_DETPREP BARRIER (*) - _ADVER - (QL)) (+1 _NOUNS);
+# "... of him having stolen ..."
+#SELECT (PART) (-3 _NOUNS) (-2 (IN)) (-1 (PPO));
+# "... you racing ..."
+SELECT (PART) (-1 (PPO));
+
 
 # Participle + Noun Phrase
 # or
@@ -308,25 +313,27 @@ SELECT (GERU) (-2 _ADJEC) (-1 (CS));
 
 # PP object of a noun "... plan for getting out ..."
 SELECT (GERU) (-2 _NOUNS) (-1 (IN));
-SELECT (GERU) (-3 _NOUNS) (-2 (IN)) (-1 (PP$));
+# "... of his having stolen ..."
+#SELECT (GERU) (-3 _NOUNS) (-2 (IN)) (-1 (PP$));
+# "... your racing ..."
+SELECT (GERU) (-1 (PP$));
+
 
 # very simple sleghemmer rules that catch most cases.
 # TODO: this overgenerates too much
 #SELECT (GERU) (-1 (IN));
 #SELECT (GERU) (-1 (CS));
 
-# gerund as directly preceding subject argument to the verb in 3rd person
+# gerund (with own arguments) as argument to the verb in 3rd person
 # and/or past tense or will-future (with optional adverbs)
+# "... playing playfully was what he did ... "
+# "... playing the guitar was what he did ... "
 LIST _3P_PRES = VBZ | BEZ | DOZ | VHZ;
 LIST _3P_PAST = BEDZ DOD HVD VBD;
-SELECT (GERU) (+1* _3P_PRES BARRIER (*) - _ADVER );
-SELECT (GERU) (+1* _3P_PAST BARRIER(*) - _ADVER );
-SELECT (GERU) (+1*  (MD) BARRIER (*) - _ADVER LINK +1 _UNINF);
+SELECT (GERU) ( +1* _3P_PRES BARRIER _COMMA_OR_SUBORD + _ANYVERB_ANYFORM);
+SELECT (GERU) ( +1* _3P_PAST BARRIER _COMMA_OR_SUBORD + _ANYVERB_ANYFORM);
+SELECT (GERU) ( +1* (MD) BARRIER _COMMA_OR_SUBORD + _ANYVERB_ANYFORM LINK +1 _UNINF);
 
-# and the same with gerund + NP and gerund + PP(NP)
-SELECT (GERU) (T:_NP_OR_PP_CONTEXT LINK +1* _3P_PRES BARRIER (*) - _ADVER );
-SELECT (GERU) (T:_NP_OR_PP_CONTEXT LINK +1* _3P_PAST  BARRIER (*) - _ADVER );
-SELECT (GERU) (T:_NP_OR_PP_CONTEXT LINK +1* (MD)  BARRIER (*) - _ADVER  LINK +1 _UNINF);
 
 # 'predicative gerund' such as "Being good is bad."
 SELECT (GERU) (0 (BEG)) (T:_AP_CONTEXT);
