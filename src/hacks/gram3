@@ -22,50 +22,90 @@ DELIMITERS = "<.>" "<!>" "<?>" ; # sentence window
 #----- LEXICAL BITS AND PIECES ----------------------------------------------
 
 
-LIST _LEX_ALWAYS_GERUND = "<appreciat(s|ed)?>"r
-   "<quit(s)?>"r
-   "<finish(s|ed)?>"r 
-   "<postpone(s|ed)?>"r
-   "<enjoy(s|ed)?>"r
-   "<(keep(s)?)|(kept)>"r
-   "<delay(s|ed)?>"r
+LIST _LEX_ALWAYS_GERUND = 
+   "<admit(s|ted)?>"r
+   "<appreciat(s|ed)?>"r
+   "<avoid(s|ed)?>"r
+   "<celebrate(s|d)?>"r
    "<consider(s|ed)?>"r
+   "<contemplate(s|d)?>"r
+   "<defer(s|red)?>"r
+   "<delay(s|ed)?>"r
+   "<den(y|ies|ied)>"r
+   "<detest(s|ed)?>"r
+   "<discontinue(s|d)?>"r
    "<discuss(es|ed)?>"r
+   "<dislike(s|d)?>"r
+   "<dispute(s|d)?>"r
+   "<endure(s|d)?>"r
+   "<enjoy(s|ed)?>"r
+   "<entail(s|ed)?>"r
+   "<espace(s|d)?>"r
+   "<excuse(s|d)?>"r
+   "<explain(s|ed)?>"r
+   "<fanc(y|ies|ied)>"r
+   "<finish(s|ed)?>"r
+   "<(forgive(s)?)|(forgave)>"r
+   "<hinder(s|ed)?>"r
+   "<imagine(s|d)?>"r
+   "<involve(s|d)?>"r
+   "<(keep(s)?)|(kept)>"r
+   "<loathe(s|d)?>"r
    "<mention(s|ed)?>"r
+   "<mind(s|d)?>"r
+   "<pardon(s|ed)?>"r
+   "<postpone(s|ed)?>"r
+   "<practice(s|d)?>"r
+   "<prevent(s|ed)?>"r
+   "<quit(s)?>"r
+   "<recall(s|ed)?>"r
+   "<report(s|ed)?>"r
+   "<resent(s|ed)?>"r
+   "<resist(s|ed)?>"r
+   "<risk(s|ed)?>"r
    "<suggest(s|ed)?>"r
-   "<mind(s|d)?>"r;
+   "<(understand(s)?)|(understood)>"r
+;
 
-LIST _LEX_GERUND_OR_TOINF_MEANING_CHANGE = "<stop(s|ped)?>"r 
-   "<remember(s|ed)?>"r
-   "<regret(s|ed)?>"r
+LIST _LEX_GERUND_OR_TOINF_MEANING_CHANGE = 
    "<(forget(s)?)|(forgot)>"r
-   "<(try)|(tries)|(tried)>"r;
+   "<help(s|ed)?>"r 
+   "<need(s|ed)?>"r 
+   "<regret(s|ed)?>"r
+   "<remember(s|ed)?>"r
+   "<stop(s|ped)?>"r 
+   "<(try)|(tries)|(tried)>"r
+;
 
 
-LIST _LEX_GERUND_OR_TOINF_NO_MEANING_CHANGE = "<like(s|d)?>"r
-   "<hate(s|d)?>"r
+LIST _LEX_GERUND_OR_TOINF_NO_MEANING_CHANGE = 
    "(<begin(s)?)|(began)>"r
+   "<continue(s|ed)?>"r
+   "<hate(s|d)?>"r
+   "<like(s|d)?>"r
    "<love(s|ed)?>"r 
-   "<start(s|ed)?>"r
    "<prefer(s|red)?>"r
-   "<continue(s|ed)?>"r;
+   "<start(s|ed)?>"r
+;
 
 
-LIST _LEX_ALWAYS_TOINF = "<hope(s|d)?>"r
-   "<plan(s|ned)?>"r
-   "<intend(s|ed)?>"r 
-   "<decide(s|d)?>"r
-   "<promise(s|d)?>"r
+LIST _LEX_ALWAYS_TOINF = 
    "<agree(s|d)?>"r
+   "<appear(s|ed)?>"r
+   "<ask(s|ed)?>"r
+   "<decide(s|d)?>"r
+   "<expect(s|ed)?>"r
+   "<hope(s|d)?>"r
+   "<intend(s|ed)?>"r 
+   "<need(s|ed)?>"r
    "<offer(s|ed)?>"r
+   "<plan(s|ned)?>"r
+   "<pretend(s|ed)?>"r
+   "<promise(s|d)?>"r
    "<refuse(s|d)?>"r
    "<seem(s|ed)?>"r
-   "<appear(s|ed)?>"r
-   "<pretend(s|ed)?>"r
-   "<ask(s|ed)?>"r
-   "<expect(s|ed)?>"r
    "<want(s|ed)?>"r
-   "<need(s|ed)?>"r;
+;
 
 # this does not work for some reasons...
 # SET _LEX_GERUND_OR_TOINF = _LEX_GERUND_OR_TOINF_MEANING_CHANGE + _LEX_GERUND_OR_TOINF_NO_MEANING_CHANGE;
