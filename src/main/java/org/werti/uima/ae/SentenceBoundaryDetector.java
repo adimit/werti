@@ -75,7 +75,6 @@ public class SentenceBoundaryDetector extends JCasAnnotator_ImplBase {
 				coh_gaps -= t.getEnd() - (t = tit.next()).getBegin();
 			}
 
-			if (tit.hasNext()) tit.next(); // skip over sentence boundary.
 			final int length = sa.getBegin() + t.getEnd();
 			final double coherence = coherence(length, coh_gaps);
 
