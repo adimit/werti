@@ -152,8 +152,8 @@ APPEND ("" BED)  ("<Were>")(+1 (PPSS));
 APPEND ("" BEDZ) ("<was>") (+1 (PPSS));
 APPEND ("" BED) ("<was>") (+1 (PPSS));
 
-# 's contraction is always BEZ
-APPEND ("" BEZ) ("<s>") (-1 ("<'>"));
+# 's contraction is always BEZ if not genitive 's
+APPEND ("" BEZ) ("<s>") (-1 ("<'>")) (NOT 0 (NN$));
 
 # introduce infinitive tags (Brown tagset only knows "uninflected forms")
 SUBSTITUTE (BE) (BE-INF) (BE) (-1*C (TO) BARRIER (*) - _ADVER);
@@ -257,8 +257,8 @@ SELECT (PROG) (-1* _BE_FINITE BARRIER _ANYVERB_ANYFORM) (+1* ("<?>"));
 LIST _COMMA  = "<,>" "<;>";
 LIST _COMMA_OR_SUBORD =  "<,>" "<;>" CS; 
 
-# "... the very brightly shining gem ..."
-SELECT (PART) (-1* _NP_DETPREP BARRIER (*) - _ADVER - (QL)) (+1 _NOUNS);
+# "... the (not) very brightly shining gem ..."
+SELECT (PART) (-1* _NP_DETPREP BARRIER (*) - _ADVER - _NEG - (QL)) (+1 _NOUNS);
 # "... of him having stolen ..."
 #SELECT (PART) (-3 _NOUNS) (-2 (IN)) (-1 (PPO));
 # "... you racing ..."
@@ -312,11 +312,11 @@ SELECT (GERU) (-2 _ADJEC) (-1 (IN));
 SELECT (GERU) (-2 _ADJEC) (-1 (CS));
 
 # PP object of a noun "... plan for getting out ..."
-SELECT (GERU) (-2 _NOUNS) (-1 (IN));
-# "... of his having stolen ..."
-#SELECT (GERU) (-3 _NOUNS) (-2 (IN)) (-1 (PP$));
-# "... your racing ..."
-SELECT (GERU) (-1 (PP$));
+SELECT (GERU) (-1* _NOUNS BARRIER (*) - _ADVER - _NEG - (QL) LINK  -1 (IN));
+# "... of his (not) really having stolen ..."
+#SELECT (GERU) (GERU) (-1* _NOUNS BARRIER (*) - _ADVER - _NEG - (QL) LINK -1 (PP$) LINK -1 (IN));
+# "... your (terrible) racing ..."
+SELECT (GERU) (-1* (PP$) BARRIER (*) - _ADJEC - (QL) );
 
 
 # very simple sleghemmer rules that catch most cases.
@@ -326,13 +326,13 @@ SELECT (GERU) (-1 (PP$));
 
 # gerund (with own arguments) as argument to the verb in 3rd person
 # and/or past tense or will-future (with optional adverbs)
-# "... playing playfully was what he did ... "
+# "... playing playfully is awesome ... "
 # "... playing the guitar was what he did ... "
 LIST _3P_PRES = VBZ | BEZ | DOZ | VHZ;
 LIST _3P_PAST = BEDZ DOD HVD VBD;
-SELECT (GERU) ( +1* _3P_PRES BARRIER _COMMA_OR_SUBORD + _ANYVERB_ANYFORM);
-SELECT (GERU) ( +1* _3P_PAST BARRIER _COMMA_OR_SUBORD + _ANYVERB_ANYFORM);
-SELECT (GERU) ( +1* (MD) BARRIER _COMMA_OR_SUBORD + _ANYVERB_ANYFORM LINK +1 _UNINF);
+SELECT (GERU) ( +1* _3P_PRES BARRIER _COMMA_OR_SUBORD OR _ANYVERB_ANYFORM);
+SELECT (GERU) ( +1* _3P_PAST BARRIER _COMMA_OR_SUBORD OR _ANYVERB_ANYFORM);
+SELECT (GERU) ( +1* (MD) BARRIER _COMMA_OR_SUBORD OR _ANYVERB_ANYFORM LINK +1 _UNINF);
 
 
 # 'predicative gerund' such as "Being good is bad."
