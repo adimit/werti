@@ -69,18 +69,18 @@ LIST _LEX_ALWAYS_GERUND =
 ;
 
 LIST _LEX_GERUND_OR_TOINF_MEANING_CHANGE = 
-   "<(forget(s)?)|(forgot)>"r
+   "<forget(s)?>"r   "<forgot>"
    "<help(s|ed)?>"r 
    "<need(s|ed)?>"r 
    "<regret(s|ed)?>"r
    "<remember(s|ed)?>"r
    "<stop(s|ped)?>"r 
-   "<(try)|(tries)|(tried)>"r
+   "<try>"   "<tries>"   "<tried>"
 ;
 
 
 LIST _LEX_GERUND_OR_TOINF_NO_MEANING_CHANGE = 
-   "(<begin(s)?)|(began)>"r
+   "<begin(s)?>"   "began"
    "<continue(s|ed)?>"r
    "<hate(s|d)?>"r
    "<like(s|d)?>"r
@@ -183,7 +183,12 @@ REMOVE ("---remove---" VBG);
 # add reading for going-to-future in the past
 "<going>" APPEND ("" VGB GOFUPA) (VBG);
 
-
+# some rare special cases:
+# gerund-noun ("fishing-pole") seems to be noun compound, the gerund is
+# assumed to be lexicalized.
+APPEND ("" NN GLEX) _INGFORM (+1 ("<->")) (+2 _NOUNS);
+APPEND ("" NN GLEX) _INGFORM (-1 ("<->")) (-2 _NOUNS);
+SELECT (NN GLEX);
 
 
 ############################################################################# 
@@ -196,11 +201,16 @@ SECTION
 
 #----- UTILITY TEMPLATES AND LISTS/SETS -------------------------------------
 
-# finite forms of to be, including imperative
+# finite forms of to be, not including imperative
 LIST _BE_FINITE = BEM BEZ BER BEN BED BEDZ;
 
 # determiners and pronouns used in NPs
 LIST _NP_DETPRON = DT DTS DTI AT PP$ PP$$ PPL PPLS PPO PPS PPSS;
+
+# these are used as clause delimiters
+LIST _COMMA  = "<,>" "<;>";
+SET _COMMA_OR_SUBORD = _COMMA OR (CS); 
+
 
 
 #----- GOING-TO FUTURE AND FUTURE-IN-THE-PAST -------------------------------
@@ -209,13 +219,13 @@ LIST _NP_DETPRON = DT DTS DTI AT PP$ PP$$ PPL PPLS PPO PPS PPSS;
 LIST GOFU_BE = BER BEM BEZ;
 LIST GOFUPA_BE = BED BEDZ;
 
-# -ing: going-to-future
+# simple going-to-future
 # sentences
 SELECT (GOFU) (-1* GOFU_BE BARRIER (*) - _NEG - _ADVER) (+1 (TO)) (+2 _INFIN);
 # qestions
 SELECT (GOFU) (-1* GOFU_BE BARRIER _ANYVERB_ANYFORM) (+1 (TO)) (+2 _INFIN) (+3* ("<?>"));
 
-# add reading for going-to-future in the past
+# going-to-future in the past
 SELECT (GOFUPA) (-1*  GOFUPA_BE  BARRIER (*) - _NEG - _ADVER) (+1 (TO)) (+2 _INFIN);
 # question
 SELECT (GOFUPA) (-1*  GOFUPA_BE BARRIER _ANYVERB_ANYFORM) (+1 (TO)) (+2 _INFIN) (+3* ("<?>"));
@@ -231,16 +241,14 @@ SELECT (PROG) (-1* _BE_FINITE BARRIER _ANYVERB_ANYFORM) (+1* ("<?>"));
 
 #----- PARTICIPLE READINGS --------------------------------------------------
 
-LIST _COMMA  = "<,>" "<;>";
-LIST _COMMA_OR_SUBORD = _COMMA OR (CS); 
-
 # "... the (not) very brightly shining gem ..."
 SELECT (PART) (-1* _NP_DETPRON BARRIER (*) - _ADVER - _NEG - (QL)) (+1 _NOUNS);
-# "... of him having stolen ..."
-#SELECT (PART) (-3 _NOUNS) (-2 (IN)) (-1 (PPO));
-# "... you racing ..."
-SELECT (PART) (-1 (PPO));
 
+# "... you racing ..."
+# "... of him having stolen ..."
+# "... herself wondering how ..."
+SELECT (PART) (-1 (PPO));
+SELECT (PART) (-1 (PPL));
 
 # Participle + Noun Phrase or Prepositional Phrase at the sentence beginning.
 # TODO: does this quite sledgehammery rule overgenerate??
@@ -249,7 +257,7 @@ SELECT (PART) (-1 (>>>)) (+1*  _COMMA_OR_SUBORD BARRIER _ANYVERB_ANYFORM );
 # parenthesis
 # "... , Peter talking loudly to the mirror, ..."
 # TODO: this does overgenerate!
-SELECT (PART) (-1* _COMMA BARRIER _ANYVERB_ANYFORM ) (+1* ( _COMMA_OR_SUBORD) BARRIER _ANYVERB_ANYFORM );
+SELECT (PART) (-1* _COMMA BARRIER _ANYVERB_ANYFORM ) (+1*  _COMMA_OR_SUBORD BARRIER _ANYVERB_ANYFORM );
 
 # "..., not noticing that..."
 # TODO: this does overgenerate!
@@ -269,7 +277,10 @@ SELECT (GERU) (-1 _NOUNS LINK -1 _LEX_GERUND_CANDIDATES LINK 0 _ANYVERB_ANYFORM 
 SELECT (GERU) (-1 (PPO) LINK -1 _LEX_GERUND_CANDIDATES LINK 0 _ANYVERB_ANYFORM );
 SELECT (GERU) (-1 (PP$) LINK -1 _LEX_GERUND_CANDIDATES LINK 0 _ANYVERB_ANYFORM );
 
-# simple rules that should be not too dangerous.
+### treat the rest
+
+# simple rules that should be not too dangerous, obtained from simple corpus
+# observations
 SELECT (GERU) (-2 _ADVER) (-1 (IN));
 SELECT (GERU) (-2 _ADVER) (-1 (CS));
 SELECT (GERU) (-2 _ADJEC) (-1 (IN));
@@ -289,11 +300,11 @@ SELECT (GERU) (-1* (PP$) BARRIER (*) - _ADJEC - (QL) );
 #SELECT (GERU) (-1 (IN));
 #SELECT (GERU) (-1 (CS));
 
-# gerund (with own arguments) as argument to the verb in 3rd person
+# gerund (with own arguments) as subject argument to the verb in 3rd person
 # and/or past tense or will-future (with optional adverbs)
 # "... playing playfully is awesome ... "
 # "... playing the guitar was what he did ... "
-LIST _3P_PRES = VBZ | BEZ | DOZ | VHZ;
+LIST _3P_PRES = VBZ BEZ DOZ VHZ;
 LIST _3P_PAST = BEDZ DOD HVD VBD;
 SELECT (GERU) ( +1* _3P_PRES BARRIER _COMMA_OR_SUBORD OR _ANYVERB_ANYFORM);
 SELECT (GERU) ( +1* _3P_PAST BARRIER _COMMA_OR_SUBORD OR _ANYVERB_ANYFORM);
