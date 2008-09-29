@@ -45,14 +45,15 @@ LIST _LEX_ALWAYS_GERUND =
    "<explain(s|ed)?>"r
    "<fanc(y|ies|ied)>"r
    "<finish(s|ed)?>"r
-   "<(forgive(s)?)|(forgave)>"r
+   "<forgive(s)?>"r   "<forgave>"
    "<hinder(s|ed)?>"r
    "<imagine(s|d)?>"r
    "<involve(s|d)?>"r
-   "<(keep(s)?)|(kept)>"r
+   "<keep(s)?>"r   "<kept>"
    "<loathe(s|d)?>"r
    "<mention(s|ed)?>"r
    "<mind(s|d)?>"r
+   "<miss(ed|es)?>"r
    "<pardon(s|ed)?>"r
    "<postpone(s|ed)?>"r
    "<practice(s|d)?>"r
@@ -64,7 +65,7 @@ LIST _LEX_ALWAYS_GERUND =
    "<resist(s|ed)?>"r
    "<risk(s|ed)?>"r
    "<suggest(s|ed)?>"r
-   "<(understand(s)?)|(understood)>"r
+   "<understand(s)?>"r   "<understood>"
 ;
 
 LIST _LEX_GERUND_OR_TOINF_MEANING_CHANGE = 
@@ -256,70 +257,76 @@ SELECT (PROG) (-1* _BE_FINITE BARRIER _ANYVERB_ANYFORM) (+1* ("<?>"));
 LIST _COMMA  = "<,>" "<;>";
 LIST _COMMA_OR_SUBORD =  "<,>" "<;>" CS; 
 
+# "... the shining gem ..."
+SELECT (PART) (-1 _NP_DETPREP) (+1 _NOUNS);
+
 # Participle + Noun Phrase
 # or
 # Participle + Prepositional Phrase including Noun Phrase. 
 # at the sentence beginning
-#SELECT (PART) (-1 (>>>)) (T:_NP_OR_PP_CONTEXT LINK +1 _COMMA_OR_SUBORD  );
 # TODO: does this quite sledgehammery rule overgenerate??
 SELECT (PART) (-1 (>>>)) (+1*  _COMMA_OR_SUBORD BARRIER _ANYVERB_ANYFORM );
 
 # "... , she sitting on the seat beside him, ... "-parentheses
-SELECT (PART) (-1* _COMMA BARRIER _ANYVERB_ANYFORM) (T:_NP_OR_PP_CONTEXT LINK +1* ( _COMMA_OR_SUBORD) BARRIER _ANYVERB_ANYFORM );
-SELECT (PART) (-1* _COMMA BARRIER _ANYVERB_ANYFORM) (+1 _ADVER LINK T:_NP_OR_PP_CONTEXT LINK +1* _COMMA_OR_SUBORD  BARRIER _ANYVERB_ANYFORM );
+# TODO: this does overgenerate!
+SELECT (PART) (-1* _COMMA BARRIER _ANYVERB_ANYFORM ) (NOT -1* (IN) BARRIER_COMMA ) (T:_NP_OR_PP_CONTEXT LINK +1* ( _COMMA_OR_SUBORD) BARRIER _ANYVERB_ANYFORM );
+SELECT (PART) (-1* _COMMA BARRIER _ANYVERB_ANYFORM ) (NOT -1* (IN) BARRIER_COMMA ) (+1 _ADVER LINK T:_NP_OR_PP_CONTEXT LINK +1* _COMMA_OR_SUBORD  BARRIER _ANYVERB_ANYFORM );
 
-# "... , not noticing the bit of sarcasm."
-#SELECT (PART) (-1* _COMMA BARRIER _ANYVERB_ANYFORM) (T:_NP_OR_PP_CONTEXT LINK (+1* #_COMMA_OR_SUBORD BARRIER _ANYVERB_ANYFORM ) OR (+1* (<<<) BARRIER _ANYVERB_ANYFORM) ) ;
 # "..., not noticing that..."
-# TODO: does this overgenerate?
-SELECT (PART) (-1* _COMMA BARRIER _ANYVERB_ANYFORM) ((+1* _COMMA_OR_SUBORD BARRIER _ANYVERB_ANYFORM ) OR (+1* (<<<) BARRIER _ANYVERB_ANYFORM)) ;
+# TODO: this does overgenerate!
+SELECT (PART) (-1* _COMMA BARRIER _ANYVERB_ANYFORM ) (NOT -1* (IN) BARRIER_COMMA ) ((+1* _COMMA_OR_SUBORD BARRIER _ANYVERB_ANYFORM ) OR (+1* (<<<) BARRIER _ANYVERB_ANYFORM)) ;
 
 
 #----- GERUND READINGS ------------------------------------------------------
 
-# very simple sleghemmer rules that catch most cases.
-# TODO: this will overgenerate?!
-SELECT (GERU) (-1 (IN));
-SELECT (GERU) (-1 (CS));
-
-### treat lexical sure-fires
+### treat lexical sure-fire erbs
 
 # without subject
 # (unioning the LISTs does not work for some reason?)
-SELECT (GERU) (-1 _LEX_ALWAYS_GERUND);
-SELECT (GERU) (-1 _LEX_GERUND_OR_TOINF_MEANING_CHANGE);
-SELECT (GERU) (-1 _LEX_GERUND_OR_TOINF_NO_MEANING_CHANGE);
+SELECT (GERU) (-1 _LEX_ALWAYS_GERUND LINK 0 _ANYVERB_ANYFORM );
+SELECT (GERU) (-1 _LEX_GERUND_OR_TOINF_MEANING_CHANGE LINK 0 _ANYVERB_ANYFORM );
+SELECT (GERU) (-1 _LEX_GERUND_OR_TOINF_NO_MEANING_CHANGE LINK 0 _ANYVERB_ANYFORM );
 
 # and with a subject 
 # TODO: does this overgenerate?
 # (unioning the LISTs does not work for some reason?)
-SELECT (GERU) (-1 _NOUNS LINK -1 _LEX_ALWAYS_GERUND);
-SELECT (GERU) (-1 (PPO) LINK -1 _LEX_ALWAYS_GERUND);
-SELECT (GERU) (-1 (PP$) LINK -1 _LEX_ALWAYS_GERUND);
-SELECT (GERU) (-1 _NOUNS LINK -1 _LEX_GERUND_OR_TOINF_MEANING_CHANGE);
-SELECT (GERU) (-1 (PPO) LINK -1 _LEX_GERUND_OR_TOINF_MEANING_CHANGE);
-SELECT (GERU) (-1 (PP$) LINK -1 _LEX_GERUND_OR_TOINF_MEANING_CHANGE);
-SELECT (GERU) (-1 _NOUNS LINK -1 _LEX_GERUND_OR_TOINF_NO_MEANING_CHANGE);
-SELECT (GERU) (-1 (PPO) LINK -1 _LEX_GERUND_OR_TOINF_NO_MEANING_CHANGE);
-SELECT (GERU) (-1 (PP$) LINK -1 _LEX_GERUND_OR_TOINF_NO_MEANING_CHANGE);
+SELECT (GERU) (-1 _NOUNS LINK -1 _LEX_ALWAYS_GERUND LINK 0 _ANYVERB_ANYFORM );
+SELECT (GERU) (-1 (PPO) LINK -1 _LEX_ALWAYS_GERUND LINK 0 _ANYVERB_ANYFORM );
+SELECT (GERU) (-1 (PP$) LINK -1 _LEX_ALWAYS_GERUND LINK 0 _ANYVERB_ANYFORM );
+SELECT (GERU) (-1 _NOUNS LINK -1 _LEX_GERUND_OR_TOINF_MEANING_CHANGE LINK 0 _ANYVERB_ANYFORM );
+SELECT (GERU) (-1 (PPO) LINK -1 _LEX_GERUND_OR_TOINF_MEANING_CHANGE LINK 0 _ANYVERB_ANYFORM );
+SELECT (GERU) (-1 (PP$) LINK -1 _LEX_GERUND_OR_TOINF_MEANING_CHANGE LINK 0 _ANYVERB_ANYFORM );
+SELECT (GERU) (-1 _NOUNS LINK -1 _LEX_GERUND_OR_TOINF_NO_MEANING_CHANGE LINK 0 _ANYVERB_ANYFORM );
+SELECT (GERU) (-1 (PPO) LINK -1 _LEX_GERUND_OR_TOINF_NO_MEANING_CHANGE LINK 0 _ANYVERB_ANYFORM );
+SELECT (GERU) (-1 (PP$) LINK -1 _LEX_GERUND_OR_TOINF_NO_MEANING_CHANGE LINK 0 _ANYVERB_ANYFORM );
 
+# simple rules that should be not too dangerous.
+SELECT (GERU) (-2 _ADVER) (-1 (IN));
+SELECT (GERU) (-2 _ADVER) (-1 (CS));
+SELECT (GERU) (-2 _ADJEC) (-1 (IN));
+SELECT (GERU) (-2 _ADJEC) (-1 (CS));
 
-# select gerund after inflected verbs and optional noun in between
-# FIXME doesn't work...
-#SELECT (GERU) (-1C* (VBD OR VBZ) BARRIER (*) - (NN OR NP));
+# PP object of a noun "... plan for getting out ..."
+SELECT (GERU) (-2 _NOUNS) (-1 (IN));
+SELECT (GERU) (-3 _NOUNS) (-2 (IN)) (-1 (PP$));
+
+# very simple sleghemmer rules that catch most cases.
+# TODO: this overgenerates too much
+#SELECT (GERU) (-1 (IN));
+#SELECT (GERU) (-1 (CS));
 
 # gerund as directly preceding subject argument to the verb in 3rd person
-# and/or past tense or will-future
+# and/or past tense or will-future (with optional adverbs)
 LIST _3P_PRES = VBZ | BEZ | DOZ | VHZ;
 LIST _3P_PAST = BEDZ DOD HVD VBD;
-SELECT (GERU) (+1 _3P_PRES);
-SELECT (GERU) (+1 _3P_PAST);
-SELECT (GERU) (+1 (MD)) (+2 _UNINF);
+SELECT (GERU) (+1* _3P_PRES BARRIER (*) - _ADVER );
+SELECT (GERU) (+1* _3P_PAST BARRIER(*) - _ADVER );
+SELECT (GERU) (+1*  (MD) BARRIER (*) - _ADVER LINK +1 _UNINF);
 
 # and the same with gerund + NP and gerund + PP(NP)
-SELECT (GERU) (T:_NP_OR_PP_CONTEXT LINK +1 _3P_PRES);
-SELECT (GERU) (T:_NP_OR_PP_CONTEXT LINK +1 _3P_PAST);
-SELECT (GERU) (T:_NP_OR_PP_CONTEXT LINK +1 (MD) LINK +1 _UNINF);
+SELECT (GERU) (T:_NP_OR_PP_CONTEXT LINK +1* _3P_PRES BARRIER (*) - _ADVER );
+SELECT (GERU) (T:_NP_OR_PP_CONTEXT LINK +1* _3P_PAST  BARRIER (*) - _ADVER );
+SELECT (GERU) (T:_NP_OR_PP_CONTEXT LINK +1* (MD)  BARRIER (*) - _ADVER  LINK +1 _UNINF);
 
 # 'predicative gerund' such as "Being good is bad."
 SELECT (GERU) (0 (BEG)) (T:_AP_CONTEXT);
