@@ -158,17 +158,36 @@ SELECT (PROG) (-1* _BE_FINITE BARRIER _ANYVERB_ANYFORM) (+1* ("<?>"));
 
 #----- GERUND READINGS ------------------------------------------------------
 
-# TODO
-# ... first easy rules for testing
-SELECT (GERU) (-2 _ADVER) (-1 (IN));
-SELECT (GERU) (-2 _ADVER) (-1 (CS));
-SELECT (GERU) (-2 _ADJEC) (-1 (IN));
-SELECT (GERU) (-2 _ADJEC) (-1 (CS));
-
-# this will overgenerate?!
-# TODO
+# very simple sleghemmer rules that catch most cases.
+# TODO: this will overgenerate?!
 SELECT (GERU) (-1 (IN));
 SELECT (GERU) (-1 (CS));
+
+# lexical sure-fires
+LIST LEX_SUREFIRES = "<like(s|d)?>"r
+   "<hate(s|d)?>"r
+   "<stop(s|ped)?>"r 
+   "<start(s|ed)?>"r
+   "<enjoy(s|ed)?>"r
+   "<continue(s|ed)?>"r
+   "<remember(s|ed)?>"r
+   "<regret(s|ed)?>"r
+   "<(forget(s)?)|(forgot)>"r
+   "<mind(s|d)?>"r
+   "<mind(s|d)?>"r;
+
+# without subject
+SELECT (GERU) (-1 LEX_SUREFIRES);
+
+# and with a subject 
+# TODO: does this overgenerate?
+SELECT (GERU) (-1 _NOUNS LINK -1 LEX_SUREFIRES);
+SELECT (GERU) (-1 (PPO) LINK -1 LEX_SUREFIRES);
+SELECT (GERU) (-1 (PP$) LINK -1 LEX_SUREFIRES);
+
+
+
+
 
 # select gerund after inflected verbs and optional noun in between
 # FIXME doesn't work...
