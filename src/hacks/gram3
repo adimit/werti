@@ -251,6 +251,30 @@ SELECT (PROG) (-1* _BE_FINITE BARRIER (*) - _NEG - _ADVER);
 SELECT (PROG) (-1* _BE_FINITE BARRIER _ANYVERB_ANYFORM) (+1* ("<?>"));
 
 
+#----- PARTICIPLE READINGS --------------------------------------------------
+
+LIST _COMMA  = "<,>" "<;>";
+LIST _COMMA_OR_SUBORD =  "<,>" "<;>" CS; 
+
+# Participle + Noun Phrase
+# or
+# Participle + Prepositional Phrase including Noun Phrase. 
+# at the sentence beginning
+#SELECT (PART) (-1 (>>>)) (T:_NP_OR_PP_CONTEXT LINK +1 _COMMA_OR_SUBORD  );
+# TODO: does this quite sledgehammery rule overgenerate??
+SELECT (PART) (-1 (>>>)) (+1*  _COMMA_OR_SUBORD BARRIER _ANYVERB_ANYFORM );
+
+# "... , she sitting on the seat beside him, ... "-parentheses
+SELECT (PART) (-1* _COMMA BARRIER _ANYVERB_ANYFORM) (T:_NP_OR_PP_CONTEXT LINK +1* ( _COMMA_OR_SUBORD) BARRIER _ANYVERB_ANYFORM );
+SELECT (PART) (-1* _COMMA BARRIER _ANYVERB_ANYFORM) (+1 _ADVER LINK T:_NP_OR_PP_CONTEXT LINK +1* _COMMA_OR_SUBORD  BARRIER _ANYVERB_ANYFORM );
+
+# "... , not noticing the bit of sarcasm."
+#SELECT (PART) (-1* _COMMA BARRIER _ANYVERB_ANYFORM) (T:_NP_OR_PP_CONTEXT LINK (+1* #_COMMA_OR_SUBORD BARRIER _ANYVERB_ANYFORM ) OR (+1* (<<<) BARRIER _ANYVERB_ANYFORM) ) ;
+# "..., not noticing that..."
+# TODO: does this overgenerate?
+SELECT (PART) (-1* _COMMA BARRIER _ANYVERB_ANYFORM) ((+1* _COMMA_OR_SUBORD BARRIER _ANYVERB_ANYFORM ) OR (+1* (<<<) BARRIER _ANYVERB_ANYFORM)) ;
+
+
 #----- GERUND READINGS ------------------------------------------------------
 
 # very simple sleghemmer rules that catch most cases.
@@ -280,9 +304,6 @@ SELECT (GERU) (-1 (PPO) LINK -1 _LEX_GERUND_OR_TOINF_NO_MEANING_CHANGE);
 SELECT (GERU) (-1 (PP$) LINK -1 _LEX_GERUND_OR_TOINF_NO_MEANING_CHANGE);
 
 
-
-
-
 # select gerund after inflected verbs and optional noun in between
 # FIXME doesn't work...
 #SELECT (GERU) (-1C* (VBD OR VBZ) BARRIER (*) - (NN OR NP));
@@ -302,30 +323,6 @@ SELECT (GERU) (T:_NP_OR_PP_CONTEXT LINK +1 (MD) LINK +1 _UNINF);
 
 # 'predicative gerund' such as "Being good is bad."
 SELECT (GERU) (0 (BEG)) (T:_AP_CONTEXT);
-
-
-#----- PARTICIPLE READINGS --------------------------------------------------
-
-LIST _COMMA  = "<,>" "<;>";
-LIST _COMMA_OR_SUBORD =  "<,>" "<;>" CS; 
-
-# Participle + Noun Phrase
-# or
-# Participle + Prepositional Phrase including Noun Phrase. 
-# at the sentence beginning
-#SELECT (PART) (-1 (>>>)) (T:_NP_OR_PP_CONTEXT LINK +1 _COMMA_OR_SUBORD  );
-# TODO: does this quite sledgehammery rule overgenerate??
-SELECT (PART) (-1 (>>>)) (+1*  _COMMA_OR_SUBORD BARRIER _ANYVERB_ANYFORM );
-
-# "... , she sitting on the seat beside him, ... "-parentheses
-SELECT (PART) (-1* _COMMA BARRIER _ANYVERB_ANYFORM) (T:_NP_OR_PP_CONTEXT LINK +1* ( _COMMA_OR_SUBORD) BARRIER _ANYVERB_ANYFORM );
-SELECT (PART) (-1* _COMMA BARRIER _ANYVERB_ANYFORM) (+1 _ADVER LINK T:_NP_OR_PP_CONTEXT LINK +1* _COMMA_OR_SUBORD  BARRIER _ANYVERB_ANYFORM );
-
-# "... , not noticing the bit of sarcasm."
-#SELECT (PART) (-1* _COMMA BARRIER _ANYVERB_ANYFORM) (T:_NP_OR_PP_CONTEXT LINK (+1* #_COMMA_OR_SUBORD BARRIER _ANYVERB_ANYFORM ) OR (+1* (<<<) BARRIER _ANYVERB_ANYFORM) ) ;
-# "..., not noticing that..."
-# TODO: does this overgenerate?
-SELECT (PART) (-1* _COMMA BARRIER _ANYVERB_ANYFORM) ((+1* _COMMA_OR_SUBORD BARRIER _ANYVERB_ANYFORM ) OR (+1* (<<<) BARRIER _ANYVERB_ANYFORM)) ;
 
 ############################################################################# 
 #
