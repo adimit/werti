@@ -21,7 +21,16 @@ DELIMITERS = "<.>" "<!>" "<?>" ; # sentence window
 
 #----- LEXICAL BITS AND PIECES ----------------------------------------------
 
+# misc
+TEMPLATE _LEX_PHRASES = 
+	(-2 ("<instead>"ir) LINK +1 ("<of>"))
+	OR
+	(-1 ("<on>"ir))
+	OR
+	(-1 ("<after>"ir))
+;
 
+# verbs
 LIST _LEX_ALWAYS_GERUND = 
    "<admit(s|ted)?>"r
    "<appreciat(s|ed)?>"r
@@ -80,7 +89,7 @@ LIST _LEX_GERUND_OR_TOINF_MEANING_CHANGE =
 
 
 LIST _LEX_GERUND_OR_TOINF_NO_MEANING_CHANGE = 
-   "<begin(s)?>"   "began"
+   "<begin(s)?>"   "<began>"
    "<continue(s|ed)?>"r
    "<hate(s|d)?>"r
    "<like(s|d)?>"r
@@ -153,7 +162,8 @@ APPEND ("" BEDZ) ("<was>") (+1 (PPSS));
 APPEND ("" BED) ("<was>") (+1 (PPSS));
 
 # 's contraction is always BEZ if not genitive 's
-APPEND ("" BEZ) ("<s>") (-1 ("<'>")) (NOT 0 (NN$));
+LIST GENITIVE  = NN$ DT$ CD$ AP$ RB$ PN$ NR$ NPS$ NP$ NNS$ JJ$;
+APPEND ("" BEZ) ("<s>") (-1 ("<'>")) (NOT 0  GENITIVE);
 
 # introduce infinitive tags (Brown tagset only knows "uninflected forms")
 SUBSTITUTE (BE) (BE-INF) (BE) (-1*C (TO) BARRIER (*) - _ADVER);
@@ -189,6 +199,10 @@ REMOVE ("---remove---" VBG);
 APPEND ("" NN GLEX) _INGFORM (+1 ("<->")) (+2 _NOUNS);
 APPEND ("" NN GLEX) _INGFORM (-1 ("<->")) (-2 _NOUNS);
 SELECT (NN GLEX);
+# same for adjective compounds ("good-looking")
+APPEND ("" JJ GLEX) _INGFORM (+1 ("<->")) (+2 _ADJEC);
+APPEND ("" JJ GLEX) _INGFORM (-1 ("<->")) (-2 _ADJEC);
+SELECT (JJ GLEX);
 
 
 ############################################################################# 
@@ -277,6 +291,9 @@ SELECT (GERU) (-1 _NOUNS LINK -1 _LEX_GERUND_CANDIDATES LINK 0 _ANYVERB_ANYFORM 
 SELECT (GERU) (-1 (PPO) LINK -1 _LEX_GERUND_CANDIDATES LINK 0 _ANYVERB_ANYFORM );
 SELECT (GERU) (-1 (PP$) LINK -1 _LEX_GERUND_CANDIDATES LINK 0 _ANYVERB_ANYFORM );
 
+### lexical sure-fire phrases
+SELECT (GERU) (T:_LEX_PHRASES);
+
 ### treat the rest
 
 # simple rules that should be not too dangerous, obtained from simple corpus
@@ -310,8 +327,14 @@ SELECT (GERU) ( +1* _3P_PRES BARRIER _COMMA_OR_SUBORD OR _ANYVERB_ANYFORM);
 SELECT (GERU) ( +1* _3P_PAST BARRIER _COMMA_OR_SUBORD OR _ANYVERB_ANYFORM);
 SELECT (GERU) ( +1* (MD) BARRIER _COMMA_OR_SUBORD OR _ANYVERB_ANYFORM LINK +1 _UNINF);
 
+# gerund as the object of a preposition
+# "He insisted on telling us the truth."
+# "He prevented the sun from shining."
+SELECT (GERU) (-1 (IN)) (-2*  _ANYVERB_ANYFORM BARRIER _COMMA);
+
 # 'predicative gerund' such as "Being very good (is incredibly bad.)"
 SELECT (GERU) (0 (BEG)) (+1* _ADVER BARRIER (*) - (QL) );
+
 
 ############################################################################# 
 #
