@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Tue Jun 03 02:06:02 CEST 2008 */
+/* First created by JCasGen Sat Sep 27 13:39:42 CEST 2008 */
 package org.werti.uima.types.annot;
 
 import org.apache.uima.jcas.JCas;
@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
 /** A relevant Token with PoS information attached.
- * Updated by JCasGen Thu Sep 18 00:51:17 CEST 2008
+ * Updated by JCasGen Sat Sep 27 13:39:42 CEST 2008
  * @generated */
 public class Token_Type extends Annotation_Type {
   /** @generated */
@@ -60,20 +60,20 @@ public class Token_Type extends Annotation_Type {
   
  
   /** @generated */
-  final Feature casFeat_lemma;
+  final Feature casFeat_lemm;
   /** @generated */
-  final int     casFeatCode_lemma;
+  final int     casFeatCode_lemm;
   /** @generated */ 
-  public String getLemma(int addr) {
-        if (featOkTst && casFeat_lemma == null)
-      jcas.throwFeatMissing("lemma", "org.werti.uima.types.annot.Token");
-    return ll_cas.ll_getStringValue(addr, casFeatCode_lemma);
+  public String getLemm(int addr) {
+        if (featOkTst && casFeat_lemm == null)
+      jcas.throwFeatMissing("lemm", "org.werti.uima.types.annot.Token");
+    return ll_cas.ll_getStringValue(addr, casFeatCode_lemm);
   }
   /** @generated */    
-  public void setLemma(int addr, String v) {
-        if (featOkTst && casFeat_lemma == null)
-      jcas.throwFeatMissing("lemma", "org.werti.uima.types.annot.Token");
-    ll_cas.ll_setStringValue(addr, casFeatCode_lemma, v);}
+  public void setLemm(int addr, String v) {
+        if (featOkTst && casFeat_lemm == null)
+      jcas.throwFeatMissing("lemm", "org.werti.uima.types.annot.Token");
+    ll_cas.ll_setStringValue(addr, casFeatCode_lemm, v);}
     
   
 
@@ -90,8 +90,8 @@ public class Token_Type extends Annotation_Type {
     casFeatCode_tag  = (null == casFeat_tag) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_tag).getCode();
 
  
-    casFeat_lemma = jcas.getRequiredFeatureDE(casType, "lemma", "uima.cas.String", featOkTst);
-    casFeatCode_lemma  = (null == casFeat_lemma) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_lemma).getCode();
+    casFeat_lemm = jcas.getRequiredFeatureDE(casType, "lemm", "uima.cas.String", featOkTst);
+    casFeatCode_lemm  = (null == casFeat_lemm) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_lemm).getCode();
 
   }
 }

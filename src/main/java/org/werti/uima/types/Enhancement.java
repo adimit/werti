@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Wed Jun 04 02:43:38 CEST 2008 */
+/* First created by JCasGen Sat Sep 27 13:39:42 CEST 2008 */
 package org.werti.uima.types;
 
 import org.apache.uima.jcas.JCas; 
@@ -11,7 +11,7 @@ import org.apache.uima.jcas.tcas.Annotation;
 
 
 /** Describes an enhancment on the current spot.
- * Updated by JCasGen Thu Sep 18 00:51:17 CEST 2008
+ * Updated by JCasGen Sat Sep 27 13:39:42 CEST 2008
  * XML source: /home/aleks/src/WERTi/desc/WERTiTypeSystem.xml
  * @generated */
 public class Enhancement extends Annotation {

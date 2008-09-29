@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Thu May 22 04:15:17 CEST 2008 */
+/* First created by JCasGen Sat Sep 27 13:39:42 CEST 2008 */
 package org.werti.uima.types.annot;
 
 import org.apache.uima.jcas.JCas;
@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
 /** Annotation spanning an HTML tag.
- * Updated by JCasGen Thu Sep 18 00:51:17 CEST 2008
+ * Updated by JCasGen Sat Sep 27 13:39:42 CEST 2008
  * @generated */
 public class HTML_Type extends Annotation_Type {
   /** @generated */

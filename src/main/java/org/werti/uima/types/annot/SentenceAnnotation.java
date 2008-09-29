@@ -1,51 +1,50 @@
 
 
-/* First created by JCasGen Wed Jun 04 16:54:22 CEST 2008 */
+/* First created by JCasGen Sat Sep 27 13:39:42 CEST 2008 */
 package org.werti.uima.types.annot;
 
 import org.apache.uima.jcas.JCas; 
 import org.apache.uima.jcas.JCasRegistry;
-
 import org.apache.uima.jcas.cas.TOP_Type;
 
 import org.apache.uima.jcas.tcas.Annotation;
 
 
 /** A sentence in natural language on the page to be processed.
- * Updated by JCasGen Thu Sep 18 00:51:17 CEST 2008
+ * Updated by JCasGen Sat Sep 27 13:39:42 CEST 2008
  * XML source: /home/aleks/src/WERTi/desc/WERTiTypeSystem.xml
  * @generated */
 public class SentenceAnnotation extends Annotation {
-	/** @generated
-	 * @ordered 
-	 */
-	public final static int typeIndexID = JCasRegistry.register(SentenceAnnotation.class);
-	/** @generated
-	 * @ordered 
-	 */
-	public final static int type = typeIndexID;
-	/** @generated  */
-	public              int getTypeIndexID() {return typeIndexID;}
+  /** @generated
+   * @ordered 
+   */
+  public final static int typeIndexID = JCasRegistry.register(SentenceAnnotation.class);
+  /** @generated
+   * @ordered 
+   */
+  public final static int type = typeIndexID;
+  /** @generated  */
+  public              int getTypeIndexID() {return typeIndexID;}
  
-	/** Never called.  Disable default constructor
-	 * @generated */
-	protected SentenceAnnotation() {}
+  /** Never called.  Disable default constructor
+   * @generated */
+  protected SentenceAnnotation() {}
     
-	/** Internal - constructor used by generator 
-	 * @generated */
-	public SentenceAnnotation(int addr, TOP_Type type) {
+  /** Internal - constructor used by generator 
+   * @generated */
+  public SentenceAnnotation(int addr, TOP_Type type) {
     super(addr, type);
     readObject();
   }
   
-	/** @generated */
-	public SentenceAnnotation(JCas jcas) {
+  /** @generated */
+  public SentenceAnnotation(JCas jcas) {
     super(jcas);
     readObject();   
   } 
 
-	/** @generated */  
-	public SentenceAnnotation(JCas jcas, int begin, int end) {
+  /** @generated */  
+  public SentenceAnnotation(JCas jcas, int begin, int end) {
     super(jcas);
     setBegin(begin);
     setEnd(end);
@@ -53,28 +52,29 @@ public class SentenceAnnotation extends Annotation {
   }   
 
   /** <!-- begin-user-doc -->
-	 * Write your own initialization here
-	 * <!-- end-user-doc -->
+    * Write your own initialization here
+    * <!-- end-user-doc -->
   @generated modifiable */
-	private void readObject() {}
+  private void readObject() {}
+     
+ 
+    
+  //*--------------*
+  //* Feature: coherence
 
-
-
-	//*--------------*
-	//* Feature: coherence
-
-	/** getter for coherence - gets The coherence of this sentence. How many html tags interefere?
-	 * @generated */
-	public double getCoherence() {
+  /** getter for coherence - gets The coherence of this sentence. How many html tags interefere?
+   * @generated */
+  public double getCoherence() {
     if (SentenceAnnotation_Type.featOkTst && ((SentenceAnnotation_Type)jcasType).casFeat_coherence == null)
       jcasType.jcas.throwFeatMissing("coherence", "org.werti.uima.types.annot.SentenceAnnotation");
     return jcasType.ll_cas.ll_getDoubleValue(addr, ((SentenceAnnotation_Type)jcasType).casFeatCode_coherence);}
     
-	/** setter for coherence - sets The coherence of this sentence. How many html tags interefere? 
-	 * @generated */
-	public void setCoherence(double v) {
+  /** setter for coherence - sets The coherence of this sentence. How many html tags interefere? 
+   * @generated */
+  public void setCoherence(double v) {
     if (SentenceAnnotation_Type.featOkTst && ((SentenceAnnotation_Type)jcasType).casFeat_coherence == null)
       jcasType.jcas.throwFeatMissing("coherence", "org.werti.uima.types.annot.SentenceAnnotation");
     jcasType.ll_cas.ll_setDoubleValue(addr, ((SentenceAnnotation_Type)jcasType).casFeatCode_coherence, v);}    
   }
-  
+
+    
