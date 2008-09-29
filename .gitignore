@@ -12,6 +12,8 @@
 !/docs/paper/*bib
 /target
 
+*_files
+
 .*.sw?
 *.jar
 *~
