@@ -205,22 +205,20 @@ LIST _NP_DETPRON = DT DTS DTI AT PP$ PP$$ PPL PPLS PPO PPS PPSS;
 
 #----- GOING-TO FUTURE AND FUTURE-IN-THE-PAST -------------------------------
 
+# forms of "to be" used in going-to future (in-the-past)
+LIST GOFU_BE = BER BEM BEZ;
+LIST GOFUPA_BE = BED BEDZ;
+
 # -ing: going-to-future
 # sentences
-SELECT (GOFU) (-1* (BER) BARRIER (*) - _NEG - _ADVER) (+1 (TO)) (+2 _INFIN);
-SELECT (GOFU) (-1* (BEM) BARRIER (*) - _NEG - _ADVER) (+1 (TO)) (+2 _INFIN);
-SELECT (GOFU) (-1* (BEZ) BARRIER (*) - _NEG - _ADVER) (+1 (TO)) (+2 _INFIN);
+SELECT (GOFU) (-1* GOFU_BE BARRIER (*) - _NEG - _ADVER) (+1 (TO)) (+2 _INFIN);
 # qestions
-SELECT (GOFU) (-1* (BER) BARRIER _ANYVERB_ANYFORM) (+1 (TO)) (+2 _INFIN) (+3* ("<?>"));
-SELECT (GOFU) (-1* (BEM) BARRIER _ANYVERB_ANYFORM) (+1 (TO)) (+2 _INFIN) (+3* ("<?>"));
-SELECT (GOFU) (-1* (BEZ) BARRIER _ANYVERB_ANYFORM) (+1 (TO)) (+2 _INFIN) (+3* ("<?>"));
+SELECT (GOFU) (-1* GOFU_BE BARRIER _ANYVERB_ANYFORM) (+1 (TO)) (+2 _INFIN) (+3* ("<?>"));
 
 # add reading for going-to-future in the past
-SELECT (GOFUPA) (-1* (BED)  BARRIER (*) - _NEG - _ADVER) (+1 (TO)) (+2 _INFIN);
-SELECT (GOFUPA) (-1* (BEDZ) BARRIER (*) - _NEG - _ADVER) (+1 (TO)) (+2 _INFIN);
+SELECT (GOFUPA) (-1*  GOFUPA_BE  BARRIER (*) - _NEG - _ADVER) (+1 (TO)) (+2 _INFIN);
 # question
-SELECT (GOFUPA) (-1* (BED) BARRIER _ANYVERB_ANYFORM) (+1 (TO)) (+2 _INFIN) (+3* ("<?>"));
-SELECT (GOFUPA) (-1* (BEDZ) BARRIER _ANYVERB_ANYFORM) (+1 (TO)) (+2 _INFIN) (+3* ("<?>"));
+SELECT (GOFUPA) (-1*  GOFUPA_BE BARRIER _ANYVERB_ANYFORM) (+1 (TO)) (+2 _INFIN) (+3* ("<?>"));
 
 
 #----- OTHER PROGRESSIVE FORM READINGS --------------------------------------
@@ -244,20 +242,14 @@ SELECT (PART) (-1* _NP_DETPRON BARRIER (*) - _ADVER - _NEG - (QL)) (+1 _NOUNS);
 SELECT (PART) (-1 (PPO));
 
 
-# Participle + Noun Phrase
-# or
-# Participle + Prepositional Phrase including Noun Phrase. 
-# at the sentence beginning
+# Participle + Noun Phrase or Prepositional Phrase at the sentence beginning.
 # TODO: does this quite sledgehammery rule overgenerate??
 SELECT (PART) (-1 (>>>)) (+1*  _COMMA_OR_SUBORD BARRIER _ANYVERB_ANYFORM );
 
 # parenthesis
-# "... , she sitting on the seat beside him, ... "
 # "... , Peter talking loudly to the mirror, ..."
 # TODO: this does overgenerate!
 SELECT (PART) (-1* _COMMA BARRIER _ANYVERB_ANYFORM ) (+1* ( _COMMA_OR_SUBORD) BARRIER _ANYVERB_ANYFORM );
- 
-
 
 # "..., not noticing that..."
 # TODO: this does overgenerate!
@@ -266,7 +258,7 @@ SELECT (PART) (-1* _COMMA BARRIER _ANYVERB_ANYFORM ) (NOT -1* (IN) BARRIER_COMMA
 
 #----- GERUND READINGS ------------------------------------------------------
 
-### treat lexical sure-fire erbs
+### treat lexical sure-fire verbs
 
 # without subject
 SELECT (GERU) (-1 _LEX_GERUND_CANDIDATES LINK 0 _ANYVERB_ANYFORM );
@@ -283,10 +275,11 @@ SELECT (GERU) (-2 _ADVER) (-1 (CS));
 SELECT (GERU) (-2 _ADJEC) (-1 (IN));
 SELECT (GERU) (-2 _ADJEC) (-1 (CS));
 
-# PP object of a noun "... plan for getting out ..."
-SELECT (GERU) (-1* _NOUNS BARRIER (*) - _ADVER - _NEG - (QL) LINK  -1 (IN));
+# PP object of a noun 
+# "... plan for getting out ..."
 # "... of his (not) really having stolen ..."
-#SELECT (GERU) (GERU) (-1* _NOUNS BARRIER (*) - _ADVER - _NEG - (QL) LINK -1 (PP$) LINK -1 (IN));
+SELECT (GERU) (-1* _NOUNS BARRIER (*) - _ADVER - _NEG - (QL) LINK  -1 (IN));
+
 # "... your (terrible) racing ..."
 SELECT (GERU) (-1* (PP$) BARRIER (*) - _ADJEC - (QL) );
 
@@ -306,8 +299,7 @@ SELECT (GERU) ( +1* _3P_PRES BARRIER _COMMA_OR_SUBORD OR _ANYVERB_ANYFORM);
 SELECT (GERU) ( +1* _3P_PAST BARRIER _COMMA_OR_SUBORD OR _ANYVERB_ANYFORM);
 SELECT (GERU) ( +1* (MD) BARRIER _COMMA_OR_SUBORD OR _ANYVERB_ANYFORM LINK +1 _UNINF);
 
-
-# 'predicative gerund' such as "Being good is bad."
+# 'predicative gerund' such as "Being very good (is incredibly bad.)"
 SELECT (GERU) (0 (BEG)) (+1* _ADVER BARRIER (*) - (QL) );
 
 ############################################################################# 
