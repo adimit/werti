@@ -28,13 +28,13 @@
 <nameValuePair>
 <name>vislcg3Loc</name>
 <value>
-<string>/usr/local/bin/vislcg3</string>
+<string>/opt/vislcg/bin/vislcg3</string>
 </value>
 </nameValuePair>
 <nameValuePair>
 <name>vislcg3GrammarLoc</name>
 <value>
-<string>/Users/rziai/Uni/icall/workspace/WERTi/src/hacks/gram3</string>
+<string>/home/nott/Eclipse-Workspace/WERTi/src/hacks/gram3</string>
 </value>
 </nameValuePair>
 </configurationParameterSettings>
