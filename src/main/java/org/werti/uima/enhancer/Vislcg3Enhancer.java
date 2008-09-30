@@ -36,7 +36,6 @@ public class Vislcg3Enhancer extends JCasAnnotator_ImplBase {
 
 	@Override
 	public void process(JCas cas) throws AnalysisEngineProcessException {
-		FSIterator cgTokenIter = cas.getAnnotationIndex(CGToken.type).iterator();
 		// stack for started enhancements
 		Stack<Enhancement> enhancements = new Stack<Enhancement>();
 		// keep track of ids for each annotation class
@@ -44,20 +43,23 @@ public class Vislcg3Enhancer extends JCasAnnotator_ImplBase {
 		for (String chunkT : chunkTags) {
 			classCounts.put(chunkT, 0);
 		}
-		// remember previous token so we can getEnd() from it
-		CGToken prev = null;
 		
-		// go through tokens
-		while (cgTokenIter.hasNext()) {
-			CGToken cgt = (CGToken) cgTokenIter.next();
-			// more than one reading? don't markup!
-			if (!isSafe(cgt)) {
-				continue;
-			}
-			
-			// analyze reading
-			CGReading reading = cgt.getReadings(0);
-			for (String chunkT : classCounts.keySet()) {
+
+		for (String chunkT : classCounts.keySet()) {
+			FSIterator cgTokenIter = cas.getAnnotationIndex(CGToken.type)
+			.iterator();
+			// remember previous token so we can getEnd() from it
+			CGToken prev = null;
+			// go through tokens
+			while (cgTokenIter.hasNext()) {
+				CGToken cgt = (CGToken) cgTokenIter.next();
+				// more than one reading? don't markup!
+				if (!isSafe(cgt)) {
+					continue;
+				}
+
+				// analyze reading
+				CGReading reading = cgt.getReadings(0);
 				// case 1: chunk start tag
 				if (containsTag(reading, chunkT + CHUNK_BEGIN_SUFFIX)) {
 					// make new enhancement
@@ -65,14 +67,19 @@ public class Vislcg3Enhancer extends JCasAnnotator_ImplBase {
 					e.setBegin(cgt.getBegin());
 					// increment id
 					int newId = classCounts.get(chunkT) + 1;
-					e.setEnhanceStart("<span id=\"" + EnhancerUtils.get_id("WERTi-span-" + chunkT, newId) + "\">");
+					e.setEnhanceStart("<span id=\""
+							+ EnhancerUtils.get_id("WERTi-span-" + chunkT,
+									newId) + "\">");
 					classCounts.put(chunkT, newId);
 					// push onto stack
 					enhancements.push(e);
 					log.debug("Started chunk " + chunkT + "-" + newId + " at pos " + e.getBegin());
-				// case 2: started enhancement but current reading doesn't have a chunk inside tag
-				} else if (!enhancements.empty() && enhancements.peek().getEnhanceStart().contains(chunkT)
-						&& !containsTag(reading, chunkT + CHUNK_INSIDE_SUFFIX)) {
+				// case 2: started enhancement but current reading doesn't
+				// have a chunk inside tag
+				} else if (!enhancements.empty()
+						&& enhancements.peek().getEnhanceStart().contains(
+								chunkT)
+								&& !containsTag(reading, chunkT + CHUNK_INSIDE_SUFFIX)) {
 					// finish enhancement
 					Enhancement e = enhancements.pop();
 					e.setEnd(prev.getEnd());
@@ -81,10 +88,13 @@ public class Vislcg3Enhancer extends JCasAnnotator_ImplBase {
 					cas.addFsToIndexes(e);
 					log.debug("Completed chunk " + chunkT + "-" + classCounts.get(chunkT) + " at pos " + e.getEnd());
 				}
+				prev = cgt;
 			}
-			prev = cgt;
 		}
-		log.debug("Enhancement stack is " + (enhancements.empty() ? "empty, OK" : "not empty, WTF??"));
+		
+
+		log.debug("Enhancement stack is "
+				+ (enhancements.empty() ? "empty, OK" : "not empty, WTF??"));
 	}
 	
 	/*
