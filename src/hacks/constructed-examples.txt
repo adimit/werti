@@ -116,3 +116,12 @@ Everybody minds them getting sad.
 
 Everbody likes Mrs. Brown doing the dishes.
 Mr. Peterson likes doing things with Mrs. Peterson.
+In abbreviations. e.g. such as Mrs. or Mr., the tagger fails.
+
+
+He kept on keeping on.
+
+After having failed the exam, he got tremendously wasted.
+On arriving at the place, they did something.
+Instead of getting wasted, they could have done something else.
+In spite of fooling around.
