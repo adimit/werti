@@ -23,6 +23,8 @@ DELIMITERS = "<.>" "<!>" "<?>" ; # sentence window
 
 # misc
 TEMPLATE _LEX_PHRASES = 
+	(-3 ("<in>"ir) LINK +1 ("<spite>") LINK +1 ("<of>"))
+	OR
 	(-2 ("<instead>"ir) LINK +1 ("<of>"))
 	OR
 	(-1 ("<on>"ir))
@@ -131,7 +133,7 @@ LIST _ADVER = RB RBR RBT; 	#  some types of adverbs used with infinitives
 LIST _NEG   = "<not>" "<Not>";  # negation words, TODO: contractions?!
 LIST _ADJEC = JJ JJT JJS JJR;
 LIST _NOUNS = NN NN$ NNS NNS$ NP NP$ NPS NPS$;
-LIST _ANYVERB_ANYFORM = VB VBD VBG VBN VBZ BE BED BEDZ BEG BEM BEN BER BEZ DO DOD DOZ HV HVD HVG HVN HVZ MD;
+LIST _ANYVERB_ANYFORM = VB VBD VBG VBN VBZ BE BED BEDZ BEG BEM BEN BER BEZ DO DOD DOZ HV HVD HVG HVN HVZ MD BE-INF DO-INF HV-INF VB-INF;
 
 
 
@@ -252,7 +254,6 @@ SELECT (PROG) (-1* _BE_FINITE BARRIER (*) - _NEG - _ADVER);
 # question
 SELECT (PROG) (-1* _BE_FINITE BARRIER _ANYVERB_ANYFORM) (+1* ("<?>"));
 
-
 #----- PARTICIPLE READINGS --------------------------------------------------
 
 # "... the (not) very brightly shining gem ..."
@@ -334,6 +335,30 @@ SELECT (GERU) (-1 (IN)) (-2*  _ANYVERB_ANYFORM BARRIER _COMMA);
 
 # 'predicative gerund' such as "Being very good (is incredibly bad.)"
 SELECT (GERU) (0 (BEG)) (+1* _ADVER BARRIER (*) - (QL) );
+
+
+############################################################################# 
+#
+# Finding clue phrases
+#
+############################################################################# 
+
+SECTION
+#AFTER-SECTIONS
+
+# ATTENTION: Use careful (C) matching wherever possible in this section.
+
+# TODO: lexical phrase clues 
+# this is tricky because they currently are TEMPLATEs.
+
+# marking up lexical clues 
+# TODO: does it make sense to mark _candidates_?
+ADD (CLU-B) _LEX_GERUND_CANDIDATES (+1*C (GERU) BARRIER (*) - (IN) ) (0 _ANYVERB_ANYFORM );
+ADD (CLU-I) (IN) (+1C (GERU)) (-1 (CLU-B));
+
+
+# marking up all preceding prepositions (does this overgenerate?)
+ADD (CLU-B) (IN) (+1C (GERU));
 
 
 ############################################################################# 
