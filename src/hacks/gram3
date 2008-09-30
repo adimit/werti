@@ -337,28 +337,6 @@ SELECT (GERU) (-1 (IN)) (-2*  _ANYVERB_ANYFORM BARRIER _COMMA);
 SELECT (GERU) (0 (BEG)) (+1* _ADVER BARRIER (*) - (QL) );
 
 
-############################################################################# 
-#
-# Finding clue phrases
-#
-############################################################################# 
-
-SECTION
-#AFTER-SECTIONS
-
-# ATTENTION: Use careful (C) matching wherever possible in this section.
-
-# TODO: lexical phrase clues 
-# this is tricky because they currently are TEMPLATEs.
-
-# marking up lexical clues 
-# TODO: does it make sense to mark _candidates_?
-ADD (CLU-B) _LEX_GERUND_CANDIDATES (+1*C (GERU) BARRIER (*) - (IN) ) (0 _ANYVERB_ANYFORM );
-ADD (CLU-I) (IN) (+1C (GERU)) (-1 (CLU-B));
-
-
-# marking up all preceding prepositions (does this overgenerate?)
-ADD (CLU-B) (IN) (+1C (GERU));
 
 
 ############################################################################# 
@@ -396,3 +374,31 @@ APPEND ("" AMB-B) (GOFU) (NOT 0 (GOI-B)) (NOT 0 (AMB-B));
 APPEND ("" AMB-B) (GOFUPA) (NOT 0 (GOP-B))  (NOT 0 (AMB-B));
 # ... and then delete the rest (better comment out this during grammar development!)
 SELECT  (AMB-B) (0 (AMB-B));
+
+
+
+############################################################################# 
+#
+# Finding clue phrases
+#
+############################################################################# 
+
+#SECTION
+AFTER-SECTIONS
+
+# TODO: lexical phrase clues 
+# this is tricky because they currently are TEMPLATEs.
+
+# marking up lexical clues
+# TODO: does it make sense to mark _candidates_?
+ADD (CLU-B) _LEX_ALWAYS_GERUND (+1* (GER-B) BARRIER  _ANYVERB_ANYFORM OR _COMMA ) (0 _ANYVERB_ANYFORM );
+ADD (CLU-B) _LEX_GERUND_OR_TOINF_MEANING_CHANGE  (+1* (GER-B) BARRIER  _ANYVERB_ANYFORM OR _COMMA ) (0 _ANYVERB_ANYFORM );
+
+
+
+ADD (CLU-B)  _LEX_ALWAYS_TOINF (+1* (INF-B) BARRIER  _ANYVERB_ANYFORM OR _COMMA ) (0 _ANYVERB_ANYFORM );
+ADD (CLU-B)  _LEX_GERUND_OR_TOINF_MEANING_CHANGE (+1* (INF-B) BARRIER  _ANYVERB_ANYFORM OR _COMMA ) (0 _ANYVERB_ANYFORM );
+
+
+# marking up all preceding prepositions (does this overgenerate?)
+ADD (CLU-B) (IN) (+1C (GER-B));
