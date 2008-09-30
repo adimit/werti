@@ -35,7 +35,6 @@ public class WERTi implements EntryPoint {
 
 	private final TaskPanel taskPanel = new TaskPanel();
 
-	@SuppressWarnings("unchecked")
 	public void onModuleLoad() {
 		final VerticalPanel form = new VerticalPanel();
 
@@ -53,7 +52,7 @@ public class WERTi implements EntryPoint {
 					(ServiceDefTarget) service;
 				target.setServiceEntryPoint
 					(GWT.getModuleBaseURL()+"/UIMAProcessor");
-				final AsyncCallback callback = new SearchCallback();
+				final AsyncCallback<String> callback = new SearchCallback();
 				//try {
 					service.process
 						(taskPanel.currentTask().configure()
@@ -170,8 +169,7 @@ public class WERTi implements EntryPoint {
 	 * <p><em>On failure</em> it will pop up an error dialog where the user will be informed
 	 * of the cause of the failure.
 	 */
-	@SuppressWarnings("unchecked")
-	private class SearchCallback implements AsyncCallback {
+	private class SearchCallback implements AsyncCallback<String> {
 		/**
 		 * Pops up an error dialog to inform the user why this happened.
 		 *
@@ -188,8 +186,8 @@ public class WERTi implements EntryPoint {
 		 *
 		 * @param result The String denoting a URL to the page to be displayed.
 		 */
-		public void onSuccess(Object result) {
-			final String whattoload = "/WERTi" + result.toString();
+		public void onSuccess(String result) {
+			final String whattoload = "/WERTi" + result;
 			status.setHTML("<a href=\"localhost:8080" + whattoload + "\">Result</a>.");
 			Window.open(whattoload, "", "");
 		}

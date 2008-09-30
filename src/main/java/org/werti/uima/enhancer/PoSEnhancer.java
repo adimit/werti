@@ -15,6 +15,7 @@ import org.apache.uima.jcas.JCas;
 import org.werti.uima.types.Enhancement;
 
 import org.werti.uima.types.annot.Token;
+import org.werti.util.EnhancerUtils;
 
 /**
  * An enhancer that takes an annotated cas and marks puts enhancement annotations
@@ -72,13 +73,13 @@ public class PoSEnhancer extends JCasAnnotator_ImplBase {
 				log.debug("Encountered token with NULL tag");
 				continue iteratetokens;
 			}
-			if (arrayContains(t.getTag(), tags)) {
+			if (EnhancerUtils.arrayContains(t.getTag(), tags)) {
 				final Enhancement e = new Enhancement(cas);
 				e.setBegin(t.getBegin());
 				e.setEnd(t.getEnd());
 
 				id++;
-				e.setEnhanceStart("<span id=\"" + get_id(id) + "\">");
+				e.setEnhanceStart("<span id=\"" + EnhancerUtils.get_id("WERTi-span",id) + "\">");
 				e.setEnhanceEnd("</span>");
 
 				if (log.isTraceEnabled()) {
@@ -92,18 +93,5 @@ public class PoSEnhancer extends JCasAnnotator_ImplBase {
 			}
 		}
 		log.info("Finished enhancement");
-	}
-
-	// need thos two to supply JS-annotations with IDs.
-	private static String get_id(int id) {
-		return "WERTi-span-" + id;
-	}
-
-	// does an array of Strings contain a given String?
-	private static boolean arrayContains(String data, String[] sa) {
-		for (String s:sa) {
-			if (s.equals(data)) return true;
-		}
-		return false;
 	}
 }

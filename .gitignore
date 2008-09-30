@@ -2,6 +2,7 @@
 /build
 /temp
 /bin
+/docs/doxy
 /docs/api
 /docs/paper
 !/docs/paper/*tex
