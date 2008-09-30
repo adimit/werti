@@ -402,3 +402,10 @@ ADD (CLU-B)  _LEX_GERUND_OR_TOINF_MEANING_CHANGE (+1* (INF-B) BARRIER  _ANYVERB_
 
 # marking up all preceding prepositions (does this overgenerate?)
 ADD (CLU-B) (IN) (+1C (GER-B));
+
+
+### ad marker for relevant text spans including clue phrases and gerunds
+ADD (RELEVANT-B) ("") (0C (CLU-B)) (+1*C (GER-B));
+ADD (RELEVANT-I) ("") (-1*C (RELEVANT-B)) (+1*C (GER-B));
+ADD (RELEVANT-I) ("") (-1 (RELEVANT-I)) (0C (GER-B));
+
