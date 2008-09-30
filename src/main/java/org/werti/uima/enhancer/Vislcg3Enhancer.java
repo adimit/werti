@@ -69,6 +69,7 @@ public class Vislcg3Enhancer extends JCasAnnotator_ImplBase {
 					classCounts.put(chunkT, newId);
 					// push onto stack
 					enhancements.push(e);
+					log.debug("Started chunk " + chunkT + "-" + newId);
 				// case 2: started enhancement but current reading doesn't have a chunk inside tag
 				} else if (!enhancements.empty() && enhancements.peek().getEnhanceStart().contains(chunkT)
 						&& !containsTag(reading, chunkT + CHUNK_INSIDE_SUFFIX)) {
@@ -78,6 +79,7 @@ public class Vislcg3Enhancer extends JCasAnnotator_ImplBase {
 					e.setEnhanceEnd("</span>");
 					// update CAS
 					cas.addFsToIndexes(e);
+					log.debug("Completed chunk " + chunkT + "-" + classCounts.get(chunkT));
 				}
 			}
 			prev = cgt;
