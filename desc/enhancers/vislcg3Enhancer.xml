@@ -21,7 +21,7 @@
 <nameValuePair>
 <name>chunkTags</name>
 <value>
-<string>INF,GER,CLU,PRO,PAR,GOI,GOP,AMB,RELEVANT</string>
+<string>INF,GER,CLU-GERONLY,CLU-INFONLY,CLU-BOTHMEANSAME,CLU-BOTHMEANDIFF,PRO,PAR,GOI,GOP,AMB,RELEVANT</string>
 </value>
 </nameValuePair>
 </configurationParameterSettings>

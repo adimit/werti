@@ -71,7 +71,11 @@ public class GerundsColorize implements EntryPoint {
 		// mark GER (gerund)
 		markHelper("GER", gerColor);
 		markHelper("INF", infColor);
-		markHelper("CLU", cluColor);
+		markHelper("CLU-GERONLY", cluColor);
+		markHelper("CLU-INFONLY", cluColor);
+		markHelper("CLU-BOTHMEANSAME", cluColor);
+		markHelper("CLU-BOTHMEANDIFF", cluColor);
+		
 		
 		if ( showAllIngForms ) {
 			markHelper("GOI", ingformColor);
