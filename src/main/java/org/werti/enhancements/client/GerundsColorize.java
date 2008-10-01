@@ -16,14 +16,13 @@ import com.google.gwt.user.client.DOM;
  * if they are present in the input. This is meant to be used
  * for debugging purposes.
  *
- * <ol>
+ * <ul>
  * <li>Spans with the GER (gerund) keyword are marked orange.</li>
  * <li>If the showAllIngForms is on, spans with the keywords GOI (going-to future), GOP (going-to-future in the past), 
  *        PAR (participle), PRO (progressive verb form) are marked bold faced.</li>
  * <li>Spans with the keyword AMB (for ambiguous) are marked red.</li>
  * <li>Those using the INF (to-infinitive) keyword are marked purple</li>
  * <li>Clue phrases are marked blue (keywords CLU-GERONLY, CLU-INFONLY, CLU-BOTHMEANSAME, CLU-BOTHMEANDIFF, CLU-CLU-FIXEDEXP)</li>
- * 
  * </ul> 
  *
  *
