@@ -1,6 +1,6 @@
 package org.werti.enhancements.client;
 
-import org.werti.uima.enhancer.Vislcg3Enhancer;
+import org.werti.uima.enhancer.Vislcg3ChunkEnhancer;
 
 import com.google.gwt.core.client.EntryPoint;
 
@@ -42,7 +42,7 @@ public class GerundsColorize implements EntryPoint {
 	
 	/**
 	 * Constructor that allows to switch of the markup of all ingforms found in 
-	 * the input from the enhancer AE (which is @link {@link Vislcg3Enhancer}).
+	 * the input from the enhancer AE (which is @link {@link Vislcg3ChunkEnhancer}).
 	 * @param showAllIngForms set this to true in order to highlight all ingforms
 	 */
 	public GerundsColorize(boolean showAllIngForms) {
@@ -75,6 +75,7 @@ public class GerundsColorize implements EntryPoint {
 		markHelper("CLU-INFONLY", cluColor);
 		markHelper("CLU-BOTHMEANSAME", cluColor);
 		markHelper("CLU-BOTHMEANDIFF", cluColor);
+		markHelper("CLU-CLU-FIXEDEXP", cluColor);
 		
 		
 		if ( showAllIngForms ) {

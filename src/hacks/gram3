@@ -28,12 +28,12 @@ TEMPLATE _FIXED_EXPRESSIONS =
 	(0 ("<instead>"ir) LINK +1 ("<of>"))
 	OR
 	(0 ("<apart>"ir) LINK +1 ("<from>"))
-	OR
-	(0 ("<on>"ir))
-	OR
-	(0 ("<after>"ir))
-	OR
-	(0 ("<without>"ir))
+	#OR
+	#(0 ("<on>"ir))
+	#OR
+	#(0 ("<after>"ir))
+	#OR
+	#(0 ("<without>"ir))
 ;
 
 # verbs
@@ -296,7 +296,7 @@ SELECT (GERU) (-1 _NOUNS LINK -1 _LEX_GERUND_CANDIDATES LINK 0 _ANYVERB_ANYFORM 
 SELECT (GERU) (-1 (PPO) LINK -1 _LEX_GERUND_CANDIDATES LINK 0 _ANYVERB_ANYFORM );
 SELECT (GERU) (-1 (PP$) LINK -1 _LEX_GERUND_CANDIDATES LINK 0 _ANYVERB_ANYFORM );
 
-### lexical sure-fire phrases
+### lexical sure-fire fixed expressions
 #SELECT (GERU) (T:_FIXED_EXPRESSIONS);
 SELECT (GERU) (-1< ("") LINK (T:_FIXED_EXPRESSIONS) LINK +1 (GERU));
 SELECT (GERU) (-2< ("") LINK (T:_FIXED_EXPRESSIONS) LINK +1 (GERU));

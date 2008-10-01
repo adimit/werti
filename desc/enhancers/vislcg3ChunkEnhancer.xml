@@ -2,9 +2,9 @@
 <analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
 <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
 <primitive>true</primitive>
-<annotatorImplementationName>org.werti.uima.enhancer.Vislcg3Enhancer</annotatorImplementationName>
+<annotatorImplementationName>org.werti.uima.enhancer.Vislcg3ChunkEnhancer</annotatorImplementationName>
 <analysisEngineMetaData>
-<name>vislcg3Enhancer</name>
+<name>vislcg3ChunkEnhancer</name>
 <description></description>
 <version>1.0</version>
 <vendor></vendor>
@@ -21,7 +21,7 @@
 <nameValuePair>
 <name>chunkTags</name>
 <value>
-<string>INF,GER,CLU-GERONLY,CLU-INFONLY,CLU-BOTHMEANSAME,CLU-BOTHMEANDIFF,PRO,PAR,GOI,GOP,AMB,RELEVANT</string>
+<string>INF,GER,CLU-GERONLY,CLU-INFONLY,CLU-BOTHMEANSAME,CLU-BOTHMEANDIFF,CLU-FIXEDEXP,PRO,PAR,GOI,GOP,AMB,RELEVANT</string>
 </value>
 </nameValuePair>
 </configurationParameterSettings>

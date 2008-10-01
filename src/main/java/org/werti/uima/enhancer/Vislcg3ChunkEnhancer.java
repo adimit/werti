@@ -18,10 +18,10 @@ import org.werti.uima.types.annot.CGToken;
 import org.werti.util.EnhancerUtils;
 import org.werti.util.StringListIterable;
 
-public class Vislcg3Enhancer extends JCasAnnotator_ImplBase {
+public class Vislcg3ChunkEnhancer extends JCasAnnotator_ImplBase {
 
 	private static final Logger log =
-		Logger.getLogger(Vislcg3Enhancer.class);
+		Logger.getLogger(Vislcg3ChunkEnhancer.class);
 	
 	private List<String> chunkTags;
 	private static String CHUNK_BEGIN_SUFFIX = "-B";
