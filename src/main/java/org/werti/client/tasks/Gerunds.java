@@ -1,6 +1,6 @@
 package org.werti.client.tasks;
 
-import org.werti.client.run.GerundsColorizeConfiguration;
+import org.werti.client.run.GerundsConfiguration;
 import org.werti.client.run.RunConfiguration;
 import org.werti.client.ui.ECheckBox;
 import org.werti.client.ui.ERadioButton;
@@ -23,9 +23,18 @@ public class Gerunds implements Task {
 	
 	
 	public RunConfiguration configure() {
-		return new GerundsColorizeConfiguration(showAll.isChecked());
+		return new GerundsConfiguration(showAll.isChecked(), retrieveChecked());
 	}
 
+	private ERadioButton retrieveChecked() {
+		for (ERadioButton erb : new ERadioButton[]{clr, ask, fib}) {
+			if (erb.isChecked()) {
+				return erb;
+			}
+		}
+		return null;
+	}
+	
 	public Widget helpText() {
 		HTML text = new HTML
 		( "<h4>Gerunds vs. To-infinitives</h4>"
