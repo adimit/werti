@@ -2,7 +2,6 @@ package org.werti.client.run;
 
 import java.util.List;
 
-import org.werti.client.ui.ERadioButton;
 import org.werti.client.util.Tuple;
 
 /**
@@ -12,25 +11,17 @@ import org.werti.client.util.Tuple;
  */
 public class GerundsConfiguration implements RunConfiguration {
 
-	private static final String[][] radios2enhancers = new String[][]{
-		{"Colorize", "GerundsColorize"},
-		{"Ask", ""},
-		{"Cloze", "GerundsCloze"}
-	};
-	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7296681895682846753L;
 	private boolean showAllKnownIngforms;
 	private String enhancer;
 
-	private static final long serialVersionUID = 4207177199810853087L;
 	
-	public GerundsConfiguration(boolean showAllKnownIngforms, ERadioButton chosenRadio) {
+	public GerundsConfiguration(boolean showAllKnownIngforms, String enhancer) {
 		this.showAllKnownIngforms = showAllKnownIngforms;
-		for (String[] entry : radios2enhancers) {
-			if (entry[0].equals(chosenRadio.getData())) {
-				this.enhancer = entry[1];
-				break;
-			}
-		}
+		this.enhancer = enhancer;
 	}
 	
 	/*
