@@ -16,14 +16,14 @@ import com.google.gwt.user.client.ui.Widget;
 public class Gerunds implements Task {
 
 	// activity type radio buttons
-	private final ERadioButton clr = new ERadioButton("Colorize", "methods", "Color Enhancement");
-	private final ERadioButton ask = new ERadioButton("Ask", "methods", "Active Presentation");
-	private final ERadioButton fib = new ERadioButton("Cloze", "methods", "Cloze Test");
+	private final ERadioButton clr = new ERadioButton("GerundsColorize", "methods", "Color Enhancement");
+	private final ERadioButton ask = new ERadioButton("", "methods", "Active Presentation");
+	private final ERadioButton fib = new ERadioButton("GerundsCloze", "methods", "Cloze Test");
 	private static final ECheckBox showAll = new ECheckBox("all", "Debug: Highlight other ingforms as well");
 	
 	
 	public RunConfiguration configure() {
-		return new GerundsConfiguration(showAll.isChecked(), retrieveChecked());
+		return new GerundsConfiguration(showAll.isChecked(), retrieveChecked().getData());
 	}
 
 	private ERadioButton retrieveChecked() {
