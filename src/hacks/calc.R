@@ -1,7 +1,6 @@
 
 require(vcd) 
 require(cluster)
-#require(A2R)
 
 
 # read data
@@ -15,52 +14,44 @@ data.norm[,2] <- data[,2] / data.sums
 data.norm[,3] <- data[,3] / data.sums 
 data.norm[,4] <- data[,4] / data.sums 
 
+#lemma <- data$lemma
+attach(data.norm)
 
-lemma <- data$lemma
-
- #colors <- c("black","red","green","blue","red","black","blue")
-
- #ternaryplot(
-   #data.norm[,2:4],
-   #pch = as.character(lemma),
-   #id= lemma
-   #col = colors[as.numeric(lemma)],
-   #main = "Verbs"
- #)
-# grid_legend(0.8, 0.9, pch, colors, levels(Positions),
-#   title = "POSITION(S)")
+data.norm.simple <- data.frame(data.norm[,1], data.norm[,2], data.norm[,3] + data.norm[,4])
+data.simple <- data.frame(data[,1], data[,2], data[,3] + data[,4])
                           
 
 X11()
 ternaryplot(
 	data.norm[,2:4],
-pch= 1,
-id_color="darkblue",
+	pch= 1,
+	id_color="darkblue",
 	id= lemma,
-	#prop_size=T,
 	cex = .1,
-#cex.lab=0.3,
-	dimnames = c("to+infinitive","preposition+gerund", "gerund"),
-grid=F
-
+	dimnames = c("to+infinitive","gerund", "preposition+gerund"),
+	main = "Verbs used with to-infinitive vs. gerund",
+	grid=T
  )
 
 X11()
-clustering1.diss <- daisy(data.norm[,2:4])
-clustering1.clus <- pam(clustering1.diss, 3, diss = TRUE)$clustering
-clusplot(clustering1.diss, clustering1.clus, diss = TRUE, shade = TRUE)
+ternaryplot(
+	data.norm[,2:4],
+	id_color="darkblue",
+	cex = .4,
+	dimnames = c("to+infinitive","gerund", "preposition+gerund"),
+	main = "Verbs used with to-infinitive vs. gerund",
+	grid=T
+ )
 
+#X11()
+#clustering1.diss <- daisy(data.norm[,2:4])
+#clustering1.clus <- pam(clustering1.diss, 3, diss = TRUE)$clustering
+#clusplot(clustering1.diss, clustering1.clus, diss = TRUE, shade = TRUE)
 
-#A2Rplot(h.usa, 
-#        k=3, 
-#        fact.sup=some.factor, 
-#        criteria=hubertgamma,
-#        boxes = FALSE,
-#        col.up = "gray",
-#        col.down = c("orange","royalblue","green3"))
+X11()
+#clustering1.diss <- daisy(data.norm.simple[,2:3])
+#clustering1.clus <- pam(clustering1.diss, 2, diss = TRUE)$clustering
+#clusplot(clustering1.diss, clustering1.clus, diss = TRUE, shade = TRUE, main="Verbs used with #to-infinitive vs. gerund")
 
-#A2Rplot(
-#   data.norm[,2:4], 
-#   k=3
-#)
-
+# selecting subsets
+# subset(data,data.norm$infinitive > 0.9 & data$ingform < 100)
