@@ -101,8 +101,24 @@ The rationale behind this is not confusing the tagger by randomly dropping words
       <features>
         <featureDescription>
           <name>trigger</name>
-          <description>The trigger for this conditional to be included.</description>
-          <rangeTypeName>uima.cas.String</rangeTypeName>
+          <description>The (possibly empty) token(s) that trigger this conditional.</description>
+          <rangeTypeName>uima.cas.FSArray</rangeTypeName>
+          <elementType>org.werti.uima.types.annot.Token</elementType>
+          <multipleReferencesAllowed>false</multipleReferencesAllowed>
+        </featureDescription>
+        <featureDescription>
+          <name>condition</name>
+          <description>The verb cluster that forms the condition of this conditional.</description>
+          <rangeTypeName>uima.cas.FSArray</rangeTypeName>
+          <elementType>org.werti.uima.types.annot.Token</elementType>
+          <multipleReferencesAllowed>false</multipleReferencesAllowed>
+        </featureDescription>
+        <featureDescription>
+          <name>result</name>
+          <description>The verb cluster that forms the result of this conditional.</description>
+          <rangeTypeName>uima.cas.FSArray</rangeTypeName>
+          <elementType>org.werti.uima.types.annot.Token</elementType>
+          <multipleReferencesAllowed>false</multipleReferencesAllowed>
         </featureDescription>
       </features>
     </typeDescription>

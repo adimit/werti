@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Sat Sep 27 13:39:42 CEST 2008 */
+/* First created by JCasGen Thu Oct 02 12:52:02 CEST 2008 */
 package org.werti.uima.types.annot;
 
 import org.apache.uima.jcas.JCas;
@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
 /** A potential conditional to be evaluated.
- * Updated by JCasGen Sat Sep 27 13:39:42 CEST 2008
+ * Updated by JCasGen Thu Oct 02 12:52:02 CEST 2008
  * @generated */
 public class Conditional_Type extends Annotation_Type {
   /** @generated */
@@ -46,18 +46,111 @@ public class Conditional_Type extends Annotation_Type {
   /** @generated */
   final int     casFeatCode_trigger;
   /** @generated */ 
-  public String getTrigger(int addr) {
+  public int getTrigger(int addr) {
         if (featOkTst && casFeat_trigger == null)
       jcas.throwFeatMissing("trigger", "org.werti.uima.types.annot.Conditional");
-    return ll_cas.ll_getStringValue(addr, casFeatCode_trigger);
+    return ll_cas.ll_getRefValue(addr, casFeatCode_trigger);
   }
   /** @generated */    
-  public void setTrigger(int addr, String v) {
+  public void setTrigger(int addr, int v) {
         if (featOkTst && casFeat_trigger == null)
       jcas.throwFeatMissing("trigger", "org.werti.uima.types.annot.Conditional");
-    ll_cas.ll_setStringValue(addr, casFeatCode_trigger, v);}
+    ll_cas.ll_setRefValue(addr, casFeatCode_trigger, v);}
     
-  
+   /** @generated */
+  public int getTrigger(int addr, int i) {
+        if (featOkTst && casFeat_trigger == null)
+      jcas.throwFeatMissing("trigger", "org.werti.uima.types.annot.Conditional");
+    if (lowLevelTypeChecks)
+      return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_trigger), i, true);
+    jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_trigger), i);
+	return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_trigger), i);
+  }
+   
+  /** @generated */ 
+  public void setTrigger(int addr, int i, int v) {
+        if (featOkTst && casFeat_trigger == null)
+      jcas.throwFeatMissing("trigger", "org.werti.uima.types.annot.Conditional");
+    if (lowLevelTypeChecks)
+      ll_cas.ll_setRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_trigger), i, v, true);
+    jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_trigger), i);
+    ll_cas.ll_setRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_trigger), i, v);
+  }
+ 
+ 
+  /** @generated */
+  final Feature casFeat_condition;
+  /** @generated */
+  final int     casFeatCode_condition;
+  /** @generated */ 
+  public int getCondition(int addr) {
+        if (featOkTst && casFeat_condition == null)
+      jcas.throwFeatMissing("condition", "org.werti.uima.types.annot.Conditional");
+    return ll_cas.ll_getRefValue(addr, casFeatCode_condition);
+  }
+  /** @generated */    
+  public void setCondition(int addr, int v) {
+        if (featOkTst && casFeat_condition == null)
+      jcas.throwFeatMissing("condition", "org.werti.uima.types.annot.Conditional");
+    ll_cas.ll_setRefValue(addr, casFeatCode_condition, v);}
+    
+   /** @generated */
+  public int getCondition(int addr, int i) {
+        if (featOkTst && casFeat_condition == null)
+      jcas.throwFeatMissing("condition", "org.werti.uima.types.annot.Conditional");
+    if (lowLevelTypeChecks)
+      return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_condition), i, true);
+    jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_condition), i);
+	return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_condition), i);
+  }
+   
+  /** @generated */ 
+  public void setCondition(int addr, int i, int v) {
+        if (featOkTst && casFeat_condition == null)
+      jcas.throwFeatMissing("condition", "org.werti.uima.types.annot.Conditional");
+    if (lowLevelTypeChecks)
+      ll_cas.ll_setRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_condition), i, v, true);
+    jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_condition), i);
+    ll_cas.ll_setRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_condition), i, v);
+  }
+ 
+ 
+  /** @generated */
+  final Feature casFeat_result;
+  /** @generated */
+  final int     casFeatCode_result;
+  /** @generated */ 
+  public int getResult(int addr) {
+        if (featOkTst && casFeat_result == null)
+      jcas.throwFeatMissing("result", "org.werti.uima.types.annot.Conditional");
+    return ll_cas.ll_getRefValue(addr, casFeatCode_result);
+  }
+  /** @generated */    
+  public void setResult(int addr, int v) {
+        if (featOkTst && casFeat_result == null)
+      jcas.throwFeatMissing("result", "org.werti.uima.types.annot.Conditional");
+    ll_cas.ll_setRefValue(addr, casFeatCode_result, v);}
+    
+   /** @generated */
+  public int getResult(int addr, int i) {
+        if (featOkTst && casFeat_result == null)
+      jcas.throwFeatMissing("result", "org.werti.uima.types.annot.Conditional");
+    if (lowLevelTypeChecks)
+      return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_result), i, true);
+    jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_result), i);
+	return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_result), i);
+  }
+   
+  /** @generated */ 
+  public void setResult(int addr, int i, int v) {
+        if (featOkTst && casFeat_result == null)
+      jcas.throwFeatMissing("result", "org.werti.uima.types.annot.Conditional");
+    if (lowLevelTypeChecks)
+      ll_cas.ll_setRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_result), i, v, true);
+    jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_result), i);
+    ll_cas.ll_setRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_result), i, v);
+  }
+ 
 
 
 
@@ -68,8 +161,16 @@ public class Conditional_Type extends Annotation_Type {
     casImpl.getFSClassRegistry().addGeneratorForType((TypeImpl)this.casType, getFSGenerator());
 
  
-    casFeat_trigger = jcas.getRequiredFeatureDE(casType, "trigger", "uima.cas.String", featOkTst);
+    casFeat_trigger = jcas.getRequiredFeatureDE(casType, "trigger", "uima.cas.FSArray", featOkTst);
     casFeatCode_trigger  = (null == casFeat_trigger) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_trigger).getCode();
+
+ 
+    casFeat_condition = jcas.getRequiredFeatureDE(casType, "condition", "uima.cas.FSArray", featOkTst);
+    casFeatCode_condition  = (null == casFeat_condition) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_condition).getCode();
+
+ 
+    casFeat_result = jcas.getRequiredFeatureDE(casType, "result", "uima.cas.FSArray", featOkTst);
+    casFeatCode_result  = (null == casFeat_result) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_result).getCode();
 
   }
 }

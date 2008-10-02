@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Sat Sep 27 13:39:42 CEST 2008 */
+/* First created by JCasGen Thu Oct 02 12:52:02 CEST 2008 */
 package org.werti.uima.types.annot;
 
 import org.apache.uima.jcas.JCas;
@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
 /** A relevant Token with PoS information attached.
- * Updated by JCasGen Sat Sep 27 13:39:42 CEST 2008
+ * Updated by JCasGen Thu Oct 02 12:52:02 CEST 2008
  * @generated */
 public class Token_Type extends Annotation_Type {
   /** @generated */

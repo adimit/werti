@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Sat Sep 27 13:39:42 CEST 2008 */
+/* First created by JCasGen Thu Oct 02 12:52:02 CEST 2008 */
 package org.werti.uima.types.annot;
 
 import org.apache.uima.jcas.JCas; 
@@ -11,7 +11,7 @@ import org.apache.uima.jcas.tcas.Annotation;
 
 
 /** A sentence in natural language on the page to be processed.
- * Updated by JCasGen Sat Sep 27 13:39:42 CEST 2008
+ * Updated by JCasGen Thu Oct 02 12:52:02 CEST 2008
  * XML source: /home/aleks/src/WERTi/desc/WERTiTypeSystem.xml
  * @generated */
 public class SentenceAnnotation extends Annotation {
