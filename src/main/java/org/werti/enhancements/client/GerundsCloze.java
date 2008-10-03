@@ -38,6 +38,7 @@ public class GerundsCloze implements EntryPoint {
 			Node occurrence  = domSpan.getLastChild();
 			
 			if ((clue.getNodeType() != Node.ELEMENT_NODE) || (occurrence.getNodeType() != Node.ELEMENT_NODE)) {
+				System.err.println("BANG! Something is wrong with the RELEVANT span");
 				// this shouldn't happen
 				continue;
 			}
@@ -45,17 +46,16 @@ public class GerundsCloze implements EntryPoint {
 			
 			Element occurrenceE = (Element) occurrence;
 
-			if (occurrenceE.getId().contains(CLU_GERONLY)) {
-				clueE.setInnerHTML("<span style=\"color: "+ cluColor +"; font-weight:bold\">"
-						+ clueE.getInnerText() + "</span>");
-				ci.setTarget(occurrenceE.getInnerText());
-				occurrenceE.setInnerText("");
-				ci.finish();
-				
-				if ((rp = RootPanel.get(prefix + "-" + RELEVANT + "-" + (++ii))) != null) {
-					ci.setNext(new ClozeItem(rp));
-					ci = ci.getNext();
-				}
+			clueE.setInnerHTML("<span style=\"color: " + cluColor
+					+ "; font-weight:bold\">" + clueE.getInnerText()
+					+ "</span>");
+			ci.setTarget(occurrenceE.getInnerText());
+			occurrenceE.setInnerText("");
+			ci.finish();
+
+			if ((rp = RootPanel.get(prefix + "-" + RELEVANT + "-" + (++ii))) != null) {
+				ci.setNext(new ClozeItem(rp));
+				ci = ci.getNext();
 			}
 			
 		}

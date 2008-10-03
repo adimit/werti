@@ -24,12 +24,10 @@ public class GerundsConfiguration implements RunConfiguration {
 		this.enhancer = enhancer;
 	}
 	
-	/*
-	public GerundsConfiguration() {
+	private GerundsConfiguration() {
 		this(false, "GerundsColorize");
 	}
-	*/
-
+	
 	public String enhancer() {
 		return enhancer;	
 	}
