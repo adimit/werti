@@ -202,6 +202,7 @@ public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiServi
 			}
 			final FileWriter out = new FileWriter(temp);
 			out.write(enhanced);
+			out.close();
 		} catch (IOException ioe) {
 			log.error("Failed to write to temporary file");
 			throw new ProcessingException("Failed write to temporary file!", ioe);
