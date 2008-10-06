@@ -29,6 +29,13 @@ public class GerundsCloze implements EntryPoint {
 	private final String ingformColor = "black";
 	private final String ambiguousColor = "red";
 	
+	private static final char[] consonants = new char[]{
+		'b','c','d','f','g','h','j','k','l','m','n','p','q','r','s','t','v','w','x','z'
+	};
+	private static final char[] vowels = new char[]{
+		'a','e','i','o','u','y'
+	};
+	
 	public void onModuleLoad() {
 		Element domSpan;
 		
@@ -55,15 +62,55 @@ public class GerundsCloze implements EntryPoint {
 			clueE.setInnerHTML("<span style=\"color: " + cluColor
 					+ "; font-weight:bold\">" + clueE.getInnerText()
 					+ "</span>");
+			String baseForm = "<em>(" + toBaseForm(occurrenceE) + ")</em>";
 			ci.setTarget(occurrenceE.getInnerText());
 			occurrenceE.setInnerText("");
 			ci.finish();
-
+			Element bfE = DOM.createLabel();
+			bfE.setInnerHTML(baseForm);
+			domSpan.appendChild(bfE);
 		}
 	}
 	
-	private String toBaseForm(String ingform) {
-		return null;
+	private String toBaseForm(Element occurrenceE) {
+		if (occurrenceE.getId().contains(INF)) {
+			// infinitive: just return the form after "to"
+			String[] tokens = occurrenceE.getInnerText().split("\\s", 3);
+			return tokens[1];
+		}
+		// gerund: slightly more involved
+		String gerund = occurrenceE.getInnerText();
+		String base = gerund.replaceFirst("ing", "");
+		
+		// consonant endings
+		if (containsChar(consonants, base.charAt(base.length()-1))) {
+			// double consonant
+			if (base.charAt(base.length()-2) == base.charAt(base.length()-1)) {
+				base = base.substring(0, base.length()-1);
+			// special case: 'ck' -> c
+			} else if (base.charAt(base.length()-2) == 'c' && base.charAt(base.length()-1) == 'k') {
+				base = base.substring(0, base.length()-1);
+			// vowel before consonant, need 'e'
+			} else if (!containsChar(vowels, base.charAt(base.length()-3))
+					&& containsChar(vowels, base.charAt(base.length()-2))
+					&& containsChar(consonants, base.charAt(base.length()-1))) {
+				base += 'e';
+			// special case: 'y' -> 'ie'
+			} else if (base.length() < 3 && base.charAt(base.length()-1) == 'y') {
+				base = base.substring(0, base.length()-1);
+				base += "ie";
+			}
+		}
+		return base;
+	}
+	
+	private static boolean containsChar(char[] arr, char c) {
+		for (int i = 0; i < arr.length; i++) {
+			if (arr[i] == c) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 }
