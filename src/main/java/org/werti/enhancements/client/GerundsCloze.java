@@ -95,12 +95,12 @@ public class GerundsCloze implements EntryPoint {
 					&& containsChar(vowels, base.charAt(base.length()-2))
 					&& containsChar(consonants, base.charAt(base.length()-1))) {
 				base += 'e';
-			// special case: 'y' -> 'ie'
-			} else if (base.length() < 3 && base.charAt(base.length()-1) == 'y') {
-				base = base.substring(0, base.length()-1);
-				base += "ie";
 			}
-		}
+		// special case: 'y' -> 'ie'
+        } else if (base.length() < 3 && base.charAt(base.length()-1) == 'y') {
+            base = base.substring(0, base.length()-1);
+            base += "ie";
+        }
 		return base;
 	}
 	
