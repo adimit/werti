@@ -55,7 +55,7 @@ LIST _LEX_ALWAYS_GERUND =
    "<endure(s|d)?>"r
    "<enjoy(s|ed)?>"r
    "<entail(s|ed)?>"r
-   "<espace(s|d)?>"r
+   "<escape(s|d)?>"r
    "<excuse(s|d)?>"r
    "<explain(s|ed)?>"r
    "<fanc(y|ies|ied)>"r
