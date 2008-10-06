@@ -30,10 +30,11 @@ public class GerundsCloze implements EntryPoint {
 	private final String ambiguousColor = "red";
 	
 	public void onModuleLoad() {
-		Element domSpan; RootPanel rp;
+		Element domSpan;
 		
-		ClozeItem ci = new ClozeItem(RootPanel.get(prefix + "-" + RELEVANT + "-" + 1));
-		for (int ii = 1; (domSpan = DOM.getElementById(prefix + "-" + RELEVANT + "-" + ii)) != null; /* see if clause */) {
+		ClozeItem ci = null;
+		ClozeItem prev;
+		for (int ii = 1; (domSpan = DOM.getElementById(prefix + "-" + RELEVANT + "-" + ii)) != null; ii++) {
 			Node clue = domSpan.getFirstChild();
 			Node occurrence  = domSpan.getLastChild();
 			
@@ -45,7 +46,12 @@ public class GerundsCloze implements EntryPoint {
 			Element clueE = (Element) clue;
 			
 			Element occurrenceE = (Element) occurrence;
-
+			prev = ci;
+			ci = new ClozeItem(RootPanel.get(occurrenceE.getId()));
+			if (prev != null) {
+				prev.setNext(ci);
+			}
+			
 			clueE.setInnerHTML("<span style=\"color: " + cluColor
 					+ "; font-weight:bold\">" + clueE.getInnerText()
 					+ "</span>");
@@ -53,11 +59,6 @@ public class GerundsCloze implements EntryPoint {
 			occurrenceE.setInnerText("");
 			ci.finish();
 
-			if ((rp = RootPanel.get(prefix + "-" + RELEVANT + "-" + (++ii))) != null) {
-				ci.setNext(new ClozeItem(rp));
-				ci = ci.getNext();
-			}
-			
 		}
 	}
 	
