@@ -53,7 +53,7 @@ IN = open(infile, "r");
 OUT = open(outfile, "w");
 
 # output header line
-OUT.write("lemma,infinitive,ingform,prep+ingform\n")
+OUT.write("lemma,infinitive,ingform,prep+ingform,prep+infinitive\n")
 	
 ### loop over input
 for line in IN:
@@ -68,7 +68,7 @@ for line in IN:
 	
 	OUT.write("%s," % (lemma))
 	
-	data = cqlQuery('[lemma="%s" & tag="V.*"] [lemma="to"] [tag="V.*I"]' %(lemma))
+	data = cqlQuery('[lemma="%s" & tag="V.*"] [tag="TO.*"] [tag="V.*I"]' %(lemma))
 	try:
 		json_obj = simplejson.loads(data)
 		count = json_obj['concsize']
@@ -89,9 +89,18 @@ for line in IN:
 	try:
 		json_obj = simplejson.loads(data)
 		count = json_obj['concsize']
+		OUT.write("%i," % (count))
+	except:
+		OUT.write("NA,")
+		
+	data = cqlQuery('[lemma="%s" & tag="V.*"] [tag="PRP"]  [tag="TO.*"] [tag="V.*I"]' %(lemma))
+	try:
+		json_obj = simplejson.loads(data)
+		count = json_obj['concsize']
 		OUT.write("%i\n" % (count))
 	except:
 		OUT.write("NA\n")
+		
 	
 	
 	#OUT.write("%s,%i,%i,%i\n" % (lemma,infCount,gerCount, prepGerCount))
