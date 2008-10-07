@@ -92,7 +92,7 @@ public class GerundsCloze implements EntryPoint {
 			if (base.charAt(base.length()-2) == base.charAt(base.length()-1)) {
 				base = base.substring(0, base.length()-1);
 			// special case: 'ck' -> c
-			} else if (base.charAt(base.length()-2) == 'c' && base.charAt(base.length()-1) == 'k') {
+			} else if (base.length() > 4 && base.charAt(base.length()-2) == 'c' && base.charAt(base.length()-1) == 'k') {
 				base = base.substring(0, base.length()-1);
 			// vowel before consonant, need 'e'
 			} else if (!containsChar(vowels, base.charAt(base.length()-3))
@@ -104,7 +104,11 @@ public class GerundsCloze implements EntryPoint {
         } else if (base.length() < 3 && base.charAt(base.length()-1) == 'y') {
             base = base.substring(0, base.length()-1);
             base += "ie";
-        }
+        // verbs that end in a vowel must end in 'e'
+		} else if (containsChar(vowels, base.charAt(base.length()-1)) && !(base.charAt(base.length()-1) == 'e')) {
+			base += 'e';
+		}
+	
 		return base;
 	}
 	
