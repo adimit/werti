@@ -44,8 +44,9 @@ public class BaseformPostEnhancer extends JCasAnnotator_ImplBase {
 			// to-infinitive, easy
 			if (startTag.contains("INF")) {
 				String toInf = e.getCoveredText();
-				// second token is the baseform
-				baseForm = toInf.split("\\s+")[1];
+				// last token is the baseform
+				String[] tokens =  toInf.split("\\s+");
+				baseForm = tokens[tokens.length-1];
 			// gerund, call morpha
 			} else if (startTag.contains("GER")) {
 				String gerund = e.getCoveredText();
