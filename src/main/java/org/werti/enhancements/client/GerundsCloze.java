@@ -63,7 +63,7 @@ public class GerundsCloze implements EntryPoint {
 					+ "; font-weight:bold\">" + clueE.getInnerText()
 					+ "</span>");
 			String baseForm = "<em>(" + toBaseForm(occurrenceE) + ")</em>";
-			ci.setTarget(occurrenceE.getInnerText());
+			ci.setTarget(normalizeTarget(occurrenceE.getInnerText()));
 			occurrenceE.setInnerText("");
 			ci.finish();
 			Element bfE = DOM.createLabel();
@@ -72,10 +72,14 @@ public class GerundsCloze implements EntryPoint {
 		}
 	}
 	
+	private static String normalizeTarget(String target) {
+		return target.replaceAll("\\s+", " ");
+	}
+	
 	private String toBaseForm(Element occurrenceE) {
 		if (occurrenceE.getId().contains(INF)) {
 			// infinitive: just return the form after "to"
-			String[] tokens = occurrenceE.getInnerText().split("\\s", 3);
+			String[] tokens = occurrenceE.getInnerText().split("\\s+", 3);
 			return tokens[1];
 		}
 		// gerund: slightly more involved
