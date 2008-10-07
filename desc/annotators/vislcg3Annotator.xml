@@ -23,6 +23,13 @@
 <multiValued>false</multiValued>
 <mandatory>true</mandatory>
 </configurationParameter>
+<configurationParameter>
+<name>alwaysEmptyLemmas</name>
+<description>If this is set to true, this wrapper will always send empty lemmas to vislcg3. This may be required for some grammars. If set to false, this wrapper will send empty lemmas only if it doesn't find lemmas in the CAS.</description>
+<type>Boolean</type>
+<multiValued>false</multiValued>
+<mandatory>true</mandatory>
+</configurationParameter>
 </configurationParameters>
 <configurationParameterSettings>
 <nameValuePair>
@@ -35,6 +42,12 @@
 <name>vislcg3GrammarLoc</name>
 <value>
 <string>/home/nott/Eclipse-Workspace/WERTi/src/hacks/gram3</string>
+</value>
+</nameValuePair>
+<nameValuePair>
+<name>alwaysEmptyLemmas</name>
+<value>
+<boolean>true</boolean>
 </value>
 </nameValuePair>
 </configurationParameterSettings>

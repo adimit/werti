@@ -25,7 +25,13 @@ import org.werti.uima.types.annot.Token;
 public class Vislcg3Annotator extends JCasAnnotator_ImplBase {
 
 	private static final Logger log =
-		Logger.getLogger(Vislcg3Annotator.class);	
+		Logger.getLogger(Vislcg3Annotator.class);
+
+	private String vislcg3Loc;
+	private String vislcg3GrammarLoc;
+	private boolean alwaysEmptyLemmas;
+	
+	
 	
 	/**
 	 * A runnable class that reads from a reader (that may
@@ -121,9 +127,6 @@ public class Vislcg3Annotator extends JCasAnnotator_ImplBase {
 		}
 		
 	}	
-
-	private String vislcg3Loc;
-	private String vislcg3GrammarLoc;
 	
 	@Override
 	public void initialize(UimaContext context)
@@ -131,6 +134,7 @@ public class Vislcg3Annotator extends JCasAnnotator_ImplBase {
 		super.initialize(context);
 		vislcg3Loc = (String) context.getConfigParameterValue("vislcg3Loc");
 		vislcg3GrammarLoc = (String) context.getConfigParameterValue("vislcg3GrammarLoc");
+		alwaysEmptyLemmas = (Boolean) context.getConfigParameterValue("alwaysEmptyLemmas");
 	}
 
 	@Override
@@ -188,7 +192,7 @@ public class Vislcg3Annotator extends JCasAnnotator_ImplBase {
 		for (Token t : tokenList) {
 			result.append("\"<" + t.getCoveredText() + ">\"\n");
 			result.append("\t\"");
-			if (t.getLemma() != null) {
+			if ( (!alwaysEmptyLemmas) && t.getLemma() != null) {
 				result.append(t.getLemma());
 			}
 			result.append("\"");
