@@ -39,9 +39,9 @@ public class TokenEnhancer extends JCasAnnotator_ImplBase {
 	public void process(JCas cas) throws AnalysisEngineProcessException {
 		int id = 0;
 		log.info("Starting enhancement");
-		Object o = getContext().getConfigParameterValue("Tags");
+		Object o = getContext().getConfigParameterValue("tags");
 		final String[] tags;
-		if (o instanceof String[]) {
+		if (o instanceof String) {
 			tags = ((String) o).split("(\\s*,\\s*)+");
 			if (log.isDebugEnabled()) {
 				final StringBuilder sb = new StringBuilder();
@@ -51,7 +51,7 @@ public class TokenEnhancer extends JCasAnnotator_ImplBase {
 				log.debug("Tags: " + sb.toString());
 			}
 		} else {
-			Object[] args = { "Tags" };
+			Object[] args = { "tags" };
 			throw new AnalysisEngineProcessException
 				(AnalysisEngineProcessException.RESOURCE_DATA_NOT_VALID, args);
 		}
