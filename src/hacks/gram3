@@ -437,7 +437,7 @@ AFTER-SECTIONS
 
 ### ad marker for relevant text spans including clue phrases and gerunds
 ADD (RELEVANT-B) ("") (0C _ALLCUETYPES_B) (+1*C (GER-B) BARRIER _INFCHUNKS );
-ADD (RELEVANT-I) ("") (-1*C (RELEVANT-B)) (+1*C (GER-B) BARRIER _INFCHUNKS );
+ADD (RELEVANT-I) ("") (-1*C (RELEVANT-B) BARRIER (GER-B) OR (INF-B)) (+1*C (GER-B) BARRIER _INFCHUNKS );
 ADD (RELEVANT-I) ("") (-1 (RELEVANT-I)) (0C (GER-B));
 ADD (RELEVANT-I) ("") (-1 (RELEVANT-B)) (0C (GER-B));
 
