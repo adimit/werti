@@ -15,21 +15,26 @@ public class GerundsConfiguration implements RunConfiguration {
 	 * 
 	 */
 	private static final long serialVersionUID = 7296681895682846753L;
-	private boolean showAllKnownIngforms;
-	private String enhancer;
+	private String gwtEnhancer;
 
 	
-	public GerundsConfiguration(boolean showAllKnownIngforms, String enhancer) {
-		this.showAllKnownIngforms = showAllKnownIngforms;
-		this.enhancer = enhancer;
+	public GerundsConfiguration(String gwtEnhancer) {
+		this.gwtEnhancer = gwtEnhancer;
 	}
 	
-	private GerundsConfiguration() {
-		this(false, "GerundsColorize");
+	/**
+	 * A dummy-zero-argument-constructor for GWT to be able to able to
+	 * serialize this class.
+	 *
+	 * @deprecated Do not use this constructor. It is here solely for compatibility
+	 * reasons.
+	 */	
+	public GerundsConfiguration() {
+		this("GerundsColorize");
 	}
 	
 	public String enhancer() {
-		return enhancer;	
+		return gwtEnhancer;	
 	}
 
 	public List<Tuple> postconfig() {

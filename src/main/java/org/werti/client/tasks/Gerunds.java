@@ -23,7 +23,13 @@ public class Gerunds implements Task {
 	
 	
 	public RunConfiguration configure() {
-		return new GerundsConfiguration(showAll.isChecked(), retrieveChecked().getData());
+		// handle the debug switch in colorize mode
+		// TODO: does the debug switch make sense the way it is? it does not affect other activities than colorize. 
+		if ( retrieveChecked().getData().equals("GerundsColorize") && showAll.isChecked()) {
+			return new GerundsConfiguration("GerundsColorizeAll");
+		} else {
+			return new GerundsConfiguration(retrieveChecked().getData());
+		}	
 	}
 
 	private ERadioButton retrieveChecked() {
