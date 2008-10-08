@@ -60,7 +60,7 @@ LIST _LEX_ALWAYS_GERUND =
    "<explain(s|ed)?>"r
    "<fanc(y|ies|ied)>"r
    "<finish(s|ed)?>"r
-   "<forgive(s)?>"r   "<forgave>"
+   "<forgive(s)?>"r   "<forgave>"   "<forgiven>"
    "<hinder(s|ed)?>"r
    "<imagine(s|d)?>"r
    "<involve(s|d)?>"r
@@ -84,7 +84,7 @@ LIST _LEX_ALWAYS_GERUND =
 ;
 
 LIST _LEX_GERUND_OR_TOINF_MEANING_CHANGE = 
-   "<forget(s)?>"r   "<forgot>"
+   "<forget(s)?>"r   "<forgot>"   "<forgotten>"
    "<help(s|ed)?>"r 
    "<need(s|ed)?>"r 
    "<regret(s|ed)?>"r
@@ -95,7 +95,7 @@ LIST _LEX_GERUND_OR_TOINF_MEANING_CHANGE =
 
 
 LIST _LEX_GERUND_OR_TOINF_NO_MEANING_CHANGE = 
-   "<begin(s)?>"   "<began>"
+   "<begin(s)?>"   "<began>"   "<begun>"
    "<continue(s|ed)?>"r
    "<hate(s|d)?>"r
    "<like(s|d)?>"r
