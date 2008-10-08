@@ -17,7 +17,7 @@ public class Gerunds implements Task {
 
 	// activity type radio buttons
 	private final ERadioButton clr = new ERadioButton("GerundsColorize", "methods", "Color Enhancement");
-	private final ERadioButton ask = new ERadioButton("", "methods", "Active Presentation");
+	private final ERadioButton ask = new ERadioButton("GerundsAsk", "methods", "Active Presentation");
 	private final ERadioButton fib = new ERadioButton("GerundsCloze", "methods", "Cloze Test");
 	private static final ECheckBox showAll = new ECheckBox("all", "Debug: Highlight other ingforms as well");
 	

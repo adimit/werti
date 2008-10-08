@@ -1,5 +1,6 @@
 package org.werti.client.run;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.werti.client.util.Tuple;
@@ -46,7 +47,10 @@ public class GerundsConfiguration implements RunConfiguration {
 	}
 
 	public List<Tuple> preconfig() {
-		return null;
+		final List<Tuple> config = new LinkedList<Tuple>();
+		// dummy tags config
+		config.add(new Tuple("tags", "blah,blubb"));
+		return config;
 	}
 
 	public String preprocessor() {

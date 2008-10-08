@@ -9,16 +9,38 @@
 <delegateAnalysisEngine key="vislcg3ChunkEnhancer">
 <import location="../enhancers/vislcg3ChunkEnhancer.xml"/>
 </delegateAnalysisEngine>
+<delegateAnalysisEngine key="TokenEnhancer">
+<import location="../enhancers/TokenEnhancer.xml"/>
+</delegateAnalysisEngine>
 </delegateAnalysisEngineSpecifiers>
 <analysisEngineMetaData>
 <name>vislCGPostProc</name>
 <description></description>
 <version>1.0</version>
 <vendor></vendor>
-<configurationParameters/>
-<configurationParameterSettings/>
+<configurationParameters searchStrategy="language_fallback">
+<configurationParameter>
+<name>Tags</name>
+<description>A list of tags to mark up, comma separated</description>
+<type>String</type>
+<multiValued>false</multiValued>
+<mandatory>true</mandatory>
+<overrides>
+<parameter>TokenEnhancer/Tags</parameter>
+</overrides>
+</configurationParameter>
+</configurationParameters>
+<configurationParameterSettings>
+<nameValuePair>
+<name>Tags</name>
+<value>
+<string>blah,blubb</string>
+</value>
+</nameValuePair>
+</configurationParameterSettings>
 <flowConstraints>
 <fixedFlow>
+<node>TokenEnhancer</node>
 <node>vislcg3ChunkEnhancer</node>
 <node>baseformPostEnhancer</node>
 </fixedFlow>
