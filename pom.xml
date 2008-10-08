@@ -112,6 +112,7 @@
 						<param>org.werti.enhancements.GerundsColorizeAll</param>
 						<param>org.werti.enhancements.Cloze</param>
 						<param>org.werti.enhancements.GerundsCloze</param>
+						<param>org.werti.enhancements.GerundsAsk</param>
 					</compileTargets>
 					<generatorDestinationPackage>org.werti.client</generatorDestinationPackage>
 					<noServer>true</noServer>
