@@ -81,6 +81,17 @@ ternaryplot(
 	grid=T
  )
 
+postscript(file="ternary-plot1.ps") 
+ternaryplot(
+	data[,2:4],
+	id_color="darkblue",
+	cex = .4,
+	dimnames = c("to+infinitive","gerund", "preposition+gerund"),
+	main = "Verbs used with to-infinitive vs. gerund",
+	grid=T
+ )
+dev.off()
+
 #X11()
 #clustering1.diss <- daisy(data.norm[,2:4])
 #clustering1.clus <- pam(clustering1.diss, 3, diss = TRUE)$clustering
