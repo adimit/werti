@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Thu Oct 02 12:52:02 CEST 2008 */
+/* First created by JCasGen Thu Oct 09 14:27:11 CEST 2008 */
 package org.werti.uima.types.annot;
 
 import org.apache.uima.jcas.JCas;
@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
 /** A sentence in natural language on the page to be processed.
- * Updated by JCasGen Thu Oct 02 12:52:02 CEST 2008
+ * Updated by JCasGen Thu Oct 09 14:27:11 CEST 2008
  * @generated */
 public class SentenceAnnotation_Type extends Annotation_Type {
   /** @generated */
@@ -58,6 +58,24 @@ public class SentenceAnnotation_Type extends Annotation_Type {
     ll_cas.ll_setDoubleValue(addr, casFeatCode_coherence, v);}
     
   
+ 
+  /** @generated */
+  final Feature casFeat_Sexp;
+  /** @generated */
+  final int     casFeatCode_Sexp;
+  /** @generated */ 
+  public String getSexp(int addr) {
+        if (featOkTst && casFeat_Sexp == null)
+      jcas.throwFeatMissing("Sexp", "org.werti.uima.types.annot.SentenceAnnotation");
+    return ll_cas.ll_getStringValue(addr, casFeatCode_Sexp);
+  }
+  /** @generated */    
+  public void setSexp(int addr, String v) {
+        if (featOkTst && casFeat_Sexp == null)
+      jcas.throwFeatMissing("Sexp", "org.werti.uima.types.annot.SentenceAnnotation");
+    ll_cas.ll_setStringValue(addr, casFeatCode_Sexp, v);}
+    
+  
 
 
 
@@ -70,6 +88,10 @@ public class SentenceAnnotation_Type extends Annotation_Type {
  
     casFeat_coherence = jcas.getRequiredFeatureDE(casType, "coherence", "uima.cas.Double", featOkTst);
     casFeatCode_coherence  = (null == casFeat_coherence) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_coherence).getCode();
+
+ 
+    casFeat_Sexp = jcas.getRequiredFeatureDE(casType, "Sexp", "uima.cas.String", featOkTst);
+    casFeatCode_Sexp  = (null == casFeat_Sexp) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_Sexp).getCode();
 
   }
 }

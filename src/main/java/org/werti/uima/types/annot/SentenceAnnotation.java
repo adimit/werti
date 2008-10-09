@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Thu Oct 02 12:52:02 CEST 2008 */
+/* First created by JCasGen Thu Oct 09 14:27:11 CEST 2008 */
 package org.werti.uima.types.annot;
 
 import org.apache.uima.jcas.JCas; 
@@ -11,7 +11,7 @@ import org.apache.uima.jcas.tcas.Annotation;
 
 
 /** A sentence in natural language on the page to be processed.
- * Updated by JCasGen Thu Oct 02 12:52:02 CEST 2008
+ * Updated by JCasGen Thu Oct 09 14:27:11 CEST 2008
  * XML source: /home/aleks/src/WERTi/desc/WERTiTypeSystem.xml
  * @generated */
 public class SentenceAnnotation extends Annotation {
@@ -75,6 +75,24 @@ public class SentenceAnnotation extends Annotation {
     if (SentenceAnnotation_Type.featOkTst && ((SentenceAnnotation_Type)jcasType).casFeat_coherence == null)
       jcasType.jcas.throwFeatMissing("coherence", "org.werti.uima.types.annot.SentenceAnnotation");
     jcasType.ll_cas.ll_setDoubleValue(addr, ((SentenceAnnotation_Type)jcasType).casFeatCode_coherence, v);}    
+   
+    
+  //*--------------*
+  //* Feature: Sexp
+
+  /** getter for Sexp - gets The Sexp of the parse of this sentence.
+   * @generated */
+  public String getSexp() {
+    if (SentenceAnnotation_Type.featOkTst && ((SentenceAnnotation_Type)jcasType).casFeat_Sexp == null)
+      jcasType.jcas.throwFeatMissing("Sexp", "org.werti.uima.types.annot.SentenceAnnotation");
+    return jcasType.ll_cas.ll_getStringValue(addr, ((SentenceAnnotation_Type)jcasType).casFeatCode_Sexp);}
+    
+  /** setter for Sexp - sets The Sexp of the parse of this sentence. 
+   * @generated */
+  public void setSexp(String v) {
+    if (SentenceAnnotation_Type.featOkTst && ((SentenceAnnotation_Type)jcasType).casFeat_Sexp == null)
+      jcasType.jcas.throwFeatMissing("Sexp", "org.werti.uima.types.annot.SentenceAnnotation");
+    jcasType.ll_cas.ll_setStringValue(addr, ((SentenceAnnotation_Type)jcasType).casFeatCode_Sexp, v);}    
   }
 
     
