@@ -51,9 +51,12 @@ public class TokenEnhancer extends JCasAnnotator_ImplBase {
 				log.debug("Tags: " + sb.toString());
 			}
 		} else {
+			/*
 			Object[] args = { "tags" };
 			throw new AnalysisEngineProcessException
 				(AnalysisEngineProcessException.RESOURCE_DATA_NOT_VALID, args);
+			*/
+			tags = new String[0];
 		}
 
 		final FSIndex textIndex = cas.getAnnotationIndex(Token.type);
