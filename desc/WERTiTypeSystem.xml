@@ -75,6 +75,11 @@ The rationale behind this is not confusing the tagger by randomly dropping words
           <description>The coherence of this sentence. How many html tags interefere?</description>
           <rangeTypeName>uima.cas.Double</rangeTypeName>
         </featureDescription>
+        <featureDescription>
+          <name>sexp</name>
+          <description>The Sexp of the parse of this sentence.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
       </features>
     </typeDescription>
     <typeDescription>
@@ -95,27 +100,27 @@ The rationale behind this is not confusing the tagger by randomly dropping words
       </features>
     </typeDescription>
     <typeDescription>
-      <name>org.werti.uima.types.annot.Conditional</name>
-      <description>A potential conditional to be evaluated.</description>
-      <supertypeName>uima.tcas.Annotation</supertypeName>
+      <name>org.werti.uima.types.annot.ConditionalSentence</name>
+      <description>A sentence containing a conditional.</description>
+      <supertypeName>org.werti.uima.types.annot.SentenceAnnotation</supertypeName>
       <features>
         <featureDescription>
           <name>trigger</name>
-          <description>The (possibly empty) token(s) that trigger this conditional.</description>
+          <description>The token(s) that triggered the markup of this conditional (possibly empty).</description>
           <rangeTypeName>uima.cas.FSArray</rangeTypeName>
           <elementType>org.werti.uima.types.annot.Token</elementType>
           <multipleReferencesAllowed>false</multipleReferencesAllowed>
         </featureDescription>
         <featureDescription>
           <name>condition</name>
-          <description>The verb cluster that forms the condition of this conditional.</description>
+          <description>The verb (cluster) that represents the condition of this conditional.</description>
           <rangeTypeName>uima.cas.FSArray</rangeTypeName>
           <elementType>org.werti.uima.types.annot.Token</elementType>
           <multipleReferencesAllowed>false</multipleReferencesAllowed>
         </featureDescription>
         <featureDescription>
           <name>result</name>
-          <description>The verb cluster that forms the result of this conditional.</description>
+          <description>The verb (cluster) representing the result of this conditional.</description>
           <rangeTypeName>uima.cas.FSArray</rangeTypeName>
           <elementType>org.werti.uima.types.annot.Token</elementType>
           <multipleReferencesAllowed>false</multipleReferencesAllowed>
