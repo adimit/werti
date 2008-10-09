@@ -17,6 +17,41 @@ import org.werti.uima.types.annot.ConditionalSentence;
 import org.werti.uima.types.annot.SentenceAnnotation;
 import org.werti.uima.types.annot.Token;
 
+/**
+ * An annotator that looks for certain triggers in {@link
+ * org.werti.uima.types.annot.SentenceAnnotation}s and puts {@link
+ * org.werti.uima.types.annot.ConditionalSentence}s if it finds them.
+ *
+ * <p>Note that this is only a primitive pre-processing tool, and only finds
+ * 'suspects'. The real conditionals have to be pegged in a parsing step (or
+ * something else).</p>
+ *
+ * <p>The triggers employed are:</p>
+ * <ol>
+ * <li><em>Single-Word-Triggers</em>
+ * <ul>
+ * <li>if</li>
+ * <li>unless</li>
+ * <li>given</li>
+ * <li>suppose</li>
+ * <li>provided</li>
+ * <li>supposing</li>
+ * <li>providing</li>
+ * </ul>
+ * </li>
+ * <li><em>Multi-Word-Triggers</em>
+ * <ul>
+ * <li>so long as</li>
+ * <li>in case</li>
+ * <li>on condition</li>
+ * <li>in the event that</li>
+ * </ul>
+ * </li>
+ * </ol>
+ *
+ * @author Aleksandar Dimitrov
+ * @version 0.1
+ */
 public class ConditionalAnnotator extends JCasAnnotator_ImplBase {
 	private static final String[] triggersa =
 	{ "if", "unless", "given", "suppose", "provided", "supposing", "providing" };
