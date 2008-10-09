@@ -18,7 +18,7 @@ import org.apache.uima.jcas.JCas;
 
 import org.apache.uima.resource.ResourceInitializationException;
 
-import org.werti.uima.types.annot.Conditional;
+import org.werti.uima.types.annot.ConditionalSentence;
 import org.werti.uima.types.annot.SentenceAnnotation;
 import org.werti.uima.types.annot.Token;
 
@@ -44,8 +44,8 @@ public class DBParser extends JCasAnnotator_ImplBase {
 		final AnnotationIndex tindex = cas.getAnnotationIndex(Token.type);
 		final StringBuilder sexp = new StringBuilder();
 
-		for(final Iterator<Conditional> cit = sindex.iterator(); cit.hasNext(); ) {
-			final Conditional sentence = cit.next();
+		for(final Iterator<ConditionalSentence> cit = sindex.iterator(); cit.hasNext(); ) {
+			final ConditionalSentence sentence = cit.next();
 			for(final Iterator<Token> tit = tindex.subiterator(sentence); tit.hasNext(); ) {
 				final Token t = tit.next();
 				sexp.append("(");
@@ -58,17 +58,10 @@ public class DBParser extends JCasAnnotator_ImplBase {
 				final String s = sexp.toString();
 				log.debug("Parsing Sexp\n"+s);
 				final Sexp parsed = parser.parse(Sexp.read((s)).list());
-				if (!doIfAnnotations(sentence.getTrigger(), parsed, cas)) {
-					sentence.removeFromIndexes();
-				}
+				sentence.setSexp(parsed.toString());
 			} catch (Exception e) {
 				log.fatal(e);
 			}
 		}
 	}
-
-	private boolean doIfAnnotations(String trigger, Sexp sentence, JCas cas) {
-		return true;
-	}
-
 }
