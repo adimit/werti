@@ -6,7 +6,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-import org.werti.client.run.CategoriesConfiguration;
+import org.werti.client.run.ConditionalConfiguration;
 import org.werti.client.run.RunConfiguration;
 
 import org.werti.client.ui.ECheckBox;
@@ -18,9 +18,9 @@ public class If implements Task {
 	// the title of this task, as it will appear in the menu.
 	private static final String NAME = "Conditionals";
 
-	private static final ECheckBox first = new ECheckBox("I", "I");
-	private static final ECheckBox second = new ECheckBox("II", "II");
-	private static final ECheckBox third = new ECheckBox("III", "III");
+	private static final ECheckBox first = new ECheckBox("1", "1");
+	private static final ECheckBox second = new ECheckBox("2", "2");
+	private static final ECheckBox third = new ECheckBox("3", "3");
 	private static final ECheckBox ommission = new ECheckBox("omis", "Include If Ommission");
 
 	private static final ERadioButton tense = new ERadioButton("Colorize", "methods", "Correct Tense");
@@ -105,20 +105,7 @@ public class If implements Task {
 	 * what enhancement module to use.
 	 */
 	public RunConfiguration configure() {
-		// dirty regex hacking. Sure, there are better solutions…
-		final StringBuilder sb_tags = new StringBuilder();
-		for (final HasData o:typeConfig) {
-			sb_tags.append(o.getData() + ",");
-		}
-		final String tags = sb_tags.toString().replaceAll("^[^\\w]*", "");
-
-		final StringBuilder module = new StringBuilder();
-		for (final HasData o:taskConfig) {
-			module.append(o.getData());
-		}
-
-		final CategoriesConfiguration config = new CategoriesConfiguration(tags, module.toString());
-		return config;
+		return new ConditionalConfiguration();
 	}
 
 	/**
