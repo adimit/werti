@@ -9,6 +9,7 @@ import java.rmi.registry.Registry;
 
 import danbikel.parser.DecoderServer;
 import danbikel.parser.DecoderServerRemote;
+import danbikel.parser.Settings;
 
 import danbikel.switchboard.Switchboard;
 
@@ -20,14 +21,18 @@ public class WERTiServer extends DecoderServer implements DecoderServerRemote {
 
 	private final static String derivedDataFilename = "src/main/resources/wsj-02-21.obj.gz";
 
-
 	public WERTiServer() throws RemoteException {
 		super(TIMEOUT);
 	}
 
 	public static void main(String[] args) {
 		try {
+			System.err.printf("Memory: %s/%s\n"
+					, Runtime.getRuntime().freeMemory()/1024/1024
+					, Runtime.getRuntime().totalMemory()/1024/1024);
 			final Switchboard sb = new Switchboard(new PrintWriter(System.out));
+			Settings.set(Settings.decoderRelaxConstraintsAfterBeamWidening, "false");
+			sb.setSettings(Settings.getSettings());
 			sb.export();
 			final Registry r = LocateRegistry.createRegistry(1099);
 			r.bind("Switchboard", sb);

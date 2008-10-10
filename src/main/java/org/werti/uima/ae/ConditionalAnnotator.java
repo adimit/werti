@@ -5,6 +5,12 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+import danbikel.parser.Settings;
+
+import org.apache.log4j.Logger;
+
+import org.apache.uima.UimaContext;
+
 import org.apache.uima.analysis_component.JCasAnnotator_ImplBase;
 
 import org.apache.uima.cas.text.AnnotationIndex;
@@ -53,6 +59,9 @@ import org.werti.uima.types.annot.Token;
  * @version 0.1
  */
 public class ConditionalAnnotator extends JCasAnnotator_ImplBase {
+	private static final Logger log =
+		Logger.getLogger(ConditionalAnnotator.class);
+
 	private static final String[] triggersa =
 	{ "if", "unless", "given", "suppose", "provided", "supposing", "providing" };
 	private static final List<String> triggers = new ArrayList<String>(Arrays.asList(triggersa));
@@ -60,11 +69,17 @@ public class ConditionalAnnotator extends JCasAnnotator_ImplBase {
 	private static final String[] mwtriggersa =
 	{ "solongas", "incase", "oncondition", "intheeventthat" };
 
+	public void initialize(UimaContext context) {
+		Settings.set(Settings.decoderRelaxConstraintsAfterBeamWidening, "false");
+		System.err.println(Settings.get(Settings.decoderRelaxConstraintsAfterBeamWidening));
+	}
 
 	@SuppressWarnings("unchecked")
 	public void process(JCas cas) {
 		final AnnotationIndex sindex = cas.getAnnotationIndex(SentenceAnnotation.type);
 		final AnnotationIndex tindex = cas.getAnnotationIndex(Token.type);
+
+		log.debug("Starting conditional detection…");
 
 		sentences: for(final Iterator<SentenceAnnotation> sit = sindex.iterator(); sit.hasNext(); ) {
 			final StringBuilder sb = new StringBuilder();
@@ -107,7 +122,15 @@ public class ConditionalAnnotator extends JCasAnnotator_ImplBase {
 				}
 			}
 		}
+
+		for(ConditionalSentence cs:sentences) {
+			cs.addToIndexes();
+		}
+		log.debug("Finished conditional detection.");
 	}
+
+	// buffer to circumvent ConcurrentModificationExceptions
+	private static final ArrayList<ConditionalSentence> sentences = new ArrayList<ConditionalSentence>();
 
 	// Helper to create a conditional annotation and add it to the Cas's indexes
 	// @param trigger_list An Array of tokens representing the trigger, of which
@@ -123,6 +146,9 @@ public class ConditionalAnnotator extends JCasAnnotator_ImplBase {
 		final FSArray trigger = new FSArray(cas, trigger_list.length);
 		trigger.copyFromArray(trigger_list, 0, 0, trigger_list.length);
 		c.setTrigger(trigger);
-		c.addToIndexes();
+		if (log.isDebugEnabled()) {
+			log.debug("Found suspect conditional:\n"+sentence.getCoveredText());
+		}
+		sentences.add(c);
 	}
 }
