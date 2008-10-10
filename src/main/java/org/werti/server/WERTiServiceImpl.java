@@ -92,6 +92,7 @@ public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiServi
 			final StringBuilder sb = new StringBuilder();
 			sb.append("\nURL: "+ url);
 			sb.append("\nConfiguration: " + config.getClass().getName());
+			sb.append("\nGWT Enhancer: " + config.enhancer());
 			sb.append("\nPre-processor: " + config.preprocessor());
 			sb.append("\n\tlocation: : " + context.getProperty(config.preprocessor()));
 			sb.append("\nPost-processor: " + config.postprocessor());
