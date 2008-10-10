@@ -3,46 +3,35 @@ package org.werti.server;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-
 import java.net.MalformedURLException;
 import java.net.URL;
-
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
-import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-
 import org.apache.log4j.Logger;
-
 import org.apache.uima.UIMAFramework;
-
 import org.apache.uima.analysis_engine.AnalysisEngine;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-
 import org.apache.uima.cas.FSIndex;
-
 import org.apache.uima.jcas.JCas;
-
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.ResourceSpecifier;
-
 import org.apache.uima.util.InvalidXMLException;
 import org.apache.uima.util.XMLInputSource;
-
 import org.werti.WERTiContext;
-
 import org.werti.client.InitializationException;
 import org.werti.client.ProcessingException;
 import org.werti.client.URLException;
 import org.werti.client.WERTiService;
-
 import org.werti.client.run.RunConfiguration;
-
 import org.werti.client.util.Tuple;
-
 import org.werti.uima.types.Enhancement;
-
 import org.werti.util.Fetcher;
+
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**
  * The server side implementation of the WERTi service.
@@ -202,6 +191,7 @@ public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiServi
 			}
 			final FileWriter out = new FileWriter(temp);
 			out.write(enhanced);
+			out.close();
 		} catch (IOException ioe) {
 			log.error("Failed to write to temporary file");
 			throw new ProcessingException("Failed write to temporary file!", ioe);
@@ -238,23 +228,44 @@ public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiServi
 
 		final FSIndex tagIndex = cas.getAnnotationIndex(Enhancement.type);
 		final Iterator<Enhancement> eit = tagIndex.iterator();
+		
+		HashMap<Integer, String> insertedTags = new HashMap<Integer, String>();
+		
+		// TODO: make sure this maintains the correct order of closing tags
 
+		// collect all enhancements on positions
 		while (eit.hasNext()) {
-			final Enhancement e = eit.next();
-			if (log.isTraceEnabled()){
-				log.trace("Enhancement starts at " + e.getBegin()
-					+ " and ends at " + e.getEnd()
-					+ "; Current skew is: " + skew);
+			Enhancement e = eit.next();
+
+			// add beginning of enhancement to the position hash
+			int begin = e.getBegin();
+			if ( ! insertedTags.containsKey(begin)) {
+				insertedTags.put(begin, e.getEnhanceStart());
+			} else {
+				insertedTags.put(begin, insertedTags.get(begin) + e.getEnhanceStart());
 			}
 
-			final String start_tag = e.getEnhanceStart();
-			rtext.insert(e.getBegin() + skew, start_tag);
-			skew += start_tag.length();
-
-			final String end_tag = e.getEnhanceEnd();
-			rtext.insert(e.getEnd() + skew, end_tag);
-			skew += end_tag.length();
+			// add end of enhancement to the position hash
+			int end = e.getEnd();
+			if ( ! insertedTags.containsKey(end)) {
+				insertedTags.put(end, e.getEnhanceEnd());
+			} else {
+				insertedTags.put(end, e.getEnhanceEnd() + insertedTags.get(end));
+			}
 		}
+		
+		// obtain sorted key set
+		LinkedList<Integer> positions = new LinkedList<Integer>(insertedTags.keySet());
+		Collections.sort(positions);
+		
+		// loop over position hash and insert enhancement tags into document text using skew
+		for ( Integer pos : positions ) {
+			String insert = insertedTags.get(pos);
+			log.trace("Enhancement: position hash at " + pos+ ": " + insert);
+			rtext.insert(pos + skew, insert);
+			skew += insert.length();
+		}
+		
 		return rtext.toString();
 	}
 }
