@@ -62,7 +62,7 @@ public class ClozeItem
 					setText("WERTiClozeTextHelped");
 					helps++;
 					next.item.setFocus(true);
-				} else if (item.getText().trim().toLowerCase().equals
+				} else if (normalize(item.getText()).equals
 						(target.toLowerCase())) {
 					setText("WERTiClozeTextWin");
 					wins++;
@@ -228,5 +228,9 @@ public class ClozeItem
 	 */
 	public ClozeItem getNext () {
 		return this.next;
+	}
+	
+	private String normalize(String str) {
+		return str.toLowerCase().replaceAll("\\s+", " ").trim();
 	}
 }
