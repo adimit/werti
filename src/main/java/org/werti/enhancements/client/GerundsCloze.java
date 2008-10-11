@@ -4,6 +4,7 @@ package org.werti.enhancements.client;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Node;
+import com.google.gwt.dom.client.NodeList;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.RootPanel;
 
@@ -49,6 +50,21 @@ public class GerundsCloze implements EntryPoint {
 			Element clueE = (Element) clue;
 			
 			Element occurrenceE = (Element) occurrence;
+			// need this hack for occurrence spans inside token spans
+			if (!occurrenceE.getId().contains(GER)
+					&& !occurrenceE.getId().contains(INF)) {
+				NodeList<Element> spanKids = occurrenceE
+						.getElementsByTagName("span");
+
+				for (int sp = 0; sp < spanKids.getLength(); sp++) {
+					Element span = spanKids.getItem(sp);
+					if (span.getId().contains(GER) || span.getId().contains(INF)) {
+						occurrenceE = span;
+						break;
+					}
+				}
+			}
+			
 			prev = ci;
 			ci = new ClozeItem(RootPanel.get(occurrenceE.getId()));
 			if (prev != null) {
