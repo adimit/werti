@@ -48,11 +48,17 @@ public class GerundsAsk implements EntryPoint {
 			spans = domSpan.getElementsByTagName("span");
 			for (int sp = 0; sp < spans.getLength(); sp++) {
 				Element span = spans.getItem(sp);
-				if (span.getId().matches(prefix + "-\\d+") && span.getFirstChildElement() != null) {
-					Element firstChild = span.getFirstChildElement();
-					if (firstChild.getTagName().equals("span")) {
-						Element spanParent = span.getParentElement();
-						spanParent.replaceChild(span, firstChild);
+				if (span.getId().matches(prefix + "-\\d+")) {
+					NodeList<Element> subSpans = span.getElementsByTagName("span");
+					for (int i = 0; i < subSpans.getLength(); i++) {
+						Element subSpan = subSpans.getItem(i);
+						if (subSpan.getId().contains("CLU")
+								|| subSpan.getId().contains(GER)
+								|| subSpan.getId().contains(INF)) {
+							Element spanParent = span.getParentElement();
+							spanParent.replaceChild(subSpan, span);
+							break;
+						}
 					}
 				}
 			}
