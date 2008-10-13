@@ -190,7 +190,6 @@ APPEND ("" VBG PART)   (VBG);
 APPEND ("" HVG PART)   (HVG);
 APPEND ("" BEG PART)   (BEG);
 # remove readings without  tags.
-LIST X = GERU PROG PART;
 REMOVE ("---remove---" VBG);
 
 # add reading for going-to-future
