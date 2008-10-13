@@ -85,9 +85,9 @@ postscript(file="ternary-plot1.ps")
 ternaryplot(
 	data[,2:4],
 	id_color="darkblue",
-	cex = .4,
+	cex = .8,
 	dimnames = c("to+infinitive","gerund", "preposition+gerund"),
-	main = "Verbs used with to-infinitive vs. gerund",
+	main="",
 	grid=T
  )
 dev.off()
