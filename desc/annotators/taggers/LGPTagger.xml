@@ -31,12 +31,6 @@
 <boolean>true</boolean>
 </value>
 </nameValuePair>
-<nameValuePair>
-<name>modelLocation</name>
-<value>
-<string>/Users/rziai/Uni/icall/workspace/WERTi/src/main/resources/models/lgptagger/pos-en-general-brown.HiddenMarkovModel</string>
-</value>
-</nameValuePair>
 </configurationParameterSettings>
 <typeSystemDescription>
 <imports>

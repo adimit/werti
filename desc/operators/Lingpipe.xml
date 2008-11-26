@@ -1,58 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
-  <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
-  <primitive>false</primitive>
-  <delegateAnalysisEngineSpecifiers>
-    <delegateAnalysisEngine key="HTMLAnnotator">
-      <import location="../annotators/HTMLAnnotator.xml"/>
-    </delegateAnalysisEngine>
-    <!-- 
-    <delegateAnalysisEngine key="WholeText">
-      <import location="../annotators/relevance/WholeText.xml"/>
-    </delegateAnalysisEngine>
-    -->
-    <delegateAnalysisEngine key="SentencBoundaryDetector">
-      <import location="../annotators/SentenceBoundaryDetector.xml"/>
-    </delegateAnalysisEngine>
-    <delegateAnalysisEngine key="LGPTagger">
-      <import location="../annotators/taggers/LGPTagger.xml"/>
-    </delegateAnalysisEngine>
-    <delegateAnalysisEngine key="GenericRelevanceAnnotator">
-      <import location="../annotators/relevance/GenericRelevanceAnnotator.xml"/>
-    </delegateAnalysisEngine>
-    <delegateAnalysisEngine key="LGPTokenizer">
-      <import location="../annotators/LGPTokenizer.xml"/>
-    </delegateAnalysisEngine>
-  </delegateAnalysisEngineSpecifiers>
-  <analysisEngineMetaData>
-    <name>LingPipeTester</name>
-    <description/>
-    <version>1.0</version>
-    <vendor/>
-    <configurationParameters/>
-    <configurationParameterSettings/>
-    <flowConstraints>
-      <fixedFlow>
-        <node>HTMLAnnotator</node>
-        <node>GenericRelevanceAnnotator</node>
-        <node>LGPTokenizer</node>
-        <node>SentencBoundaryDetector</node>
-        <node>LGPTagger</node>
-      </fixedFlow>
-    </flowConstraints>
-    <fsIndexCollection/>
-    <capabilities>
-      <capability>
-        <inputs/>
-        <outputs/>
-        <languagesSupported/>
-      </capability>
-    </capabilities>
-    <operationalProperties>
-      <modifiesCas>true</modifiesCas>
-      <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
-      <outputsNewCASes>false</outputsNewCASes>
-    </operationalProperties>
-  </analysisEngineMetaData>
-  <resourceManagerConfiguration/>
+<frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+<primitive>false</primitive>
+<delegateAnalysisEngineSpecifiers>
+<delegateAnalysisEngine key="HTMLAnnotator">
+<import location="../annotators/HTMLAnnotator.xml"/>
+</delegateAnalysisEngine>
+<delegateAnalysisEngine key="LGPTagger">
+<import location="../annotators/taggers/LGPTagger.xml"/>
+</delegateAnalysisEngine>
+<delegateAnalysisEngine key="SentencBoundaryDetector">
+<import location="../annotators/SentenceBoundaryDetector.xml"/>
+</delegateAnalysisEngine>
+<delegateAnalysisEngine key="GenericRelevanceAnnotator">
+<import location="../annotators/relevance/GenericRelevanceAnnotator.xml"/>
+</delegateAnalysisEngine>
+<delegateAnalysisEngine key="LGPTokenizer">
+<import location="../annotators/LGPTokenizer.xml"/>
+</delegateAnalysisEngine>
+</delegateAnalysisEngineSpecifiers>
+<analysisEngineMetaData>
+<name>LingPipeTester</name>
+<description></description>
+<version>1.0</version>
+<vendor></vendor>
+<configurationParameters searchStrategy="language_fallback">
+<configurationParameter>
+<name>runningOnServer</name>
+<description>Flag indicating whether we are running on a server or not.</description>
+<type>Boolean</type>
+<multiValued>false</multiValued>
+<mandatory>false</mandatory>
+<overrides>
+<parameter>LGPTagger/runningOnServer</parameter>
+</overrides>
+</configurationParameter>
+<configurationParameter>
+<name>modelLocation</name>
+<description>Location of the model file used for tagging.</description>
+<type>String</type>
+<multiValued>false</multiValued>
+<mandatory>false</mandatory>
+<overrides>
+<parameter>LGPTagger/modelLocation</parameter>
+</overrides>
+</configurationParameter>
+</configurationParameters>
+<configurationParameterSettings/>
+<flowConstraints>
+<fixedFlow>
+<node>HTMLAnnotator</node>
+<node>GenericRelevanceAnnotator</node>
+<node>LGPTokenizer</node>
+<node>SentencBoundaryDetector</node>
+<node>LGPTagger</node>
+</fixedFlow>
+</flowConstraints>
+<fsIndexCollection/>
+<capabilities>
+<capability>
+<inputs/>
+<outputs/>
+<languagesSupported/>
+</capability>
+</capabilities>
+<operationalProperties>
+<modifiesCas>true</modifiesCas>
+<multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+<outputsNewCASes>false</outputsNewCASes>
+</operationalProperties>
+</analysisEngineMetaData>
+<resourceManagerConfiguration/>
 </analysisEngineDescription>
