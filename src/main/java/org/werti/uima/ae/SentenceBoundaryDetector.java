@@ -58,13 +58,12 @@ public class SentenceBoundaryDetector extends JCasAnnotator_ImplBase {
 		final Iterator<Token> tit = textIndex.iterator();
 
 		int coh_gaps = 0;
+		int sentenceCount = 0;
 
 		Token t;
 		while (tit.hasNext()) {
 			t = tit.next();
-			if (log.isDebugEnabled()) {
-				log.debug("Looking at token: " + t.getCoveredText());
-			}
+
 
 			SentenceAnnotation sa = new SentenceAnnotation(cas);
 			sa.setBegin(t.getBegin());
@@ -85,13 +84,20 @@ public class SentenceBoundaryDetector extends JCasAnnotator_ImplBase {
 					t = tit.next();
 				}
 			}
-
+		
 			sa.setEnd(t.getEnd());
 			sa.setCoherence(coherence);
 			sa.addToIndexes();
+
+			if ( log.isTraceEnabled() ) {
+				log.trace("Sentence from " + sa.getBegin() + " to " + sa.getEnd()  
+						 + ": " + sa.getCoveredText());
+			}
+
+			sentenceCount++;
 			coh_gaps = 0;
 		} 
-		log.info("Finished sentence boundary detection.");
+		log.info("Annotated " + sentenceCount + " sentences.");
 	}
 
 	// holds the formula for calculating the coherence based on the length
