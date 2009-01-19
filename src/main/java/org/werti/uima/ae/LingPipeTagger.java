@@ -95,7 +95,9 @@ public class LingPipeTagger extends JCasAnnotator_ImplBase {
 								+ words[ii]
 								+ "; tlist = " + tlist.get(ii).getCoveredText());
 					}
-					log.debug("Tagging " + words[ii] + " with " + tags[ii] + ".");
+					if (log.isTraceEnabled()) {
+						log.trace("Tagging " + words[ii] + " with " + tags[ii] + ".");
+					}	
 				}
 				// Do NOT even THINK ABOUT calling addToIndexes(). The Tokens are already
 				// there. We just modified their field 'tag'.

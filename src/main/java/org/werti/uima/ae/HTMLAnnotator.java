@@ -57,11 +57,15 @@ public class HTMLAnnotator extends JCasAnnotator_ImplBase {
 			tag.setBegin(tstart);
 			tag.setEnd(tend = (s.indexOf('>', tstart) + 1));
 
-			log.debug("tstart = " + tstart + "; tend = " + tend);
+			if (log.isTraceEnabled()) {
+				log.trace("tstart = " + tstart + "; tend = " + tend);
+			}
 
 			final String tname = find_tname(s.substring(tstart, tend));
 
-			log.debug("Looking at tag " + tname);
+			if (log.isTraceEnabled()) {
+				log.trace("Looking at tag " + tname);
+			}
 
 			tstart = tend;
 
