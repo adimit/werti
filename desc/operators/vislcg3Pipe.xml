@@ -1,123 +1,155 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
-<frameworkImplementation>org.apache.uima.java</frameworkImplementation>
-<primitive>false</primitive>
-<delegateAnalysisEngineSpecifiers>
-<delegateAnalysisEngine key="vislcg3Annotator">
-<import location="../annotators/vislcg3Annotator.xml"/>
-</delegateAnalysisEngine>
-<delegateAnalysisEngine key="Lingpipe">
-<import location="Lingpipe.xml"/>
-</delegateAnalysisEngine>
-</delegateAnalysisEngineSpecifiers>
-<analysisEngineMetaData>
-<name>vislcg3Pipe</name>
-<description></description>
-<version>1.0</version>
-<vendor></vendor>
-<configurationParameters searchStrategy="language_fallback">
-<configurationParameter>
-<name>vislcg3Loc</name>
-<description>Location of vislcg3 binary.</description>
-<type>String</type>
-<multiValued>false</multiValued>
-<mandatory>true</mandatory>
-<overrides>
-<parameter>vislcg3Annotator/vislcg3Loc</parameter>
-</overrides>
-</configurationParameter>
-<configurationParameter>
-<name>vislcg3GrammarLoc</name>
-<description>Location of CG3 grammar.</description>
-<type>String</type>
-<multiValued>false</multiValued>
-<mandatory>true</mandatory>
-<overrides>
-<parameter>vislcg3Annotator/vislcg3GrammarLoc</parameter>
-</overrides>
-</configurationParameter>
-<configurationParameter>
-<name>alwaysEmptyLemmas</name>
-<description>If this is set to true, this wrapper will always send empty lemmas to vislcg3. This may be required for some grammars. If set to false, this wrapper will send empty lemmas only if it doesn't find lemmas in the CAS.</description>
-<type>Boolean</type>
-<multiValued>false</multiValued>
-<mandatory>true</mandatory>
-<overrides>
-<parameter>vislcg3Annotator/alwaysEmptyLemmas</parameter>
-</overrides>
-</configurationParameter>
-<configurationParameter>
-<name>runningOnServer</name>
-<description>Flag indicating whether we are running on a server or not.</description>
-<type>Boolean</type>
-<multiValued>false</multiValued>
-<mandatory>false</mandatory>
-<overrides>
-<parameter>Lingpipe/runningOnServer</parameter>
-</overrides>
-</configurationParameter>
-<configurationParameter>
-<name>modelLocation</name>
-<description>Location of the model file used for tagging.</description>
-<type>String</type>
-<multiValued>false</multiValued>
-<mandatory>false</mandatory>
-<overrides>
-<parameter>Lingpipe/modelLocation</parameter>
-</overrides>
-</configurationParameter>
-</configurationParameters>
-<configurationParameterSettings>
-<nameValuePair>
-<name>modelLocation</name>
-<value>
-<string>dummy</string>
-</value>
-</nameValuePair>
-<nameValuePair>
-<name>runningOnServer</name>
-<value>
-<boolean>false</boolean>
-</value>
-</nameValuePair>
-<nameValuePair>
-<name>alwaysEmptyLemmas</name>
-<value>
-<boolean>true</boolean>
-</value>
-</nameValuePair>
-<nameValuePair>
-<name>vislcg3GrammarLoc</name>
-<value>
-<string>dummy</string>
-</value>
-</nameValuePair>
-<nameValuePair>
-<name>vislcg3Loc</name>
-<value>
-<string>dummy</string>
-</value>
-</nameValuePair>
-</configurationParameterSettings>
-<flowConstraints>
-<fixedFlow>
-<node>Lingpipe</node>
-<node>vislcg3Annotator</node>
-</fixedFlow>
-</flowConstraints>
-<fsIndexCollection/>
-<capabilities>
-<capability>
-<inputs/>
-<outputs/>
-<languagesSupported/>
-</capability>
-</capabilities>
-<operationalProperties>
-<modifiesCas>true</modifiesCas>
-<multipleDeploymentAllowed>true</multipleDeploymentAllowed>
-<outputsNewCASes>false</outputsNewCASes>
-</operationalProperties>
-</analysisEngineMetaData>
-<resourceManagerConfiguration/>
+  <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+  <primitive>false</primitive>
+  <delegateAnalysisEngineSpecifiers>
+    <delegateAnalysisEngine key="vislcg3Annotator">
+      <import location="../annotators/vislcg3Annotator.xml"/>
+    </delegateAnalysisEngine>
+    <delegateAnalysisEngine key="Lingpipe">
+      <import location="Lingpipe.xml"/>
+    </delegateAnalysisEngine>
+  </delegateAnalysisEngineSpecifiers>
+  <analysisEngineMetaData>
+    <name>vislcg3Pipe</name>
+    <description/>
+    <version>1.0</version>
+    <vendor/>
+    <configurationParameters searchStrategy="language_fallback">
+      <configurationParameter>
+        <name>vislcg3Loc</name>
+        <description>Location of vislcg3 binary.</description>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>true</mandatory>
+        <overrides>
+          <parameter>vislcg3Annotator/vislcg3Loc</parameter>
+        </overrides>
+      </configurationParameter>
+      <configurationParameter>
+        <name>vislcg3GrammarLoc</name>
+        <description>Location of CG3 grammar.</description>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>true</mandatory>
+        <overrides>
+          <parameter>vislcg3Annotator/vislcg3GrammarLoc</parameter>
+        </overrides>
+      </configurationParameter>
+      <configurationParameter>
+        <name>alwaysEmptyLemmas</name>
+        <description>If this is set to true, this wrapper will always send empty lemmas to vislcg3. This may be required for some grammars. If set to false, this wrapper will send empty lemmas only if it doesn't find lemmas in the CAS.</description>
+        <type>Boolean</type>
+        <multiValued>false</multiValued>
+        <mandatory>true</mandatory>
+        <overrides>
+          <parameter>vislcg3Annotator/alwaysEmptyLemmas</parameter>
+        </overrides>
+      </configurationParameter>
+      <configurationParameter>
+        <name>runningOnServer</name>
+        <description>Flag indicating whether we are running on a server or not.</description>
+        <type>Boolean</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+        <overrides>
+          <parameter>Lingpipe/runningOnServer</parameter>
+        </overrides>
+      </configurationParameter>
+      <configurationParameter>
+        <name>modelLocation</name>
+        <description>Location of the model file used for tagging.</description>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+        <overrides>
+          <parameter>Lingpipe/modelLocation</parameter>
+        </overrides>
+      </configurationParameter>
+      <configurationParameter>
+        <name>AcceptedLanguages</name>
+        <description>A comma-separated list of languages that are accepted by the language checker. If set to the empty string, text of any language will pass the threshold.</description>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>true</mandatory>
+        <overrides>
+          <parameter>Lingpipe/AcceptedLanguages</parameter>
+        </overrides>
+      </configurationParameter>
+      <configurationParameter>
+        <name>SetLanguageOnEmptyAcceptList</name>
+        <description>Sets the behaviour in the case the accept list is empty: if set to true, the language will be identified and stored in the CAS. Otherwise no action will be taken (which is a lot faster).</description>
+        <type>Boolean</type>
+        <multiValued>false</multiValued>
+        <mandatory>true</mandatory>
+        <overrides>
+          <parameter>Lingpipe/SetLanguageOnEmptyAcceptList</parameter>
+        </overrides>
+      </configurationParameter>
+    </configurationParameters>
+    <configurationParameterSettings>
+      <nameValuePair>
+        <name>modelLocation</name>
+        <value>
+          <string>dummy</string>
+        </value>
+      </nameValuePair>
+      <nameValuePair>
+        <name>runningOnServer</name>
+        <value>
+          <boolean>false</boolean>
+        </value>
+      </nameValuePair>
+      <nameValuePair>
+        <name>alwaysEmptyLemmas</name>
+        <value>
+          <boolean>true</boolean>
+        </value>
+      </nameValuePair>
+      <nameValuePair>
+        <name>vislcg3GrammarLoc</name>
+        <value>
+          <string>dummy</string>
+        </value>
+      </nameValuePair>
+      <nameValuePair>
+        <name>vislcg3Loc</name>
+        <value>
+          <string>dummy</string>
+        </value>
+      </nameValuePair>
+      <nameValuePair>
+        <name>AcceptedLanguages</name>
+        <value>
+          <string>dummy</string>
+        </value>
+      </nameValuePair>
+      <nameValuePair>
+        <name>SetLanguageOnEmptyAcceptList</name>
+        <value>
+          <boolean>false</boolean>
+        </value>
+      </nameValuePair>
+    </configurationParameterSettings>
+    <flowConstraints>
+      <fixedFlow>
+        <node>Lingpipe</node>
+        <node>vislcg3Annotator</node>
+      </fixedFlow>
+    </flowConstraints>
+    <fsIndexCollection/>
+    <capabilities>
+      <capability>
+        <inputs/>
+        <outputs/>
+        <languagesSupported/>
+      </capability>
+    </capabilities>
+    <operationalProperties>
+      <modifiesCas>true</modifiesCas>
+      <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+      <outputsNewCASes>false</outputsNewCASes>
+    </operationalProperties>
+  </analysisEngineMetaData>
+  <resourceManagerConfiguration/>
 </analysisEngineDescription>

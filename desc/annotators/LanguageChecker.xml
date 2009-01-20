@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+  <primitive>true</primitive>
+  <annotatorImplementationName>org.werti.uima.ae.LanguageChecker</annotatorImplementationName>
+  <analysisEngineMetaData>
+    <name>LanguageChecker</name>
+    <description>This annotator checkes wether or not the document is in the reqeuired language. If not, it will abort the processing by throwing mean exceptions that should be examined by the class in control of the pipeline. 
+The idea behind this is to have a safety abort function if the pipeline is fed with text in a language that cannot be understood.</description>
+    <version>1.0</version>
+    <vendor/>
+    <configurationParameters>
+      <configurationParameter>
+        <name>AcceptedLanguages</name>
+        <description>A comma-separated list of languages that are accepted by the language checker. If set to the empty string, text of any language will pass the threshold.</description>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>true</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>SetLanguageOnEmptyAcceptList</name>
+        <description>Sets the behaviour in the case the accept list is empty: if set to true, the language will be identified and stored in the CAS. Otherwise no action will be taken (which is a lot faster).</description>
+        <type>Boolean</type>
+        <multiValued>false</multiValued>
+        <mandatory>true</mandatory>
+      </configurationParameter>
+    </configurationParameters>
+    <configurationParameterSettings>
+      <nameValuePair>
+        <name>AcceptedLanguages</name>
+        <value>
+          <string>dummyvalue this should be set elsewhere</string>
+        </value>
+      </nameValuePair>
+      <nameValuePair>
+        <name>SetLanguageOnEmptyAcceptList</name>
+        <value>
+          <boolean>false</boolean>
+        </value>
+      </nameValuePair>
+    </configurationParameterSettings>
+    <typeSystemDescription>
+      <imports>
+        <import location="../WERTiTypeSystem.xml"/>
+      </imports>
+    </typeSystemDescription>
+    <typePriorities/>
+    <fsIndexCollection/>
+    <capabilities>
+      <capability>
+        <inputs>
+          <type allAnnotatorFeatures="true">org.werti.uima.types.annot.RelevantText</type>
+        </inputs>
+        <outputs/>
+        <languagesSupported/>
+      </capability>
+    </capabilities>
+    <operationalProperties>
+      <modifiesCas>true</modifiesCas>
+      <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+      <outputsNewCASes>false</outputsNewCASes>
+    </operationalProperties>
+  </analysisEngineMetaData>
+  <resourceManagerConfiguration/>
+</analysisEngineDescription>
