@@ -64,7 +64,7 @@ public class GenericRelevanceAnnotator extends JCasAnnotator_ImplBase {
 		// skip ahead to the body
 		while (tit.hasNext()){
 			tag = tit.next();
-			final String tname = tag.getTag_name();
+			final String tname = tag.getTag_name().toLowerCase();
 			if (tname.equals("/head")
 			||  tname.equals("body")) {
 				tags.push(tname);
@@ -74,7 +74,7 @@ public class GenericRelevanceAnnotator extends JCasAnnotator_ImplBase {
 		
 		// read in all the natural language you can find
 		findreltxt: while (tit.hasNext()) {
-			final String tname = tag.getTag_name();
+			final String tname = tag.getTag_name().toLowerCase();
 			tags.push(tname);
 
 			// weed out tags we don't need
