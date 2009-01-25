@@ -43,8 +43,8 @@ for LingPipe, so you need to add it yourself:
 	mvn install:install-file \
 		-DgroupId=com.aliasi \
 		-DartifactId=lingpipe \
-		-Dversion=3.5.1 \
-		-Dfile=/path/to/lingpipe-3.5.1.jar \
+		-Dversion=3.7.0 \
+		-Dfile=/path/to/lingpipe-3.7.0.jar \
 		-Dpackaging=jar
 
 Take care to replace `/path/to/lingpipe.jar` with the location where you
