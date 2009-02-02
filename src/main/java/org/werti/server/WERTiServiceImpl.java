@@ -15,7 +15,6 @@ import org.apache.log4j.Logger;
 import org.apache.uima.UIMAFramework;
 import org.apache.uima.analysis_engine.AnalysisEngine;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.cas.CAS;
 import org.apache.uima.cas.CASException;
 import org.apache.uima.cas.FSIndex;
 import org.apache.uima.jcas.JCas;
@@ -31,7 +30,6 @@ import org.werti.client.WERTiService;
 import org.werti.client.run.RunConfiguration;
 import org.werti.client.util.Tuple;
 import org.werti.uima.types.Enhancement;
-import org.werti.util.Fetcher;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -59,9 +57,6 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiService {
 	private static final Logger log =
 		Logger.getLogger(WERTiServiceImpl.class);
-
-	// maximum amount of of ms to wait for a web-page to load
-	private static final int MAX_WAIT = 1000 * 10; // 10 seconds
 
 	public static WERTiContext context;
 
