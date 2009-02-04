@@ -8,6 +8,9 @@ import org.apache.uima.jcas.JCas;
 
 public final class AEUtil {
 
+	/* Generic buffer size for input streams */
+	public static final int BUFSIZE = 256;
+
 	public static JCas maybeGetJCasView(JCas cas, String view)
 		throws AnalysisEngineProcessException {
 		try {
