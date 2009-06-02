@@ -13,6 +13,8 @@
  * Don't screw up on html tags with &lt; and &gt; entities instead of < and >.
  * WERTi.java does not respect this.server; line 179
  * does the HTML annotation really need the tag-name field?
+ * Possible bug with premature .next() call on iterators in LingPipeTagger and others
+ (first sentence is likely not considered)
 
 *** Wishlist
 ************

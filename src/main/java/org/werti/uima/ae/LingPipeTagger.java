@@ -28,6 +28,8 @@ import org.werti.WERTiContext;
 import org.werti.uima.types.annot.SentenceAnnotation;
 import org.werti.uima.types.annot.Token;
 
+import org.werti.util.Resources;
+
 /**
  * A wrapper around the LingPipe Tagger.
  *
@@ -49,7 +51,7 @@ public class LingPipeTagger extends JCasAnnotator_ImplBase {
 
 	private static HmmDecoder tagger;
 
-	public void initialize(UimaContext context) throws ResourceInitializationException {
+	public void initialize2(UimaContext context) throws ResourceInitializationException {
 		super.initialize(context);
 		if (tagger == null) {
 			if (context.getConfigParameterValue("runningOnServer") != null) {
