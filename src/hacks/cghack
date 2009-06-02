@@ -1,0 +1,21 @@
+#!/bin/bash
+
+#
+# Wrapper that runs 
+#
+
+TEXT="$1"
+GRAMMAR="$2"
+
+LPT="`which cmd_pos_en_general_brown.sh`"
+VISLCG="`which vislcg3`"
+
+LPTDIR=`dirname ${LPT}`
+
+
+cat "$TEXT" \
+	| ( cd $LPTDIR  ; $LPT ) \
+	| perl -wne 'while ( m/<token pos="([^"]*)">([^<]*)<\/token>/g ) { print "\n\"<$2>\"\n\t\"\" " . uc($1); }' \
+	| "$VISLCG" -g "$GRAMMAR" --trace
+	
+

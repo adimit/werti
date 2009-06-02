@@ -69,8 +69,8 @@ public class FSListIterable implements Iterable<TOP> {
 		private NonEmptyFSList work_list;
 		
 		public FSListIterator() {
-			// the list needs to be modified so
-			// save it
+			// the list needs to be modified so save it
+			// TODO: this is by reference, shouldn't the list (not its items) be cloned?
 			work_list = list;
 		}
 

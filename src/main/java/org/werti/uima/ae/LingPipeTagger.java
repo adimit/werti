@@ -1,9 +1,14 @@
 package org.werti.uima.ae;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import com.aliasi.hmm.HiddenMarkovModel;
 import com.aliasi.hmm.HmmDecoder;
 
 import org.apache.log4j.Logger;
@@ -47,10 +52,34 @@ public class LingPipeTagger extends JCasAnnotator_ImplBase {
 	public void initialize(UimaContext context) throws ResourceInitializationException {
 		super.initialize(context);
 		if (tagger == null) {
-			tagger = WERTiContext.getLpgtagger();
+			if (context.getConfigParameterValue("runningOnServer") != null) {
+				Boolean runningOnServer = (Boolean) context.getConfigParameterValue("runningOnServer");
+				if (runningOnServer) {
+					tagger = WERTiContext.getLpgtagger();
+				} else {
+					try {
+						tagger = getLpgtagger((String)context.getConfigParameterValue("modelLocation"));
+					} catch (Exception e) {
+						throw new ResourceInitializationException(e);
+					}
+				}
+			} else {
+				tagger = WERTiContext.getLpgtagger();
+			}
 		}
 	}
 
+	/*
+	 * helper for loading models without werti context
+	 */
+	private HmmDecoder getLpgtagger(String modelLoc) throws FileNotFoundException, IOException, ClassNotFoundException {
+		final HiddenMarkovModel hmm;
+		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(modelLoc));
+		hmm = (HiddenMarkovModel) ois.readObject();
+		ois.close();
+		return new HmmDecoder(hmm);
+	}
+	
 	/**
 	 * Tag using the lingPipe <code>HmmDecoder</code>.
 	 *

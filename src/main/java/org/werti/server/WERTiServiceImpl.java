@@ -11,6 +11,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 import org.apache.uima.UIMAFramework;
 import org.apache.uima.analysis_engine.AnalysisEngine;
@@ -92,6 +94,7 @@ public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiServi
 			final StringBuilder sb = new StringBuilder();
 			sb.append("\nURL: "+ url);
 			sb.append("\nConfiguration: " + config.getClass().getName());
+			sb.append("\nGWT Enhancer: " + config.enhancer());
 			sb.append("\nPre-processor: " + config.preprocessor());
 			sb.append("\n\tlocation: : " + context.getProperty(config.preprocessor()));
 			sb.append("\nPost-processor: " + config.postprocessor());
@@ -176,7 +179,7 @@ public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiServi
 		}
 
 		final String base_url = "http://" + fetcher.getBase_url() + ":" + fetcher.getPort();
-		final String enhanced = enhance(config.enhancer(), cas, base_url);
+		final String enhanced = enhance(config.enhancer(), cas, base_url, getThreadLocalRequest());
 		final String tempDir = getServletContext().getRealPath("/tmp");
 		final File temp;
 		try { // to create a temporary file
@@ -208,17 +211,20 @@ public class WERTiServiceImpl extends RemoteServiceServlet implements WERTiServi
 	 * @param cas The cas to enhance.
 	 */
 	@SuppressWarnings("unchecked")
-	private String enhance(final String method, final JCas cas, final String baseurl) {
+	private String enhance(final String method, final JCas cas, final String baseurl, HttpServletRequest req) {
 		final String docText = cas.getDocumentText();
 		final StringBuilder rtext = new StringBuilder(docText);
 
 		int skew = docText.indexOf("<head");
 		skew = docText.indexOf('>',skew)+1;
-
+		
+		String thisUrl = req.getRequestURL().toString();
+		thisUrl = thisUrl.replaceFirst("(?<=" + getServletContext().getServletContextName() + ").*", "");
+		
 		final String basetag = "<base href=\"" + baseurl + "\" />"
 			// GWT main JS module
 			+ "<script type=\"text/javascript\" language=\"javascript\" src=\""
-			+ context.getProperty("this-server") + "/WERTi/org.werti.enhancements."
+			+ thisUrl + "/org.werti.enhancements."
 			+ method
 			+ "/org.werti.enhancements."
 			+ method

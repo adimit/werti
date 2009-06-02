@@ -1,0 +1,43 @@
+#
+# fist real test grammar for gerund detection
+#
+# # ATTENTION: uses TreeTagger interpretatiom of Penn TB Tagset
+
+#
+
+DELIMITERS = "<.>" "<!>" "<?>" ; # sentence window
+
+SETS
+LIST PPART = VBG VHG VVG ; # possible gerunds
+LIST INFIN = VV VB VH;     # infinitives
+LIST ADVER = RB RBR RBS;   #  adverbs
+
+
+BEFORE-SECTIONS
+
+# add gerund reading
+#APPEND ("" GERUND) PPART
+
+# add present participle reading
+# need to insert "" as empty wordform, otherwise things break
+#APPEND ("" PRESENTPART) (GERUND);
+
+# remove original reading
+#REMOVE PPART
+
+# tree tagger: always TO for "to" -> "IN" before non-infinitives,
+# accepting inifinitvely many adverbs in between.
+SUBSTITUTE (TO) (IN) (TO) (NOT *1C INFIN BARRIER (*) - ADVER);
+
+
+SECTION
+#empty
+
+# marking infinitive constructions: TO ADVER* INFIN
+ADD (^INF-B) (TO);
+ADD (^INF-I) INFIN (-*1C (TO) BARRIER (*) - ADVER );
+ADD (^INF-I) ADVER (-*1C (TO) BARRIER (*) - ADVER ) (+*1C INFIN BARRIER (*) - ADVER );
+
+
+AFTER-SECTIONS
+#empty
