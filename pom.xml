@@ -63,21 +63,6 @@
 			<version>20070605</version>
 		</dependency>
 		<dependency>
-			<groupId>danbikel</groupId>
-			<artifactId>Parser</artifactId>
-			<version>1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>trove</groupId>
-			<artifactId>trove</artifactId>
-			<version>1.0.2</version>
-		</dependency>
-		<dependency>
-			<groupId>net.didion</groupId>
-			<artifactId>jwnl</artifactId>
-			<version>1.4</version>
-		</dependency>
-		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>1.2.13</version>
@@ -130,8 +115,6 @@
 					</compileTargets>
 					<generatorDestinationPackage>org.werti.client</generatorDestinationPackage>
 					<noServer>true</noServer>
-					<!--  this parameter is VERY important with automatic mode - has to match the version in your declared deps -->
-					<!--  if this is set incorrect (not a match), or left out (default is 1.5.1 for 2.0-beta22) you will have mysterious errors -->
 					<gwtVersion>${gwtVersion}</gwtVersion>
 				</configuration>
 				<executions>
@@ -223,10 +206,6 @@
 			<!-- GWT Stuff -->
 			<id>gwt-maven</id>
 			<url>http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/</url>
-		</repository>
-		<repository>
-			<id>JWNL</id>
-			<url>http://www.americannationalcorpus.org/maven/thirdparty/</url>
 		</repository>
 	</repositories>
 	<pluginRepositories>

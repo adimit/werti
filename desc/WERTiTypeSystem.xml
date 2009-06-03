@@ -1,131 +1,98 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <typeSystemDescription xmlns="http://uima.apache.org/resourceSpecifier">
-  <name>WERTiTypeSystem</name>
-  <description/>
-  <version>1.1</version>
-  <vendor/>
-  <types>
-    <typeDescription>
-      <name>org.werti.uima.types.annot.RelevantText</name>
-      <description>Optional annotation to specify which text to work on.</description>
-      <supertypeName>uima.tcas.Annotation</supertypeName>
-      <features>
-        <featureDescription>
-          <name>enclosing_tag</name>
-          <description>The html tag that encloses this text fragment.</description>
-          <rangeTypeName>uima.cas.String</rangeTypeName>
-        </featureDescription>
-        <featureDescription>
-          <name>relevant</name>
-          <description>Is this a relevant chunk of input or too small?
+<name>WERTiTypeSystem</name>
+<description></description>
+<version>1.0</version>
+<vendor></vendor>
+<types>
+<typeDescription>
+<name>org.werti.uima.types.annot.RelevantText</name>
+<description>Optional annotation to specify which text to work on.</description>
+<supertypeName>uima.tcas.Annotation</supertypeName>
+<features>
+<featureDescription>
+<name>enclosing_tag</name>
+<description>The html tag that encloses this text fragment.</description>
+<rangeTypeName>uima.cas.String</rangeTypeName>
+</featureDescription>
+<featureDescription>
+<name>relevant</name>
+<description>Is this a relevant chunk of input or too small?
 
 The idea is that a piece of text can make it to being relevant, iff it is between to already relevant pieces of text, but itself too small to be included and all tags that were opened between the first piece of actually relevant text and this piece of irrelevant text are closed before the second piece starts.
 
 The rationale behind this is not confusing the tagger by randomly dropping words, just because they're inside some &lt;b&gt; tag.</description>
-          <rangeTypeName>uima.cas.Boolean</rangeTypeName>
-        </featureDescription>
-      </features>
-    </typeDescription>
-    <typeDescription>
-      <name>org.werti.uima.types.annot.Token</name>
-      <description>A relevant Token with PoS information attached.</description>
-      <supertypeName>uima.tcas.Annotation</supertypeName>
-      <features>
-        <featureDescription>
-          <name>tag</name>
-          <description>The part of speech this tag stands for.</description>
-          <rangeTypeName>uima.cas.String</rangeTypeName>
-        </featureDescription>
-        <featureDescription>
-          <name>lemm</name>
-          <description>The lemma of the word in this token. May remain empty if there is no lemmatizer around.</description>
-          <rangeTypeName>uima.cas.String</rangeTypeName>
-        </featureDescription>
-      </features>
-    </typeDescription>
-    <typeDescription>
-      <name>org.werti.uima.types.annot.HTML</name>
-      <description>Annotation spanning an HTML tag.</description>
-      <supertypeName>uima.tcas.Annotation</supertypeName>
-      <features>
-        <featureDescription>
-          <name>tag_name</name>
-          <description>The name of the HTML tag.</description>
-          <rangeTypeName>uima.cas.String</rangeTypeName>
-        </featureDescription>
-        <featureDescription>
-          <name>closing</name>
-          <description>Is this tag closing?</description>
-          <rangeTypeName>uima.cas.Boolean</rangeTypeName>
-        </featureDescription>
-        <featureDescription>
-          <name>irrelevant</name>
-          <description>Is this a tag irrelevant to the interpreter? (like script, functional comment tags...)</description>
-          <rangeTypeName>uima.cas.Boolean</rangeTypeName>
-        </featureDescription>
-      </features>
-    </typeDescription>
-    <typeDescription>
-      <name>org.werti.uima.types.annot.SentenceAnnotation</name>
-      <description>A sentence in natural language on the page to be processed.</description>
-      <supertypeName>uima.tcas.Annotation</supertypeName>
-      <features>
-        <featureDescription>
-          <name>coherence</name>
-          <description>The coherence of this sentence. How many html tags interefere?</description>
-          <rangeTypeName>uima.cas.Double</rangeTypeName>
-        </featureDescription>
-        <featureDescription>
-          <name>sexp</name>
-          <description>The Sexp of the parse of this sentence.</description>
-          <rangeTypeName>uima.cas.String</rangeTypeName>
-        </featureDescription>
-      </features>
-    </typeDescription>
-    <typeDescription>
-      <name>org.werti.uima.types.Enhancement</name>
-      <description>Describes an enhancment on the current spot.</description>
-      <supertypeName>uima.tcas.Annotation</supertypeName>
-      <features>
-        <featureDescription>
-          <name>EnhanceStart</name>
-          <description>The start tag of the enhancement annotation.</description>
-          <rangeTypeName>uima.cas.String</rangeTypeName>
-        </featureDescription>
-        <featureDescription>
-          <name>EnhanceEnd</name>
-          <description>The end tag of the enhancement annotation.</description>
-          <rangeTypeName>uima.cas.String</rangeTypeName>
-        </featureDescription>
-      </features>
-    </typeDescription>
-    <typeDescription>
-      <name>org.werti.uima.types.annot.ConditionalSentence</name>
-      <description>A sentence containing a conditional.</description>
-      <supertypeName>org.werti.uima.types.annot.SentenceAnnotation</supertypeName>
-      <features>
-        <featureDescription>
-          <name>trigger</name>
-          <description>The token(s) that triggered the markup of this conditional (possibly empty).</description>
-          <rangeTypeName>uima.cas.FSArray</rangeTypeName>
-          <elementType>org.werti.uima.types.annot.Token</elementType>
-          <multipleReferencesAllowed>false</multipleReferencesAllowed>
-        </featureDescription>
-        <featureDescription>
-          <name>condition</name>
-          <description>The verb (cluster) that represents the condition of this conditional.</description>
-          <rangeTypeName>uima.cas.FSArray</rangeTypeName>
-          <elementType>org.werti.uima.types.annot.Token</elementType>
-          <multipleReferencesAllowed>false</multipleReferencesAllowed>
-        </featureDescription>
-        <featureDescription>
-          <name>result</name>
-          <description>The verb (cluster) representing the result of this conditional.</description>
-          <rangeTypeName>uima.cas.FSArray</rangeTypeName>
-          <elementType>org.werti.uima.types.annot.Token</elementType>
-          <multipleReferencesAllowed>false</multipleReferencesAllowed>
-        </featureDescription>
-      </features>
-    </typeDescription>
-  </types>
+<rangeTypeName>uima.cas.Boolean</rangeTypeName>
+</featureDescription>
+</features>
+</typeDescription>
+<typeDescription>
+<name>org.werti.uima.types.annot.Token</name>
+<description>A relevant Token with PoS information attached.</description>
+<supertypeName>uima.tcas.Annotation</supertypeName>
+<features>
+<featureDescription>
+<name>tag</name>
+<description>The part of speech this tag stands for.</description>
+<rangeTypeName>uima.cas.String</rangeTypeName>
+</featureDescription>
+<featureDescription>
+<name>lemma</name>
+<description>The lemma of the word in this token. May remain empty if there is no lemmatizer around.</description>
+<rangeTypeName>uima.cas.String</rangeTypeName>
+</featureDescription>
+</features>
+</typeDescription>
+<typeDescription>
+<name>org.werti.uima.types.annot.HTML</name>
+<description>Annotation spanning an HTML tag.</description>
+<supertypeName>uima.tcas.Annotation</supertypeName>
+<features>
+<featureDescription>
+<name>tag_name</name>
+<description>The name of the HTML tag.</description>
+<rangeTypeName>uima.cas.String</rangeTypeName>
+</featureDescription>
+<featureDescription>
+<name>closing</name>
+<description>Is this tag closing?</description>
+<rangeTypeName>uima.cas.Boolean</rangeTypeName>
+</featureDescription>
+<featureDescription>
+<name>irrelevant</name>
+<description>Is this a tag irrelevant to the interpreter? (like script, functional comment tags...)</description>
+<rangeTypeName>uima.cas.Boolean</rangeTypeName>
+</featureDescription>
+</features>
+</typeDescription>
+<typeDescription>
+<name>org.werti.uima.types.annot.SentenceAnnotation</name>
+<description>A sentence in natural language on the page to be processed.</description>
+<supertypeName>uima.tcas.Annotation</supertypeName>
+<features>
+<featureDescription>
+<name>coherence</name>
+<description>The coherence of this sentence. How many html tags interefere?</description>
+<rangeTypeName>uima.cas.Double</rangeTypeName>
+</featureDescription>
+</features>
+</typeDescription>
+<typeDescription>
+<name>org.werti.uima.types.Enhancement</name>
+<description>Describes an enhancment on the current spot.</description>
+<supertypeName>uima.tcas.Annotation</supertypeName>
+<features>
+<featureDescription>
+<name>EnhanceStart</name>
+<description>The start tag of the enhancement annotation.</description>
+<rangeTypeName>uima.cas.String</rangeTypeName>
+</featureDescription>
+<featureDescription>
+<name>EnhanceEnd</name>
+<description>The end tag of the enhancement annotation.</description>
+<rangeTypeName>uima.cas.String</rangeTypeName>
+</featureDescription>
+</features>
+</typeDescription>
+</types>
 </typeSystemDescription>
