@@ -2,9 +2,9 @@
 <analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
   <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
   <primitive>true</primitive>
-  <annotatorImplementationName>org.werti.uima.ae.LingPipeTagger</annotatorImplementationName>
+  <annotatorImplementationName>org.werti.uima.ae.ConditionalAnnotator</annotatorImplementationName>
   <analysisEngineMetaData>
-    <name>LGPTagger</name>
+    <name>ConditionalAnnotator</name>
     <description/>
     <version>1.0</version>
     <vendor/>
@@ -12,7 +12,7 @@
     <configurationParameterSettings/>
     <typeSystemDescription>
       <imports>
-        <import location="../../WERTiTypeSystem.xml"/>
+        <import location="../WERTiTypeSystem.xml"/>
       </imports>
     </typeSystemDescription>
     <typePriorities/>
@@ -20,17 +20,9 @@
     <capabilities>
       <capability>
         <inputs>
-          <type>org.werti.uima.types.annot.Token</type>
-          <type>org.werti.uima.types.annot.SentenceAnnotation</type>
-          <feature>org.werti.uima.types.annot.Token:sofa</feature>
-          <feature>org.werti.uima.types.annot.SentenceAnnotation:end</feature>
-          <feature>org.werti.uima.types.annot.SentenceAnnotation:begin</feature>
-          <feature>org.werti.uima.types.annot.SentenceAnnotation:sofa</feature>
+          <type allAnnotatorFeatures="true">org.werti.uima.types.annot.SentenceAnnotation</type>
         </inputs>
-        <outputs>
-          <type>org.werti.uima.types.annot.Token</type>
-          <feature>org.werti.uima.types.annot.Token:tag</feature>
-        </outputs>
+        <outputs/>
         <languagesSupported/>
       </capability>
     </capabilities>

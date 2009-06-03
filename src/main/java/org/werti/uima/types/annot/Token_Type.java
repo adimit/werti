@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Wed Sep 17 17:47:41 CEST 2008 */
+/* First created by JCasGen Tue Jun 03 02:06:02 CEST 2008 */
 package org.werti.uima.types.annot;
 
 import org.apache.uima.jcas.JCas;
@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
 /** A relevant Token with PoS information attached.
- * Updated by JCasGen Wed Sep 17 17:47:41 CEST 2008
+ * Updated by JCasGen Wed Sep 17 14:36:52 CEST 2008
  * @generated */
 public class Token_Type extends Annotation_Type {
   /** @generated */
@@ -58,24 +58,6 @@ public class Token_Type extends Annotation_Type {
     ll_cas.ll_setStringValue(addr, casFeatCode_tag, v);}
     
   
- 
-  /** @generated */
-  final Feature casFeat_lemma;
-  /** @generated */
-  final int     casFeatCode_lemma;
-  /** @generated */ 
-  public String getLemma(int addr) {
-        if (featOkTst && casFeat_lemma == null)
-      jcas.throwFeatMissing("lemma", "org.werti.uima.types.annot.Token");
-    return ll_cas.ll_getStringValue(addr, casFeatCode_lemma);
-  }
-  /** @generated */    
-  public void setLemma(int addr, String v) {
-        if (featOkTst && casFeat_lemma == null)
-      jcas.throwFeatMissing("lemma", "org.werti.uima.types.annot.Token");
-    ll_cas.ll_setStringValue(addr, casFeatCode_lemma, v);}
-    
-  
 
 
 
@@ -88,10 +70,6 @@ public class Token_Type extends Annotation_Type {
  
     casFeat_tag = jcas.getRequiredFeatureDE(casType, "tag", "uima.cas.String", featOkTst);
     casFeatCode_tag  = (null == casFeat_tag) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_tag).getCode();
-
- 
-    casFeat_lemma = jcas.getRequiredFeatureDE(casType, "lemma", "uima.cas.String", featOkTst);
-    casFeatCode_lemma  = (null == casFeat_lemma) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_lemma).getCode();
 
   }
 }

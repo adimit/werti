@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Wed Sep 17 17:47:41 CEST 2008 */
+/* First created by JCasGen Wed Jun 04 02:43:38 CEST 2008 */
 package org.werti.uima.types;
 
 import org.apache.uima.jcas.JCas; 
@@ -11,7 +11,7 @@ import org.apache.uima.jcas.tcas.Annotation;
 
 
 /** Describes an enhancment on the current spot.
- * Updated by JCasGen Wed Sep 17 17:47:41 CEST 2008
+ * Updated by JCasGen Wed Sep 17 14:36:52 CEST 2008
  * XML source: /home/aleks/src/WERTi/desc/enhancers/TokenEnhancer.xml
  * @generated */
 public class Enhancement extends Annotation {

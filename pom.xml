@@ -25,12 +25,6 @@
 			<version>2.2.2-incubating</version>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.uima</groupId>
-			<artifactId>uimaj-tools</artifactId>
-			<version>2.2.2-incubating</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-user</artifactId>
 			<version>${gwtVersion}</version>
@@ -107,11 +101,7 @@
 						<param>org.werti.WERTi</param>
 						<param>org.werti.enhancements.Ask</param>
 						<param>org.werti.enhancements.Colorize</param>
-						<param>org.werti.enhancements.GerundsColorize</param>
-						<param>org.werti.enhancements.GerundsColorizeAll</param>
 						<param>org.werti.enhancements.Cloze</param>
-						<param>org.werti.enhancements.GerundsCloze</param>
-						<param>org.werti.enhancements.GerundsAsk</param>
 					</compileTargets>
 					<generatorDestinationPackage>org.werti.client</generatorDestinationPackage>
 					<noServer>true</noServer>

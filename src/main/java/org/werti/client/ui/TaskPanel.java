@@ -55,6 +55,15 @@ public class TaskPanel extends TabPanel {
 	}
 
 	/**
+	 * Select the task and adjust the current active configuration.
+	 *
+	 * @param index The TabIndex of the task to be selected.
+	 */
+	@Override public void selectTab(int index) {
+		super.selectTab(index);
+	}
+
+	/**
 	 * Request the currently active (for the open tab) task.
 	 *
 	 * @return This Tab's <code>Task</code>

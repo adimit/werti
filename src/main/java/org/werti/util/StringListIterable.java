@@ -68,8 +68,8 @@ public class StringListIterable implements Iterable<String> {
 		private NonEmptyStringList work_list;
 		
 		public StringListIterator() {
-			// the list needs to be modified so save it
-			// TODO: this is by reference, shouldn't the list (not its items) be cloned?
+			// the list needs to be modified so
+			// save it
 			work_list = list;
 		}
 

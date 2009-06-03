@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Wed Sep 17 17:47:41 CEST 2008 */
+/* First created by JCasGen Wed Jun 04 02:43:38 CEST 2008 */
 package org.werti.uima.types;
 
 import org.apache.uima.jcas.JCas;
@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
 /** Describes an enhancment on the current spot.
- * Updated by JCasGen Wed Sep 17 17:47:41 CEST 2008
+ * Updated by JCasGen Wed Sep 17 14:36:52 CEST 2008
  * @generated */
 public class Enhancement_Type extends Annotation_Type {
   /** @generated */
